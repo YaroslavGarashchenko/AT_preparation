@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PreAddTech" GeneratedClassName="Settings_AT">
+  <Profiles />
+  <Settings>
+    <Setting Name="FoxProPath" Description="Путь к среде FoxPro" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\Vfp50_D_Out_User\0_VFP9\vfp9.exe</Value>
+    </Setting>
+    <Setting Name="BookPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\Vfp50_D_Out_User\Book\Book.app</Value>
+    </Setting>
+    <Setting Name="Base_TriPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\Vfp50_D_Out_User\Base_Tri\Base_Tri.app</Value>
+    </Setting>
+    <Setting Name="Anal_MorPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\Vfp50_D_Out_User\Anal_Mor\Anal_Mor.app</Value>
+    </Setting>
+    <Setting Name="RP_TechnPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\Vfp50_D_Out_User\RP_Techn\RP_Techn.app</Value>
+    </Setting>
+    <Setting Name="Stat_Mod" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\Vfp50_D_Out_User\Stat_Mod\Stat_Mod.app</Value>
+    </Setting>
+    <Setting Name="GLC_PlayerPuth" Type="System.String" Scope="User">
+      <Value Profile="(Default)">e:\App_0P\GLC_Player_2_2_0\glc_player.exe</Value>
+    </Setting>
+    <Setting Name="MagicsPuth" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E:\App\Materialise\Magics 19.01\Magics.exe</Value>
+    </Setting>
+    <Setting Name="ExcelPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\Program Files (x86)\MSOffice\Office12\EXCEL.EXE</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
