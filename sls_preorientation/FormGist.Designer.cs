@@ -32,6 +32,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGist));
             this.chartGistogram = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.buttonSwitch = new System.Windows.Forms.Button();
             this.chartIntegral = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -85,6 +86,7 @@
             this.Controls.Add(this.buttonSwitch);
             this.Controls.Add(this.chartGistogram);
             this.Controls.Add(this.chartIntegral);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormGist";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Гистограмма распределения";

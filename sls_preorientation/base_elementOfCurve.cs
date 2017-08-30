@@ -11,21 +11,35 @@ namespace PreAddTech
     public class base_elementOfCurve
     {
         /// <summary>
-        /// Определение первой точки 
+        /// Порядковый номер
+        /// </summary>
+        public int num { get; set;}
+
+        /// <summary>
+        /// Первая точка 
         /// </summary>
         public PointF point1 { get; set; }
+
         /// <summary>
-        /// Определение второй точки
+        /// Вторая точка
         /// </summary>
         public PointF point2 { get; set; }
+
         /// <summary>
-        /// Метка (для процедур перебора)
+        /// Смежный элемент по первой точке
         /// </summary>
-        public bool mark { get; set; }
+        public int numAdjacent1 { get; set; }
+
+        /// <summary>
+        /// Смежный элемент по второй точке
+        /// </summary>
+        public int numAdjacent2 { get; set; }
+
         /// <summary>
         /// Номер контура
         /// </summary>
         public int iContour { get; set; }
+
         /// <summary>
         /// Метка внутреннего/внешнего контура (True - внешний контур, Fаlse - внутренний контур)
         /// </summary>

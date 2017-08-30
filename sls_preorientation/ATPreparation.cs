@@ -59,7 +59,6 @@ namespace PreAddTech
             formCreateVoxModel.AnalColorVisual.Dispose();
             formCreateVoxModel.AnalLocation.Dispose();
             formCreateVoxModel.AnalLayer.Dispose();
-            formCreateVoxModel.AnalVariety.Dispose();
             formCreateVoxModel.analOrient.Dispose();
             formCreateVoxModel.Text = ((Button)sender).Text;
             activeTask = (int)switchActiveTask.analizeDecomposing;
@@ -449,7 +448,6 @@ namespace PreAddTech
             formAnalisysOrientationModel.Show();
             formAnalisysOrientationModel.AnalVox.Dispose();
             formAnalisysOrientationModel.Vox_model.Dispose();
-            formAnalisysOrientationModel.AnalVariety.Dispose();
             formAnalisysOrientationModel.AnalLocation.Dispose();
             formAnalisysOrientationModel.AnalLayer.Dispose();
             formAnalisysOrientationModel.Text = ((Button)sender).Text;
@@ -472,7 +470,6 @@ namespace PreAddTech
             formAnalisysLayerModel.Show();
             formAnalisysLayerModel.AnalVox.Dispose();
             formAnalisysLayerModel.Vox_model.Dispose();
-            formAnalisysLayerModel.AnalVariety.Dispose();
             formAnalisysLayerModel.analOrient.Dispose();
             formAnalisysLayerModel.AnalColorVisual.Dispose();
             formAnalisysLayerModel.AnalLocation.Dispose();
@@ -496,7 +493,6 @@ namespace PreAddTech
             formPacking.Show();
             formPacking.AnalVox.Dispose();
             formPacking.AnalLayer.Dispose();
-            formPacking.AnalVariety.Dispose();
             formPacking.AnalColorVisual.Dispose();
             formPacking.analOrient.Dispose();
             formPacking.Text = ((Button)sender).Text;
@@ -522,7 +518,6 @@ namespace PreAddTech
             formAnalysisManufacturability.analOrient.Dispose();
             formAnalysisManufacturability.AnalLayer.Dispose();
             formAnalysisManufacturability.AnalLocation.Dispose();
-            formAnalysisManufacturability.AnalVariety.Dispose();
             formAnalysisManufacturability.Text = ((Button)sender).Text;
             formAnalysisManufacturability.activeTask = switchActiveTask.analizeVisual;
             //Запись данных в историю
@@ -530,6 +525,7 @@ namespace PreAddTech
             richTextBoxHistory.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
             richTextBoxHistory.Text += ((Button)sender).Text + "\n";
         }
+        
         /// <summary>
         /// Оценка сложности модели (разнообразие треугольных граней)
         /// </summary>
@@ -537,20 +533,25 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void buttonEvaluation_Click_1(object sender, EventArgs e)
         {
-            FormAnalysis formEvaluation = new FormAnalysis();
+            FormResults formEvaluation = new FormResults();
             formEvaluation.Activate();
             formEvaluation.Show();
-            formEvaluation.AnalVox.Dispose();
-            formEvaluation.Vox_model.Dispose();
-            formEvaluation.analOrient.Dispose();
-            formEvaluation.AnalLocation.Dispose();
-            formEvaluation.AnalLayer.Dispose();
-            formEvaluation.Text = ((Button)sender).Text;
-            formEvaluation.activeTask = switchActiveTask.evaluation;
             //Запись данных в историю
             richTextBoxHistory.Text += "Дата: " + DateTime.Now.ToShortDateString() + ";  ";
             richTextBoxHistory.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
             richTextBoxHistory.Text += ((Button)sender).Text + "\n";
+        }
+
+        /// <summary>
+        /// Справочная система
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonHelp_Click(object sender, EventArgs e)
+        {
+            FormHelp formHelp = new FormHelp();
+            formHelp.Activate();
+            formHelp.Show();
         }
     }
 }

@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+            <section name="PreAddTech.SettingsUser" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+            <section name="PreAddTech.Settings_AT" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+        </sectionGroup>
+    </configSections>
+    <connectionStrings>
+        <add name="PreAddTech.Properties.Settings.Base_varConnectionString"
+            connectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Base_var.mdf;Integrated Security=True;Connect Timeout=30"
+            providerName="System.Data.SqlClient" />
+        <add name="PreAddTech.Properties.Settings.VarModelsConnectionString"
+            connectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\VarModels.mdf;Integrated Security=True;Connect Timeout=30"
+            providerName="System.Data.SqlClient" />
+    </connectionStrings>
+    <userSettings>
+        <PreAddTech.SettingsUser>
+            <setting name="FoxProPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\0_VFP9\vfp9.exe</value>
+            </setting>
+            <setting name="BookPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\Book\Book.app</value>
+            </setting>
+            <setting name="Base_TriPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\Base_Tri\Base_Tri.app</value>
+            </setting>
+            <setting name="Anal_MorPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\Anal_Mor\Anal_Mor.app</value>
+            </setting>
+            <setting name="RP_TechnPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\RP_Techn\RP_Techn.app</value>
+            </setting>
+            <setting name="Stat_Mod" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\Stat_Mod\Stat_Mod.app</value>
+            </setting>
+            <setting name="GLC_PlayerPuth" serializeAs="String">
+                <value>e:\App_0P\GLC_Player_2_2_0\glc_player.exe</value>
+            </setting>
+            <setting name="MagicsPuth" serializeAs="String">
+                <value>E:\App\Materialise\Magics 19.01\Magics.exe</value>
+            </setting>
+            <setting name="ExcelPath" serializeAs="String">
+                <value>c:\Program Files (x86)\MSOffice\Office12\EXCEL.EXE</value>
+            </setting>
+        </PreAddTech.SettingsUser>
+        <PreAddTech.Settings_AT>
+            <setting name="FoxProPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\0_VFP9\vfp9.exe</value>
+            </setting>
+            <setting name="BookPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\Book\Book.app</value>
+            </setting>
+            <setting name="Base_TriPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\Base_Tri\Base_Tri.app</value>
+            </setting>
+            <setting name="Anal_MorPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\Anal_Mor\Anal_Mor.app</value>
+            </setting>
+            <setting name="RP_TechnPath" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\RP_Techn\RP_Techn.app</value>
+            </setting>
+            <setting name="Stat_Mod" serializeAs="String">
+                <value>d:\Vfp50_D_Out_User\Stat_Mod\Stat_Mod.app</value>
+            </setting>
+            <setting name="GLC_PlayerPuth" serializeAs="String">
+                <value>e:\App_0P\GLC_Player_2_2_0\glc_player.exe</value>
+            </setting>
+            <setting name="MagicsPuth" serializeAs="String">
+                <value>E:\App\Materialise\Magics 19.01\Magics.exe</value>
+            </setting>
+            <setting name="ExcelPath" serializeAs="String">
+                <value>c:\Program Files (x86)\MSOffice\Office12\EXCEL.EXE</value>
+            </setting>
+        </PreAddTech.Settings_AT>
+    </userSettings>
+</configuration>

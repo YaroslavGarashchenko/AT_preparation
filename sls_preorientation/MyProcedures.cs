@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms;
 using System.IO;
 using System.Linq;
 using System.Drawing;
+using MSExel = Microsoft.Office.Interop.Excel;
 
 namespace PreAddTech
 {
@@ -27,15 +28,6 @@ namespace PreAddTech
         /// <summary>
         /// Расчет площади проекции треугольника на плоскость YZ
         /// </summary>
-        /// <param name="x1"></param>
-        /// <param name="y1"></param>
-        /// <param name="z1"></param>
-        /// <param name="x2"></param>
-        /// <param name="y2"></param>
-        /// <param name="z2"></param>
-        /// <param name="x3"></param>
-        /// <param name="y3"></param>
-        /// <param name="z3"></param>
         /// <returns></returns>
         public double StrX(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3)
         {
@@ -416,6 +408,7 @@ namespace PreAddTech
         /// <param name="count">Общее количество объема данных</param>
         public void ProgressBarRefresh(ToolStripProgressBar ProgressBar, int i, int count)
         {
+            if(count != 0)
             ProgressBar.Value = (int)(ProgressBar.Minimum + (ProgressBar.Maximum - ProgressBar.Minimum) * i / count);
             Application.DoEvents();
         }
@@ -618,7 +611,8 @@ namespace PreAddTech
         /// <returns></returns>
         public float squareSection(PointF P1, PointF P2)
         {
-            return Math.Abs((P1.X + P2.X) * (P1.Y - P2.Y) / 2);
+            //return Math.Abs((P1.X + P2.X) * (P1.Y - P2.Y) / 2);
+            return (P1.X + P2.X) * (P1.Y - P2.Y) / 2;
         }
         
         /// <summary>
@@ -631,7 +625,8 @@ namespace PreAddTech
             float Asquare = 0, Xb = 0, Yb = 0;
             foreach (var item in listElements)
             {
-                Asquare += Math.Abs((item.point1.X * item.point2.Y - item.point2.X * item.point1.Y) /2);
+                //Asquare += Math.Abs((item.point1.X * item.point2.Y - item.point2.X * item.point1.Y) /2);
+                Asquare += (item.point1.X * item.point2.Y - item.point2.X * item.point1.Y) / 2;
                 Xb += (item.point1.X + item.point2.X) * Math.Abs(item.point1.X * item.point2.Y - item.point2.X * item.point1.Y);
                 Yb += (item.point1.Y + item.point2.Y) * Math.Abs(item.point1.X * item.point2.Y - item.point2.X * item.point1.Y);
             }
@@ -644,7 +639,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="ListStl"></param>
         /// <returns>Массив: 0-minZ, 1-maxZ, 2-minX, 3-maxX, 4-minY, 5-maxY</returns>
-        public float[] limitModel(List<base_stl> ListStl)
+        public float[] limitModelOld(List<base_stl> ListStl)
         {
             float[] limits = new float[6] { float.MaxValue, float.MinValue,
                                             float.MaxValue, float.MinValue,
@@ -678,40 +673,518 @@ namespace PreAddTech
             return limits;
         }
 
-        public List<float> MassiveAngleAdjacent(List<base_elementOfCurve> listE)
+        /// <summary>
+        /// Процедура определения предельных координат модели по осям X, Y, Z
+        /// </summary>
+        /// <param name="ListStl"></param>
+        /// <returns>Массив: 0-minZ, 1-maxZ, 2-minX, 3-maxX, 4-minY, 5-maxY</returns>
+        public float[] limitModel(List<base_stl> ListStl)
         {
-            List<base_elementOfCurve> templistE = new List<base_elementOfCurve>();
-            //Номер контура
-            int nContour = 1;
+            float[] tempZ = new float[3*ListStl.Count];
+            float[] tempX = new float[3*ListStl.Count];
+            float[] tempY = new float[3*ListStl.Count];
+            //
+            for (int i = 0; i < ListStl.Count; i++)
+            {
+                tempZ[3 * i] = ListStl[i].Z1;
+                tempZ[3 * i + 1] = ListStl[i].Z2;
+                tempZ[3 * i + 2] = ListStl[i].Z3;
 
+                tempX[3 * i] = ListStl[i].X1;
+                tempX[3 * i + 1] = ListStl[i].X2;
+                tempX[3 * i + 2] = ListStl[i].X3;
+
+                tempY[3 * i] = ListStl[i].Y1;
+                tempY[3 * i + 1] = ListStl[i].Y2;
+                tempY[3 * i + 2] = ListStl[i].Y3;
+            }
+            return new float[6] { tempZ.Min(), tempZ.Max(), tempX.Min(), tempX.Max(), tempY.Min(), tempY.Max() };
+        }
+
+        /// <summary>
+        /// Процедура выявления замкнутых контуров с определением его вида: внешний и внутренний
+        /// </summary>
+        /// <param name="listE">Список элементов контура</param>
+        /// <returns></returns>
+        public List<base_elementOfCurve> listCloseContour(List<base_elementOfCurve> listE)
+        {
+            if (listE.Count == 0)
+            {
+                return new List<base_elementOfCurve>();
+            }
+
+            //Приведение в исходное положение
+            for (int k = 0; k < listE.Count(); k++)
+            {
+                listE[k].iContour = 0;
+                listE[k].insideOrOuterContour = true;
+                listE[k].numAdjacent1 = 0;
+                listE[k].numAdjacent2 = 0;
+            }
+
+            //Количество совпадений
+            int numCoincidence = 0;
+
+            //Простановка порядковых номеров смежных элементов
             for (int i = 0; i < listE.Count(); i++)
             {
-                if (i > 0)
+                if (listE[i].numAdjacent1 == 0)
                 {
                     //поиск совпадения вершин (приближенного)
-                    for (int j = i; j < listE.Count; j++)
+                    for (int j = 0; j < listE.Count; j++)
                     {
-                        if (((listE[i - 1].point2.X - listE[j].point1.X) < 0.0001f) &&
-                            ((listE[i - 1].point2.Y - listE[j].point1.Y) < 0.0001f))
+                        if (listE[i].point1 == listE[j].point2)
                         {
-
+                            listE[i].numAdjacent1 = listE[j].num;
+                            listE[j].numAdjacent2 = listE[i].num;
+                            numCoincidence++;
                         }
-                        if (((listE[i - 1].point2.X - listE[j].point2.X) < 0.0001f) &&
-                            ((listE[i - 1].point2.Y - listE[j].point2.Y) < 0.0001f))
-                        {
-
-                        }
+                        //
+                        if (numCoincidence == 2)
+                            goto Finish;
                     }
                 }
-                else
+                if (listE[i].numAdjacent2 == 0)
                 {
-                    templistE.Add(listE[i]);
-                    listE[i].mark = false;
-                    listE[i].iContour = nContour;
+                    for (int j = 0; j < listE.Count; j++)
+                    {
+                        if ( listE[i].point2 == listE[j].point1 )
+                        {
+                            listE[i].numAdjacent2 = listE[j].num;
+                            listE[j].numAdjacent1 = listE[i].num;
+                            numCoincidence++;
+                        }
+                        //
+                        if (numCoincidence == 2)
+                            goto Finish;
+                    }
+                }
+            Finish: numCoincidence = 0;
+            }
+
+            //Номер контура
+            int numContour = 0;
+
+            //Простановка номера контура
+            for (int m = 0; m < listE.Count(); m++)
+            {
+                if (listE[m].iContour == 0 && listE[m].numAdjacent2 != 0 && listE[m].numAdjacent1 != 0)
+                {
+                    int searchNum = listE[m].numAdjacent2 - 1;
+                    int finishNum = listE[m].numAdjacent1 - 1;
+                    listE[m].iContour = ++numContour;
+                    int current = m;
+                    int i = 0;
+                    //Поиск номера
+                    while (searchNum != finishNum && i++ < listE.Count())
+                    {
+                        if (listE[searchNum].numAdjacent1 == current + 1)
+                        {
+                            current = searchNum;
+                            listE[searchNum].iContour = numContour;
+                            searchNum = listE[searchNum].numAdjacent2 - 1;
+                        }
+                        if (listE[searchNum].numAdjacent2 == current + 1)
+                        {
+                            current = searchNum;
+                            listE[searchNum].iContour = numContour;
+                            searchNum = listE[searchNum].numAdjacent1 - 1;
+                        }
+                        if (searchNum == 0) break;
+                    }
+                    listE[finishNum].iContour = numContour;
                 }
             }
 
-            return new List<float>();
+            //Определение внешнего/внутреннего контура (true/false)
+            if (numContour > 1)
+            {
+                List<base_elementOfCurve>[] subList = new List<base_elementOfCurve>[numContour];
+                for (int i = 0; i < subList.Length; i++)
+                {
+                    subList[i] = new List<base_elementOfCurve>();
+                }
+                foreach (var item in listE)
+                {
+                    if (item != null || item.iContour != 0)
+                    {
+                        subList[item.iContour - 1].Add(item);
+                    }
+                }
+                //проверка на наличие псевдоконтуров
+                int numBug = 0;
+                for (int i = 0; i < numContour; i++)
+                {
+                    if (subList[i].Count() <= 2)
+                        numBug++;
+                }
+                if (numContour-numBug <= 1)
+                {
+                    return listE;
+                }
+
+                //Площадь отдельных контуров
+                float[] sumContour = new float[numContour];
+                //метка внешнего контура
+                bool[] outContour = new bool[numContour];   
+                //
+                for (int i = 0; i < numContour; i++)
+                {
+                    for (int j = 0; j < subList[i].Count(); j++)
+                    {
+                        sumContour[i] += squareSection(subList[i][j].point1, subList[i][j].point2);
+                    }
+                    if (sumContour[i] < 0)
+                    {
+                        for (int j = 0; j < listE.Count(); j++)
+                        {
+                            if (listE[j].iContour == i)
+                            listE[j].insideOrOuterContour = false;
+                        }
+                    }
+                }
+            }
+            return listE;
+        }
+
+        /// <summary>
+        /// Определение массива смежных углов для ребер многостороннего контура
+        /// </summary>
+        /// <param name="listE"></param>
+        /// <returns></returns>
+        public List<float> massiveAngleAdjacent(List<base_elementOfCurve> listE)
+        {
+            List<float> result = new List<float>();
+
+            float Xa, Xb, Xc, Ya, Yb, Yc;
+
+            for (int i = 0; i < listE.Count(); i++)
+            {
+                if (listE[i].numAdjacent2 != 0)
+                {
+                    Xb = listE[i].point1.X; Yb = listE[i].point1.Y;
+                    Xa = listE[i].point2.X; Ya = listE[i].point2.Y;
+
+                    Xc = listE[listE[i].numAdjacent2 - 1].point2.X;
+                    Yc = listE[listE[i].numAdjacent2 - 1].point2.Y;
+
+                    result.Add((float)(Math.Acos(((Xb - Xa) * (Xc - Xa) + (Yb - Ya) * (Yc - Ya)) /
+                                Math.Sqrt(((Xb - Xa) * (Xb - Xa) + (Yb - Ya) * (Yb - Ya)) * ((Xc - Xa) * (Xc - Xa) + (Yc - Ya) * (Yc - Ya))))
+                                * 180 / Math.PI));
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Сохранение данных DataGridView в XLS файл
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        public void SaveDataGridInXlc(DataGridView dataGridView)
+        {
+            try
+            {
+                MSExel.Application ExcelApp = new MSExel.Application();
+                MSExel.Workbook ExcelWorkBook = ExcelApp.Workbooks.Add();
+                MSExel.Sheets Sheets = ExcelWorkBook.Worksheets;
+                MSExel.Worksheet ExcelWorkSheet = (MSExel.Worksheet)Sheets.get_Item(1);
+
+                for (int j = 0; j < dataGridView.ColumnCount; j++)
+                    ExcelApp.Cells[1, j + 1] = dataGridView.Columns[j].HeaderText;
+                //
+                for (int i = 0; i < dataGridView.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataGridView.ColumnCount; j++)
+                    {
+                        ExcelApp.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value;
+                    }
+                }
+                ExcelApp.Visible = true;
+                ExcelApp.UserControl = true;
+            }
+            catch (Exception err)
+            {
+                Clipboard.Clear();
+                string clipboardTable = "";
+                for (int j = 0; j < dataGridView.ColumnCount; j++)
+                {
+                    clipboardTable += dataGridView.Columns[j].HeaderText;
+                    clipboardTable += "\t";
+                }
+                clipboardTable += "\n";
+                //
+                for (int i = 0; i < dataGridView.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dataGridView.ColumnCount; j++)
+                    {
+                        if (dataGridView.Rows[i].Cells[j].Value.ToString() != null &&
+                            dataGridView.Rows[i].Cells[j].Value.ToString() != "")
+                        {
+                            clipboardTable += dataGridView.Rows[i].Cells[j].Value.ToString();
+                        }
+                        else
+                        {
+                            clipboardTable += "---";
+                        }
+                        clipboardTable += "\t";
+                    }
+                    clipboardTable += "\n";
+                }
+                Clipboard.SetText(clipboardTable);
+                MessageBox.Show("Проблемы с приложением MS Excel \n" +
+                                "Данные таблицы помещены в буфер обмена. \n\n" + err.Message);
+            }
+        }
+        /// <summary>
+        /// Определение координат точек пересечения плоскостью треугольной грани
+        /// </summary>
+        /// <param name="P1">Первая вершина</param>
+        /// <param name="P2">Вторая вершина</param>
+        /// <param name="P3">Третяя вершина</param>
+        /// <param name="Z">Координата расположения плоскости по оси Z</param>
+        /// <returns></returns>
+        public PointF[] elementOfCurveOld (Point3D P1, Point3D P2, Point3D P3, float Z)
+        {
+            /*
+             base_elementOfCurve tempElement = new base_elementOfCurve();
+
+                        if (coordinateSectionZ[i] == pointSTL[0].Z && coordinateSectionZ[i] == pointSTL[1].Z)
+                        {
+                            tempElement.point1 = new PointF() { X = pointSTL[0].X, Y = pointSTL[0].Y };
+                            tempElement.point2 = new PointF() { X = pointSTL[1].X, Y = pointSTL[1].Y };
+                        }
+                        else if (coordinateSectionZ[i] == pointSTL[1].Z && coordinateSectionZ[i] == pointSTL[2].Z)
+                        {
+                            tempElement.point1 = new PointF() { X = pointSTL[1].X, Y = pointSTL[1].Y };
+                            tempElement.point2 = new PointF() { X = pointSTL[2].X, Y = pointSTL[2].Y };
+                        }
+                        else 
+                        {
+                            if (pointSTL[1].Z > coordinateSectionZ[i] && pointSTL[0].Z < coordinateSectionZ[i])
+                            {
+                                tempElement.point1 = proc.PlaneCrossLine(pointSTL[0].X, pointSTL[0].Y, pointSTL[0].Z,
+                                                     pointSTL[1].X, pointSTL[1].Y, pointSTL[1].Z,
+                                                     coordinateSectionZ[i]);
+
+                                tempElement.point2 = proc.PlaneCrossLine(pointSTL[0].X, pointSTL[0].Y, pointSTL[0].Z,
+                                                     pointSTL[2].X, pointSTL[2].Y, pointSTL[2].Z,
+                                                     coordinateSectionZ[i]);
+                            }
+                            if (pointSTL[2].Z > coordinateSectionZ[i] && pointSTL[1].Z < coordinateSectionZ[i])
+                            {
+                                tempElement.point1 = proc.PlaneCrossLine(pointSTL[0].X, pointSTL[0].Y, pointSTL[0].Z,
+                                                     pointSTL[2].X, pointSTL[2].Y, pointSTL[2].Z,
+                                                     coordinateSectionZ[i]);
+
+                                tempElement.point2 = proc.PlaneCrossLine(pointSTL[1].X, pointSTL[1].Y, pointSTL[1].Z,
+                                                     pointSTL[2].X, pointSTL[2].Y, pointSTL[2].Z,
+                                                     coordinateSectionZ[i]);
+                            }
+                        } 
+            */
+
+            PointF[] pointsCurve = new PointF[2];
+
+            if (Z == P1.Z && Z == P2.Z)
+            {
+                pointsCurve[0] = new PointF() { X = P1.X, Y = P1.Y };
+                pointsCurve[1] = new PointF() { X = P2.X, Y = P2.Y };
+            }
+            else if (Z == P2.Z && Z == P3.Z)
+            {
+                pointsCurve[0] = new PointF() { X = P2.X, Y = P2.Y };
+                pointsCurve[1] = new PointF() { X = P3.X, Y = P3.Y };
+            }
+            else
+            {
+                if (P2.Z > Z && P1.Z < Z)
+                {
+                    pointsCurve[0] = PlaneCrossLine(P1.X, P1.Y, P1.Z, P2.X, P2.Y, P2.Z, Z);
+
+                    pointsCurve[1] = PlaneCrossLine(P1.X, P1.Y, P1.Z, P3.X, P3.Y, P3.Z, Z);
+                }
+                if (P3.Z > Z && P2.Z < Z)
+                {
+                    pointsCurve[0] = PlaneCrossLine(P1.X, P1.Y, P1.Z, P3.X, P3.Y, P3.Z, Z);
+
+                    pointsCurve[1] = PlaneCrossLine(P2.X, P2.Y, P2.Z, P3.X, P3.Y, P3.Z, Z);
+                }
+            }
+
+            return pointsCurve;
+        }
+
+        /// <summary>
+        /// Определение координат точек пересечения плоскостью треугольной грани
+        /// </summary>
+        /// <param name="P1">Первая вершина</param>
+        /// <param name="P2">Вторая вершина</param>
+        /// <param name="P3">Третяя вершина</param>
+        /// <param name="Z">Координата расположения плоскости по оси Z</param>
+        /// <returns></returns>
+        public PointF[] elementOfCurve(Point3D P1, Point3D P2, Point3D P3, float Z)
+        {
+            PointF[] pointsCurve = new PointF[2];
+
+            if (Z == P1.Z && Z == P2.Z)
+            {
+                pointsCurve[1] = new PointF() { X = P1.X, Y = P1.Y };
+                pointsCurve[0] = new PointF() { X = P2.X, Y = P2.Y };
+            }
+            else if (Z == P2.Z && Z == P3.Z)
+            {
+                pointsCurve[1] = new PointF() { X = P2.X, Y = P2.Y };
+                pointsCurve[0] = new PointF() { X = P3.X, Y = P3.Y };
+            }
+            else if (Z == P3.Z && Z == P1.Z)
+            {
+                pointsCurve[1] = new PointF() { X = P3.X, Y = P3.Y };
+                pointsCurve[0] = new PointF() { X = P1.X, Y = P1.Y };
+            }
+            else if (P1.Z >= Z && P2.Z <= Z && P3.Z <= Z)
+            {
+                pointsCurve[1] = PlaneCrossLine(P1.X, P1.Y, P1.Z, P2.X, P2.Y, P2.Z, Z);
+                pointsCurve[0] = PlaneCrossLine(P3.X, P3.Y, P3.Z, P1.X, P1.Y, P1.Z, Z);
+            }
+            else if (P2.Z >= Z && P1.Z <= Z && P3.Z <= Z)
+            {
+                pointsCurve[0] = PlaneCrossLine(P1.X, P1.Y, P1.Z, P2.X, P2.Y, P2.Z, Z);
+                pointsCurve[1] = PlaneCrossLine(P3.X, P3.Y, P3.Z, P2.X, P2.Y, P2.Z, Z);
+            }
+            else if (P3.Z >= Z && P1.Z <= Z && P2.Z <= Z)
+            {
+                pointsCurve[0] = PlaneCrossLine(P2.X, P2.Y, P2.Z, P3.X, P3.Y, P3.Z, Z);
+                pointsCurve[1] = PlaneCrossLine(P3.X, P3.Y, P3.Z, P1.X, P1.Y, P1.Z, Z);
+            }
+            else if (P1.Z <= Z && P2.Z >= Z && P3.Z >= Z)
+            {
+                pointsCurve[0] = PlaneCrossLine(P1.X, P1.Y, P1.Z, P2.X, P2.Y, P2.Z, Z);
+                pointsCurve[1] = PlaneCrossLine(P3.X, P3.Y, P3.Z, P1.X, P1.Y, P1.Z, Z);
+            }
+            else if (P2.Z <= Z && P1.Z >= Z && P3.Z >= Z)
+            {
+                pointsCurve[1] = PlaneCrossLine(P1.X, P1.Y, P1.Z, P2.X, P2.Y, P2.Z, Z);
+                pointsCurve[0] = PlaneCrossLine(P3.X, P3.Y, P3.Z, P2.X, P2.Y, P2.Z, Z);
+            }
+            else if (P3.Z <= Z && P1.Z >= Z && P2.Z >= Z)
+            {
+                pointsCurve[1] = PlaneCrossLine(P2.X, P2.Y, P2.Z, P3.X, P3.Y, P3.Z, Z);
+                pointsCurve[0] = PlaneCrossLine(P3.X, P3.Y, P3.Z, P1.X, P1.Y, P1.Z, Z);
+            }
+            return pointsCurve;
+        }
+
+        /// <summary>
+        /// Определение фрактальной размерности контура (контуров)
+        /// </summary>
+        /// <param name="listE"></param>
+        /// <returns></returns>
+        public float fractalDimension(List<base_elementOfCurve> listE)
+        {
+            float fractalD = 0;
+            //Первая точка (начало процедуры)
+            int startContour = listE[0].iContour;
+            PointF startPoint = listE[0].point1;
+            //Длина контура
+            float lengthContour = 0;
+            //
+            for (int i = 0; i < listE.Count(); i++)
+            {
+                lengthContour += length(listE[i].point1, listE[i].point2);
+            }
+            //Первоначальный радиус окружности
+            float mera = lengthContour / 10;
+
+            //Начальная длина
+            float lengthTemp = 0;
+
+            while (lengthTemp < lengthContour)
+            {
+                float x0 = startPoint.X;
+                float y0 = startPoint.Y;
+                float A = mera * mera - x0 * x0 - y0 * y0;
+                List<base_elementOfCurve> ElementTemp = new List<base_elementOfCurve>();
+                //Проверка пересечения окружности с линией контура
+                for (int i = 0; i < listE.Count(); i++)
+                {
+                    //Варианты пересечения 
+                    //Необходимо выбрать с максимальной длиной отрезка
+                    //0 - номер контура, 1 - номер элемента
+
+                    //1-я точка линии
+                    float x1 = listE[i].point1.X;
+                    float y1 = listE[i].point1.Y;
+                    //2-я точка линии
+                    float x2 = listE[i].point2.X;
+                    float y2 = listE[i].point2.Y;
+                    //
+                    float k = (y2 - y1) / (x2 - x1);
+                    float B = 2*k*k*x0*x1 - k*k*x1*x1 + k*k*y0*y0 + A*k*k + 2*k*x0*y0 - 2*k*x0*y1 - 2*k*x1*y0 + 2*k*x1*y1 + 
+                              x0*x0 + 2*y0*y1 - y1*y1 + A;
+                    if (B >= 0)
+                    {
+                        float C = k * (k * x1 + y0 - y1) + x0;
+                        PointF pointTemp1 = new PointF();
+                        PointF pointTemp2 = new PointF();
+
+                        pointTemp1.X = (float)(C + Math.Sqrt(B)) / (k * k + 1);
+                        pointTemp1.Y = (float)(k*(C + Math.Sqrt(B)) / (k * k + 1) - k*x1 + y1);
+                        //bool hit1 = false;
+                        pointTemp2.X = (float)(C - Math.Sqrt(B)) / (k * k + 1);
+                        pointTemp2.Y = (float)(k * (C - Math.Sqrt(B)) / (k * k + 1) - k*x1 + y1);
+                        //bool hit2 = false;
+                        //Проверка попадания на линию (между точками listE[i].point1 и listE[i].point2)
+                        float[] pLineX = new float[2] { x1, x2 };
+                        float[] pLineY = new float[2] { y1, y2 };
+
+                        if (pLineX.Min() != pLineX.Max())
+                        {
+                            //if (pointTemp1.X > pLineX.Min() && pointTemp1.X < pLineX.Max())
+                                //lengthContourFromStartToPoint();
+
+                            //if (pointTemp2.X > pLineX.Min() && pointTemp2.X < pLineX.Max())
+                                //hit2 = true;
+                        }
+                        else
+                        {
+                            //if (pointTemp1.Y > pLineY.Min() && pointTemp1.Y < pLineY.Max())
+                                //hit1 = true;
+
+                            //if (pointTemp2.Y > pLineY.Min() && pointTemp2.Y < pLineY.Max())
+                                //hit2 = true;
+                        }
+                    }
+
+                }
+
+                //mera++;
+            }
+
+            return fractalD;
+        }
+        /// <summary>
+        /// Определение длины отрезка контура
+        /// </summary>
+        /// <param name="listE">Список элементов контура</param>
+        /// <param name="numElement1">Номер элемента начала отрезка</param>
+        /// <param name="numElement2">Номер элемента конца отрезка</param>
+        /// <param name="EndPoint">Точка конца отрезка</param>
+        /// <returns></returns>
+        float lengthContourFromStartToPoint(List<base_elementOfCurve> listE, int numElement1, int numElement2, PointF EndPoint)
+        {
+            if (listE.Count == 0) return float.Epsilon;
+
+            float lengthContour = 0;
+            int numElement = numElement1;
+
+            while (numElement2 != numElement)
+            {
+                lengthContour += length(listE[numElement].point1, listE[numElement].point2);
+                numElement = listE[numElement].numAdjacent2;
+            }
+            lengthContour += length(listE[numElement2].point1, EndPoint);
+            return lengthContour;
         }
     }
 }

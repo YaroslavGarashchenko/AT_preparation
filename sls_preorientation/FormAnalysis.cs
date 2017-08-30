@@ -12,11 +12,11 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml;
 using System.Linq;
 using MSExel = Microsoft.Office.Interop.Excel;
+using btl.generic;
 
 
 namespace PreAddTech
 {
-
     public partial class FormAnalysis : Form
     {
         public FormAnalysis()
@@ -48,8 +48,8 @@ namespace PreAddTech
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             toolStripStatusLabel_info.Text = "Открытие и просмотр STL-файла";
-            openFileDialog1.FileName = "";
-            openFileDialog1.Filter = "STL files (*.stl)|*.stl|All files (*.*)|*.*";
+            openFileDialogU.FileName = "";
+            openFileDialogU.Filter = "STL files (*.stl)|*.stl|All files (*.*)|*.*";
             float StartTimeSecunds, EndTimeSecunds;
             // количество строк для просмотра
             ulong n = Convert.ToUInt64(toolStripTextBoxVol.Text);
@@ -63,9 +63,9 @@ namespace PreAddTech
 
             // текстовый файл
             if (toolStripComboBox2.Text.Substring(0, 2) == "1."
-                && openFileDialog1.ShowDialog() == DialogResult.OK)
+                && openFileDialogU.ShowDialog() == DialogResult.OK)
             {
-                StreamReader sr = new StreamReader(openFileDialog1.FileName);
+                StreamReader sr = new StreamReader(openFileDialogU.FileName);
                 timer1.Enabled = true;
                 //Определение количества треугольников
                 countTr = 0;
@@ -77,11 +77,11 @@ namespace PreAddTech
                     }
                 }
                 sr.Close();
-                sr = new StreamReader(openFileDialog1.FileName);
+                sr = new StreamReader(openFileDialogU.FileName);
                 //
                 StartTimeSecunds = 3600 * DateTime.Now.Hour +
                     60 * DateTime.Now.Minute + DateTime.Now.Second;
-                VibFileName = openFileDialog1.FileName;
+                VibFileName = openFileDialogU.FileName;
                 toolStripTextBoxFileName.Text = VibFileName;
                 ///
                 if (metka)
@@ -120,11 +120,11 @@ namespace PreAddTech
             }
             // бинарный файл
             if (toolStripComboBox2.Text.Substring(0, 2) == "2."
-                && openFileDialog1.ShowDialog() == DialogResult.OK)
+                && openFileDialogU.ShowDialog() == DialogResult.OK)
             {
                 StartTimeSecunds = 3600 * DateTime.Now.Hour +
                     60 * DateTime.Now.Minute + DateTime.Now.Second;
-                VibFileName = openFileDialog1.FileName;
+                VibFileName = openFileDialogU.FileName;
                 toolStripTextBoxFileName.Text = VibFileName;
                 try
                 {
@@ -216,10 +216,10 @@ namespace PreAddTech
                 {
                     MessageBox.Show(e9.Message);
                 }
-                toolStripStatusLabel1.Text = "Массив исходных данных не создан";
+                toolStripStatusLabelCreateVoxel.Text = "Массив исходных данных не создан";
                 toolStripStatusLabel2.Text = "Массив исходных данных не создан";
                 toolStripStatusLabelInphoOrientation.Text = "Массив исходных данных не создан";
-                toolStripStatusLabel1.ForeColor = Color.Red;
+                toolStripStatusLabelCreateVoxel.ForeColor = Color.Red;
                 toolStripStatusLabel2.ForeColor = Color.Red;
                 toolStripStatusLabelInphoOrientation.ForeColor = Color.Red;
                 Calculate_size.Enabled = false;
@@ -450,7 +450,7 @@ namespace PreAddTech
                                 //
                                 //dataGridView1.Rows.Add(StrNom, x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn, fstr[3].ToString("0.###E-000"));
                                 //
-                                StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, true, Encoding.Default);
+                                StreamWriter sw = new StreamWriter(saveFileDialogU.FileName, true, Encoding.Default);
                                 sw.WriteLine(zn + "\t" + fstr[3]);
                                 sw.Close();
                                 //
@@ -495,15 +495,15 @@ namespace PreAddTech
 
             if (toolStripComboBox3.Text.Substring(0, 1) == "2")
             {
-                toolStripStatusLabel2.Text = "Файл сохранен " + (string)saveFileDialog1.FileName;
+                toolStripStatusLabel2.Text = "Файл сохранен " + (string)saveFileDialogU.FileName;
                 toolStripStatusLabel2.ForeColor = Color.Black;
             }
             if (toolStripComboBox3.Text.Substring(0, 1) == "3")
             {
                 //MessageBox.Show("Массив объектов класса треугольники создан. \n" +
                 //                "Количество треугольников: " + ListStl.Count.ToString("###,0"));
-                toolStripStatusLabel1.Text = "Массив исходных данных создан, количество треугольников: " + ListStl.Count.ToString("###,0");
-                toolStripStatusLabel1.ForeColor = Color.Black;
+                toolStripStatusLabelCreateVoxel.Text = "Массив исходных данных создан, количество треугольников: " + ListStl.Count.ToString("###,0");
+                toolStripStatusLabelCreateVoxel.ForeColor = Color.Black;
                 toolStripStatusLabel2.Text = "Массив исходных данных создан, количество треугольников: " + ListStl.Count.ToString("###,0");
                 toolStripStatusLabel2.ForeColor = Color.Black;
                 toolStripStatusLabelColorVisual.Text = "Расчет не выполнен.";
@@ -525,17 +525,17 @@ namespace PreAddTech
         /// </summary>
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.FileName = "stl_" +
+            saveFileDialogU.FileName = "stl_" +
                                        DateTime.Now.Year.ToString() + "_" +
                                        DateTime.Now.Month.ToString() + "_" +
                                        DateTime.Now.Day.ToString() + "_" +
                                        DateTime.Now.Hour.ToString() + "_" +
                                        DateTime.Now.Minute.ToString();
-            saveFileDialog1.DefaultExt = "txt";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            saveFileDialogU.DefaultExt = "txt";
+            if (saveFileDialogU.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter sw = new
-                    StreamWriter(saveFileDialog1.FileName, false, Encoding.Default);
+                    StreamWriter(saveFileDialogU.FileName, false, Encoding.Default);
                 float Sum = 0, Sum0 = 0;
                 int Num = int.Parse(toolStripTextBox2.Text);
                 for (int i = 0; i < ListStl.Count; i++)
@@ -552,7 +552,7 @@ namespace PreAddTech
                     }
                 }
                 sw.WriteLine(ListStl.Count);
-                toolStripStatusLabel2.Text = "Файл сохранен" + saveFileDialog1.FileName;
+                toolStripStatusLabel2.Text = "Файл сохранен" + saveFileDialogU.FileName;
                 sw.Close();
             }
         }
@@ -670,7 +670,7 @@ namespace PreAddTech
                                     (float)numericUpDownVoxX.Value /
                                     (float)numericUpDownVoxY.Value /
                                     (float)numericUpDownVoxZ.Value).ToString("N0");
-            toolStripStatusLabel1.Text = "Массив создан. Исходные данные определены";
+            toolStripStatusLabelCreateVoxel.Text = "Массив создан. Исходные данные определены";
         }
         /// <summary>
         /// Параметры воксельной модели (количество вокселей по осям X,Y,Z)
@@ -693,7 +693,7 @@ namespace PreAddTech
             richTextBoxInfo.Text += "Время (начало создания воксельной модели): " + DateTime.Now.ToLongTimeString() + "\n";
             toolStripButtonASC.Enabled = false;
             toolStripButtonVerification.Enabled = false;
-            toolStripStatusLabel1.Text = "Воксельная модель создается... ";
+            toolStripStatusLabelCreateVoxel.Text = "Воксельная модель создается... ";
             string temptext = richTextBoxInfo.Text;
             MyProcedures proc = new MyProcedures();
             ///исходные данные
@@ -787,7 +787,7 @@ namespace PreAddTech
                                 }
                                 catch (Exception e2)
                                 {
-                                    toolStripStatusLabel1.Text = e2.Message + ". Отсутствует грань или имеются накладывающиеся, пересекающиеся грани";
+                                    toolStripStatusLabelCreateVoxel.Text = e2.Message + ". Отсутствует грань или имеются накладывающиеся, пересекающиеся грани";
                                     //MessageBox.Show(e2.Message + "\n" + MPeresZ.Count + "\n" + "Возможно модель имеет дефекты:" +
                                     //    "отсутствует треугольник или имеются накладывающиеся, пересекающиеся треугольники");
                                     return;
@@ -811,9 +811,9 @@ namespace PreAddTech
             richTextBoxInfo.Text += "Время создания: " + EndTime.ToString("###,0") + " мc. \n";
             toolStripButtonASC.Enabled = true;
             toolStripButtonVerification.Enabled = true;
-            toolStripStatusLabel1.Text = "Воксельная модель создана.";
+            toolStripStatusLabelCreateVoxel.Text = "Воксельная модель создана.";
             toolStripStatusLabelLocation.Text = "Воксельная модель создана.";
-
+            toolStripButtonSaveVoxModel.Enabled = true;
             //Создание массива моделей для размещения на рабочей платформе
             if (activeTask == ATPreparation.switchActiveTask.analizePacking)
             {
@@ -946,20 +946,20 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            toolStripStatusLabel1.Text = "Сохранение модели...";
-            saveFileDialog1.FileName = "vox_" +
+            toolStripStatusLabelCreateVoxel.Text = "Сохранение модели...";
+            saveFileDialogU.FileName = "vox_" +
                            DateTime.Now.Year.ToString() + "_" +
                            DateTime.Now.Month.ToString() + "_" +
                            DateTime.Now.Day.ToString() + "_" +
                            DateTime.Now.Hour.ToString() + "_" +
                            DateTime.Now.Minute.ToString();
-            saveFileDialog1.AddExtension = true;
-            saveFileDialog1.DefaultExt = ".asc";
-            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            saveFileDialogU.AddExtension = true;
+            saveFileDialogU.DefaultExt = ".asc";
+            if (saveFileDialogU.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 int StartTime = DateTime.Now.Hour * 3600000 + DateTime.Now.Minute * 60000 + DateTime.Now.Second * 1000 + DateTime.Now.Millisecond;
                 StreamWriter sw = new
-                    StreamWriter(saveFileDialog1.FileName, false, Encoding.Default);
+                    StreamWriter(saveFileDialogU.FileName, false, Encoding.Default);
                 sw.WriteLine("------- Next Cloud : VoxModel : PointsModel ---------- ");
                 int numTempvoxstr = 0;
                 foreach (var tempvoxstr in ListVox)
@@ -974,9 +974,9 @@ namespace PreAddTech
                 sw.Close();
                 //MessageBox.Show("Файл записан: " + saveFileDialog1.FileName);
                 int dTime = DateTime.Now.Hour * 3600000 + DateTime.Now.Minute * 60000 + DateTime.Now.Second * 1000 + DateTime.Now.Millisecond - StartTime;
-                richTextBoxInfo.Text += "Записан файл: " + saveFileDialog1.FileName + ", за " + dTime.ToString("###,0") + " мс. \n";
+                richTextBoxInfo.Text += "Записан файл: " + saveFileDialogU.FileName + ", за " + dTime.ToString("###,0") + " мс. \n";
             }
-            toolStripStatusLabel1.Text = "Модель сохранена в файл: " + saveFileDialog1.FileName;
+            toolStripStatusLabelCreateVoxel.Text = "Модель сохранена в файл: " + saveFileDialogU.FileName;
         }
         /// <summary>
         /// Проверка воксельной модели
@@ -1047,7 +1047,7 @@ namespace PreAddTech
             //
             int EndTime = DateTime.Now.Hour * 3600000 + DateTime.Now.Minute * 60000 + DateTime.Now.Second * 1000 + DateTime.Now.Millisecond - StartTime;
             richTextBoxInfo.Text += "Время проверки: " + EndTime.ToString("###,0") + " мc. \n";
-            toolStripStatusLabel1.Text = "Выполнена проверка модели. ";
+            toolStripStatusLabelCreateVoxel.Text = "Выполнена проверка модели. ";
         }
         /// <summary>
         /// Статистические характеристики (результаты анализа)
@@ -1055,16 +1055,21 @@ namespace PreAddTech
         public float[] resultStat_X = new float[13];
         public float[] resultStat_Y = new float[13];
         public float[] resultStat_Z = new float[13];
+        public float[] resultStat3D = new float[13];
+
         List<Stat_analysis.elementGist> gistX = new List<Stat_analysis.elementGist>();
         List<Stat_analysis.elementGist> gistY = new List<Stat_analysis.elementGist>();
         List<Stat_analysis.elementGist> gistZ = new List<Stat_analysis.elementGist>();
+        List<Stat_analysis.elementGist> gist3D = new List<Stat_analysis.elementGist>();
         //
         public float[] resultStat_XEmpty = new float[13];
         public float[] resultStat_YEmpty = new float[13];
         public float[] resultStat_ZEmpty = new float[13];
+        public float[] resultStat3DEmpty = new float[13];
         List<Stat_analysis.elementGist> gistXEmpty = new List<Stat_analysis.elementGist>();
         List<Stat_analysis.elementGist> gistYEmpty = new List<Stat_analysis.elementGist>();
         List<Stat_analysis.elementGist> gistZEmpty = new List<Stat_analysis.elementGist>();
+        List<Stat_analysis.elementGist> gist3DEmpty = new List<Stat_analysis.elementGist>();
         //
         public float[] resultStat_XSum = new float[13];
         public float[] resultStat_YSum = new float[13];
@@ -1072,6 +1077,9 @@ namespace PreAddTech
         List<Stat_analysis.elementGist> gistXSum = new List<Stat_analysis.elementGist>();
         List<Stat_analysis.elementGist> gistYSum = new List<Stat_analysis.elementGist>();
         List<Stat_analysis.elementGist> gistZSum = new List<Stat_analysis.elementGist>();
+        //Массивы для анализа объемного распределения
+        float[,,] distributionXYZ;
+        float[,,] distributionXYZEmpty;
 
         /// <summary>
         /// Статистический анализ воксельной модели
@@ -1089,19 +1097,23 @@ namespace PreAddTech
             Stat_analysis statisticaX = new Stat_analysis();
             Stat_analysis statisticaY = new Stat_analysis();
             Stat_analysis statisticaZ = new Stat_analysis();
+            Stat_analysis statistica3D = new Stat_analysis();
             //
             List<float> tempMassiveVoxelX = new List<float>();
             List<float> tempMassiveVoxelY = new List<float>();
             List<float> tempMassiveVoxelZ = new List<float>();
+            List<float> tempMassiveVoxel3D = new List<float>();
             //Пустые воксели
             Stat_analysis statisticaXEmpty = new Stat_analysis();
             Stat_analysis statisticaYEmpty = new Stat_analysis();
             Stat_analysis statisticaZEmpty = new Stat_analysis();
+            Stat_analysis statistica3DEmpty = new Stat_analysis();
             //
             List<float> tempMassiveVoxelXEmpty = new List<float>();
             List<float> tempMassiveVoxelYEmpty = new List<float>();
             List<float> tempMassiveVoxelZEmpty = new List<float>();
-            //Решение проблемы гистограмм с относителным содержанием вокселей для матеньких деталей
+            List<float> tempMassiveVoxel3DEmpty = new List<float>();
+            //Решение проблемы гистограмм с относителным содержанием вокселей для маленьких деталей
             Stat_analysis statisticaXSum = new Stat_analysis();
             Stat_analysis statisticaYSum = new Stat_analysis();
             Stat_analysis statisticaZSum = new Stat_analysis();
@@ -1128,7 +1140,6 @@ namespace PreAddTech
                 tempMassiveVoxelYSum.Add(ListVox[i].Yv);
                 tempMassiveVoxelZSum.Add(ListVox[i].Zv);
             }
-
             //
             // 1. Распределение вокселей модели
             if (toolStripComboBoxShowAnalysis.SelectedIndex == 0)
@@ -1154,6 +1165,15 @@ namespace PreAddTech
                 gistZ = statisticaZEmpty.Gist(tempMassiveVoxelZEmpty.ToArray(), (int)numericUpDownNumIntZ.Value);
                 resultStat_Z = statisticaZEmpty.Stat(tempMassiveVoxelZEmpty.ToArray(), gistZ);
             }
+            //Анализ распределения вокселей моделей по отдельным объемам рабочего пространства
+            distributionXYZ = new float[(int)numericUpDownNumIntX.Value, 
+                                        (int)numericUpDownNumIntY.Value, 
+                                        (int)numericUpDownNumIntZ.Value];
+
+            distributionXYZEmpty = new float[(int)numericUpDownNumIntX.Value,
+                                        (int)numericUpDownNumIntY.Value,
+                                        (int)numericUpDownNumIntZ.Value];
+
             //
             gistXSum = statisticaXSum.Gist(tempMassiveVoxelXSum.ToArray(), (int)numericUpDownNumIntX.Value);
             resultStat_XSum = statisticaXSum.Stat(tempMassiveVoxelXSum.ToArray(), gistXSum);
@@ -1162,7 +1182,56 @@ namespace PreAddTech
             resultStat_YSum = statisticaYSum.Stat(tempMassiveVoxelYSum.ToArray(), gistYSum);
             //
             gistZSum = statisticaZSum.Gist(tempMassiveVoxelZSum.ToArray(), (int)numericUpDownNumIntZ.Value);
-            resultStat_ZSum = statisticaZSum.Stat(tempMassiveVoxelZSum.ToArray(), gistZSum);
+            resultStat_ZSum = statisticaZSum.Stat(tempMassiveVoxelZSum.ToArray(), gistZSum);            
+            
+            //Интервал по координате X,Y,Z
+            int intX, intY, intZ;
+            //
+            foreach (var item in ListVox)
+            {
+                    intX = ((int)Math.Floor((item.Xv - resultStat_XSum[0]) /
+                           (resultStat_XSum[2] / (int)numericUpDownNumIntX.Value)) == (int)numericUpDownNumIntX.Value) ?
+                           (int)numericUpDownNumIntX.Value - 1 :
+                           (int)Math.Floor((item.Xv - resultStat_XSum[0]) /
+                           (resultStat_XSum[2] / (int)numericUpDownNumIntX.Value));
+                    //
+                    intY = ((int)Math.Floor((item.Yv - resultStat_YSum[0]) /
+                           (resultStat_YSum[2] / (int)numericUpDownNumIntY.Value)) == (int)numericUpDownNumIntY.Value) ?
+                           (int)numericUpDownNumIntY.Value - 1 :
+                           (int)Math.Floor((item.Yv - resultStat_YSum[0]) /
+                           (resultStat_YSum[2] / (int)numericUpDownNumIntY.Value));
+                    //
+                    intZ = ((int)Math.Floor((item.Zv - resultStat_ZSum[0]) /
+                           (resultStat_ZSum[2] / (int)numericUpDownNumIntZ.Value)) == (int)numericUpDownNumIntZ.Value) ?
+                           (int)numericUpDownNumIntZ.Value - 1 :
+                           (int)Math.Floor((item.Zv - resultStat_ZSum[0]) /
+                           (resultStat_ZSum[2] / (int)numericUpDownNumIntZ.Value));
+                    //                
+                if (item.Lfull)
+                { distributionXYZ[intX, intY, intZ]++; }
+                else 
+                { distributionXYZEmpty[intX, intY, intZ]++; }
+            }
+            //Статистический анализ пространственного распределения
+            for (int i = 0; i < (int)numericUpDownNumIntX.Value; i++)
+            {
+                for (int j = 0; j < (int)numericUpDownNumIntY.Value; j++)
+                {
+                    for (int k = 0; k < (int)numericUpDownNumIntZ.Value; k++)
+                    {
+                        tempMassiveVoxel3D.Add(distributionXYZ[i, j, k]);
+                        tempMassiveVoxel3DEmpty.Add(distributionXYZEmpty[i, j, k]);
+                    }
+                }
+            }
+            gist3D = statistica3D.Gist(tempMassiveVoxel3D.ToArray(), (int)numericUpDownNumIntX.Value *
+                                           (int)numericUpDownNumIntY.Value * (int)numericUpDownNumIntZ.Value);
+            resultStat3D = statistica3D.Stat(tempMassiveVoxel3D.ToArray(), gist3D);
+            //
+            gist3DEmpty = statistica3DEmpty.Gist(tempMassiveVoxel3DEmpty.ToArray(), (int)numericUpDownNumIntX.Value *
+                               (int)numericUpDownNumIntY.Value * (int)numericUpDownNumIntZ.Value);
+            resultStat3DEmpty = statistica3DEmpty.Stat(tempMassiveVoxel3DEmpty.ToArray(), gist3D);
+
             ///
             toolStripComboBoxShowAnalysis.Enabled = true;
             toolStripButtonShowStatisticalDataX.Enabled = true;
@@ -2729,16 +2798,8 @@ namespace PreAddTech
         }
         private void numericUpDownG1_ValueChanged(object sender, EventArgs e)
         {
-            labelRGB1.BackColor = Color.FromArgb((int)numericUpDownR1.Value,
+            cproc.changeColorLabel(labelRGB1, (int)numericUpDownR1.Value,
                                   (int)numericUpDownG1.Value, (int)numericUpDownB1.Value);
-            if (numericUpDownR1.Value < 64 || numericUpDownG1.Value < 64 || numericUpDownB1.Value < 64)
-            {
-                labelRGB1.ForeColor = Color.White;
-            }
-            else if (numericUpDownR1.Value < 128 || numericUpDownG1.Value < 128 || numericUpDownB1.Value < 128)
-            { labelRGB1.ForeColor = Color.Yellow; }
-            else
-            { labelRGB1.ForeColor = Color.Black; }
         }
         /// <summary>
         /// Задание первого цвета (MouseDoubleClick)
@@ -2747,21 +2808,8 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void labelRGB1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (colorDialogSelect.ShowDialog() == DialogResult.OK)
-            {
-                labelRGB1.BackColor = colorDialogSelect.Color;
-                numericUpDownR1.Value = colorDialogSelect.Color.R;
-                numericUpDownG1.Value = colorDialogSelect.Color.G;
-                numericUpDownB1.Value = colorDialogSelect.Color.B;
-            }
-            if (colorDialogSelect.Color.R < 40 || colorDialogSelect.Color.G < 40 || colorDialogSelect.Color.B < 40)
-            {
-                labelRGB1.ForeColor = Color.White;
-            }
-            else if (colorDialogSelect.Color.R < 128 || colorDialogSelect.Color.G < 128 || colorDialogSelect.Color.B < 128)
-            { labelRGB1.ForeColor = Color.Yellow; }
-            else
-            { labelRGB1.ForeColor = Color.Black; }
+            cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDownR1,
+                              numericUpDownG1, numericUpDownB1);
         }
         /// <summary>
         /// Задание второго цвета (MouseDoubleClick)
@@ -2770,35 +2818,14 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void labelRGB2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (colorDialogSelect.ShowDialog() == DialogResult.OK)
-            {
-                labelRGB2.BackColor = colorDialogSelect.Color;
-                numericUpDownR2.Value = colorDialogSelect.Color.R;
-                numericUpDownG2.Value = colorDialogSelect.Color.G;
-                numericUpDownB2.Value = colorDialogSelect.Color.B;
-            }
-            if (colorDialogSelect.Color.R < 40 || colorDialogSelect.Color.G < 40 || colorDialogSelect.Color.B < 40)
-            {
-                labelRGB2.ForeColor = Color.White;
-            }
-            else if (colorDialogSelect.Color.R < 128 || colorDialogSelect.Color.G < 128 || colorDialogSelect.Color.B < 128)
-            { labelRGB2.ForeColor = Color.Yellow; }
-            else
-            { labelRGB2.ForeColor = Color.Black; }
+            cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDownR2,
+                              numericUpDownG2, numericUpDownB2);
         }
 
         private void numericUpDownR2_ValueChanged(object sender, EventArgs e)
         {
-            labelRGB2.BackColor = Color.FromArgb((int)numericUpDownR2.Value,
-                      (int)numericUpDownG2.Value, (int)numericUpDownB2.Value);
-            if (numericUpDownR2.Value < 64 || numericUpDownG2.Value < 64 || numericUpDownB2.Value < 64)
-            {
-                labelRGB2.ForeColor = Color.White;
-            }
-            else if (numericUpDownR2.Value < 128 || numericUpDownG2.Value < 128 || numericUpDownB2.Value < 128)
-            { labelRGB2.ForeColor = Color.Yellow; }
-            else
-            { labelRGB2.ForeColor = Color.Black; }
+            cproc.changeColorLabel(labelRGB2, (int)numericUpDownR2.Value,
+                                  (int)numericUpDownG2.Value, (int)numericUpDownB2.Value);
         }
         /// <summary>
         /// Обновление формы
@@ -2886,23 +2913,23 @@ namespace PreAddTech
             EndTime = DateTime.Now;
             //Запись файла
             toolStripStatusLabelColorVisual.Text = "Сохранение модели...";
-            saveFileDialog1.FileName = "Anal_" +
+            saveFileDialogU.FileName = "Anal_" +
                            DateTime.Now.Year.ToString() + "_" +
                            DateTime.Now.Month.ToString() + "_" +
                            DateTime.Now.Day.ToString() + "_" +
                            DateTime.Now.Hour.ToString() + "_" +
                            DateTime.Now.Minute.ToString();
-            saveFileDialog1.AddExtension = true;
+            saveFileDialogU.AddExtension = true;
             if (toolStripComboBoxSelestFormatFile.SelectedIndex == 1) //PLY формат
             { 
 
-            saveFileDialog1.DefaultExt = ".ply";
+            saveFileDialogU.DefaultExt = ".ply";
 
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                if (saveFileDialogU.ShowDialog() == DialogResult.OK)
                 {
                     
                     StreamWriter sw = new
-                        StreamWriter(saveFileDialog1.FileName, false, Encoding.Default);
+                        StreamWriter(saveFileDialogU.FileName, false, Encoding.Default);
                     sw.WriteLine("ply");
                     sw.WriteLine("format ascii 1.0");
                     sw.WriteLine("comment Color analysis: PLY; " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
@@ -2963,7 +2990,7 @@ namespace PreAddTech
                     //NameFile
                     dataGridViewVariantsVisualization[dataGridViewVariantsVisualization.Columns
                         ["NameFile"].Index, (dataGridViewVariantsVisualization.Rows.Count - 1)].Value =
-                                 saveFileDialog1.FileName;
+                                 saveFileDialogU.FileName;
                     //ButtonOpenFile
                     dataGridViewVariantsVisualization[dataGridViewVariantsVisualization.Columns
                         ["ButtonOpenFile"].Index, (dataGridViewVariantsVisualization.Rows.Count - 1)].Value =
@@ -2971,7 +2998,7 @@ namespace PreAddTech
                     try
                     {
                         frmMain.richTextBoxHistory.Text += "Сохранена цветовая модель для анализа: \n";
-                        frmMain.richTextBoxHistory.Text += saveFileDialog1.FileName + " \n";
+                        frmMain.richTextBoxHistory.Text += saveFileDialogU.FileName + " \n";
                         
                         toolStripStatusLabelColorVisual.Text = "Файл сохранен за " +
                                        (EndTime - StartTime).Minutes + " мин " +
@@ -2987,12 +3014,12 @@ namespace PreAddTech
             else if (toolStripComboBoxSelestFormatFile.SelectedIndex == 0) //AMF формат
             {
 
-                saveFileDialog1.DefaultExt = ".amf";
+                saveFileDialogU.DefaultExt = ".amf";
 
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                if (saveFileDialogU.ShowDialog() == DialogResult.OK)
                 {
                     
-                    XmlTextWriter AMFWritter = new XmlTextWriter(saveFileDialog1.FileName, Encoding.UTF8);
+                    XmlTextWriter AMFWritter = new XmlTextWriter(saveFileDialogU.FileName, Encoding.UTF8);
                     AMFWritter.WriteStartDocument();
 
                     //amf
@@ -3001,7 +3028,7 @@ namespace PreAddTech
                     AMFWritter.WriteEndElement();
                     AMFWritter.Close();
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(saveFileDialog1.FileName);
+                    xDoc.Load(saveFileDialogU.FileName);
                     /*
                     //constellation
                     XmlNode constellation = xDoc.CreateElement("constellation");
@@ -3151,7 +3178,7 @@ namespace PreAddTech
                             triangle.AppendChild(v3); // кому принадлежит
                         }
                     }
-                    xDoc.Save(saveFileDialog1.FileName);
+                    xDoc.Save(saveFileDialogU.FileName);
 
                     toolStripStatusLabelColorVisual.Text = "Модель сохранена за " +
                                                            (EndTime - StartTime).Minutes + " мин " +
@@ -3162,7 +3189,7 @@ namespace PreAddTech
                     //NameFile
                     dataGridViewVariantsVisualization[dataGridViewVariantsVisualization.Columns
                         ["NameFile"].Index, (dataGridViewVariantsVisualization.Rows.Count - 1)].Value =
-                                 saveFileDialog1.FileName;
+                                 saveFileDialogU.FileName;
                     //ButtonOpenFile
                     dataGridViewVariantsVisualization[dataGridViewVariantsVisualization.Columns
                         ["ButtonOpenFile"].Index, (dataGridViewVariantsVisualization.Rows.Count - 1)].Value =
@@ -3170,7 +3197,7 @@ namespace PreAddTech
                     try
                     {
                         frmMain.richTextBoxHistory.Text += "Создана и сохранена модель для цветового анализа: \n";
-                        frmMain.richTextBoxHistory.Text += saveFileDialog1.FileName + " \n";
+                        frmMain.richTextBoxHistory.Text += saveFileDialogU.FileName + " \n";
                     }
                     catch (Exception e9)
                     {
@@ -3180,11 +3207,11 @@ namespace PreAddTech
             }
             else if (toolStripComboBoxSelestFormatFile.SelectedIndex == 2) //XLS формат
             {
-                saveFileDialog1.DefaultExt = ".xls";
+                saveFileDialogU.DefaultExt = ".xls";
 
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                if (saveFileDialogU.ShowDialog() == DialogResult.OK)
                 {
-                    string fileName = saveFileDialog1.FileName;
+                    string fileName = saveFileDialogU.FileName;
                     try
                     {
                         MSExel.Application ExcelApp = new MSExel.Application();
@@ -3304,12 +3331,104 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            foreach (var TempSTL in ListStl)
+            MyProcedures proc = new MyProcedures();
+            toolStripStatusLabelCreateVoxel.Text = "Сохранение модели...";
+            Application.DoEvents();
+            saveFileDialogU.FileName = "vox_" +
+                           DateTime.Now.Year.ToString() + "_" +
+                           DateTime.Now.Month.ToString() + "_" +
+                           DateTime.Now.Day.ToString() + "_" +
+                           DateTime.Now.Hour.ToString() + "_" +
+                           DateTime.Now.Minute.ToString();
+            saveFileDialogU.AddExtension = true;
+            saveFileDialogU.DefaultExt = ".vox";
+            if (saveFileDialogU.ShowDialog() == DialogResult.OK && ListVox.Count != 0)
             {
+                var StartTime = DateTime.Now;
 
+                try
+                {
+                    XmlTextWriter textWritter = new XmlTextWriter(saveFileDialogU.FileName, Encoding.UTF8);
+                    textWritter.WriteStartDocument();
+                    //Тело (Variants):
+                    textWritter.WriteStartElement("VoxelModel");
+                    textWritter.WriteEndElement();
+                    textWritter.Close();
+                    XmlDocument xDoc = new XmlDocument();
+                    xDoc.Load(saveFileDialogU.FileName);
+                    
+                    //richTextBoxInfo
+                    XmlNode element0 = xDoc.CreateElement("richTextBoxInfo");
+                    element0.InnerText = @toolStripTextBoxFileName.Text;
+                    xDoc.DocumentElement.AppendChild(element0);
+                    //
+                    //Количество вокселей
+                    XmlNode elementCount = xDoc.CreateElement("CountVoxels");
+                    elementCount.InnerText = ListVox.Count.ToString();
+                    xDoc.DocumentElement.AppendChild(elementCount);
+                    //
+                    object[] massiveObjectsNumeric = new object[3] { numericUpDownVoxX, numericUpDownVoxY, numericUpDownVoxZ };
+                    object[] massiveObjects = new object[23] {textBoxMinX, textBoxMinY, textBoxMinZ,
+                                                              textBoxMaxX, textBoxMaxY, textBoxMaxZ,
+                                                              textBoxSizeX, textBoxSizeY, textBoxSizeZ,
+                                                              textBoxTotalVox,
+                                                              textBoxVoxMinX, textBoxVoxMinY, textBoxVoxMinZ,
+                                                              textBoxVoxMaxX, textBoxVoxMaxY, textBoxVoxMaxZ,
+                                                              textBoxVoxSizeX, textBoxVoxSizeY, textBoxVoxSizeZ,
+                                                              textBoxErrorX, textBoxErrorY, textBoxErrorZ,
+                                                              textBoxTotalVoxRez };
+                    for (int i = 0; i < massiveObjectsNumeric.Length; i++)
+                    {
+                        XmlNode element = xDoc.CreateElement(((NumericUpDown)massiveObjectsNumeric[i]).Name);
+                        element.InnerText = ((NumericUpDown)massiveObjectsNumeric[i]).Value.ToString();
+                        xDoc.DocumentElement.AppendChild(element);
+                    }
+                    for (int i = 0; i < massiveObjects.Length; i++)
+                    {
+                        XmlNode element = xDoc.CreateElement(((TextBox)massiveObjects[i]).Name);
+                        element.InnerText = ((TextBox)massiveObjects[i]).Text;
+                        xDoc.DocumentElement.AppendChild(element);
+                    }
+
+                    XmlNode elementVoxels = xDoc.CreateElement("Voxels");
+                    xDoc.DocumentElement.AppendChild(elementVoxels);
+                    int numTempvoxstr = 0;
+                    foreach (var item in ListVox)
+                    {
+                        XmlNode elementVox = xDoc.CreateElement("Voxel");
+                        // Nom; Xv; Yv; Zv; Lv; Lfull; NomModel; SizeX; SizeY; SizeZ
+                        elementVox.InnerText = item.Nom.ToString() + ";" +
+                                               item.Xv.ToString() + ";" +
+                                               item.Yv.ToString() + ";" +
+                                               item.Zv.ToString() + ";" +
+                                               item.Lv.ToString() + ";" +
+                                               item.Lfull.ToString() + ";" +
+                                               item.NomModel.ToString() + ";" +
+                                               item.SizeX.ToString() + ";" +
+                                               item.SizeY.ToString() + ";" +
+                                               item.SizeZ.ToString();
+                        elementVoxels.AppendChild(elementVox);
+                        proc.ProgressBarRefresh(toolStripProgressBarCreateVoxel, numTempvoxstr++, ListVox.Count);
+                    }
+                    xDoc.Save(saveFileDialogU.FileName);
+                }
+                catch (Exception e7)
+                {
+                    MessageBox.Show("Не записана БД! \n" + e7.Message, "Проблема!");
+                }
+
+                var dTime = DateTime.Now - StartTime;
+                richTextBoxInfo.Text += "Записан файл: " + saveFileDialogU.FileName + ", за " + dTime.TotalSeconds.ToString("###,0") + " с. \n";
             }
-            richTextBoxInfo.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
-            richTextBoxInfo.Text += "Сохранены данные списка ListStl в файл" + "\n";
+            toolStripStatusLabelCreateVoxel.Text = "Модель сохранена в файл: " + saveFileDialogU.FileName;
+            try
+            {
+                frmMain.richTextBoxHistory.Text += "Воксельная модель сохранена в файл: " + saveFileDialogU.FileName + " \n";
+            }
+            catch (Exception e9)
+            {
+                MessageBox.Show(e9.Message);
+            }
         }
         /// <summary>
         /// Вызов гистограммы и просмотра модели
@@ -3568,9 +3687,14 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void toolStripButtonCalculateOrientation_Click(object sender, EventArgs e)
         {
+            //Message
+            toolStripStatusLabelInphoOrientation.Text = "Выполняется расчет...";
+            toolStripStatusLabelInphoOrientation.ForeColor = Color.Black;
+            Application.DoEvents();
+            //
             MyProcedures proc = new MyProcedures();
             float[] resultStatParOrientation = new float[13];
-        DateTime StartTime = DateTime.Now;
+            DateTime StartTime = DateTime.Now;
             ///
             if (ListStl.Count == 0)
             {
@@ -3624,14 +3748,17 @@ namespace PreAddTech
             {
                 MessageBox.Show(e8.Message);
             }
-            int numVariants = (int)((360 * 360) /
+            int numVariants = (int)((180 * 180) /
                               (float.Parse(toolStripComboBoxDX.Text) * float.Parse(toolStripComboBoxDY.Text)));
-            int numVariantsX = (int)(360 / float.Parse(toolStripComboBoxDX.Text));
-            int numVariantsY = (int)(360 / float.Parse(toolStripComboBoxDY.Text));
+            int numVariantsX = (int)(180 / float.Parse(toolStripComboBoxDX.Text));
+            int numVariantsY = (int)(180 / float.Parse(toolStripComboBoxDY.Text));
             //
             
             gistParMassiveOrientation.Clear();
             gistParMassiveOrientationDensity.Clear();
+
+            try
+            {
             float[] tempMassiveParNormals = new float[ListStlNormal.Count];
             float[] tempMassiveParNormalsZ = new float[uniqueVox.Count()];
             float[] tempMassiveParNormalsS = new float[ListStlNormal.Count];
@@ -3656,6 +3783,7 @@ namespace PreAddTech
                     int p = 0;
                     foreach (var item in uniqueVox)
                     {
+                        
                         tempMassiveParNormalsZ[p++] = proc.turnXY(item.ToArray()[0].X, item.ToArray()[0].Y, item.ToArray()[0].Z,
                                                    i * float.Parse(toolStripComboBoxDX.Text),
                                                    j * float.Parse(toolStripComboBoxDY.Text))[2];
@@ -3718,13 +3846,21 @@ namespace PreAddTech
                                                    (DateTime.Now - StartTime).Minutes + " мин. " +
                                                    (DateTime.Now - StartTime).Seconds + " с. " +
                                                    (DateTime.Now - StartTime).Milliseconds + " мс.";
+            }
+            catch (Exception e9)
+            {
+                MessageBox.Show("Проверьте исходные данные или выполните анализ триангуляционной модели. \n" + e9.Message, "Проблема!");
+                toolStripStatusLabelInphoOrientation.Text = "Анализ не выполнен.";
+                toolStripStatusLabelInphoOrientation.ForeColor = Color.Red;
+                toolStripButtonColorAnalysis.Enabled = false;
+            }
         }
 
         private void toolStripComboBoxDX_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                toolStripTextBoxVarCount.Text = ((360*360) / 
+                toolStripTextBoxVarCount.Text = ((180*180) / 
                     (float.Parse(toolStripComboBoxDX.Text) * float.Parse(toolStripComboBoxDY.Text))).ToString() + 
                     " вариантов";
             }
@@ -3840,14 +3976,14 @@ namespace PreAddTech
                 float turnY = (float)dataGridViewOrientation
                          [dataGridViewOrientation.Columns["YOrient"].Index, e.RowIndex].Value;
 
-                saveFileDialog1.FileName = "Model_Or_X" + turnX.ToString() + "Y" + turnY.ToString();
-                saveFileDialog1.AddExtension = true;
-                saveFileDialog1.DefaultExt = ".stl";
+                saveFileDialogU.FileName = "Model_Or_X" + turnX.ToString() + "Y" + turnY.ToString();
+                saveFileDialogU.AddExtension = true;
+                saveFileDialogU.DefaultExt = ".stl";
 
-                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                    if (saveFileDialogU.ShowDialog() == DialogResult.OK)
                     {
                         StreamWriter sw = new
-                            StreamWriter(saveFileDialog1.FileName, false, Encoding.Default);
+                            StreamWriter(saveFileDialogU.FileName, false, Encoding.Default);
                         sw.WriteLine("solid " + DateTime.Now.ToShortDateString() + " " 
                                                       + DateTime.Now.ToShortTimeString());
                     //Начало процедуры
@@ -3890,13 +4026,13 @@ namespace PreAddTech
                     dataGridViewOrientation.Rows[e.RowIndex].DefaultCellStyle.Font = new Font(this.Font, FontStyle.Bold);
 
                         toolStripStatusLabelInphoOrientation.Text = "Сохранен файл: " +
-                                                                    saveFileDialog1.FileName + ", за "
+                                                                    saveFileDialogU.FileName + ", за "
                                                                    + dTime.Seconds + "с "
                                                                    + dTime.Milliseconds + "мс";
                         try
                         {
                             frmMain.richTextBoxHistory.Text += "Сохранена модель (STL-файл): \n";
-                            frmMain.richTextBoxHistory.Text += saveFileDialog1.FileName + " \n";
+                            frmMain.richTextBoxHistory.Text += saveFileDialogU.FileName + " \n";
                         }
                         catch (Exception e8)
                         {
@@ -3966,71 +4102,28 @@ namespace PreAddTech
                                 "Данные таблицы помещены в буфер обмена. \n\n" + err.Message);
             }
         }
+        //процедуры цвета
+        ColorProcedures cproc = new ColorProcedures();
 
         private void numericUpDown1varR_ValueChanged(object sender, EventArgs e)
         {
-            if (checkBox1var.CheckState == CheckState.Checked)
-            {
-                label1var.BackColor = Color.FromArgb((int)numericUpDown1varR.Value,
-                                      (int)numericUpDown1varG.Value, (int)numericUpDown1varB.Value);
-                if (numericUpDown1varR.Value < 64 || numericUpDown1varG.Value < 64 || numericUpDown1varB.Value < 64)
-                {
-                    label1var.ForeColor = Color.White;
-                }
-                else if (numericUpDown1varR.Value < 128 || numericUpDown1varG.Value < 128 || numericUpDown1varB.Value < 128)
-                { label1var.ForeColor = Color.Yellow; }
-                else
-                { label1var.ForeColor = Color.Black; }
-            }
-            else
-            {
-                label1var.BackColor = Color.Transparent;
-                label1var.ForeColor = Color.Black;
-            }
+            cproc.changeColorLabel(label1var, (int)numericUpDown1varR.Value,
+                                      (int)numericUpDown1varG.Value, (int)numericUpDown1varB.Value,
+                                      (checkBox1var.CheckState == CheckState.Checked));
         }
 
         private void numericUpDown2varR_ValueChanged(object sender, EventArgs e)
         {
-            if (checkBox2var.CheckState == CheckState.Checked)
-            {
-                label2var.BackColor = Color.FromArgb((int)numericUpDown2varR.Value,
-                                  (int)numericUpDown2varG.Value, (int)numericUpDown2varB.Value);
-                if (numericUpDown2varR.Value < 64 || numericUpDown2varG.Value < 64 || numericUpDown2varB.Value < 64)
-                {
-                    label2var.ForeColor = Color.White;
-                }
-                else if (numericUpDown2varR.Value < 128 || numericUpDown2varG.Value < 128 || numericUpDown2varB.Value < 128)
-                { label2var.ForeColor = Color.Yellow; }
-                else
-                { label2var.ForeColor = Color.Black; }
-            }
-            else
-            {
-                label2var.BackColor = Color.Transparent;
-                label2var.ForeColor = Color.Black;
-            }
+            cproc.changeColorLabel(label2var, (int)numericUpDown2varR.Value,
+                                      (int)numericUpDown2varG.Value, (int)numericUpDown2varB.Value,
+                                      (checkBox2var.CheckState == CheckState.Checked));
         }
 
         private void numericUpDown3varR_ValueChanged(object sender, EventArgs e)
         {
-            if (checkBox3var.CheckState == CheckState.Checked)
-            {
-                label3var.BackColor = Color.FromArgb((int)numericUpDown3varR.Value,
-                                  (int)numericUpDown3varG.Value, (int)numericUpDown3varB.Value);
-                if (numericUpDown3varR.Value < 64 || numericUpDown3varG.Value < 64 || numericUpDown3varB.Value < 64)
-                {
-                    label3var.ForeColor = Color.White;
-                }
-                else if (numericUpDown3varR.Value < 128 || numericUpDown3varG.Value < 128 || numericUpDown3varB.Value < 128)
-                { label3var.ForeColor = Color.Yellow; }
-                else
-                { label3var.ForeColor = Color.Black; }
-            }
-            else
-            {
-                label3var.BackColor = Color.Transparent;
-                label3var.ForeColor = Color.Black;
-            }
+            cproc.changeColorLabel(label3var, (int)numericUpDown3varR.Value,
+                                      (int)numericUpDown3varG.Value, (int)numericUpDown3varB.Value,
+                                      (checkBox3var.CheckState == CheckState.Checked));
         }
 
         private void numericUpDownIntOrientation_ValueChanged(object sender, EventArgs e)
@@ -4214,39 +4307,6 @@ namespace PreAddTech
             }
         }
         /// <summary>
-        /// Анализ триангуляционной модели
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void toolStripButton3_Click_1(object sender, EventArgs e)
-        {
-            //площадь и объем триангуляционной модели
-            double Sstl = 0;
-            float Vstl = 0;
-            //Сумма произведений объема и координат центра тяжести треугольника
-            float VXc = 0;
-            float VYc = 0;
-            float VZc = 0;
-            foreach (var tempstl in ListStl)
-            {
-                Sstl += tempstl.CalcSTr()[3];
-                var temp = tempstl.CenterOfGravity();
-                VXc += temp[0] * temp[3];
-                VYc += temp[1] * temp[3];
-                VZc += temp[2] * temp[3];
-                Vstl += temp[3];
-            }
-            richTextBoxResultAnalysis.Text +=  "Анализ выполнен: " + DateTime.Now.ToShortDateString() + "; " + DateTime.Now.ToShortTimeString() + "\n";
-            richTextBoxResultAnalysis.Text += "Модель изделия: " + toolStripTextBoxFileName.Text + "\n";
-            richTextBoxResultAnalysis.Text += "Площадь триангуляционной модели: " + Sstl.ToString("N3") + " mm2 \n";
-            richTextBoxResultAnalysis.Text += "Объем триангуляционной модели: " + Vstl.ToString("N3") + " mm3 \n";
-            richTextBoxResultAnalysis.Text += "Координаты центра тяжести триангуляционной модели: \n" + 
-                                              "Xc = "+ (VXc / Vstl).ToString("N3") + " mm \n" +
-                                              "Yc = " + (VYc / Vstl).ToString("N3") + " mm \n" +
-                                              "Zc = " + (VZc / Vstl).ToString("N3") + " mm \n\n";
-            
-        }
-        /// <summary>
         /// Вызов формы для задания зависимости угла наклона грани от исследуемого признака
         /// </summary>
         /// <param name="sender"></param>
@@ -4299,6 +4359,10 @@ namespace PreAddTech
             { return; }
             base_model currentModel = massiveListModels[toolStripComboBoxListModels.SelectedIndex];
             List<base_vox> currentVoxels = new List<base_vox>();
+            
+            //Реализация генетического алгоритма
+            GA geneticAlgorithm = new GA();
+
             float[] sizesPlant = new float[3]
             { PlantSettings.workHeight, PlantSettings.workLength, PlantSettings.workWidth};
             //Условия размещения модели в рабочем пространстве установки
@@ -4586,21 +4650,16 @@ namespace PreAddTech
         /// </summary>
         float[] limits = new float[6];
 
-        /// <summary>
-        /// Статистические характеристики (результаты анализа по слоям)
-        /// </summary>
-        public float[] resultStatParLayer = new float[13];
-        public float[] resultStatParLayerA = new float[13];
-        /// <summary>
-        /// Данные гистограммы по анализу слоев
-        /// </summary>
-        List<Stat_analysis.elementGist> gistParLayer = new List<Stat_analysis.elementGist>();
-        List<Stat_analysis.elementGist> gistParLayerA = new List<Stat_analysis.elementGist>();
         List<object> gistParMassiveLayer = new List<object>();
         List<object> gistParMassiveLayerA = new List<object>();
-        List<object> ParMassiveLayer = new List<object>();
-        List<object> ParMassiveLayerA = new List<object>();
-        
+
+        List<List<float>> ParMassiveLayer = new List<List<float>>();
+        List<List<float>> ParMassiveLayerA = new List<List<float>>();
+        /// <summary>
+        /// Список данных для расчета смещения ц.т. сечения от центра модели
+        /// </summary>
+        List<float[]> ShXYCentre = new List<float[]>();
+
         /// <summary>
         /// Формирование слоев послойного построения
         /// </summary>
@@ -4615,6 +4674,10 @@ namespace PreAddTech
             }
             gistParMassiveLayer.Clear();
             ParMassiveLayer.Clear();
+            gistParMassiveLayerA.Clear();
+            ParMassiveLayerA.Clear();
+            ShXYCentre.Clear();
+            
             MyProcedures proc = new MyProcedures();
             //Определение мин. и макс. координат вершин по оси Z
             limits = proc.limitModel(ListStl);
@@ -4623,7 +4686,6 @@ namespace PreAddTech
             float maxZ = limits[1];
             float[] tempZ = new float[3];
             float[] coordinateSectionZ;
-
             //Шаг построения
             float stepConst;
             //Выбрана стратегия с постоянным шагом построения
@@ -4636,27 +4698,27 @@ namespace PreAddTech
                     dataGridViewSetLayer.Rows.Clear();
 
                 //Заполнение таблицы
-                string[] strEmpty = new string[30];
-                //Массив для анализа смещения центра тяжести
-                float[,] SXYCentre = new float[coordinateSectionZ.Length, 3]; 
+                string[] strEmpty = new string[29];
 
                 for (int i = 0; i < coordinateSectionZ.Length; i++)
                 {
                     coordinateSectionZ[i] = (float)Math.Round(minZ + i*stepConst, 3);
-                    proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Length);
+                    proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Length - 1);
+
                     //Добавление в dataGridViewSetLayer
                     dataGridViewSetLayer.Rows.Add(
                                 i+1,
                                 stepConst,
                                 coordinateSectionZ[i],
+                                "",
+                                "",
                                 strEmpty
                                 );
                 }
             }
             else
             {
-                MessageBox.Show("Не выбрана стратегия или не задана корректная величина шага построения."
-                    , "Ошибка!");
+                MessageBox.Show("Выбранная стратегия недоработана", "Ошибка!");
                 return;
             }
             listContour.Clear();
@@ -4664,11 +4726,12 @@ namespace PreAddTech
             float Perimeter;
             //Площадь
             float Section;
-
+            //Барицентр
+            PointF barCenter;
             //Рассечение 3D-модели плоскостями
             for (int i = 0; i < coordinateSectionZ.Length; i++)
             {
-                proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Length);
+                proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Length - 1);
                 Perimeter = 0;
                 Section = 0;
                 base_curveContourSection tempContour = new base_curveContourSection();
@@ -4677,98 +4740,79 @@ namespace PreAddTech
                 List<base_elementOfCurve> tempElementOfCurve = new List<base_elementOfCurve>();
                 //Массив данных для стат.анализа
                 List<float> tempMassiveParLayer = new List<float>();
-                //List<float> tempMassiveParLayerA = new List<float>();
-                //
+                //Порядковый номер элемента контура
+                int num = 1;
+
                 foreach (var item in ListStl)
                 {
-                    tempZ[0] = item.Z1;
-                    tempZ[1] = item.Z2;
-                    tempZ[2] = item.Z3;
-                    // 6 ситуаций пересечения треугольной грани участвующей в формировании контура
-                    if (tempZ.Min() <= coordinateSectionZ[i] && coordinateSectionZ[i] <= tempZ.Max())
+                    List<Point3D> pointSTL0 = new List<Point3D>();
+                    List<Point3D> pointSTL = new List<Point3D>();
+                    pointSTL0.Add(new Point3D() { X = item.X1, Y = item.Y1, Z = item.Z1 });
+                    pointSTL0.Add(new Point3D() { X = item.X2, Y = item.Y2, Z = item.Z2 });
+                    pointSTL0.Add(new Point3D() { X = item.X3, Y = item.Y3, Z = item.Z3 });
+
+                    IEnumerable<Point3D> orderPoint = pointSTL0.OrderBy(point => point.Z);
+                    
+                    foreach (Point3D itemPoint in orderPoint)
+                    {
+                        pointSTL.Add(itemPoint);
+                    }
+                    /*
+                    if (pointSTL[0].Z == coordinateSectionZ[i] )
+                    {
+                        continue;
+                    }
+                    */
+                    // пересечение треугольной грани участвующей в формировании контура
+                    if (pointSTL[0].Z < coordinateSectionZ[i] && coordinateSectionZ[i] < pointSTL[2].Z && Math.Abs(item.ZN) != 1)
                     {
                         base_elementOfCurve tempElement = new base_elementOfCurve();
+                        PointF[] pointsCurve = proc.elementOfCurve(
+                                            new Point3D() { X = item.X1, Y = item.Y1, Z = item.Z1 },
+                                            new Point3D() { X = item.X2, Y = item.Y2, Z = item.Z2 },
+                                            new Point3D() { X = item.X3, Y = item.Y3, Z = item.Z3 }, 
+                                            coordinateSectionZ[i]);
+                        tempElement.point1 = pointsCurve[0];
+                        tempElement.point2 = pointsCurve[1];
 
-                        if (coordinateSectionZ[i] != item.Z1 && coordinateSectionZ[i] == item.Z2 && coordinateSectionZ[i] == item.Z3)
+                        if (tempElement.point1 != PointF.Empty)
                         {
-                            tempElement.point1 = new PointF() { X = item.X2, Y = item.Y2 };
-                            tempElement.point2 = new PointF() { X = item.X3, Y = item.Y3 };
+                            tempElement.num = num++;
+                            tempElementOfCurve.Add(tempElement);
+                            Perimeter += proc.length(tempElement.point1, tempElement.point2);
+                            Section += proc.squareSection(tempElement.point1, tempElement.point2);
+                            tempMassiveParLayer.Add((float)(Math.Acos(item.ZN) / Math.PI * 180));
                         }
-                        else if (coordinateSectionZ[i] == item.Z1 && coordinateSectionZ[i] != item.Z2 && coordinateSectionZ[i] == item.Z3)
-                        {
-                            tempElement.point1 = new PointF() { X = item.X1, Y = item.Y1 };
-                            tempElement.point2 = new PointF() { X = item.X3, Y = item.Y3 };
-                        }
-                        else if (coordinateSectionZ[i] == item.Z1 && coordinateSectionZ[i] == item.Z2 && coordinateSectionZ[i] != item.Z3)
-                        {
-                            tempElement.point1 = new PointF() { X = item.X1, Y = item.Y1 };
-                            tempElement.point2 = new PointF() { X = item.X2, Y = item.Y2 };
-                        }
-                        if ((item.Z1 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z2) ||
-                                 (item.Z2 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z1))
-                        {
-                            tempElement.point1 = proc.PlaneCrossLine(item.X1, item.Y1, item.Z1, 
-                                                                     item.X2, item.Y2, item.Z2, 
-                                                                     coordinateSectionZ[i]);
-                        }
-                        if ((item.Z2 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z3) ||
-                                 (item.Z3 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z2))
-                        {
-                            if (tempElement.point1 == PointF.Empty)
-                            {
-                                tempElement.point1 = proc.PlaneCrossLine(item.X2, item.Y2, item.Z2,
-                                                                         item.X3, item.Y3, item.Z3,
-                                                                         coordinateSectionZ[i]);
-                            }
-                            else
-                            {
-                                tempElement.point2 = proc.PlaneCrossLine(item.X2, item.Y2, item.Z2, 
-                                                                         item.X3, item.Y3, item.Z3, 
-                                                                         coordinateSectionZ[i]);
-                            }
-                        }
-                        if ((item.Z3 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z1) ||
-                                 (item.Z1 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z3))
-                        {
-                            if (tempElement.point1 == PointF.Empty)
-                            {
-                                tempElement.point1 = proc.PlaneCrossLine(item.X3, item.Y3, item.Z3,
-                                                                         item.X1, item.Y1, item.Z1,
-                                                                         coordinateSectionZ[i]);
-                            }
-                            else if (tempElement.point2 == PointF.Empty)
-                            {
-                                tempElement.point2 = proc.PlaneCrossLine(item.X3, item.Y3, item.Z3,
-                                                                         item.X1, item.Y1, item.Z1,
-                                                                         coordinateSectionZ[i]);
-                            }
-                        }
-                        tempElement.mark = true;
-                        tempElementOfCurve.Add(tempElement);
-                        Perimeter += proc.length(tempElement.point1, tempElement.point2);
-                        Section += proc.squareSection(tempElement.point1, tempElement.point2);
-
-                        tempMassiveParLayer.Add((float)(Math.Acos(item.ZN) / Math.PI * 180));
-
                     }
                 }
                 tempContour.listElement = tempElementOfCurve;
                 listContour.Add(tempContour);
                 //Периметр
-                dataGridViewSetLayer[dataGridViewSetLayer.Columns["P"].Index, i].Value = Math.Round(Perimeter,3);
+                dataGridViewSetLayer[dataGridViewSetLayer.Columns["P"].Index, i].Value = Math.Round(Perimeter, 3);
                 //Площадь сечения
                 dataGridViewSetLayer[dataGridViewSetLayer.Columns["Ssection"].Index, i].Value = Section;
                 //Барицентр сечения
-                dataGridViewSetLayer[dataGridViewSetLayer.Columns["centroidOfArea"].Index, i].Value = 
-                                     proc.barycenterSection(tempElementOfCurve).ToString();
+                barCenter = proc.barycenterSection(tempElementOfCurve);
+                dataGridViewSetLayer[dataGridViewSetLayer.Columns["centroidOfArea"].Index, i].Value = barCenter.ToString();
                 //Смещение центра тяжести контура от центра тяжести модели
                 dataGridViewSetLayer[dataGridViewSetLayer.Columns["Delta"].Index, i].Value = 0f;
 
+                //Добавление в массив для рассчета цетра тяжести 3D-модели
+                //Массив для анализа смещения центра тяжести
+                //0 - Площадь сечения, 1 - глубина слоя, 2,3 - координаты центра тяжести по осям X, Y
+                //4 - Величина смещения 
+                float[] ShXYCentreLayer = new float[5];
+
+                //Добавление в массив для рассчета цетра тяжести 3D-модели
+                ShXYCentreLayer[0] = Section;
+                ShXYCentreLayer[1] = stepConst;
+                ShXYCentreLayer[2] = float.IsNaN(barCenter.X) ? 0: barCenter.X;
+                ShXYCentreLayer[3] = float.IsNaN(barCenter.X) ? 0: barCenter.Y;
+
+                ShXYCentre.Add(ShXYCentreLayer);
                 //Данные для стат.анализа
-                //ParMassiveLayerA = proc.
 
                 ParMassiveLayer.Add(tempMassiveParLayer);
-
             }
             toolStripStatusLabelLayerAnalysis.Text = "Данные по сечениям готовы";
             toolStripStatusLabelLayerAnalysis.ForeColor = Color.Black;
@@ -4813,6 +4857,9 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void dataGridViewSetLayer_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            //игнорирование нажатия вне кнопки
+            if (e.RowIndex < 0) return;
+
             dataGridViewSetLayer.Rows[e.RowIndex].DefaultCellStyle.Font = new Font(this.Font, FontStyle.Bold);
             numSection = e.RowIndex;
             tempElementOfCurveSection = listContour[numSection].listElement;
@@ -4821,6 +4868,104 @@ namespace PreAddTech
             tempElementOfCurveSectionMassive.Add(listContour[numSection].listElement);
 
             panelReviewContourSection.Refresh();
+
+            //Просмотр гистограммы
+            if (e.ColumnIndex == dataGridViewSetLayer.Columns["Nz"].Index &&
+                dataGridViewSetLayer.Rows[e.RowIndex].Cells["Nz"].Value.ToString().TrimEnd() == "Просмотр")
+            {
+                try
+                {
+                    FormGist formGistogram = new FormGist();
+                    formGistogram.Activate();
+                    formGistogram.Show();
+
+                    //Вывод данных на гистограмму распределения
+                    Series seriesStatisticalPar = new Series();
+                    Series seriesStatisticalPar2 = new Series();
+                    List<Stat_analysis.elementGist> gistParTemp = new List<Stat_analysis.elementGist>();
+
+                    gistParTemp = (List<Stat_analysis.elementGist>)gistParMassiveLayer[e.RowIndex];
+
+                    float SumInt = 0;
+                    float SumPar = 0;
+                    //Относительные величины
+                    for (int i = 0; i < gistParTemp.Count; i++)
+                    {
+                        SumPar += gistParTemp[i].Y;
+                    }
+                    //
+                    for (int i = 0; i < gistParTemp.Count; i++)
+                    {
+                        seriesStatisticalPar.Points.Add(
+                            new DataPoint(Math.Round((gistParTemp[i].Xmin + gistParTemp[i].Xmax) / 2, 2), gistParTemp[i].Y / SumPar));
+                        SumInt += gistParTemp[i].Y;
+                        seriesStatisticalPar2.Points.Add(
+                            new DataPoint(Math.Round((gistParTemp[i].Xmin + gistParTemp[i].Xmax) / 2, 2), SumInt / SumPar));
+                    }
+                    seriesStatisticalPar2.ChartArea =
+                    seriesStatisticalPar.ChartArea = "ChartArea1";
+                    seriesStatisticalPar2.ChartType =
+                    seriesStatisticalPar.ChartType = SeriesChartType.Column;
+                    formGistogram.chartIntegral.Palette =
+                    formGistogram.chartGistogram.Palette = ChartColorPalette.BrightPastel;
+
+                    formGistogram.chartGistogram.Series.Add(seriesStatisticalPar);
+                    formGistogram.chartIntegral.Series.Add(seriesStatisticalPar2);
+                }
+                catch (Exception e17)
+                {
+                    MessageBox.Show(e17.Message);
+                }
+            }
+
+            //Просмотр второй гистограммы
+            if (e.ColumnIndex == dataGridViewSetLayer.Columns["Aadjacent"].Index &&
+                dataGridViewSetLayer.Rows[e.RowIndex].Cells["Aadjacent"].Value.ToString().TrimEnd() == "Просмотр")
+            {
+                try
+                {
+                    FormGist formGistogram = new FormGist();
+                    formGistogram.Activate();
+                    formGistogram.Show();
+
+                    //Вывод данных на гистограмму распределения
+                    Series seriesStatisticalParA = new Series();
+                    Series seriesStatisticalParA2 = new Series();
+                    List<Stat_analysis.elementGist> gistParTempA = new List<Stat_analysis.elementGist>();
+
+                    gistParTempA = (List<Stat_analysis.elementGist>)gistParMassiveLayerA[e.RowIndex];
+
+                    float SumIntA = 0;
+                    float SumParA = 0;
+                    //Относительные величины
+                    for (int i = 0; i < gistParTempA.Count; i++)
+                    {
+                        SumParA += gistParTempA[i].Y;
+                    }
+                    //
+                    for (int i = 0; i < gistParTempA.Count; i++)
+                    {
+                        seriesStatisticalParA.Points.Add(
+                            new DataPoint(Math.Round((gistParTempA[i].Xmin + gistParTempA[i].Xmax) / 2, 2), gistParTempA[i].Y / SumParA));
+                        SumIntA += gistParTempA[i].Y;
+                        seriesStatisticalParA2.Points.Add(
+                            new DataPoint(Math.Round((gistParTempA[i].Xmin + gistParTempA[i].Xmax) / 2, 2), SumIntA / SumParA));
+                    }
+                    seriesStatisticalParA2.ChartArea =
+                    seriesStatisticalParA.ChartArea = "ChartArea1";
+                    seriesStatisticalParA2.ChartType =
+                    seriesStatisticalParA.ChartType = SeriesChartType.Column;
+                    formGistogram.chartIntegral.Palette =
+                    formGistogram.chartGistogram.Palette = ChartColorPalette.BrightPastel;
+
+                    formGistogram.chartGistogram.Series.Add(seriesStatisticalParA);
+                    formGistogram.chartIntegral.Series.Add(seriesStatisticalParA2);
+                }
+                catch (Exception e17)
+                {
+                    MessageBox.Show(e17.Message);
+                }
+            }
         }
 
         /// <summary>
@@ -4842,16 +4987,28 @@ namespace PreAddTech
             if (dataGridViewSetLayer.RowCount != 0 && float.TryParse(toolStripComboBoxScale.Text, out Kscale))
             {
                 Pen myPen = new Pen(colorPen);
+                Pen myPen2 = new Pen(Color.Black);
                 Graphics contourGraphics = panelReviewContourSection.CreateGraphics();
                 if (checkBoxOneOrAll.CheckState != CheckState.Checked)
                 {
                     foreach (var item in tempElementOfCurveSection)
                     {
-                        contourGraphics.DrawLine(myPen,
-                                                 Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2, 
-                                                 Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
-                                                 Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2, 
-                                                 Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                        if (!item.insideOrOuterContour)
+                        {
+                            contourGraphics.DrawLine(myPen,
+                                                     Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2,
+                                                     Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
+                                                     Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2,
+                                                     Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                        }
+                        else
+                        {
+                            contourGraphics.DrawLine(myPen2,
+                                                     Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2,
+                                                     Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
+                                                     Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2,
+                                                     Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                        }
                     }
                 }
                 else 
@@ -4860,11 +5017,22 @@ namespace PreAddTech
                     {
                         foreach (var item in item0)
                         {
-                            contourGraphics.DrawLine(myPen,
-                                                 Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                 Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
-                                                 Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                 Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                            if (!item.insideOrOuterContour)
+                            {
+                                contourGraphics.DrawLine(myPen,
+                                                         Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2,
+                                                         Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
+                                                         Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2,
+                                                         Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                            }
+                            else
+                            {
+                                contourGraphics.DrawLine(myPen2,
+                                                         Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2,
+                                                         Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
+                                                         Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2,
+                                                         Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                            }
                         }
                     }
                 }
@@ -4916,7 +5084,7 @@ namespace PreAddTech
 
         private void checkBoxOneOrAll_CheckStateChanged(object sender, EventArgs e)
         {
-            if (checkBoxPreview.CheckState == CheckState.Checked)
+            if (checkBoxOneOrAll.CheckState == CheckState.Checked)
             {
                 checkBoxOneOrAll.Text = "Отображать несколько слоев";
             }
@@ -4946,6 +5114,8 @@ namespace PreAddTech
             dataGridViewSetLayer.Dock = DockStyle.None;
         }
 
+        List<float> ParMassiveLayerFD = new List<float>();
+
         /// <summary>
         /// Статистический анализ характеристик контура
         /// </summary>
@@ -4953,43 +5123,382 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void toolStripButtonLayerAnalysis_Click(object sender, EventArgs e)
         {
+            /// Статистические характеристики (результаты анализа по слоям)   
+            float[] resultStatParLayer = new float[13];
+            float[] resultStatParLayerA = new float[13];
+            //Определение контуров внешних/внутренних
+            MyProcedures proc = new MyProcedures();
+
+            ParMassiveLayerA.Clear();
+            ParMassiveLayerFD.Clear();
+            //Определение смежных углов элементов контура 
+            //Определение фрактальной размерности
+            for (int i = 0; i < listContour.Count; i++)
+            {
+                proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, listContour.Count - 1);
+                List<base_elementOfCurve> listETemp = proc.listCloseContour(listContour[i].listElement);
+                ParMassiveLayerA.Add(proc.massiveAngleAdjacent(listETemp));
+                ParMassiveLayerFD.Add(proc.fractalDimension(listETemp));
+            }
+            ///
+            float Xcentre0 = 0;
+            float Ycentre0 = 0;
+            float volum = 0;
+            //Определение смещения центра тяжести для каждого слоя
+            //ShXYCentre
+            for (int j = 0; j < ShXYCentre.Count; j++)
+            {
+                Xcentre0 += ShXYCentre[j][0] * ShXYCentre[j][1] * ShXYCentre[j][2];
+                Ycentre0 += ShXYCentre[j][0] * ShXYCentre[j][1] * ShXYCentre[j][3];
+                volum    += ShXYCentre[j][0] * ShXYCentre[j][1];
+            }
+            //
+            float Xcentre = Xcentre0 / volum;
+            float Ycentre = Ycentre0 / volum;
+            //MessageBox.Show("Xcentre = " + Xcentre + "; Ycentre = " + Ycentre);
+            //
+            for (int j = 0; j < ShXYCentre.Count; j++)
+            {
+                ShXYCentre[j][4] = (float)Math.Sqrt((Xcentre - ShXYCentre[j][2]) * (Xcentre - ShXYCentre[j][2]) + 
+                                   (Ycentre - ShXYCentre[j][3]) * (Ycentre - ShXYCentre[j][3]));
+            }
+            //
             if (ParMassiveLayer.Count != 0)
             {
                 for (int i = 0; i < ParMassiveLayer.Count; i++)
                 {
-                    Stat_analysis statisticaPar = new Stat_analysis();
-                    if (((List<float>)ParMassiveLayer[i]).Count == 0)
+                    if (ParMassiveLayer[i].Count < 3)
                     {
-                        MessageBox.Show("Массив данных для анализа отсутствует", "Проблема!");
-                        return;
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["Nz"].Index, i].Value = "Нет данных";
+                        gistParMassiveLayer.Add(new List<Stat_analysis.elementGist>());
                     }
-                    //Гистограмма
-                    gistParLayer = statisticaPar.Gist(((List<float>)ParMassiveLayer[i]).ToArray(), (int)numericUpDownLayerInt.Value);
-                    gistParMassiveLayer.Add(gistParLayer);
-                //
-                    resultStatParLayer = statisticaPar.Stat(((List<float>)ParMassiveLayer[i]).ToArray(), gistParLayer);
-                    //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-                    // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMinInterval"].Index, i].Value = resultStatParLayer[0];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMaxInterval"].Index, i].Value = resultStatParLayer[1];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzRange"].Index, i].Value = resultStatParLayer[2];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzDispersion"].Index, i].Value = resultStatParLayer[3];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzSigma"].Index, i].Value = resultStatParLayer[4];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMean"].Index, i].Value = resultStatParLayer[5];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzKasim"].Index, i].Value = resultStatParLayer[6];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzKeks"].Index, i].Value = resultStatParLayer[7];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzKv"].Index, i].Value = resultStatParLayer[8];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMeana"].Index, i].Value = resultStatParLayer[9];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzModa"].Index, i].Value = resultStatParLayer[10];
-                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMediana"].Index, i].Value = resultStatParLayer[11];
+                    else
+                    {
+                        Stat_analysis statisticaPar = new Stat_analysis();
+                        /// <summary>
+                        /// Данные гистограммы по анализу слоев
+                        /// </summary>
+                        List<Stat_analysis.elementGist> gistParLayer = new List<Stat_analysis.elementGist>();
 
+                        gistParLayer = statisticaPar.Gist((ParMassiveLayer[i]).ToArray(), (int)numericUpDownLayerInt.Value);
+                        gistParMassiveLayer.Add(gistParLayer);
+                        //
+                        resultStatParLayer = statisticaPar.Stat((ParMassiveLayer[i]).ToArray(), gistParLayer);
+                        //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
+                        // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+                        if (resultStatParLayer[2] > 0)
+                        { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Nz"].Index, i].Value = "Просмотр"; }
+                        else { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Nz"].Index, i].Value = "Нет данных"; }
+
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMinInterval"].Index, i].Value = resultStatParLayer[0];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMaxInterval"].Index, i].Value = resultStatParLayer[1];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzRange"].Index, i].Value = resultStatParLayer[2];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzDispersion"].Index, i].Value = resultStatParLayer[3];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzSigma"].Index, i].Value = resultStatParLayer[4];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMean"].Index, i].Value = resultStatParLayer[5];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzKasim"].Index, i].Value = resultStatParLayer[6];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzKeks"].Index, i].Value = resultStatParLayer[7];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzKv"].Index, i].Value = resultStatParLayer[8];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMeana"].Index, i].Value = resultStatParLayer[9];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzModa"].Index, i].Value = resultStatParLayer[10];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzMediana"].Index, i].Value = resultStatParLayer[11];
+                        //Delta
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["Delta"].Index, i].Value = ShXYCentre[i][4];
+                    }
+                }
+            }
+            else
+            { return; }
+
+            if (ParMassiveLayerA.Count != 0)
+            {
+                for (int i = 0; i < ParMassiveLayerA.Count; i++)
+                {
+                    //MessageBox.Show("(ParMassiveLayerA[i]).ToArray() - " + i + " - " + ParMassiveLayerA[i].Count);
+
+                    if (ParMassiveLayerA[i].Count < 2)
+                    {
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["Aadjacent"].Index, i].Value = "Нет данных";
+                        gistParMassiveLayerA.Add(new List<Stat_analysis.elementGist>());
+                    }
+                    else
+                    {
+                        Stat_analysis statisticaParA = new Stat_analysis();
+                        /// <summary>
+                        /// Данные гистограммы по анализу слоев
+                        /// </summary>
+                        List<Stat_analysis.elementGist> gistParLayerA = new List<Stat_analysis.elementGist>();
+
+                        gistParLayerA = statisticaParA.Gist((ParMassiveLayerA[i]).ToArray(), (int)numericUpDownLayerInt.Value);
+                        gistParMassiveLayerA.Add(gistParLayerA);
+                        //
+                        resultStatParLayerA = statisticaParA.Stat((ParMassiveLayerA[i]).ToArray(), gistParLayerA);
+                        //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
+                        // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+                        if (resultStatParLayerA[2] > 0)
+                        { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Aadjacent"].Index, i].Value = "Просмотр"; }
+                        else { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Aadjacent"].Index, i].Value = "Нет данных"; }
+
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["AMinInterval"].Index, i].Value = resultStatParLayerA[0];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["AMaxInterval"].Index, i].Value = resultStatParLayerA[1];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["ARange"].Index, i].Value = resultStatParLayerA[2];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["ADispersion"].Index, i].Value = resultStatParLayerA[3];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["ASigma"].Index, i].Value = resultStatParLayerA[4];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["AMean"].Index, i].Value = resultStatParLayerA[5];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["AKasim"].Index, i].Value = resultStatParLayerA[6];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["AKeks"].Index, i].Value = resultStatParLayerA[7];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["AKv"].Index, i].Value = resultStatParLayerA[8];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["AMeana"].Index, i].Value = resultStatParLayerA[9];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["AModa"].Index, i].Value = resultStatParLayerA[10];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["AMediana"].Index, i].Value = resultStatParLayerA[11];
+                    }
                 }
             }
             else
             { return; }
 
             toolStripStatusLabelLayerAnalysis.Text ="Выполнен анализ стат. характеристик исследуемых признаков";
-            toolStripStatusLabelLayerAnalysis.BackColor = Color.Black;
+            toolStripStatusLabelLayerAnalysis.ForeColor = Color.Black;
+        }
+
+        private void toolStripTextBoxFileName_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Сохранение данных из таблицы в Exsel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButtonLayerSave_Click(object sender, EventArgs e)
+        {
+            MyProcedures proc = new MyProcedures();
+            proc.SaveDataGridInXlc(dataGridViewSetLayer);
+        }
+        /// <summary>
+        /// Выбор цвета для первого условия анализа данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void label1var_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (checkBox1var.CheckState == CheckState.Checked)
+            {
+                cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDown1varR,
+                              numericUpDown1varG, numericUpDown1varB);
+            }
+        }
+        /// <summary>
+        /// Выбор цвета для второго условия анализа данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void label2var_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (checkBox2var.CheckState == CheckState.Checked)
+            {
+                cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDown2varR,
+              numericUpDown2varG, numericUpDown2varB);
+            }
+        }
+        /// <summary>
+        /// Выбор цвета для третьего условия анализа данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void label3var_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (checkBox3var.CheckState == CheckState.Checked && colorDialogSelect.ShowDialog() == DialogResult.OK)
+            {
+                cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDown3varR,
+                              numericUpDown3varG, numericUpDown3varB);
+            }
+        }
+        /// <summary>
+        /// Анализ распределения элементарных объемов на основе воксельной модели 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButton3D_Click(object sender, EventArgs e)
+        {
+            if (ListVox.Count == 0) return;
+
+            toolStripButtonShowHistogramXYZ_Click(sender, e);
+            toolStripButtonShowHistogramXYZ.Font = new Font(this.Font, FontStyle.Regular);
+            toolStripButtonShowHistogram3D.Font = new Font(this.Font, FontStyle.Bold);
+            //resultStat3D, resultStat3DEmpty
+            ///0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
+            /// 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+            float[] resultStat = new float[13];
+            if (toolStripComboBoxShowAnalysis.SelectedIndex == 0) resultStat = resultStat3D;
+            else if (toolStripComboBoxShowAnalysis.SelectedIndex == 1) resultStat = resultStat3DEmpty; 
+
+            textBoxMin.Text = resultStat[0].ToString("0.0000E-00");
+            textBoxMax.Text = resultStat[1].ToString("0.0000E-00");
+            textBoxInterval.Text = resultStat[2].ToString("0.0000E-00");
+            textBoxDispersion.Text = resultStat[3].ToString("0.0000E-00");
+            textBoxStandardDeviation.Text = resultStat[4].ToString("0.0000E-00");
+            textBoxAverage.Text = resultStat[5].ToString("0.0000E-00");
+            textBoxSkewness.Text = resultStat[6].ToString("0.0000E-00");
+            textBoxCoefficientOfExcess.Text = resultStat[7].ToString("0.0000E-00");
+            textBoxCoefficientOfVariation.Text = resultStat[8].ToString("0.0000E-00");
+            textBoxMean.Text = resultStat[9].ToString("0.0000E-00");
+            textBoxMode.Text = resultStat[10].ToString("0.0000E-00");
+            textBoxMedian.Text = resultStat[11].ToString("0.0000E-00");
+            //Запуск формы для визуализации распределения объемов
+            FormDitribution3D analize3D = new FormDitribution3D();
+            analize3D.trackBarHeight.Maximum = (int)numericUpDownNumIntZ.Value;
+
+            analize3D.distributionXYZ = distributionXYZ;
+            analize3D.distributionXYZEmpty = distributionXYZEmpty;
+
+            analize3D.intervalsX = (int)numericUpDownNumIntX.Value;
+            analize3D.intervalsY = (int)numericUpDownNumIntY.Value;
+            analize3D.intervalsZ = (int)numericUpDownNumIntZ.Value;
+
+            analize3D.Activate();
+            analize3D.Show();
+        }
+
+        private void toolStripButtonOpenVoxModel_Click(object sender, EventArgs e)
+        {
+            MyProcedures proc = new MyProcedures();
+            try
+            {
+                XmlDocument xDoc = new XmlDocument();
+                openFileDialogU.DefaultExt = "vox";
+
+                if (openFileDialogU.ShowDialog() == DialogResult.OK)
+                {
+                    xDoc.Load(openFileDialogU.FileName);
+                    //корневой элемент
+                    XmlElement xRoot = xDoc.DocumentElement;
+                    //Обновляем ListVox
+                    ListVox.Clear();
+
+                    // обход всех узлов в корневом элементе
+                    foreach (XmlNode xnode in xRoot)
+                    {
+                        int elementCount = 1;
+                        if (xnode.Name == "richTextBoxInfo") richTextBoxInfo.Text = "Загружена воксельная модель, созданная из STL-файла: " +
+                                                                                    xnode.InnerText;
+                        else if (xnode.Name == "elementCount") elementCount = int.Parse(xnode.InnerText); 
+                        else if (xnode.Name == "textBoxMinX") textBoxMinX.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxMinY") textBoxMinY.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxMinZ") textBoxMinZ.Text = xnode.InnerText;
+
+                        else if (xnode.Name == "textBoxMaxX") textBoxMaxX.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxMaxY") textBoxMaxY.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxMaxZ") textBoxMaxZ.Text = xnode.InnerText;
+
+                        else if (xnode.Name == "textBoxSizeX") textBoxSizeX.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxSizeY") textBoxSizeY.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxSizeZ") textBoxSizeZ.Text = xnode.InnerText;
+
+                        else if (xnode.Name == "numericUpDownVoxX") numericUpDownVoxX.Value = decimal.Parse(xnode.InnerText);
+                        else if (xnode.Name == "numericUpDownVoxY") numericUpDownVoxY.Value = decimal.Parse(xnode.InnerText);
+                        else if (xnode.Name == "numericUpDownVoxZ") numericUpDownVoxZ.Value = decimal.Parse(xnode.InnerText);
+
+                        else if (xnode.Name == "textBoxTotalVox") textBoxTotalVox.Text = xnode.InnerText;
+
+                        else if (xnode.Name == "textBoxVoxMinX") textBoxVoxMinX.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxVoxMinY") textBoxVoxMinY.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxVoxMinZ") textBoxVoxMinZ.Text = xnode.InnerText;
+
+                        else if (xnode.Name == "textBoxVoxMaxX") textBoxVoxMaxX.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxVoxMaxY") textBoxVoxMaxY.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxVoxMaxZ") textBoxVoxMaxZ.Text = xnode.InnerText;
+
+                        else if (xnode.Name == "textBoxVoxSizeX") textBoxVoxSizeX.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxVoxSizeY") textBoxVoxSizeY.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxVoxSizeZ") textBoxVoxSizeZ.Text = xnode.InnerText;
+
+                        else if (xnode.Name == "textBoxErrorX") textBoxErrorX.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxErrorY") textBoxErrorY.Text = xnode.InnerText;
+                        else if (xnode.Name == "textBoxErrorZ") textBoxErrorZ.Text = xnode.InnerText;
+
+                        else if (xnode.Name == "textBoxTotalVoxRez") textBoxTotalVoxRez.Text = xnode.InnerText;
+
+                        else if (xnode.Name == "Voxels")
+                        {
+                            //int numTempvoxstr = 0;
+                            // обходим все дочерние узлы элемента user
+                            foreach (XmlNode childnode in xnode.ChildNodes)
+                            {
+                                string[] tempVoxString = new string[10];
+                                tempVoxString = childnode.InnerText.Split(';');
+                                // Nom; Xv; Yv; Zv; Lv; Lfull; NomModel; SizeX; SizeY; SizeZ
+                                ListVox.Add(new base_vox()
+                                {
+                                    Nom = int.Parse(tempVoxString[0]),
+                                    Xv = float.Parse(tempVoxString[1]),
+                                    Yv = float.Parse(tempVoxString[2]),
+                                    Zv = float.Parse(tempVoxString[3]),
+                                    Lv = bool.Parse(tempVoxString[4]),
+                                    Lfull = bool.Parse(tempVoxString[5]),
+                                    NomModel = int.Parse(tempVoxString[6]),
+                                    SizeX = float.Parse(tempVoxString[7]),
+                                    SizeY = float.Parse(tempVoxString[8]),
+                                    SizeZ = float.Parse(tempVoxString[9])
+                                });
+                                //proc.ProgressBarRefresh(toolStripProgressBarCreateVoxel, numTempvoxstr++, elementCount);
+                            }
+                        }
+                    }
+                }
+                toolStripStatusLabelCreateVoxel.Text = "Воксельная модель загружена из файла: " + saveFileDialogU.FileName;
+                toolStripStatusLabelCreateVoxel.ForeColor = Color.Black;
+
+                toolStripButtonStatAnal.Enabled = true;
+                //
+                //Создание массива моделей для размещения на рабочей платформе
+                if (activeTask == ATPreparation.switchActiveTask.analizePacking)
+                {
+                    base_model model = new base_model();
+                    model.Name = toolStripTextBoxFileName.Text;
+                    //model.Stl = ListStl;
+                    //Создание списка вокселей для модели изделия
+                    List<base_vox> tempListVox = new List<base_vox>();
+                    foreach (var item in ListVox)
+                    {
+                        if (item.Lfull)
+                            tempListVox.Add(item);
+                    }
+                    model.Voxels = tempListVox;
+                    //
+                    model.totalCountVoxels = tempListVox.Count;
+                    model.sizeXvoxel = float.Parse(textBoxSizeX.Text);
+                    model.sizeYvoxel = float.Parse(textBoxSizeY.Text);
+                    model.sizeZvoxel = float.Parse(textBoxSizeZ.Text);
+                    model.Volumе = 0;
+                    model.angleX = 0;
+                    model.angleY = 0;
+                    model.coordinateX = float.Parse(textBoxMinX.Text);
+                    model.coordinateY = float.Parse(textBoxMinY.Text);
+                    model.coordinateZ = float.Parse(textBoxMinZ.Text);
+                    model.sizeX = float.Parse(textBoxSizeX.Text);
+                    model.sizeY = float.Parse(textBoxSizeY.Text);
+                    model.sizeZ = float.Parse(textBoxSizeZ.Text);
+                    model.information = richTextBoxInfo.Text;
+                    massiveListModels.Add(model);
+                    //добавление в список выбора
+                    toolStripComboBoxListModels.Items.Add(massiveListModels.Count.ToString("000") +
+                               " " + toolStripTextBoxFileName.Text.Remove(0, 1 + toolStripTextBoxFileName.Text.LastIndexOf(@"\")));
+                }
+                try
+                    {
+                        frmMain.richTextBoxHistory.Text += "Воксельная модель загружена из файла: " + saveFileDialogU.FileName + " \n";
+                    }
+                catch (Exception e9)
+                    {
+                        MessageBox.Show(e9.Message);
+                    }
+            }
+            catch (Exception e7)
+            {
+                MessageBox.Show("Не правильный формат данных... \n" + e7.Message, "Ошибка!");
+                return;
+            }
         }
 
         /// <summary>
@@ -5019,10 +5528,10 @@ namespace PreAddTech
         {
             if (toolStripComboBox3.SelectedIndex == 1) // 2. Просмотр и записать в файл
             {
-                saveFileDialog1.FileName = "stl_" + DateTime.Now.Year.ToString() + "_" +
+                saveFileDialogU.FileName = "stl_" + DateTime.Now.Year.ToString() + "_" +
                                     DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" +
                                     DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString();
-                saveFileDialog1.ShowDialog();
+                saveFileDialogU.ShowDialog();
             }
         }
     }

@@ -33,6 +33,9 @@
             this.buttonCreateVoxModel = new System.Windows.Forms.Button();
             this.dataGridViewVariants = new System.Windows.Forms.DataGridView();
             this.M0 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.variantDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.varModelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -40,7 +43,7 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
+            this.buttonInfo = new System.Windows.Forms.Button();
             this.buttonSettings = new System.Windows.Forms.Button();
             this.label23 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -54,15 +57,13 @@
             this.buttonEvaluation = new System.Windows.Forms.Button();
             this.buttonAnalysisManufacturability = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.varModelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.variantDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonHelp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVariants)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.varModelsBindingSource)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.varModelsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonCreateVoxModel
@@ -104,6 +105,26 @@
             this.M0.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.M0.TrueValue = "1";
             this.M0.Width = 25;
+            // 
+            // variantDataGridViewTextBoxColumn
+            // 
+            this.variantDataGridViewTextBoxColumn.DataPropertyName = "Variant";
+            this.variantDataGridViewTextBoxColumn.HeaderText = "Вариант";
+            this.variantDataGridViewTextBoxColumn.MaxInputLength = 10;
+            this.variantDataGridViewTextBoxColumn.MinimumWidth = 20;
+            this.variantDataGridViewTextBoxColumn.Name = "variantDataGridViewTextBoxColumn";
+            // 
+            // groupDataGridViewTextBoxColumn
+            // 
+            this.groupDataGridViewTextBoxColumn.DataPropertyName = "Group";
+            this.groupDataGridViewTextBoxColumn.HeaderText = "Группа";
+            this.groupDataGridViewTextBoxColumn.MaxInputLength = 10;
+            this.groupDataGridViewTextBoxColumn.MinimumWidth = 20;
+            this.groupDataGridViewTextBoxColumn.Name = "groupDataGridViewTextBoxColumn";
+            // 
+            // varModelsBindingSource
+            // 
+            this.varModelsBindingSource.DataSource = typeof(PreAddTech.VarModels);
             // 
             // button2
             // 
@@ -176,21 +197,21 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
-            // button11
+            // buttonInfo
             // 
-            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button11.Location = new System.Drawing.Point(665, 12);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(85, 30);
-            this.button11.TabIndex = 11;
-            this.button11.Text = "О программе";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.buttonInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonInfo.Location = new System.Drawing.Point(665, 12);
+            this.buttonInfo.Name = "buttonInfo";
+            this.buttonInfo.Size = new System.Drawing.Size(85, 30);
+            this.buttonInfo.TabIndex = 11;
+            this.buttonInfo.Text = "О программе";
+            this.buttonInfo.UseVisualStyleBackColor = true;
+            this.buttonInfo.Click += new System.EventHandler(this.button11_Click);
             // 
             // buttonSettings
             // 
             this.buttonSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSettings.Location = new System.Drawing.Point(540, 12);
+            this.buttonSettings.Location = new System.Drawing.Point(407, 12);
             this.buttonSettings.Name = "buttonSettings";
             this.buttonSettings.Size = new System.Drawing.Size(110, 30);
             this.buttonSettings.TabIndex = 12;
@@ -202,7 +223,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label23.Location = new System.Drawing.Point(21, 402);
+            this.label23.Location = new System.Drawing.Point(16, 402);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(80, 13);
             this.label23.TabIndex = 31;
@@ -306,7 +327,7 @@
             this.buttonEvaluation.Name = "buttonEvaluation";
             this.buttonEvaluation.Size = new System.Drawing.Size(210, 42);
             this.buttonEvaluation.TabIndex = 6;
-            this.buttonEvaluation.Text = "Оценка сложности модели (разнообразие треугольных граней)";
+            this.buttonEvaluation.Text = "Оценка сложности модели";
             this.buttonEvaluation.UseVisualStyleBackColor = true;
             this.buttonEvaluation.Click += new System.EventHandler(this.buttonEvaluation_Click_1);
             // 
@@ -330,31 +351,22 @@
             this.label3.TabIndex = 38;
             this.label3.Text = "Внешние системы (программы)";
             // 
-            // varModelsBindingSource
+            // buttonHelp
             // 
-            this.varModelsBindingSource.DataSource = typeof(PreAddTech.VarModels);
-            // 
-            // variantDataGridViewTextBoxColumn
-            // 
-            this.variantDataGridViewTextBoxColumn.DataPropertyName = "Variant";
-            this.variantDataGridViewTextBoxColumn.HeaderText = "Вариант";
-            this.variantDataGridViewTextBoxColumn.MaxInputLength = 10;
-            this.variantDataGridViewTextBoxColumn.MinimumWidth = 20;
-            this.variantDataGridViewTextBoxColumn.Name = "variantDataGridViewTextBoxColumn";
-            // 
-            // groupDataGridViewTextBoxColumn
-            // 
-            this.groupDataGridViewTextBoxColumn.DataPropertyName = "Group";
-            this.groupDataGridViewTextBoxColumn.HeaderText = "Группа";
-            this.groupDataGridViewTextBoxColumn.MaxInputLength = 10;
-            this.groupDataGridViewTextBoxColumn.MinimumWidth = 20;
-            this.groupDataGridViewTextBoxColumn.Name = "groupDataGridViewTextBoxColumn";
+            this.buttonHelp.Location = new System.Drawing.Point(540, 12);
+            this.buttonHelp.Name = "buttonHelp";
+            this.buttonHelp.Size = new System.Drawing.Size(102, 30);
+            this.buttonHelp.TabIndex = 39;
+            this.buttonHelp.Text = "Справка";
+            this.buttonHelp.UseVisualStyleBackColor = true;
+            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
             // 
             // ATPreparation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(780, 565);
+            this.Controls.Add(this.buttonHelp);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.label3);
@@ -363,22 +375,22 @@
             this.Controls.Add(this.label23);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.buttonSettings);
-            this.Controls.Add(this.button11);
+            this.Controls.Add(this.buttonInfo);
             this.Controls.Add(this.dataGridViewVariants);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ATPreparation";
-            this.Text = "Технологическая подготовка проекта материализации моделей аддитивными технологиям" +
+            this.Text = "Технологическая подготовка материализации сложных изделий аддитивными технологиям" +
     "и";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ATPreparation_FormClosing);
             this.Load += new System.EventHandler(this.ATPreparation_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVariants)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.varModelsBindingSource)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.varModelsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,7 +407,7 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button buttonInfo;
         private System.Windows.Forms.Button buttonSettings;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Panel panel3;
@@ -413,5 +425,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn groupDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button buttonEvaluation;
         private System.Windows.Forms.Button buttonAnalysisManufacturability;
+        private System.Windows.Forms.Button buttonHelp;
     }
 }

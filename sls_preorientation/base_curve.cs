@@ -21,10 +21,14 @@ namespace PreAddTech
         /// <summary>
         /// Метка внутреннего/внешнего контура (True - внешний контур, Fаlse - внутренний контур)
         /// </summary>
-        public bool insideOrOuterContour { get; set; }
+        public object insideOrOuterContour { get; set; }
         /// <summary>
         /// Список точек контура
         /// </summary>
         public List<base_elementOfCurve> listElement { get; set; }
     }
+    /// <summary>
+    /// Внутренний/внешний контур
+    /// </summary>
+    enum inout { inside, outer };
 }

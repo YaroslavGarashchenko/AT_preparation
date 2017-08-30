@@ -1,1 +1,516 @@
-﻿
+﻿            //resultStat_ 0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
+            for (int j = 0; j < (int)numericUpDownNumIntX.Value; j++)
+            {
+                float minX = j * resultStat_X[0];
+                float maxX = (j == (int)numericUpDownNumIntX.Value - 1) ?
+                             minX + (3/2) * resultStat_X[2] / (int)numericUpDownNumIntX.Value: 
+                             minX + resultStat_X[2] / (int)numericUpDownNumIntX.Value;
+                //YZ
+                List<base_vox> distributionYZ = new List<base_vox>();
+                foreach (var item in ListVox)
+                {
+                    // 1. Распределение вокселей модели / 2.Распределение свободного пространства
+                    if (toolStripComboBoxShowAnalysis.SelectedIndex == 0)
+                        { if (item.Xv >= minX && item.Lfull) distributionYZ.Add(item); }
+                    else if (toolStripComboBoxShowAnalysis.SelectedIndex == 1)
+                        { if (item.Xv >= minX && !item.Lfull) distributionYZ.Add(item); }
+                    if (item.Xv > maxX)
+                        break;
+                }
+
+                for (int k = 0; k < (int)numericUpDownNumIntY.Value; k++)
+                {
+                    float minY = k * resultStat_Y[0];
+                    float maxY = (k == (int)numericUpDownNumIntY.Value - 1) ?
+                                 minY + (3 / 2) * resultStat_Y[2] / (int)numericUpDownNumIntY.Value :
+                                 minY + resultStat_Y[2] / (int)numericUpDownNumIntY.Value;
+
+
+                    for (int m = 0; m < (int)numericUpDownNumIntZ.Value; m++)
+                    {
+                        float minZ = m * resultStat_Z[0];
+                        float maxZ = (m == (int)numericUpDownNumIntZ.Value - 1) ?
+                                     minZ + (3 / 2) * resultStat_Z[2] / (int)numericUpDownNumIntZ.Value :
+                                     minZ + resultStat_Z[2] / (int)numericUpDownNumIntZ.Value;
+
+
+                    }
+                }
+            }
+****************
+                StreamWriter sw = new
+                    StreamWriter(saveFileDialogU.FileName, false, Encoding.Default);
+                sw.WriteLine("<? xml version = \"1.0\" encoding = \"utf-8\" ?>");
+                sw.WriteLine("<VoxelFormat>");
+                sw.WriteLine("<richTextBoxInfo>" + @toolStripTextBoxFileName.Text + "</richTextBoxInfo>");
+                sw.WriteLine("<textBoxMinX>" + textBoxMinX.Text + "</textBoxMinX>");
+                sw.WriteLine("<textBoxMinY>" + textBoxMinY.Text + "</textBoxMinY>");
+                sw.WriteLine("<textBoxMinZ>" + textBoxMinZ.Text + "</textBoxMinZ>");
+
+                sw.WriteLine("<textBoxMaxX>" + textBoxMaxX.Text + "</textBoxMaxX>");
+                sw.WriteLine("<textBoxMaxY>" + textBoxMaxY.Text + "</textBoxMaxY>");
+                sw.WriteLine("<textBoxMaxZ>" + textBoxMaxZ.Text + "</textBoxMaxZ>");
+
+                sw.WriteLine("<textBoxSizeX>" + textBoxSizeX.Text + "</textBoxSizeX>");
+                sw.WriteLine("<textBoxSizeY>" + textBoxSizeY.Text + "</textBoxSizeY>");
+                sw.WriteLine("<textBoxSizeZ>" + textBoxSizeZ.Text + "</textBoxSizeZ>");
+
+                sw.WriteLine("<numericUpDownVoxX>" + numericUpDownVoxX.Value + "</numericUpDownVoxX>");
+                sw.WriteLine("<numericUpDownVoxY>" + numericUpDownVoxY.Value + "</numericUpDownVoxY>");
+                sw.WriteLine("<numericUpDownVoxZ>" + numericUpDownVoxZ.Value + "</numericUpDownVoxZ>");
+
+                sw.WriteLine("<textBoxTotalVox>" + textBoxTotalVox.Text + "</textBoxTotalVox>");
+                //
+                sw.WriteLine("<textBoxVoxMinX>" + textBoxVoxMinX.Text + "</textBoxVoxMinX>");
+                sw.WriteLine("<textBoxVoxMinY>" + textBoxVoxMinY.Text + "</textBoxVoxMinY>");
+                sw.WriteLine("<textBoxVoxMinZ>" + textBoxVoxMinZ.Text + "</textBoxVoxMinZ>");
+
+                sw.WriteLine("<textBoxVoxMaxX>" + textBoxVoxMaxX.Text + "</textBoxVoxMaxX>");
+                sw.WriteLine("<textBoxVoxMaxY>" + textBoxVoxMaxY.Text + "</textBoxVoxMaxY>");
+                sw.WriteLine("<textBoxVoxMaxZ>" + textBoxVoxMaxZ.Text + "</textBoxVoxMaxZ>");
+
+                sw.WriteLine("<textBoxVoxSizeX>" + textBoxVoxSizeX.Text + "</textBoxVoxSizeX>");
+                sw.WriteLine("<textBoxVoxSizeY>" + textBoxVoxSizeY.Text + "</textBoxVoxSizeY>");
+                sw.WriteLine("<textBoxVoxSizeZ>" + textBoxVoxSizeZ.Text + "</textBoxVoxSizeZ>");
+
+                sw.WriteLine("<textBoxErrorX>" + textBoxErrorX.Text + "</textBoxErrorX>");
+                sw.WriteLine("<textBoxErrorY>" + textBoxErrorY.Text + "</textBoxErrorY>");
+                sw.WriteLine("<textBoxErrorZ>" + textBoxErrorZ.Text + "</textBoxErrorZ>");
+
+                sw.WriteLine("<textBoxTotalVoxRez>" + textBoxTotalVoxRez.Text + "</textBoxTotalVoxRez>");
+                //
+                sw.WriteLine("<Voxels>");
+                int numTempvoxstr = 0;
+                foreach (var tempvoxstr in ListVox)
+                {
+                    if (tempvoxstr.Lfull)
+                    {
+                        sw.WriteLine("<Voxel>" +
+                                     tempvoxstr.Nom + ";" +
+                                     tempvoxstr.Xv + ";" +
+                                     tempvoxstr.Yv + ";" +
+                                     tempvoxstr.Zv + ";" +
+                                     tempvoxstr.Lv + ";" +
+                                     tempvoxstr.Lfull + ";" +
+                                     tempvoxstr.NomModel + ";" +
+                                     tempvoxstr.SizeX + ";" +
+                                     tempvoxstr.SizeY + ";" +
+                                     tempvoxstr.SizeZ +
+                                     "</Voxel>"
+                                     );
+                    }
+                    proc.ProgressBarRefresh(toolStripProgressBarCreateVoxel, numTempvoxstr++, ListVox.Count);
+                }
+                sw.WriteLine("</Voxels>");
+                sw.WriteLine("</VoxelFormat>");
+                sw.Close();
+
+
+********************************************************************
+                foreach (var item in ListStl)
+                {
+                    tempZ[0] = item.Z1;
+                    tempZ[1] = item.Z2;
+                    tempZ[2] = item.Z3;
+
+                    // пересечение треугольной грани участвующей в формировании контура
+                    if (tempZ.Min() <= coordinateSectionZ[i] && coordinateSectionZ[i] <= tempZ.Max() && Math.Abs(item.ZN) != 1)
+                    {
+                        base_elementOfCurve tempElement = new base_elementOfCurve();
+
+
+                        if (coordinateSectionZ[i] == item.Z2 && coordinateSectionZ[i] == item.Z3)
+                        {
+                            tempElement.point1 = new PointF() { X = item.X2, Y = item.Y2 };
+                            tempElement.point2 = new PointF() { X = item.X3, Y = item.Y3 };
+                            //MessageBox.Show(" 2 и 3 = " + tempElement.point1.ToString() + "\n" + tempElement.point2.ToString());
+                        }
+                        else if (coordinateSectionZ[i] == item.Z1 && coordinateSectionZ[i] == item.Z3)
+                        {
+                            tempElement.point1 = new PointF() { X = item.X1, Y = item.Y1 };
+                            tempElement.point2 = new PointF() { X = item.X3, Y = item.Y3 };
+                            //MessageBox.Show(" 1 и 3 = " + tempElement.point1.ToString() + "\n" + tempElement.point2.ToString());
+                        }
+                        else if (coordinateSectionZ[i] == item.Z1 && coordinateSectionZ[i] == item.Z2 )
+                        {
+                            tempElement.point1 = new PointF() { X = item.X1, Y = item.Y1 };
+                            tempElement.point2 = new PointF() { X = item.X2, Y = item.Y2 };
+                            //MessageBox.Show(" 1 и 2 = " + tempElement.point1.ToString() + "\n" + tempElement.point2.ToString());
+                   
+                        }
+                        if ((item.Z1 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z2) ||
+                                 (item.Z2 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z1))
+                        {
+                            tempElement.point1 = proc.PlaneCrossLine(item.X1, item.Y1, item.Z1,
+                                                                     item.X2, item.Y2, item.Z2,
+                                                                     coordinateSectionZ[i]);
+                            //MessageBox.Show("tempElement.point1 - 12 = " + tempElement.point1.ToString());
+                        }
+                        if ((item.Z2 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z3) ||
+                                 (item.Z3 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z2))
+                        {
+                            if (tempElement.point1 == PointF.Empty)
+                            {
+                                tempElement.point1 = proc.PlaneCrossLine(item.X2, item.Y2, item.Z2,
+                                                                         item.X3, item.Y3, item.Z3,
+                                                                         coordinateSectionZ[i]);
+                                //MessageBox.Show("tempElement.point1 - 23 = " + tempElement.point1.ToString());
+                            }
+                            else
+                            {
+                                tempElement.point2 = proc.PlaneCrossLine(item.X2, item.Y2, item.Z2,
+                                                                         item.X3, item.Y3, item.Z3,
+                                                                         coordinateSectionZ[i]);
+
+                                //MessageBox.Show("tempElement.point2 - 23 = " + tempElement.point2.ToString());
+                            }
+                        }
+                        if ((item.Z3 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z1) ||
+                                 (item.Z1 < coordinateSectionZ[i] && coordinateSectionZ[i] < item.Z3))
+                        {
+                            if (tempElement.point1 == PointF.Empty)
+                            {
+                                tempElement.point1 = proc.PlaneCrossLine(item.X3, item.Y3, item.Z3,
+                                                                         item.X1, item.Y1, item.Z1,
+                                                                         coordinateSectionZ[i]);
+
+                                //MessageBox.Show("tempElement.point2 - 31 = " + tempElement.point1.ToString());
+                            }
+                            else if (tempElement.point2 == PointF.Empty)
+                            {
+                                tempElement.point2 = proc.PlaneCrossLine(item.X3, item.Y3, item.Z3,
+                                                                         item.X1, item.Y1, item.Z1,
+                                                                         coordinateSectionZ[i]);
+
+                                //MessageBox.Show("tempElement.point2 - 31 = " + tempElement.point2.ToString());
+                            }
+                        }
+                        tempElement.num = num++;
+
+                        tempElementOfCurve.Add(tempElement);
+                        Perimeter += proc.length(tempElement.point1, tempElement.point2);
+                        Section += proc.squareSection(tempElement.point1, tempElement.point2);
+
+                        tempMassiveParLayer.Add((float)(Math.Acos(item.ZN) / Math.PI * 180));
+                    }
+                }
+
+
+
+        /// <summary>
+        /// Процедура перевода данных из List<base_stl> в List<base_vertex>
+        /// </summary>
+        /// <param name="ListStl"></param>
+        /// <returns></returns>
+        public List<object> translationSTLtoListVertex(List<base_stl> ListStl, ToolStripProgressBar ProgressBar)
+        {
+            List<object> listResult = new List<object>();
+            //Номер вершины
+            int nomVertex = 0;
+
+            listVertex.Clear();
+            for (int k = 0; k < ListStl.Count; k++)
+            {
+                base_vertex tempVertex1 = new base_vertex() { X = ListStl[k].X1, Y = ListStl[k].Y1, Z = ListStl[k].Z1 };
+                base_vertex tempVertex2 = new base_vertex() { X = ListStl[k].X2, Y = ListStl[k].Y2, Z = ListStl[k].Z2 };
+                base_vertex tempVertex3 = new base_vertex() { X = ListStl[k].X3, Y = ListStl[k].Y3, Z = ListStl[k].Z3 };
+                //Метка совпадения вершин
+                bool bVertex1 = false;
+                bool bVertex2 = false;
+                bool bVertex3 = false;
+                //Предположение - треугольник не вырожденный (вершины не совпадают для одной грани)
+                if (listVertex.Count != 0)
+                {
+                    foreach (var item in listVertex)
+                    {
+                        if (item.X == tempVertex1.X && item.Y == tempVertex1.Y && item.Z == tempVertex1.Z)
+                        {
+                            bVertex1 = true;
+                            ListStl[k].NomV1 = item.Nom;
+                        }
+                        if (item.X == tempVertex2.X && item.Y == tempVertex2.Y && item.Z == tempVertex2.Z)
+                        {
+                            bVertex2 = true;
+                            ListStl[k].NomV2 = item.Nom;
+                        }
+                        if (item.X == tempVertex3.X && item.Y == tempVertex3.Y && item.Z == tempVertex3.Z)
+                        {
+                            bVertex3 = true;
+                            ListStl[k].NomV3 = item.Nom;
+                        }
+                    }
+                    if (!bVertex1)
+                    {
+                        ListStl[k].NomV1 = tempVertex1.Nom = ++nomVertex;
+                        listVertex.Add(tempVertex1);
+                    }
+                    if (!bVertex2)
+                    {
+                        ListStl[k].NomV2 = tempVertex2.Nom = ++nomVertex;
+                        listVertex.Add(tempVertex2);
+                    }
+                    if (!bVertex3)
+                    {
+                        ListStl[k].NomV3 = tempVertex3.Nom = ++nomVertex;
+                        listVertex.Add(tempVertex3);
+                    }
+                }
+                else
+                {
+                    ListStl[k].NomV1 = tempVertex1.Nom = nomVertex;
+                    listVertex.Add(tempVertex1);
+                    ListStl[k].NomV2 = tempVertex2.Nom = ++nomVertex;
+                    listVertex.Add(tempVertex2);
+                    ListStl[k].NomV3 = tempVertex3.Nom = ++nomVertex;
+                    listVertex.Add(tempVertex3);
+                }
+                ProgressBarRefresh(ProgressBar, k, ListStl.Count);
+            }
+            listResult.Add(listVertex);
+            listResult.Add(ListStl);
+
+            return listResult;
+        }
+								////////////////
+Удивительно...
+ListStl3 = ListStl2.Count != 0 ? ListStl2 : ListStl;
+tempValue += (float)((base_stl)ListStl[j]).CalcSTr()[3];
+///
+http://edu.vgasu.vrn.ru/sub-faculties/us/DocLib10/Курочка/Статистика_УМК/Статистика_УМК/Статистика_8-10.pdf
+Определение количества интервалов гистограммы
+ min x - максимальное и минимальное значения признака в совокупности; п 
+— число групп.
+Число групп приближенно определяется по формуле Стерджесса:
+m = 1 + 3,322 lg n,
+где m — число групп; n — число единиц совокупности; lg n -десятичный лога-
+рифм от n
+*****
+Статистический анализ
+*****
+       /// <summary>
+        /// Статистические характеристики (результаты анализа)
+        /// </summary>
+        public float[] resultStatPar = new float[13];
+        List<Stat_analysis.elementGist> gistPar = new List<Stat_analysis.elementGist>();
+
+        /// <summary>
+        /// Статистический анализ исследуемого признака
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButton5_Click_1(object sender, EventArgs e)
+        {
+            Stat_analysis statisticaPar = new Stat_analysis();
+            //
+            List<float> tempMassivePar = new List<float>();
+
+            for (int i = 0; i < ListStl.Count; i++)
+                {
+                        tempMassivePar.Add(ListStl[i].Xv);
+                }
+            //
+                gistPar = statisticaPar.Gist(tempMassivePar.ToArray(), (int)numericUpDownIntVisual.Value);
+                resultStatPar = statisticaPar.Stat(tempMassivePar.ToArray(), gistPar);
+***********
+Обновление данных в базе данных
+***********
+           this.Validate();
+            customersBindingSource.EndEdit();
+
+            _123DataSet.CustomersDataTable deleteCustomers = 
+                (_123DataSet.CustomersDataTable) _123DataSet.Customers.GetChanges(DataRowState.Deleted);
+            
+            _123DataSet.CustomersDataTable newCustomers =
+                (_123DataSet.CustomersDataTable)_123DataSet.Customers.GetChanges(DataRowState.Added);
+
+            _123DataSet.CustomersDataTable modifiedCustomers =
+                (_123DataSet.CustomersDataTable)_123DataSet.Customers.GetChanges(DataRowState.Modified);
+
+            try
+            {
+                    
+                // Remove all deleted orders from the Orders table.
+                if (deleteCustomers != null)
+                {
+                    customersTableAdapter.Update(deleteCustomers);
+                }
+                // Add new orders to the Orders table.
+                if (newCustomers != null)
+                {
+                    customersTableAdapter.Update(newCustomers);
+                }
+                // Update all modified Orders.
+                if (modifiedCustomers != null)
+                {
+                    customersTableAdapter.Update(modifiedCustomers);
+                }
+                _123DataSet.AcceptChanges();
+            }
+
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            finally
+            {
+                if (deleteCustomers != null)
+                {
+                    deleteCustomers.Dispose();
+                }
+                if (newCustomers != null)
+                {
+                    newCustomers.Dispose();
+                }
+                if (modifiedCustomers != null)
+                {
+                    modifiedCustomers.Dispose();
+                }
+            }
+*******************
+Professional techniques for C# - Lecture Notes Part 4 of 4
+http://www.codeproject.com/Articles/1094829/Professional-techniques-for-Csharp-Lecture-Notes-P
+*****
+Генерирование случайных чисел
+Random Values in .NET - Some Library
+https://github.com/PawelSienko/Some
+Использование библиотеки
+http://www.codeproject.com/Articles/1094250/Random-values-in-NET-Some-library
+*******************
+                    if ( x1.IndexOf(NumberFormatInfo.CurrentInfo.NumberDecimalSeparator) == -1)
+                    {
+                        if (NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == ".")
+                        {
+                            x1 = x1.Replace(',', '.'); y1 = y1.Replace(',', '.'); z1 = z1.Replace(',', '.');
+                            x2 = x2.Replace(',', '.'); y2 = y2.Replace(',', '.'); z2 = z2.Replace(',', '.');
+                            x3 = x3.Replace(',', '.'); y3 = y3.Replace(',', '.'); z3 = z3.Replace(',', '.');
+                            xn = xn.Replace(',', '.'); yn = yn.Replace(',', '.'); zn = zn.Replace(',', '.');
+                        }
+                        if (NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == ",")
+                        {
+                            x1 = x1.Replace('.', ','); y1 = y1.Replace('.', ','); z1 = z1.Replace('.', ',');
+                            x2 = x2.Replace('.', ','); y2 = y2.Replace('.', ','); z2 = z2.Replace('.', ',');
+                            x3 = x3.Replace('.', ','); y3 = y3.Replace('.', ','); z3 = z3.Replace('.', ',');
+                            xn = xn.Replace('.', ','); yn = yn.Replace('.', ','); zn = zn.Replace('.', ',');
+                        }
+                    }
+*******************
+создание xml http://www.cyberforum.ru/csharp-beginners/thread636967.html
+*******************
+ string filename = DateTime.Now.ToString("PL_95000ddMMyyyy") + ".xml";
+            if (!File.Exists(filename))
+            {
+                XmlTextWriter writer = new XmlTextWriter(filename, Encoding.Default);
+                writer.Close();
+            }
+            XDocument xd = new XDocument(
+                new XElement("dataset",
+                    new XElement("table",
+                    new XElement("id",textBox1.Text),
+                    new XElement("indexvz",textBox2.Text),
+                    new XElement("fio",textBox3.Text))));
+            xd.Save(filename);
+***
+XML 
+***
+ <?xml version="1.0" encoding="utf-8"?>
+<dataset>
+  <table>
+    <id>1</id>
+    <indexvz>1</indexvz>
+    <fio>1</fio>
+  </table>
+</dataset>
+*** 
+Но при павторном вводе информации старая затирается новой.
+///
+ <dataset>
+  <table>
+    <id>1</id>
+    <indexvz>1</indexvz>
+    <fio>1</fio>
+  </table>
+<table>
+    <id>2</id>
+    <indexvz>2</indexvz>
+    <fio>2</fio>
+  </table>
+</dataset>
+***
+XDocument xd = File.Exists(filename) ? XDocument.Load(filename) : new XDocument(new XElement("root"));
+            xd.Root.Add(new XElement("dataset",
+                           new XElement("table",
+                           new XElement("id", 1),
+                           new XElement("indexvz", 1),
+                           new XElement("fio", 1))));
+            xd.Save(filename);
+
+******************************
+			//http://www.cyberforum.ru/csharp-beginners/thread1678780.html
+            FileStream stream = new FileStream(Path,FileMode.Open, FileAccess.Read);
+ 
+            BinaryReader read = new BinaryReader(stream);
+ 
+            UnicodeEncoding unicode = new UnicodeEncoding();
+ 
+            byte[] bufer = new byte[stream.Length];
+ 
+            read.Read(bufer,0, (int)stream.Length);
+ 
+           richTextBox1.AppendText( unicode.GetString(bufer));
+*******************************
+  // чтение binary file
+*******************************
+                    if (toolStripComboBox2.Text.Substring(0,2) == "2.")
+                    {
+                        using (BinaryReader br = new BinaryReader(File.Open(VibFileName, FileMode.Open)))
+                        {
+                            while (br.BaseStream.Position != br.BaseStream.Length)
+                            {
+                                byte[] header = br.ReadBytes(80);
+                                uint numTris = br.ReadUInt32();
+
+                                for (uint ui = 0; ui < numTris; ui++)
+                                {
+                                    // нормальный вектор
+                                    float xn = br.ReadSingle(); float yn = br.ReadSingle(); float zn = br.ReadSingle();
+                                    // вершина 1
+                                    float x1 = br.ReadSingle(); float y1 = br.ReadSingle(); float z1 = br.ReadSingle();
+                                    // вершина 2
+                                    float x2 = br.ReadSingle(); float y2 = br.ReadSingle(); float z2 = br.ReadSingle();
+                                    // вершина 3
+                                    float x3 = br.ReadSingle(); float y3 = br.ReadSingle(); float z3 = br.ReadSingle();
+                                    //
+                                    ushort numAttr = br.ReadUInt16();
+                                }
+                            }
+                        }
+                    }
+***********************************
+запись в бинарный файл 
+***********************************
+string FileName = "qwe.stg";
+BinaryWriter STG = new BinaryWriter(File.Open(FileName, FileMode.Create));
+STG.Write(Convert.ToUInt32(1));
+STG.Write(Convert.ToUInt32(2));
+STG.Write(Convert.ToUInt32(3));
+ 
+STG.Close();
+***********************************
+                                /*
+                                //Создание массива данных
+                                TrStl[ui].Nom = (int)ui+1;
+                                TrStl[ui].X1 = x1;
+                                TrStl[ui].Y1 = y1;
+                                TrStl[ui].Z1 = z1;
+                                TrStl[ui].X2 = x2;
+                                TrStl[ui].Y2 = y2;
+                                TrStl[ui].Z2 = z2;
+                                TrStl[ui].X3 = x3;
+                                TrStl[ui].Y3 = y3;
+                                TrStl[ui].Z3 = z3;
+                                TrStl[ui].XN = xn;
+                                TrStl[ui].YN = yn;
+                                TrStl[ui].ZN = zn;
+                                */
+***********************************

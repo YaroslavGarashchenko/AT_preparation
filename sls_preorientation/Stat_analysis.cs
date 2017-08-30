@@ -131,13 +131,20 @@ namespace PreAddTech
         {
             //Объем выборки
             int Nvib = DataArray.Length;
+            //создаем список интервалов
+            gist.Clear();
+            //
+            if (Nvib == 0)
+            {
+                MessageBox.Show("Нет данных для анализа", "Проблема!");
+                return gist;
+            }
             //
             float Xmin = DataArray.Min();
             float Xmax = DataArray.Max();
             float Xint = Xmax - Xmin; // интервал значений
 
-            //создаем список интервалов
-            gist.Clear();
+
             for (int i = 0; i < NumInt; i++)
             {
                 elementGist tempElementGist = new elementGist();
