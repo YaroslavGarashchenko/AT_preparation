@@ -1,0 +1,29 @@
+The system of technological preparation of materialization of complex products by additive technologies
+
+The developed system of technological preparation for the materialization of complex products by additive methods includes research tools using applied statistics and methodology allows to solve the following tasks:
+
+сonvert (import) STL-files of 3D-models of industrial products in the database of geometric characteristics (coordinates of vertices and normal vectors) of triangular faces;
+perform a layer analysis of 3D model of the product to assess the geometric complexity and the possibility of layer-by-layer manufacturing;
+create a voxel 3D-model of the product to perform the analysis of the distribution of elementary volumes in the layer-by-layer working space for evaluating options for applying structural decomposition;
+perform color visualization of 3D model of the product for the tasks of verifying the triangulation model correctness, analyzing the process design and making decisions at the stage of technological preparation;
+on the basis of a multicriteria evaluation, determine the rational range of rotation angles of 3D model of product for its rational orientation;
+to make a comparative evaluation of effectiveness of various options for placing 3D models of products in the workspace;
+export data (triangle database data) of the prepared 3D model to the formats: STL (for materialization using traditional technologies or Additive Manufacturing), AMF / PLY (for multicolor model visualization) and XLS (for data analysis in third-party application) ;
+to determine the statistical characteristics of distribution of the features being studied, characterizing the properties of triangulated 3D model and the technological processes of additive technologies;
+visualization and recording of initial data and research results.
+The most complete is the subsystem for color rendering of the triangulation model. It is destined to test its design for solving problems of technological preparation. This system allows you to evaluate the quality of triangulation of 3D model, the technological design of product and perform analysis of the effectiveness of additive technologies. When developing the color visualization sub-system following main tasks were solved:
+
+an estimation of correctness and rationality of triangulation of CAD-model;
+working out of a design for product manufacturability at use of additive technologies;
+visual assessment of the possibility of determining the rational orientation of the product in the working area of the construction. The developed subsystem presents the user with the following basic options for setting parameters and operating modes with subsequent visualization of the results:
+selection of test indication of 16 characteristics proposed for analysis of product model;
+automatic formation of the color scale when specifying the number of intervals and color for the first and last interval (components of RGB model are determined by garmonic dependence);
+editing intervals or selectively deleting them in the color scale database to match the values of the feature being examined;
+color editing for each individual value interval using the color selection dialog box;
+saving the color model to PLY, AMF and for additional analysis as a data table in XLS format (or in TXT format in the absence of MS Excel application);
+statistical analysis and plotting of distribution histogram of the characteristics;
+recording of settlement data in a common table for comparative analysis;
+determination of basic statistical characteristics (12 parameters);
+saving the results of statistical analysis to XLS-format file for further analysis using third-party software;
+output form of visualization of analysis results in the form of density or integral probability function.
+The help system is not provided yet. The interface language is Russian.
