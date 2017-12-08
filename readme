@@ -1,6 +1,6 @@
 The system of technological preparation of materialization of complex products by additive technologies
 
-The developed system of technological preparation for the materialization of complex products by additive methods includes research tools using applied statistics and methodology allows to solve the following tasks:
+The developed system includes research tools using applied statistics and methodology allows to solve the following tasks:
 - сonvert (import) STL-files of 3D-models of industrial products in the database of geometric characteristics (coordinates of vertices and normal vectors) of triangular faces;
 - perform a layer analysis of 3D model of the product to assess the geometric complexity and the possibility of layer-by-layer manufacturing;
 - create a voxel 3D-model of the product to perform the analysis of the distribution of elementary volumes in the layer-by-layer working space for evaluating options for applying structural decomposition;
