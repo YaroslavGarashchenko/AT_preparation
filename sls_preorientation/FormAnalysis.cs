@@ -4672,6 +4672,9 @@ namespace PreAddTech
                 MessageBox.Show("Нет исходных данных...", "Ошибка!");
                 return;
             }
+            checkBoxVisualAnalysis.Enabled = false;
+            numericUpDownRatioRtoL.Enabled = true;
+            toolStripButtonLayerAnalysis.Enabled = true;
             gistParMassiveLayer.Clear();
             ParMassiveLayer.Clear();
             gistParMassiveLayerA.Clear();
@@ -4680,29 +4683,23 @@ namespace PreAddTech
             
             MyProcedures proc = new MyProcedures();
             //Определение мин. и макс. координат вершин по оси Z
-            limits = proc.limitModel(ListStl);
+            limits = proc.limitModel(ListStl); // [0] - minZ; [1] - maxZ
 
-            float minZ = limits[0];
-            float maxZ = limits[1];
-            float[] tempZ = new float[3];
-            float[] coordinateSectionZ;
-            //Шаг построения
-            float stepConst;
+            float[] coordinateSectionZ; //Массив координат расположения сечений
+            float stepConst; //Шаг построения
             //Выбрана стратегия с постоянным шагом построения
             if (toolStripComboBoxLayerAnalysis.SelectedIndex == 0 && float.TryParse(toolStripTextBoxMinStep.Text, out stepConst))
             {
-                //Массив координат расположения сечений
-                coordinateSectionZ = new float[(int)Math.Ceiling((maxZ - minZ) / stepConst)];
+                coordinateSectionZ = new float[(int)Math.Ceiling((limits[1] - limits[0]) / stepConst)];
 
                 if (dataGridViewSetLayer.RowCount != 0)
                     dataGridViewSetLayer.Rows.Clear();
 
-                //Заполнение таблицы
-                string[] strEmpty = new string[29];
+                string[] strEmpty = new string[29];//Заполнение таблицы
 
                 for (int i = 0; i < coordinateSectionZ.Length; i++)
                 {
-                    coordinateSectionZ[i] = (float)Math.Round(minZ + i*stepConst, 3);
+                    coordinateSectionZ[i] = (float)Math.Round(limits[0] + i*stepConst, 3);
                     proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Length - 1);
 
                     //Добавление в dataGridViewSetLayer
@@ -4722,12 +4719,9 @@ namespace PreAddTech
                 return;
             }
             listContour.Clear();
-            //Периметр
-            float Perimeter;
-            //Площадь
-            float Section;
-            //Барицентр
-            PointF barCenter;
+            float Perimeter;//Периметр
+            float Section;//Площадь
+            PointF barCenter;//Барицентр
             //Рассечение 3D-модели плоскостями
             for (int i = 0; i < coordinateSectionZ.Length; i++)
             {
@@ -4757,14 +4751,8 @@ namespace PreAddTech
                     {
                         pointSTL.Add(itemPoint);
                     }
-                    /*
-                    if (pointSTL[0].Z == coordinateSectionZ[i] )
-                    {
-                        continue;
-                    }
-                    */
                     // пересечение треугольной грани участвующей в формировании контура
-                    if (pointSTL[0].Z < coordinateSectionZ[i] && coordinateSectionZ[i] < pointSTL[2].Z && Math.Abs(item.ZN) != 1)
+                    if (pointSTL[0].Z <= coordinateSectionZ[i] && coordinateSectionZ[i] < pointSTL[2].Z && Math.Abs(item.ZN) != 1)
                     {
                         base_elementOfCurve tempElement = new base_elementOfCurve();
                         PointF[] pointsCurve = proc.elementOfCurve(
@@ -4775,7 +4763,7 @@ namespace PreAddTech
                         tempElement.point1 = pointsCurve[0];
                         tempElement.point2 = pointsCurve[1];
 
-                        if (tempElement.point1 != PointF.Empty)
+                        if (tempElement.point1 != PointF.Empty && tempElement.point1 != tempElement.point2)
                         {
                             tempElement.num = num++;
                             tempElementOfCurve.Add(tempElement);
@@ -4816,6 +4804,9 @@ namespace PreAddTech
             }
             toolStripStatusLabelLayerAnalysis.Text = "Данные по сечениям готовы";
             toolStripStatusLabelLayerAnalysis.ForeColor = Color.Black;
+
+            numericUpDownCountFractalAnalysis.Enabled = true;
+            numericUpDownCurentFractalAnalysis.Enabled = true;
         }
 
         private void toolStripTextBoxMinStep_KeyPress(object sender, KeyPressEventArgs e)
@@ -4864,7 +4855,7 @@ namespace PreAddTech
             numSection = e.RowIndex;
             tempElementOfCurveSection = listContour[numSection].listElement;
 
-            if(checkBoxOneOrAll.CheckState == CheckState.Checked)
+            if (checkBoxOneOrAll.CheckState == CheckState.Checked)
             tempElementOfCurveSectionMassive.Add(listContour[numSection].listElement);
 
             panelReviewContourSection.Refresh();
@@ -4986,8 +4977,17 @@ namespace PreAddTech
 
             if (dataGridViewSetLayer.RowCount != 0 && float.TryParse(toolStripComboBoxScale.Text, out Kscale))
             {
-                Pen myPen = new Pen(colorPen);
-                Pen myPen2 = new Pen(Color.Black);
+                //Количество контуров
+                int countContour = 0;
+                foreach (var item in tempElementOfCurveSection)
+                {
+                    countContour = item.iContour < countContour ? countContour : item.iContour;
+                }
+
+                Pen myPen = new Pen(colorPen); // внутренний контур
+                Pen myPen2 = new Pen(Color.Black); // внешний контур
+                Pen myPen3 = new Pen(Color.DarkBlue); // контур окружностей (мер)
+
                 Graphics contourGraphics = panelReviewContourSection.CreateGraphics();
                 if (checkBoxOneOrAll.CheckState != CheckState.Checked)
                 {
@@ -4996,18 +4996,18 @@ namespace PreAddTech
                         if (!item.insideOrOuterContour)
                         {
                             contourGraphics.DrawLine(myPen,
-                                                     Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                     Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
-                                                     Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                     Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                                                   transformationPointForVisualisation(item.point1, Kscale, 
+                                                           limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis),
+                                                   transformationPointForVisualisation(item.point2, Kscale, 
+                                                           limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis));
                         }
                         else
                         {
                             contourGraphics.DrawLine(myPen2,
-                                                     Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                     Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
-                                                     Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                     Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                                                   transformationPointForVisualisation(item.point1, Kscale,
+                                                           limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis),
+                                                   transformationPointForVisualisation(item.point2, Kscale,
+                                                           limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis));
                         }
                     }
                 }
@@ -5020,27 +5020,69 @@ namespace PreAddTech
                             if (!item.insideOrOuterContour)
                             {
                                 contourGraphics.DrawLine(myPen,
-                                                         Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                         Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
-                                                         Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                         Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                                                   transformationPointForVisualisation(item.point1, Kscale,
+                                                           limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis),
+                                                   transformationPointForVisualisation(item.point2, Kscale,
+                                                           limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis));
                             }
                             else
                             {
                                 contourGraphics.DrawLine(myPen2,
-                                                         Kscale * (item.point1.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                         Hvis / 2 - Kscale * (item.point1.Y - limits[4] - Hmodel / 2),
-                                                         Kscale * (item.point2.X - limits[2] - Wmodel / 2) + Wvis / 2,
-                                                         Hvis / 2 - Kscale * (item.point2.Y - limits[4] - Hmodel / 2));
+                                                   transformationPointForVisualisation(item.point1, Kscale,
+                                                           limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis),
+                                                   transformationPointForVisualisation(item.point2, Kscale,
+                                                           limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis));
                             }
                         }
                     }
                 }
+
+                if (checkBoxVisualAnalysis.CheckState == CheckState.Checked)
+                {
+                    foreach (var item in ParMassiveLayerFract_anal[numSection].pointR)
+                    {
+                        if (numericUpDownCurentFractalAnalysis.Value == (item.nomMeasure + 1))
+                        {
+                            PointF pointC = transformationPointForVisualisation(item.pointCentre, Kscale,
+                                                               limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis);
+                            float R = 2 * Kscale * item.R > 1 ? 2 * Kscale * item.R : 1;
+                            contourGraphics.DrawArc(myPen3, pointC.X - Kscale * item.R, 
+                                                            pointC.Y - Kscale * item.R, 
+                                                            R, R, 
+                                                            0, 360);
+                        }
+                    }
+                }
+
+                labelCountContour.Text = "Количество контуров: " + countContour + ".";
                 //
                 myPen.Dispose();
                 contourGraphics.Dispose();
             }
         }
+        /// <summary>
+        /// Трансформация точки для визуализации (послойный анализ)
+        /// </summary>
+        /// <param name="P0">исходная точка</param>
+        /// <param name="Kscale">масштабный коэффициент</param>
+        /// <param name="minModelX">минимальная координата модели по оси X</param>
+        /// <param name="minModelY">минимальная координата модели по оси Y</param>
+        /// <param name="Wmodel">габаритный размер модели по оси X</param>
+        /// <param name="Hmodel">габаритный размер модели по оси Y</param>
+        /// <param name="Wvis">Максимальный размер визуализации по оси X</param>
+        /// <param name="Hvis">Максимальный размер визуализации по оси Y</param>
+        /// <returns></returns>
+        PointF transformationPointForVisualisation(PointF P0, float Kscale, float minModelX, float minModelY, 
+                                                   float Wmodel, float Hmodel, int Wvis, int Hvis)
+        {
+            PointF transformationP = new PointF()
+            {
+                X = Kscale * (P0.X - minModelX - Wmodel / 2) + Wvis / 2,
+                Y = Hvis / 2 - Kscale * (P0.Y - minModelY - Hmodel / 2)
+            };
+            return transformationP;
+        }
+
         /// <summary>
         /// Цвет пера для прорисовки контура
         /// </summary>
@@ -5113,8 +5155,14 @@ namespace PreAddTech
         {
             dataGridViewSetLayer.Dock = DockStyle.None;
         }
-
+        /// <summary>
+        /// Список фрактальной размерности
+        /// </summary>
         List<float> ParMassiveLayerFD = new List<float>();
+        /// <summary>
+        /// Список результатов фрактального анализа
+        /// </summary>
+        List<base_fract_anal> ParMassiveLayerFract_anal = new List<base_fract_anal>();
 
         /// <summary>
         /// Статистический анализ характеристик контура
@@ -5131,14 +5179,20 @@ namespace PreAddTech
 
             ParMassiveLayerA.Clear();
             ParMassiveLayerFD.Clear();
+            ParMassiveLayerFract_anal.Clear();
             //Определение смежных углов элементов контура 
             //Определение фрактальной размерности
             for (int i = 0; i < listContour.Count; i++)
             {
                 proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, listContour.Count - 1);
-                List<base_elementOfCurve> listETemp = proc.listCloseContour(listContour[i].listElement);
+                List<base_elementOfCurve> listETemp = proc.listCloseContour(listContour[i].listElement, SettingsUser.Default.RoundingKoord);
                 ParMassiveLayerA.Add(proc.massiveAngleAdjacent(listETemp));
-                ParMassiveLayerFD.Add(proc.fractalDimension(listETemp));
+                base_fract_anal fractal_analTemp = proc.fractalDimension(listETemp,
+                                      (int)numericUpDownCountFractalAnalysis.Value,
+                                      (int)numericUpDownRatioRtoL.Value,
+                                      checkBoxAbsOrRel.CheckState == CheckState.Checked);
+                ParMassiveLayerFD.Add(fractal_analTemp.mean());
+                ParMassiveLayerFract_anal.Add(fractal_analTemp);
             }
             ///
             float Xcentre0 = 0;
@@ -5209,7 +5263,7 @@ namespace PreAddTech
             }
             else
             { return; }
-
+            //Статистический анализ углов контура
             if (ParMassiveLayerA.Count != 0)
             {
                 for (int i = 0; i < ParMassiveLayerA.Count; i++)
@@ -5257,6 +5311,19 @@ namespace PreAddTech
             else
             { return; }
 
+            //Фрактальная размерность контуров
+            if (ParMassiveLayerFD.Count != 0)
+            {
+                for (int i = 0; i < ParMassiveLayerFD.Count; i++)
+                {
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["Fractal_Size"].Index, i].Value =
+                            ParMassiveLayerFD[i].ToString("0.000");
+                }
+            }
+            else
+            { return; }
+
+            checkBoxVisualAnalysis.Enabled = true;
             toolStripStatusLabelLayerAnalysis.Text ="Выполнен анализ стат. характеристик исследуемых признаков";
             toolStripStatusLabelLayerAnalysis.ForeColor = Color.Black;
         }
@@ -5518,7 +5585,50 @@ namespace PreAddTech
             activeChart = massiveChart[(int)setAbsRel * 4 + (int)setChartType];
             activeChart.Visible = true;
         }
- 
+
+        private void numericUpDownCurentFractalAnalysis_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDownCurentFractalAnalysis.Value > numericUpDownCountFractalAnalysis.Value)
+            {
+                numericUpDownCurentFractalAnalysis.Value = numericUpDownCountFractalAnalysis.Value;
+            }
+        }
+
+        private void numericUpDownCountFractalAnalysis_ValueChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void checkBoxAbsOrRel_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (checkBoxAbsOrRel.CheckState == CheckState.Checked)
+            {
+                checkBoxAbsOrRel.Text = "Абсолютные значения";
+            }
+            else
+            {
+                checkBoxAbsOrRel.Text = "Относительные значения";
+            }
+        }
+
+        private void dataGridViewSetLayer_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //игнорирование нажатия вне объекта
+            if (e.RowIndex < 0 || ParMassiveLayerFract_anal.Count == 0) return;
+
+            if (e.ColumnIndex == dataGridViewSetLayer.Columns["Fractal_Size"].Index &&
+                dataGridViewSetLayer.Rows[e.RowIndex].Cells["Fractal_Size"].Value.ToString().TrimEnd() != "")
+            {
+                FormResults dataRevision = new FormResults();
+                dataRevision.Activate();
+                dataRevision.ListStl = ListStl;
+                dataRevision.toolStripComboBoxResult.SelectedIndex = 1;
+                dataRevision.richTextBoxResultAnalysis.Text = dataRevision.revision[1] = 
+                                                              ParMassiveLayerFract_anal[numSection].ToString();
+                dataRevision.Show();
+            }
+        }
+
         /// <summary>
         /// Выбор пункта "2. Просмотр и запись в файл"
         /// </summary>
@@ -5533,6 +5643,15 @@ namespace PreAddTech
                                     DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString();
                 saveFileDialogU.ShowDialog();
             }
+        }
+        /// <summary>
+        /// Фрактальный визуальный анализ (прорисовка окружностей)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButtonFractalDimension_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

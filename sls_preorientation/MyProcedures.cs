@@ -705,8 +705,9 @@ namespace PreAddTech
         /// Процедура выявления замкнутых контуров с определением его вида: внешний и внутренний
         /// </summary>
         /// <param name="listE">Список элементов контура</param>
-        /// <returns></returns>
-        public List<base_elementOfCurve> listCloseContour(List<base_elementOfCurve> listE)
+        /// <param name="roundCoord">Точность сравнения координат вершин</param>
+        /// <returns>listE</returns>
+        public List<base_elementOfCurve> listCloseContour(List<base_elementOfCurve> listE, float roundCoord)
         {
             if (listE.Count == 0)
             {
@@ -723,7 +724,7 @@ namespace PreAddTech
             }
 
             //Количество совпадений
-            int numCoincidence = 0;
+            //int numCoincidence = 0;
 
             //Простановка порядковых номеров смежных элементов
             for (int i = 0; i < listE.Count(); i++)
@@ -733,33 +734,39 @@ namespace PreAddTech
                     //поиск совпадения вершин (приближенного)
                     for (int j = 0; j < listE.Count; j++)
                     {
-                        if (listE[i].point1 == listE[j].point2)
+                        if (Math.Abs(listE[i].point1.X - listE[j].point2.X) < roundCoord &&
+                            Math.Abs(listE[i].point1.Y - listE[j].point2.Y) < roundCoord)
                         {
                             listE[i].numAdjacent1 = listE[j].num;
                             listE[j].numAdjacent2 = listE[i].num;
-                            numCoincidence++;
+                            //2017/12/14
+                            break;
+                            //numCoincidence++;
                         }
                         //
-                        if (numCoincidence == 2)
-                            goto Finish;
+                        //if (numCoincidence == 2)
+                        //    goto Finish;
                     }
                 }
                 if (listE[i].numAdjacent2 == 0)
                 {
                     for (int j = 0; j < listE.Count; j++)
                     {
-                        if ( listE[i].point2 == listE[j].point1 )
+                        if (Math.Abs(listE[i].point2.X - listE[j].point1.X) < roundCoord &&
+                            Math.Abs(listE[i].point2.Y - listE[j].point1.Y) < roundCoord)
                         {
                             listE[i].numAdjacent2 = listE[j].num;
                             listE[j].numAdjacent1 = listE[i].num;
-                            numCoincidence++;
+                            //2017/12/14
+                            break;
+                            //numCoincidence++;
                         }
                         //
-                        if (numCoincidence == 2)
-                            goto Finish;
+                        //if (numCoincidence == 2)
+                        //    goto Finish;
                     }
                 }
-            Finish: numCoincidence = 0;
+            //Finish: numCoincidence = 0;
             }
 
             //Номер контура
@@ -768,29 +775,33 @@ namespace PreAddTech
             //Простановка номера контура
             for (int m = 0; m < listE.Count(); m++)
             {
-                if (listE[m].iContour == 0 && listE[m].numAdjacent2 != 0 && listE[m].numAdjacent1 != 0)
+                if (listE[m].iContour == 0 && listE[m].numAdjacent2 > 0 && listE[m].numAdjacent1 > 0)
                 {
                     int searchNum = listE[m].numAdjacent2 - 1;
                     int finishNum = listE[m].numAdjacent1 - 1;
                     listE[m].iContour = ++numContour;
-                    int current = m;
                     int i = 0;
                     //Поиск номера
                     while (searchNum != finishNum && i++ < listE.Count())
                     {
+                        if ( searchNum == -1) break;
+                        /*
                         if (listE[searchNum].numAdjacent1 == current + 1)
                         {
-                            current = searchNum;
+                        */
                             listE[searchNum].iContour = numContour;
                             searchNum = listE[searchNum].numAdjacent2 - 1;
-                        }
+                        /*
+                    }*/
+                        /*
                         if (listE[searchNum].numAdjacent2 == current + 1)
                         {
                             current = searchNum;
                             listE[searchNum].iContour = numContour;
                             searchNum = listE[searchNum].numAdjacent1 - 1;
                         }
-                        if (searchNum == 0) break;
+                        */
+                        if (searchNum == 0 ) break;
                     }
                     listE[finishNum].iContour = numContour;
                 }
@@ -806,7 +817,7 @@ namespace PreAddTech
                 }
                 foreach (var item in listE)
                 {
-                    if (item != null || item.iContour != 0)
+                    if (item != null && item.iContour != 0)
                     {
                         subList[item.iContour - 1].Add(item);
                     }
@@ -1078,91 +1089,152 @@ namespace PreAddTech
         /// <summary>
         /// Определение фрактальной размерности контура (контуров)
         /// </summary>
-        /// <param name="listE"></param>
+        /// <param name="listE">Список элементов контура</param>
         /// <returns></returns>
-        public float fractalDimension(List<base_elementOfCurve> listE)
+        public base_fract_anal fractalDimension(List<base_elementOfCurve> listE, int CountFractalAnalysis, int ratioRtoL, bool absOrRelR)
         {
-            float fractalD = 0;
-            //Первая точка (начало процедуры)
-            int startContour = listE[0].iContour;
-            PointF startPoint = listE[0].point1;
-            //Длина контура
-            float lengthContour = 0;
-            //
-            for (int i = 0; i < listE.Count(); i++)
-            {
-                lengthContour += length(listE[i].point1, listE[i].point2);
-            }
-            //Первоначальный радиус окружности
-            float mera = lengthContour / 10;
+            base_fract_anal ResultFractalAnalysis = new base_fract_anal();
+            if (listE.Count == 0) { return ResultFractalAnalysis; }
 
-            //Начальная длина
-            float lengthTemp = 0;
-
-            while (lengthTemp < lengthContour)
+            //List<float> listFractalDimension = new List<float>();
+            //Результаты анализа фрактальной размерности 
+            
+            ResultFractalAnalysis.fractalDimension = new List<float>();
+            ResultFractalAnalysis.length = new List<float>();
+            ResultFractalAnalysis.size = new List<float>();
+            ResultFractalAnalysis.pointR = new List<fractalMeraR>();
+            ResultFractalAnalysis.countElements = listE.Count();
+            List<PointF> listPointF = new List<PointF>();
+            int countContour = 0;
+            //Определение количества контуров
+            foreach (var item in listE)
+            { countContour = item.iContour < countContour ? countContour : item.iContour; }
+            ResultFractalAnalysis.countContour = countContour;
+            int[] startContour = new int[countContour]; // начало контура
+            int[] endContour = new int[countContour]; // конец контура
+            float[] lengthContour = new float[countContour]; // длина контура
+            for (int j = 0; j < countContour; j++)
             {
-                float x0 = startPoint.X;
-                float y0 = startPoint.Y;
-                float A = mera * mera - x0 * x0 - y0 * y0;
-                List<base_elementOfCurve> ElementTemp = new List<base_elementOfCurve>();
-                //Проверка пересечения окружности с линией контура
-                for (int i = 0; i < listE.Count(); i++)
+                var listECurrent = from E in listE
+                                   where E.iContour == j + 1
+                                   select E;                
+                //Первая и последняя точки контура
+                bool first = true;
+                foreach (var item in listECurrent)
                 {
-                    //Варианты пересечения 
-                    //Необходимо выбрать с максимальной длиной отрезка
-                    //0 - номер контура, 1 - номер элемента
-
-                    //1-я точка линии
-                    float x1 = listE[i].point1.X;
-                    float y1 = listE[i].point1.Y;
-                    //2-я точка линии
-                    float x2 = listE[i].point2.X;
-                    float y2 = listE[i].point2.Y;
-                    //
-                    float k = (y2 - y1) / (x2 - x1);
-                    float B = 2*k*k*x0*x1 - k*k*x1*x1 + k*k*y0*y0 + A*k*k + 2*k*x0*y0 - 2*k*x0*y1 - 2*k*x1*y0 + 2*k*x1*y1 + 
-                              x0*x0 + 2*y0*y1 - y1*y1 + A;
-                    if (B >= 0)
+                    if ( first )
                     {
-                        float C = k * (k * x1 + y0 - y1) + x0;
-                        PointF pointTemp1 = new PointF();
-                        PointF pointTemp2 = new PointF();
-
-                        pointTemp1.X = (float)(C + Math.Sqrt(B)) / (k * k + 1);
-                        pointTemp1.Y = (float)(k*(C + Math.Sqrt(B)) / (k * k + 1) - k*x1 + y1);
-                        //bool hit1 = false;
-                        pointTemp2.X = (float)(C - Math.Sqrt(B)) / (k * k + 1);
-                        pointTemp2.Y = (float)(k * (C - Math.Sqrt(B)) / (k * k + 1) - k*x1 + y1);
-                        //bool hit2 = false;
-                        //Проверка попадания на линию (между точками listE[i].point1 и listE[i].point2)
-                        float[] pLineX = new float[2] { x1, x2 };
-                        float[] pLineY = new float[2] { y1, y2 };
-
-                        if (pLineX.Min() != pLineX.Max())
-                        {
-                            //if (pointTemp1.X > pLineX.Min() && pointTemp1.X < pLineX.Max())
-                                //lengthContourFromStartToPoint();
-
-                            //if (pointTemp2.X > pLineX.Min() && pointTemp2.X < pLineX.Max())
-                                //hit2 = true;
-                        }
-                        else
-                        {
-                            //if (pointTemp1.Y > pLineY.Min() && pointTemp1.Y < pLineY.Max())
-                                //hit1 = true;
-
-                            //if (pointTemp2.Y > pLineY.Min() && pointTemp2.Y < pLineY.Max())
-                                //hit2 = true;
-                        }
+                        startContour[j] = item.num - 1; //Номер элемента начала
+                        first = false;
                     }
-
+                        lengthContour[j] += length(item.point1, item.point2);
                 }
+                float mera;
+                // Первоначальный радиус окружности  
+                if (absOrRelR)
+                {
+                    mera = ratioRtoL; //абсолютный размер
+                }
+                else
+                {
+                    mera = lengthContour[j] / ratioRtoL; //радиус относительно длины контура
+                }
+                ResultFractalAnalysis.Mstart = mera;
+                int[] L = new int[CountFractalAnalysis]; // Размерность
+                float[] M = new float[CountFractalAnalysis]; // Мера
+                
+                //Изменение меры
+                for (int varMera = 0; varMera < CountFractalAnalysis; varMera++)
+                {
+                    int i = 0;
+                    //прохождение контура
+                    mera = mera / 2; // Мера - радиус окружности
+                    float x0 = listE[startContour[j]].point1.X; //Координаты центра окружности
+                    float y0 = listE[startContour[j]].point1.Y;
+                    float lengthOld = 0f;
+                    PointF pointSearch = new PointF(); //Для поиска точки пересечения
+                    int limit = (int)Math.Ceiling(lengthContour[j] / mera) + 1;
+                    while (lengthOld < lengthContour[j] && i < limit)
+                    {
+                        float A = mera * mera - x0 * x0 - y0 * y0;
+                        float lengthSearch = float.MaxValue; //Для поиска минимального значения
 
-                //mera++;
+                        foreach (var item in listECurrent)
+                        {
+                            float x1 = item.point1.X; float y1 = item.point1.Y;//1-я точка линии
+                            float x2 = item.point2.X; float y2 = item.point2.Y;//2-я точка линии
+                            PointF pointTemp1 = new PointF(); PointF pointTemp2 = new PointF();
+                            bool add = false;
+                            //два варианта расчета точек пересечения
+                            if (x1 == x2)
+                            {
+                                //Проверка пересечения окружности с линией контура
+                                if (Math.Abs(x0 - x1) <= mera)
+                                {
+                                    pointTemp1.X = x1;
+                                    pointTemp1.Y = y0 + (float)Math.Sqrt(2 * x0 * x1 - x1 * x1 + y0 * y0 + A);
+                                    pointTemp2.X = x1;
+                                    pointTemp2.Y = y0 - (float)Math.Sqrt(2 * x0 * x1 - x1 * x1 + y0 * y0 + A);
+                                    add = true;
+                                }
+                            }
+                            else
+                            {
+                                float k = (y2 - y1) / (x2 - x1);
+                                float B = 2 * k * k * x0 * x1 - k * k * x1 * x1 + k * k * y0 * y0 + A * k * k + 2 * k * x0 * y0 - 2 * k * x0 * y1 -
+                                          2 * k * x1 * y0 + 2 * k * x1 * y1 + x0 * x0 + 2 * y0 * y1 - y1 * y1 + A;
+                                //Проверка пересечения окружности с линией контура
+                                if (B >= 0)
+                                {
+                                    float C = k * (k * x1 + y0 - y1) + x0;
+                                    pointTemp1.X = (float)(C + Math.Sqrt(B)) / (k * k + 1);
+                                    pointTemp1.Y = (float)(k * (C + Math.Sqrt(B)) / (k * k + 1) - k * x1 + y1);
+                                    pointTemp2.X = (float)(C - Math.Sqrt(B)) / (k * k + 1);
+                                    pointTemp2.Y = (float)(k * (C - Math.Sqrt(B)) / (k * k + 1) - k * x1 + y1);
+                                    add = true;
+                                }
+                            }
+                            if (add)
+                            {
+                                float length1 = float.MaxValue, length2 = float.MaxValue;
+                                //Проверка попадания точки на линию (между точками listE[i].point1 и listE[i].point2)
+                                if (locatePointInLine(item.point1, item.point2, pointTemp1))
+                                    length1 = lengthContourFromStartToPoint(listE, startContour[j], item.num - 1, pointTemp1);
+
+                                if (locatePointInLine(item.point1, item.point2, pointTemp2))
+                                    length2 = lengthContourFromStartToPoint(listE, startContour[j], item.num - 1, pointTemp2);
+
+                                //Проверка сравнением с расстоянием до центра окружности
+                                length1 = length1 < lengthOld ? float.MaxValue : length1;
+                                length2 = length2 < lengthOld ? float.MaxValue : length2;
+
+                                if (length1 < length2 && length1 < lengthSearch)
+                                { lengthSearch = length1; pointSearch = pointTemp1; }
+                                else if (length1 > length2 && length2 < lengthSearch)
+                                { lengthSearch = length2; pointSearch = pointTemp2; }
+                            }
+                        }
+                        lengthOld = lengthSearch;
+                        x0 = pointSearch.X; y0 = pointSearch.Y;
+                        listPointF.Add(pointSearch);
+                        fractalMeraR tempR = new fractalMeraR() {nomIteration = i++, nomMeasure = varMera,
+                                             pointCentre = pointSearch, R = mera};
+                        ResultFractalAnalysis.pointR.Add(tempR);
+                        L[varMera]++;
+                    }
+                    M[varMera] = mera;
+                    if (varMera > 0)
+                    {   
+                        ResultFractalAnalysis.fractalDimension.Add((float)((Math.Log(L[varMera - 1] + 1) - Math.Log(L[varMera] + 1)) /
+                                                 (Math.Log(M[varMera]) - Math.Log(M[varMera - 1]))));
+                    }
+                        ResultFractalAnalysis.size.Add(M[varMera]);
+                        ResultFractalAnalysis.length.Add(L[varMera]);
+                }
             }
-
-            return fractalD;
+            return ResultFractalAnalysis;
         }
+        
         /// <summary>
         /// Определение длины отрезка контура
         /// </summary>
@@ -1173,7 +1245,7 @@ namespace PreAddTech
         /// <returns></returns>
         float lengthContourFromStartToPoint(List<base_elementOfCurve> listE, int numElement1, int numElement2, PointF EndPoint)
         {
-            if (listE.Count == 0) return float.Epsilon;
+            if (listE.Count == 0) return 0f;
 
             float lengthContour = 0;
             int numElement = numElement1;
@@ -1181,10 +1253,28 @@ namespace PreAddTech
             while (numElement2 != numElement)
             {
                 lengthContour += length(listE[numElement].point1, listE[numElement].point2);
-                numElement = listE[numElement].numAdjacent2;
+                numElement = listE[numElement].numAdjacent2 - 1;
             }
             lengthContour += length(listE[numElement2].point1, EndPoint);
             return lengthContour;
+        }
+
+        /// <summary>
+        /// Определение размещения точки в пределах отрезка заданного двумя точками
+        /// </summary>
+        /// <param name="linePoint1">Первая точка линии</param>
+        /// <param name="linePoint2">Вторая точка линии</param>
+        /// <param name="Point3">Заданная точка</param>
+        /// <returns>true - точка внутри отрезка</returns>
+        bool locatePointInLine(PointF linePoint1, PointF linePoint2, PointF Point3)
+        {
+            float length13 = (float)Math.Sqrt((linePoint1.X - Point3.X) * (linePoint1.X - Point3.X) + 
+                                              (linePoint1.Y - Point3.Y) * (linePoint1.Y - Point3.Y));
+            float length12 = (float)Math.Sqrt((linePoint1.X - linePoint2.X) * (linePoint1.X - linePoint2.X) +
+                                              (linePoint1.Y - linePoint2.Y) * (linePoint1.Y - linePoint2.Y));
+            float length23 = (float)Math.Sqrt((linePoint2.X - Point3.X) * (linePoint2.X - Point3.X) +
+                                              (linePoint2.Y - Point3.Y) * (linePoint2.Y - Point3.Y));
+            return (length12 >= length13 && length12 >= length23);
         }
     }
 }

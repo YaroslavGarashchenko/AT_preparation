@@ -102,6 +102,7 @@
       <DependentUpon>AboutProgram.cs</DependentUpon>
     </Compile>
     <Compile Include="base_curve.cs" />
+    <Compile Include="base_fract_anal.cs" />
     <Compile Include="base_model.cs" />
     <Compile Include="base_elementOfCurve.cs" />
     <Compile Include="base_stl.cs" />

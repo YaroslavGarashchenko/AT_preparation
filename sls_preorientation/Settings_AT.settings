@@ -29,5 +29,8 @@
     <Setting Name="ExcelPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">c:\Program Files (x86)\MSOffice\Office12\EXCEL.EXE</Value>
     </Setting>
+    <Setting Name="RoundingKoord" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.0001</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

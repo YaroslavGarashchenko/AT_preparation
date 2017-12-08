@@ -134,5 +134,17 @@ namespace PreAddTech {
                 this["ExcelPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0001")]
+        public float RoundingKoord {
+            get {
+                return ((float)(this["RoundingKoord"]));
+            }
+            set {
+                this["RoundingKoord"] = value;
+            }
+        }
     }
 }

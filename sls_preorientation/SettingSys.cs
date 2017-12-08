@@ -53,6 +53,9 @@ namespace PreAddTech
             //ExcelPath
             dataGridViewSYS.Rows.Add(
             "Программа Excel", "ExcelPath", SettingsUser.Default.ExcelPath, "Путь к файлу");
+            //Точность округления координат вершин для операций сравнения
+            dataGridViewSYS.Rows.Add(
+            "Точность сравнения координат вершин", "RoundingKoord", SettingsUser.Default.RoundingKoord, "float");
         }
         /// <summary>
         /// Сохранение изменений настроек
@@ -111,6 +114,9 @@ namespace PreAddTech
             //ExcelPath
             dataGridViewSYS.Rows.Add(
             "Программа Excel", "ExcelPath", Settings_AT.Default.ExcelPath, "Путь к файлу");
+            //Точность округления координат вершин для операций сравнения
+            dataGridViewSYS.Rows.Add(
+            "Точность сравнения координат вершин", "RoundingKoord", Settings_AT.Default.RoundingKoord, "float");
         }
         /// <summary>
         /// Задание пути к файлу
