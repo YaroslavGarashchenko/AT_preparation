@@ -98,7 +98,9 @@
         }
 
         #endregion
-
+        /// <summary>
+        /// Гистограмма распределения
+        /// </summary>
         public System.Windows.Forms.DataVisualization.Charting.Chart chartGistogram;
         private System.Windows.Forms.Button buttonSwitch;
         public System.Windows.Forms.DataVisualization.Charting.Chart chartIntegral;

@@ -10,6 +10,9 @@ using System.Configuration;
 
 namespace PreAddTech
 {
+    /// <summary>
+    /// Форма системных настроек
+    /// </summary>
     public partial class SettingSys : Form
     {
         public SettingSys()
@@ -56,13 +59,16 @@ namespace PreAddTech
             //Точность округления координат вершин для операций сравнения
             dataGridViewSYS.Rows.Add(
             "Точность сравнения координат вершин", "RoundingKoord", SettingsUser.Default.RoundingKoord, "float");
+            //Точность задания координат по оси Z (дискретность)
+            dataGridViewSYS.Rows.Add(
+            "Дискретность задания координат по оси Z", "PositionResolution", SettingsUser.Default.PositionResolution, "float");
         }
         /// <summary>
         /// Сохранение изменений настроек
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void ButtonSave_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < dataGridViewSYS.Rows.Count; i++)
             {
@@ -86,7 +92,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonDefolt_Click(object sender, EventArgs e)
+        private void ButtonDefolt_Click(object sender, EventArgs e)
         {
             dataGridViewSYS.Rows.Clear();
             dataGridViewSYS.Rows.Add(
@@ -117,13 +123,16 @@ namespace PreAddTech
             //Точность округления координат вершин для операций сравнения
             dataGridViewSYS.Rows.Add(
             "Точность сравнения координат вершин", "RoundingKoord", Settings_AT.Default.RoundingKoord, "float");
+            //Точность задания координат по оси Z (дискретность)
+            dataGridViewSYS.Rows.Add(
+            "Дискретность задания координат по оси Z", "PositionResolution", Settings_AT.Default.PositionResolution, "float");
         }
         /// <summary>
         /// Задание пути к файлу
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridViewSYS_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewSYS_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex != dataGridViewSYS.Columns["Value"].Index ||
                 dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, e.RowIndex].Value.ToString() != "Путь к файлу") return;

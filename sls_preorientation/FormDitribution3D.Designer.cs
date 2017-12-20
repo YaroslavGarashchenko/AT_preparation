@@ -377,6 +377,9 @@
         #endregion
         private System.Windows.Forms.Button buttonSection;
         public System.Windows.Forms.TrackBar trackBarHeight;
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelСurrent;
         private System.Windows.Forms.NumericUpDown numericUpDownB2;
         private System.Windows.Forms.NumericUpDown numericUpDownG2;

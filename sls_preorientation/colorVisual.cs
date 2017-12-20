@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PreAddTech
 {
+    /// <summary>
+    /// Класс для цветовой визуализации
+    /// </summary>
     public class colorVisual
     {
         /// <summary>

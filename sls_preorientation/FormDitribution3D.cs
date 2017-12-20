@@ -9,6 +9,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PreAddTech
 {
+    /// <summary>
+    /// Форма для анализа распределения вокселей в пространстве
+    /// </summary>
     public partial class FormDitribution3D : Form
     {
         public FormDitribution3D()

@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace PreAddTech
 {
+    /// <summary>
+    /// Экранная форма справочной информации
+    /// </summary>
     public partial class FormHelp : Form
     {
         public FormHelp()

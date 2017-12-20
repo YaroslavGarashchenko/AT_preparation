@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Variants>
+  <Variant id="1">
+    <group>1</group>
+    <comment>Расчет 1</comment>
+    <history></history>
+  </Variant>
+  <Variant id="2">
+    <group>1</group>
+    <comment>Расчет 2</comment>
+    <history></history>
+</Variant>
+  <Variant id="3">
+    <group>2</group>
+    <comment>Расчет 3</comment>
+    <history></history>
+  </Variant>
+</Variants>
