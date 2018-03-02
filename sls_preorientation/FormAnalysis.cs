@@ -4806,6 +4806,7 @@ namespace PreAddTech
                 ParMassiveLayer.Add(tempMassiveParLayer);
             }
             }
+            //Выбрана стратегия с переменным шагом построения
             else if (toolStripComboBoxLayerAnalysis.SelectedIndex == 1 && float.TryParse(toolStripTextBoxMinStep.Text, out float stepMin)
                                                                        && float.TryParse(toolStripTextBoxMaxStep.Text, out float stepMax))
             {
@@ -4816,7 +4817,7 @@ namespace PreAddTech
                 }
                 //Первоначальный массив координат построения
                 //шаг построения - дискретность задания положения плоскости сечения
-                if (float.TryParse(SettingsUser.Default.PositionResolution, out float resolution))
+                if (float.TryParse(SettingsUser.Default.PositionResolution.Replace('.',','), out float resolution))
                 { coordinateSectionZ = new float[(int)Math.Ceiling((limits[1] - limits[0]) / resolution)]; }
                 else
                 {
