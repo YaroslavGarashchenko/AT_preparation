@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -41,7 +41,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <DocumentationFile>
     </DocumentationFile>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -106,7 +106,9 @@
     <Compile Include="base_model.cs" />
     <Compile Include="base_elementOfCurve.cs" />
     <Compile Include="base_stl.cs" />
+    <Compile Include="base_threading.cs" />
     <Compile Include="base_vox.cs" />
+    <Compile Include="enumerators.cs" />
     <Compile Include="ColorProcedures.cs" />
     <Compile Include="colorVisual.cs" />
     <Compile Include="FormAnalysis.cs">
@@ -155,7 +157,9 @@
     <Compile Include="PlantParameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Settings.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="SettingsUser.cs" />
     <Compile Include="SettingsUser.Designer.cs">
       <AutoGen>True</AutoGen>

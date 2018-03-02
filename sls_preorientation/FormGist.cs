@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace PreAddTech
 {
+    /// <summary>
+    /// Экранная форма вывода гистограммы 
+    /// </summary>
     public partial class FormGist : Form
     {
         public FormGist()

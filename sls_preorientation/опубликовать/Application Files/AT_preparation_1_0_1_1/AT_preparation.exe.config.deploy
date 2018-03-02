@@ -35,19 +35,16 @@
                 <value>d:\Vfp50_D_Out_User\Stat_Mod\Stat_Mod.app</value>
             </setting>
             <setting name="GLC_PlayerPuth" serializeAs="String">
-                <value>d:\App_0P\GLC_Player_2_2_0\glc_player.exe</value>
+                <value>e:\App_0P\GLC_Player_2_2_0\glc_player.exe</value>
             </setting>
             <setting name="MagicsPuth" serializeAs="String">
-                <value>C:\Program Files\Materialise\Materialise Magics 21.0\Magics.exe</value>
+                <value>E:\App\Materialise\Magics 19.01\Magics.exe</value>
             </setting>
             <setting name="ExcelPath" serializeAs="String">
-                <value>C:\Program Files (x86)\Microsoft Office\Office12\EXCEL.EXE</value>
+                <value>c:\Program Files (x86)\MSOffice\Office12\EXCEL.EXE</value>
             </setting>
             <setting name="RoundingKoord" serializeAs="String">
                 <value>0.0001</value>
-            </setting>
-            <setting name="PositionResolution" serializeAs="String">
-                <value>0.01</value>
             </setting>
         </PreAddTech.SettingsUser>
         <PreAddTech.Settings_AT>
@@ -70,19 +67,16 @@
                 <value>d:\Vfp50_D_Out_User\Stat_Mod\Stat_Mod.app</value>
             </setting>
             <setting name="GLC_PlayerPuth" serializeAs="String">
-                <value>d:\App_0P\GLC_Player_2_2_0\glc_player.exe</value>
+                <value>e:\App_0P\GLC_Player_2_2_0\glc_player.exe</value>
             </setting>
             <setting name="MagicsPuth" serializeAs="String">
-                <value>C:\Program Files\Materialise\Materialise Magics 21.0\Magics.exe</value>
+                <value>E:\App\Materialise\Magics 19.01\Magics.exe</value>
             </setting>
             <setting name="ExcelPath" serializeAs="String">
-                <value>C:\Program Files (x86)\Microsoft Office\Office12\EXCEL.EXE</value>
+                <value>c:\Program Files (x86)\MSOffice\Office12\EXCEL.EXE</value>
             </setting>
             <setting name="RoundingKoord" serializeAs="String">
                 <value>0.0001</value>
-            </setting>
-            <setting name="PositionResolution" serializeAs="String">
-                <value>0.01</value>
             </setting>
         </PreAddTech.Settings_AT>
     </userSettings>

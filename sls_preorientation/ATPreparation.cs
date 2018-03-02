@@ -15,6 +15,9 @@ namespace PreAddTech
     
     public partial class ATPreparation : Form
     {
+        /// <summary>
+        /// Основная экранная форма
+        /// </summary>
         public ATPreparation()
         {
             InitializeComponent();
@@ -422,10 +425,12 @@ namespace PreAddTech
             }
             */
         }
+
         /// <summary>
         /// Список решаемых задач
         /// </summary>
-        public enum switchActiveTask { analizeDecomposing = 0,
+        public enum switchActiveTask {
+                                        analizeDecomposing = 0,
                                         analizeOrientation,
                                         analizeSlising,
                                         analizePacking,

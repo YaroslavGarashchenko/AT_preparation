@@ -58,7 +58,7 @@
             this.dataGridViewSYS.Name = "dataGridViewSYS";
             this.dataGridViewSYS.Size = new System.Drawing.Size(900, 511);
             this.dataGridViewSYS.TabIndex = 0;
-            this.dataGridViewSYS.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewSYS_CellContentDoubleClick);
+            this.dataGridViewSYS.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewSYS_CellContentDoubleClick);
             // 
             // buttonSave
             // 
@@ -70,7 +70,7 @@
             this.buttonSave.TabIndex = 1;
             this.buttonSave.Text = "Сохранить настройки";
             this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // buttonDefolt
             // 
@@ -81,7 +81,7 @@
             this.buttonDefolt.TabIndex = 2;
             this.buttonDefolt.Text = "Значения по умолчанию (default)";
             this.buttonDefolt.UseVisualStyleBackColor = true;
-            this.buttonDefolt.Click += new System.EventHandler(this.buttonDefolt_Click);
+            this.buttonDefolt.Click += new System.EventHandler(this.ButtonDefolt_Click);
             // 
             // openFileDialogSelectFile
             // 

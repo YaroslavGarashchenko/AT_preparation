@@ -58,7 +58,9 @@
         }
 
         #endregion
-
+        /// <summary>
+        /// Просмотр html справки
+        /// </summary>
         public System.Windows.Forms.WebBrowser webBrowserHelp;
     }
 }

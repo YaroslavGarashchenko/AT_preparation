@@ -21,16 +21,19 @@
       <Value Profile="(Default)">d:\Vfp50_D_Out_User\Stat_Mod\Stat_Mod.app</Value>
     </Setting>
     <Setting Name="GLC_PlayerPuth" Type="System.String" Scope="User">
-      <Value Profile="(Default)">e:\App_0P\GLC_Player_2_2_0\glc_player.exe</Value>
+      <Value Profile="(Default)">d:\App_0P\GLC_Player_2_2_0\glc_player.exe</Value>
     </Setting>
     <Setting Name="MagicsPuth" Type="System.String" Scope="User">
-      <Value Profile="(Default)">E:\App\Materialise\Magics 19.01\Magics.exe</Value>
+      <Value Profile="(Default)">C:\Program Files\Materialise\Materialise Magics 21.0\Magics.exe</Value>
     </Setting>
     <Setting Name="ExcelPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:\Program Files (x86)\MSOffice\Office12\EXCEL.EXE</Value>
+      <Value Profile="(Default)">C:\Program Files (x86)\Microsoft Office\Office12\EXCEL.EXE</Value>
     </Setting>
-    <Setting Name="RoundingKoord" Type="System.Single" Scope="User">
+    <Setting Name="RoundingKoord" Type="System.String" Scope="User">
       <Value Profile="(Default)">0.0001</Value>
+    </Setting>
+    <Setting Name="PositionResolution" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0.01</Value>
     </Setting>
   </Settings>
 </SettingsFile>

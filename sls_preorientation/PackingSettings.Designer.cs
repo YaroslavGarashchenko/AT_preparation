@@ -124,6 +124,9 @@
         private System.Windows.Forms.Button buttonSaveSettings;
         private System.Windows.Forms.DataGridViewTextBoxColumn Parameter;
         private System.Windows.Forms.DataGridViewTextBoxColumn Volum;
+        /// <summary>
+        /// Параметры установки
+        /// </summary>
         public System.Windows.Forms.BindingSource plantParametersBindingSource;
     }
 }

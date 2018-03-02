@@ -57,9 +57,12 @@ namespace PreAddTech
             set { z1 = value; }
         }
         /// <summary>
-        /// координата 2-й вершины по оси X
+        /// координата 2-й вершины по оси X (private)
         /// </summary>
         private float x2;
+        /// <summary>
+        /// координата 2-й вершины по оси X
+        /// </summary>
         public float X2
         {
             get { return x2; }

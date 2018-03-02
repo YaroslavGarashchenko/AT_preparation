@@ -24,7 +24,7 @@ namespace PreAddTech
             InitializeComponent();
         }
 
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        private void RichTextBox1_TextChanged(object sender, EventArgs e)
         {
             int textlength = richTextBox_review.TextLength;
             toolStripComboBox1.ToolTipText = textlength.ToString() + " символов в тексте";
@@ -45,7 +45,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void ToolStripButton1_Click(object sender, EventArgs e)
         {
             toolStripStatusLabel_info.Text = "Открытие и просмотр STL-файла";
             openFileDialogU.FileName = "";
@@ -56,7 +56,7 @@ namespace PreAddTech
             ulong i = 0;
             //
             bool metka = toolStripComboBox1.Text.TrimEnd() == "весь файл" ? false : true;
-            ///
+            //
             MyProcedures proc = new MyProcedures();
             string line;
             string VibFileName;
@@ -83,7 +83,7 @@ namespace PreAddTech
                     60 * DateTime.Now.Minute + DateTime.Now.Second;
                 VibFileName = openFileDialogU.FileName;
                 toolStripTextBoxFileName.Text = VibFileName;
-                ///
+                //
                 if (metka)
                 {
                     richTextBox_review.Text = "";
@@ -93,7 +93,7 @@ namespace PreAddTech
                         {
                             ++i;
                             richTextBox_review.Text += line + "\n";
-                            ///
+                            //
                         }
                     }
                     catch (Exception e0)
@@ -106,15 +106,15 @@ namespace PreAddTech
                     //чтение всего файла
                     richTextBox_review.Text = sr.ReadToEnd();
                 }
-                ///
+                //
                 EndTimeSecunds = 3600 * DateTime.Now.Hour +
                                  60 * DateTime.Now.Minute + DateTime.Now.Second;
                 toolStripStatusLabel_time_loud.Text = "Время загрузки: " +
                     (EndTimeSecunds - StartTimeSecunds).ToString() + " c.";
-                ///
+                //
                 toolStripStatusLabel_info.Text = "Количество символов " + richTextBox_review.TextLength.ToString("###,0");
                 sr.Close();
-                ///
+                //
                 timer1.Enabled = false;
                 MessageBox.Show("Выбран файл и загружен для просмотра: " + VibFileName);
             }
@@ -189,19 +189,19 @@ namespace PreAddTech
                     timer1.Enabled = false;
                     if (VibFileName.Substring((int)(VibFileName.Length - 3)).ToLower() == "stl")
                     {
-                        toolStripButton1_Click(sender, e);
+                        ToolStripButton1_Click(sender, e);
                     }
                     else
                     { return; }
                 }
-                ///
+                //
                 EndTimeSecunds = 3600 * DateTime.Now.Hour +
                                  60 * DateTime.Now.Minute + DateTime.Now.Second;
                 toolStripStatusLabel_time_loud.Text = "Время загрузки: " +
                     (EndTimeSecunds - StartTimeSecunds).ToString() + " c.";
-                ///
+                //
                 toolStripStatusLabel_info.Text = "Количество символов " + richTextBox_review.TextLength.ToString("###,0");
-                ///
+                //
                 timer1.Enabled = false;
                 /*
                 MessageBox.Show("Выбран файл и загружен для просмотра: " + VibFileName + "\n" +
@@ -229,7 +229,7 @@ namespace PreAddTech
             }
         }
 
-        private void toolStripComboBox1_TextChanged(object sender, EventArgs e)
+        private void ToolStripComboBox1_TextChanged(object sender, EventArgs e)
         {
             if (toolStripComboBox1.Text.TrimEnd() != "весь файл")
             {
@@ -249,7 +249,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void ToolStripButton2_Click(object sender, EventArgs e)
         {
             string VibFileName = toolStripTextBoxFileName.Text;
             string VibFileName2 = "";
@@ -287,7 +287,7 @@ namespace PreAddTech
             int Nom = 0; // порядковый номер треугольника
             string StrNom;
             int NomVertex = 0; // порядковый номер вершины
-            ///string x1 ="", y1 = "", z1 = "", x2 = "", y2 = "", z2 = "", x3 = "", y3 = "", z3 = "", xn = "", yn = "", zn = "", str = "";
+            //string x1 ="", y1 = "", z1 = "", x2 = "", y2 = "", z2 = "", x3 = "", y3 = "", z3 = "", xn = "", yn = "", zn = "", str = "";
             string x1 = "", y1 = "", z1 = "", x2 = "", y2 = "", z2 = "", x3 = "", y3 = "", z3 = "", xn = "", yn = "", zn = "";
             double[] fstr;
             string[] p1; // вспомогательный массив
@@ -410,11 +410,11 @@ namespace PreAddTech
                         xn = p2[9]; yn = p2[10];zn = p2[11];
                         */
                     }
-                    ///fstr = proc.Str(double.Parse(x1), double.Parse(y1), double.Parse(z1),
-                    ///                double.Parse(x2), double.Parse(y2), double.Parse(z2),
-                    ///                double.Parse(x3), double.Parse(y3), double.Parse(z3));
-                    ///str = fstr.ToString("0.###E-000");
-                    ///Действие по выбранной активности
+                    //fstr = proc.Str(double.Parse(x1), double.Parse(y1), double.Parse(z1),
+                    //                double.Parse(x2), double.Parse(y2), double.Parse(z2),
+                    //                double.Parse(x3), double.Parse(y3), double.Parse(z3));
+                    //str = fstr.ToString("0.###E-000");
+                    //Действие по выбранной активности
                     //1.Просмотр в таблице
                     //2.Просмотр и записать в файл
                     //3.Записать в массив для расчетов
@@ -430,22 +430,22 @@ namespace PreAddTech
                         {
                             case "1":
                                 //Просмотр в таблице
-                                ///dataGridView1.Rows.Add(StrNom, x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn, str);
+                                //dataGridView1.Rows.Add(StrNom, x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn, str);
                                 dataGridView1.Rows.Add(StrNom, x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn);
                                 break;
                             case "2":
                                 //Просмотр и записать в файл
-                                base_stl TrSTL1 = new base_stl();
-                                //Записать в массив для расчетов
-                                TrSTL1.X1 = float.Parse(x1);
-                                TrSTL1.Y1 = float.Parse(y1);
-                                TrSTL1.Z1 = float.Parse(z1);
-                                TrSTL1.X2 = float.Parse(x2);
-                                TrSTL1.Y2 = float.Parse(y2);
-                                TrSTL1.Z2 = float.Parse(z2);
-                                TrSTL1.X3 = float.Parse(x3);
-                                TrSTL1.Y3 = float.Parse(y3);
-                                TrSTL1.Z3 = float.Parse(z3);
+                                base_stl TrSTL1 = new base_stl()
+                                                  { X1 = float.Parse(x1),
+                                                    Y1 = float.Parse(y1),
+                                                    Z1 = float.Parse(z1),
+                                                    X2 = float.Parse(x2),
+                                                    Y2 = float.Parse(y2),
+                                                    Z2 = float.Parse(z2),
+                                                    X3 = float.Parse(x3),
+                                                    Y3 = float.Parse(y3),
+                                                    Z3 = float.Parse(z3)
+                                                  };
                                 fstr = TrSTL1.CalcSTr();
                                 //
                                 //dataGridView1.Rows.Add(StrNom, x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn, fstr[3].ToString("0.###E-000"));
@@ -456,21 +456,22 @@ namespace PreAddTech
                                 //
                                 break;
                             case "3":
-                                base_stl TrSTL = new base_stl();
-                                //Записать в массив для расчетов
-                                TrSTL.Nom = int.Parse(StrNom);
-                                TrSTL.X1 = float.Parse(x1);
-                                TrSTL.Y1 = float.Parse(y1);
-                                TrSTL.Z1 = float.Parse(z1);
-                                TrSTL.X2 = float.Parse(x2);
-                                TrSTL.Y2 = float.Parse(y2);
-                                TrSTL.Z2 = float.Parse(z2);
-                                TrSTL.X3 = float.Parse(x3);
-                                TrSTL.Y3 = float.Parse(y3);
-                                TrSTL.Z3 = float.Parse(z3);
-                                TrSTL.XN = float.Parse(xn);
-                                TrSTL.YN = float.Parse(yn);
-                                TrSTL.ZN = float.Parse(zn);
+                                base_stl TrSTL = new base_stl()
+                                                 {
+                                                    Nom = int.Parse(StrNom),
+                                                    X1 = float.Parse(x1),
+                                                    Y1 = float.Parse(y1),
+                                                    Z1 = float.Parse(z1),
+                                                    X2 = float.Parse(x2),
+                                                    Y2 = float.Parse(y2),
+                                                    Z2 = float.Parse(z2),
+                                                    X3 = float.Parse(x3),
+                                                    Y3 = float.Parse(y3),
+                                                    Z3 = float.Parse(z3),
+                                                    XN = float.Parse(xn),
+                                                    YN = float.Parse(yn),
+                                                    ZN = float.Parse(zn)
+                                                 };
                                 //Исходный цвет - серый
                                 TrSTL.Rface = 128;
                                 TrSTL.Gface = 128;
@@ -523,7 +524,7 @@ namespace PreAddTech
         /// <summary>
         /// Сохранение данных в файл
         /// </summary>
-        private void toolStripButton5_Click(object sender, EventArgs e)
+        private void ToolStripButton5_Click(object sender, EventArgs e)
         {
             saveFileDialogU.FileName = "stl_" +
                                        DateTime.Now.Year.ToString() + "_" +
@@ -556,7 +557,7 @@ namespace PreAddTech
                 sw.Close();
             }
         }
-        public void timer1_Tick(object sender, EventArgs e)
+        public void Timer1_Tick(object sender, EventArgs e)
         {
             if (toolStripProgressBarOpenSTL.Value < (toolStripProgressBarOpenSTL.Maximum))
                 toolStripProgressBarOpenSTL.Value++;
@@ -569,7 +570,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void блокнотToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //
             proc.StartInfo.FileName = @"Notepad.exe";
@@ -581,7 +582,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void magicsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MagicsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -604,7 +605,7 @@ namespace PreAddTech
             }
         }
 
-        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void SaveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
         }
@@ -649,11 +650,11 @@ namespace PreAddTech
                                                                 (maxY - minY).ToString("N03") + " ;  " +
                                                                 (maxZ - minZ).ToString("N03") + "\n" + "\n";
             richTextBoxInfo.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
-            ///
+            //
             toolStripButtonCreateVoxModel.Enabled = true;
             toolStripButtonASC.Enabled = false;
             toolStripButtonVerification.Enabled = false;
-            ///запись данных в соответствующие поля
+            //запись данных в соответствующие поля
             textBoxMinX.Text = minX.ToString("N02");
             textBoxMaxX.Text = maxX.ToString("N02");
             textBoxSizeX.Text = (maxX - minX).ToString("N02");
@@ -681,11 +682,10 @@ namespace PreAddTech
         /// </summary>
         List<base_vox> ListVox = new List<base_vox>();
 
+        /// <summary>
         /// Процедура создания воксельной модели
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void toolStripButtonCreateVoxModel_Click(object sender, EventArgs e)
+        private void ToolStripButtonCreateVoxModel_Click(object sender, EventArgs e)
         {
             ListVox.Clear();
             toolStripButtonStatAnal.Enabled = true;
@@ -696,7 +696,7 @@ namespace PreAddTech
             toolStripStatusLabelCreateVoxel.Text = "Воксельная модель создается... ";
             string temptext = richTextBoxInfo.Text;
             MyProcedures proc = new MyProcedures();
-            ///исходные данные
+            //исходные данные
             float MinX = float.Parse(textBoxMinX.Text) + (float)numericUpDownVoxX.Value / 2;
             float MaxX = float.Parse(textBoxMaxX.Text) - (float)numericUpDownVoxX.Value / 2;
             //
@@ -721,10 +721,10 @@ namespace PreAddTech
             float tempX = 0;
             float tempY = 0;
             float tempZ = 0;
-            /// <summary>
-            /// Список координат пересечений треугольников
-            /// </summary>
+
+            // Список координат пересечений треугольников            
             List<float> MPeresZ = new List<float>();
+
             int k = 0; //количество полных вокселей
             // Общее количество вокселей
             int TotalCount = 0;
@@ -761,13 +761,15 @@ namespace PreAddTech
                     for (int m = 0; m <= numZ; m++)
                     {
                         tempZ = MinZ + m * SizeZ;
-                        base_vox tempVoxLine = new base_vox();
-                        tempVoxLine.Xv = tempX;
-                        tempVoxLine.Yv = tempY;
-                        tempVoxLine.Zv = tempZ;
-                        tempVoxLine.SizeX = SizeX;
-                        tempVoxLine.SizeY = SizeY;
-                        tempVoxLine.SizeZ = SizeZ;
+                        base_vox tempVoxLine = new base_vox()
+                            {
+                                Xv = tempX,
+                                Yv = tempY,
+                                Zv = tempZ,
+                                SizeX = SizeX,
+                                SizeY = SizeY,
+                                SizeZ = SizeZ
+                            };
                         //Простановка метки модели
                         if (MPeresZ.Count > 1 && Math.IEEERemainder((double)MPeresZ.Count, 2) == 0)
                         {
@@ -817,9 +819,9 @@ namespace PreAddTech
             //Создание массива моделей для размещения на рабочей платформе
             if (activeTask == ATPreparation.switchActiveTask.analizePacking)
             {
-                base_model model = new base_model();
-                model.Name = toolStripTextBoxFileName.Text;
-                model.Stl = ListStl;
+                base_model model = new base_model() {
+                                        Name = toolStripTextBoxFileName.Text,
+                                        Stl = ListStl};
                 //Создание списка вокселей для модели изделия
                 List<base_vox> tempListVox = new List<base_vox>();
                 foreach (var item in ListVox)
@@ -868,7 +870,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButton4_Click(object sender, EventArgs e)
+        private void ToolStripButton4_Click(object sender, EventArgs e)
         {
             if (ListStl.Count != 0)
             {
@@ -889,7 +891,7 @@ namespace PreAddTech
                     for (; j < ListStl.Count; j++)
                     {
                         var item2 = ListStl[j];
-                        if (proced.contiguity(item1, item2))
+                        if (proced.Contiguity(item1, item2))
                         {
                             fi = proced.AngleBetweenNormals(item1, item2);
 
@@ -904,7 +906,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox4_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxVox.Checked == false)
             {
@@ -924,7 +926,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void numericUpDownVoxX_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownVoxX_ValueChanged(object sender, EventArgs e)
         {
             if (checkBoxVox.Checked == true)
             {
@@ -944,7 +946,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButton3_Click(object sender, EventArgs e)
+        private void ToolStripButton3_Click(object sender, EventArgs e)
         {
             toolStripStatusLabelCreateVoxel.Text = "Сохранение модели...";
             saveFileDialogU.FileName = "vox_" +
@@ -983,7 +985,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonVerification_Click(object sender, EventArgs e)
+        private void ToolStripButtonVerification_Click(object sender, EventArgs e)
         {
             int StartTime = DateTime.Now.Hour * 3600000 + DateTime.Now.Minute * 60000 + DateTime.Now.Second * 1000 + DateTime.Now.Millisecond;
 
@@ -1086,7 +1088,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButton5_Click_1(object sender, EventArgs e)
+        private void ToolStripButton5_Click_1(object sender, EventArgs e)
         {
             if (ListVox.Count == 0)
             {
@@ -1232,7 +1234,7 @@ namespace PreAddTech
                                (int)numericUpDownNumIntY.Value * (int)numericUpDownNumIntZ.Value);
             resultStat3DEmpty = statistica3DEmpty.Stat(tempMassiveVoxel3DEmpty.ToArray(), gist3D);
 
-            ///
+            //
             toolStripComboBoxShowAnalysis.Enabled = true;
             toolStripButtonShowStatisticalDataX.Enabled = true;
             toolStripButtonShowStatisticalDataY.Enabled = true;
@@ -1248,17 +1250,17 @@ namespace PreAddTech
             }
         }
 
-        private void textBoxSizeX_TextChanged(object sender, EventArgs e)
+        private void TextBoxSizeX_TextChanged(object sender, EventArgs e)
         {
             textBoxSizeX2.Text = textBoxSizeX.Text;
         }
 
-        private void textBoxSizeY_TextChanged(object sender, EventArgs e)
+        private void TextBoxSizeY_TextChanged(object sender, EventArgs e)
         {
             textBoxSizeY2.Text = textBoxSizeY.Text;
         }
 
-        private void textBoxSizeZ_TextChanged(object sender, EventArgs e)
+        private void TextBoxSizeZ_TextChanged(object sender, EventArgs e)
         {
             textBoxSizeZ2.Text = textBoxSizeZ.Text;
         }
@@ -1267,7 +1269,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxNumInterval.Checked == false)
             {
@@ -1287,7 +1289,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void numericUpDownNumIntX_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownNumIntX_ValueChanged(object sender, EventArgs e)
         {
             if (checkBoxNumInterval.Checked == true)
             {
@@ -1304,7 +1306,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void numericUpDownNumIntY_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownNumIntY_ValueChanged(object sender, EventArgs e)
         {
 
             textBoxSizeIntervalsY.Text = (decimal.Parse(textBoxSizeY2.Text) / numericUpDownNumIntY.Value).ToString("N03");
@@ -1314,7 +1316,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void numericUpDownNumIntZ_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownNumIntZ_ValueChanged(object sender, EventArgs e)
         {
             textBoxSizeIntervalsZ.Text = (decimal.Parse(textBoxSizeZ2.Text) / numericUpDownNumIntZ.Value).ToString("N03");
         }
@@ -1327,9 +1329,9 @@ namespace PreAddTech
         {
             try
             {
-                this.numericUpDownNumIntX_ValueChanged(sender, e);
-                this.numericUpDownNumIntY_ValueChanged(sender, e);
-                this.numericUpDownNumIntZ_ValueChanged(sender, e);
+                this.NumericUpDownNumIntX_ValueChanged(sender, e);
+                this.NumericUpDownNumIntY_ValueChanged(sender, e);
+                this.NumericUpDownNumIntZ_ValueChanged(sender, e);
             }
             catch (Exception e4)
             {
@@ -1343,16 +1345,16 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonShowStatisticalDataX_Click(object sender, EventArgs e)
+        private void ToolStripButtonShowStatisticalDataX_Click(object sender, EventArgs e)
         {
             toolStripButtonShowStatisticalDataX.Font = new Font(this.Font, FontStyle.Bold);
             toolStripButtonShowStatisticalDataY.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowStatisticalDataZ.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowHistogramXYZ.Font = new Font(this.Font, FontStyle.Regular);
-            activeChartType = switchChartType.X;
+            activeChartType = SwitchChartType.X;
 
-            ///0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-            /// 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+            //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
+            // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
             textBoxMin.Text = resultStat_X[0].ToString("0.0000E-00");
             textBoxMax.Text = resultStat_X[1].ToString("0.0000E-00");
             textBoxInterval.Text = resultStat_X[2].ToString("0.0000E-00");
@@ -1402,9 +1404,9 @@ namespace PreAddTech
             chartHistogramVoxelXRelation.Series.Add(seriesStatisticalDataXRelation);
 
             SwitchChart(activeChartType, activeChartAbsRel);
-            if (activeChartAbsRel == switchChartAbsRel.Relative)
+            if (activeChartAbsRel == SwitchChartAbsRel.Relative)
                 activeChart = chartHistogramVoxelXRelation;
-            else if (activeChartAbsRel == switchChartAbsRel.Absolute)
+            else if (activeChartAbsRel == SwitchChartAbsRel.Absolute)
                 activeChart = chartHistogramVoxelX;
         }
         /// <summary>
@@ -1412,13 +1414,13 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonShowStatisticalDataY_Click(object sender, EventArgs e)
+        private void ToolStripButtonShowStatisticalDataY_Click(object sender, EventArgs e)
         {
             toolStripButtonShowStatisticalDataX.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowStatisticalDataY.Font = new Font(this.Font, FontStyle.Bold);
             toolStripButtonShowStatisticalDataZ.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowHistogramXYZ.Font = new Font(this.Font, FontStyle.Regular);
-            activeChartType = switchChartType.Y;
+            activeChartType = SwitchChartType.Y;
 
             textBoxMin.Text = resultStat_Y[0].ToString("0.0000E-00");
             textBoxMax.Text = resultStat_Y[1].ToString("0.0000E-00");
@@ -1491,13 +1493,13 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonShowStatisticalDataZ_Click(object sender, EventArgs e)
+        private void ToolStripButtonShowStatisticalDataZ_Click(object sender, EventArgs e)
         {
             toolStripButtonShowStatisticalDataX.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowStatisticalDataY.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowStatisticalDataZ.Font = new Font(this.Font, FontStyle.Bold);
             toolStripButtonShowHistogramXYZ.Font = new Font(this.Font, FontStyle.Regular);
-            activeChartType = switchChartType.Z;
+            activeChartType = SwitchChartType.Z;
 
             textBoxMin.Text = resultStat_Z[0].ToString("0.0000E-00");
             textBoxMax.Text = resultStat_Z[1].ToString("0.0000E-00");
@@ -1570,14 +1572,14 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonShowHistogramXYZ_Click(object sender, EventArgs e)
+        private void ToolStripButtonShowHistogramXYZ_Click(object sender, EventArgs e)
         {
             toolStripButtonShowStatisticalDataX.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowStatisticalDataY.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowStatisticalDataZ.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowHistogramXYZ.Font = new Font(this.Font, FontStyle.Bold);
 
-            activeChartType = switchChartType.XYZ;
+            activeChartType = SwitchChartType.XYZ;
             //
             textBoxMin.Clear();
             textBoxMax.Clear();
@@ -1736,7 +1738,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void chartHistogramVoxel_DoubleClick(object sender, EventArgs e)
+        private void ChartHistogramVoxel_DoubleClick(object sender, EventArgs e)
         {
             if (activeChart.Dock != DockStyle.Fill)
             {
@@ -1750,7 +1752,7 @@ namespace PreAddTech
             }
         }
 
-        private void исходныеДанныепоказатьскрытьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowHideToolStripMenuItem_Click(object sender, EventArgs e)
         {
             textBoxDataHistogram.Visible = !textBoxDataHistogram.Visible;
         }
@@ -1759,29 +1761,29 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem5_Click(object sender, EventArgs e)
         {
-            chartHistogramVoxel_DoubleClick(activeChart, e);
+            ChartHistogramVoxel_DoubleClick(activeChart, e);
         }
         /// <summary>
         /// Абсолютные/относительные значения на графике
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem6_Click(object sender, EventArgs e)
         {
             Chart[] massiveChart = { chartHistogramVoxelX, chartHistogramVoxelY, chartHistogramVoxelZ, chartHistogramVoxelXYZ,
                                      chartHistogramVoxelXRelation, chartHistogramVoxelYRelation, chartHistogramVoxelZRelation,
                                      chartHistogramVoxelXYZRelative};
 
-            SwitchChart(activeChartType, (activeChartAbsRel == switchChartAbsRel.Absolute ? switchChartAbsRel.Relative : switchChartAbsRel.Absolute));
+            SwitchChart(activeChartType, (activeChartAbsRel == SwitchChartAbsRel.Absolute ? SwitchChartAbsRel.Relative : SwitchChartAbsRel.Absolute));
         }
         /// <summary>
         /// Создание списка цветовых палитр для выбора
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void цветоваяПалитраГистограммsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ColorHistogramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItemColorSсhemе.Items.Clear();
             foreach (string strChartColorPalette in Enum.GetNames(typeof(ChartColorPalette)))
@@ -1816,7 +1818,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             if ((chartHistogramVoxelXYZ.Visible != false) && (chartHistogramVoxelXYZ.ChartAreas.Count >= 1))
                 chartHistogramVoxelXYZ.ChartAreas[0].Visible = !chartHistogramVoxelXYZ.ChartAreas[0].Visible;
@@ -1826,7 +1828,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
         {
             if ((chartHistogramVoxelXYZ.Visible != false) && (chartHistogramVoxelXYZ.ChartAreas.Count >= 2))
                 chartHistogramVoxelXYZ.ChartAreas[1].Visible = !chartHistogramVoxelXYZ.ChartAreas[1].Visible;
@@ -1836,7 +1838,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem4_Click(object sender, EventArgs e)
         {
             if ((chartHistogramVoxelXYZ.Visible != false) && (chartHistogramVoxelXYZ.ChartAreas.Count >= 3))
                 chartHistogramVoxelXYZ.ChartAreas[2].Visible = !chartHistogramVoxelXYZ.ChartAreas[2].Visible;
@@ -1885,12 +1887,12 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonAbsolute_Click(object sender, EventArgs e)
+        private void ToolStripButtonAbsolute_Click(object sender, EventArgs e)
         {
             toolStripButtonAbsolute.Font = new Font(this.Font, FontStyle.Bold);
             toolStripButtonRelative.Font = new Font(this.Font, FontStyle.Regular);
 
-            activeChartAbsRel = switchChartAbsRel.Absolute;
+            activeChartAbsRel = SwitchChartAbsRel.Absolute;
             SwitchChart(activeChartType, activeChartAbsRel);
         }
         /// <summary>
@@ -1898,27 +1900,27 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonRelative_Click(object sender, EventArgs e)
+        private void ToolStripButtonRelative_Click(object sender, EventArgs e)
         {
             toolStripButtonAbsolute.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonRelative.Font = new Font(this.Font, FontStyle.Bold);
 
-            activeChartAbsRel = switchChartAbsRel.Relative;
+            activeChartAbsRel = SwitchChartAbsRel.Relative;
             SwitchChart(activeChartType, activeChartAbsRel);
         }
         /// <summary>
         /// Список гистограмм (абсолютные значения, относительные значения)
         /// </summary>
-        private enum switchChartAbsRel { Absolute = 0, Relative };
-        private enum switchChartType { X = 0, Y, Z, XYZ };
+        private enum SwitchChartAbsRel { Absolute = 0, Relative };
+        private enum SwitchChartType { X = 0, Y, Z, XYZ };
         /// <summary>
         /// Активная гистограмма - с абсолютными или относительными величинами
         /// </summary>
-        private switchChartAbsRel activeChartAbsRel = switchChartAbsRel.Absolute;
+        private SwitchChartAbsRel activeChartAbsRel = SwitchChartAbsRel.Absolute;
         /// <summary>
         /// Активная гистограмма - по какой оси X, Y, Z, XYZ
         /// </summary>
-        private switchChartType activeChartType = switchChartType.X;
+        private SwitchChartType activeChartType = SwitchChartType.X;
         /// <summary>
         /// Загрузка формы (Настройка формы в зависимости от решаемой задачи)
         /// </summary>
@@ -1969,7 +1971,7 @@ namespace PreAddTech
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void toolStripButtonColorVisual_Click(object sender, EventArgs e)
+    private void ToolStripButtonColorVisual_Click(object sender, EventArgs e)
         {
             toolStripProgressBarVisualization.Value = 0;
             try
@@ -1983,7 +1985,7 @@ namespace PreAddTech
                 MessageBox.Show(e8.Message);
             }
             ListStl2.Clear();
-            ///
+            //
             if (ListStl.Count == 0)
             {
                 MessageBox.Show("Нет данных для анализа");
@@ -2032,7 +2034,7 @@ namespace PreAddTech
                         smegnostiRebroNum = 0;
                         for (int j = 0; j < ListStl.Count; j++)
                         {
-                            if (tempproced0.contiguity(ListStl[i], ListStl[j]))
+                            if (tempproced0.Contiguity(ListStl[i], ListStl[j]))
                             {
                                 smegnostiRebroNum++;
                             }
@@ -2052,7 +2054,7 @@ namespace PreAddTech
                         smegnostiVertexNum = 0;
                         for (int j = 0; j < ListStl.Count; j++)
                         {
-                            if (i != j && tempproced1.contiguityVertex(ListStl[i], ListStl[j]) >= 1)
+                            if (i != j && tempproced1.ContiguityVertex(ListStl[i], ListStl[j]) >= 1)
                             {
                                 smegnostiVertexNum++;
                             }
@@ -2075,7 +2077,7 @@ namespace PreAddTech
                     
                     // 3 Коэффициент вектора нормали по оси Z (миним.значение в слое)
                 case 3:
-                    ///Создание массива слоев
+                    //Создание массива слоев
                     float step = (float)numericUpDownStep.Value; //Шаг построения
                     tempMassivePar.Clear();
                     foreach (var TempSTL in ListStl)
@@ -2129,7 +2131,7 @@ namespace PreAddTech
                 
                     // 4 Коэффициент вектора нормали по оси Z (размах значений угла в градусах в текущем слое)
                 case 4:
-                    ///Создание массива слоев
+                    //Создание массива слоев
                     float step2 = (float)numericUpDownStep.Value; //Шаг построения
                     tempMassivePar.Clear();
                     foreach (var TempSTL in ListStl)
@@ -2212,7 +2214,7 @@ namespace PreAddTech
                     {
                         MyProcedures ProcTranslation = new MyProcedures(); // Процедура для перевода данных из STL в список List<base_stl>
                         // Базовая модель для анализа (по умолчанию - сфера)
-                        ListStl2 = ProcTranslation.translationSTLtoList(FileName);
+                        ListStl2 = ProcTranslation.TranslationSTLtoList(FileName);
                         List<float> zenit = new List<float>();
                         List<float> azimut = new List<float>();
                         float Radius = 50;
@@ -2309,7 +2311,7 @@ namespace PreAddTech
                     {
                         for (int j = 0; j < ListStl.Count; j++)
                         {
-                            if (tempproced8.contiguity(ListStl[i], ListStl[j]))
+                            if (tempproced8.Contiguity(ListStl[i], ListStl[j]))
                             {
                                 fiTemp8.Add((float)tempproced8.AngleBetweenNormals(ListStl[i], ListStl[j]));
                             }
@@ -2334,7 +2336,7 @@ namespace PreAddTech
                     {
                         for (int j = 0; j < ListStl.Count; j++)
                         {
-                            if (tempproced9.contiguity(ListStl[i], ListStl[j]))
+                            if (tempproced9.Contiguity(ListStl[i], ListStl[j]))
                             {
                                 fiTemp9.Add((float)tempproced9.AngleBetweenNormals(ListStl[i], ListStl[j]));
                             }
@@ -2363,7 +2365,7 @@ namespace PreAddTech
                         
                         for (int j = 0; j < ListStl.Count; j++)
                         {
-                            if (tempproced10.contiguity(ListStl[i], ListStl[j]))
+                            if (tempproced10.Contiguity(ListStl[i], ListStl[j]))
                             {
                                 fiTemp10 += (float)tempproced10.AngleBetweenNormals(ListStl[i], ListStl[j]);
                                 numfi++;
@@ -2717,7 +2719,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonColorVisual_Click_1(object sender, EventArgs e)
+        private void ToolStripButtonColorVisual_Click_1(object sender, EventArgs e)
         {
             if (!gridColor)
             { return; }
@@ -2729,12 +2731,14 @@ namespace PreAddTech
                 {
                     if (dataGridViewIntervals[dataGridViewIntervals.Columns["Begin"].Index, i].Value != null)
                     {
-                        colorVisual tempTablColorDistribution = new colorVisual();
-                        tempTablColorDistribution.Nom = i;
-                        tempTablColorDistribution.Begin = float.Parse(dataGridViewIntervals[dataGridViewIntervals.Columns["Begin"].Index, i].Value.ToString());
-                        tempTablColorDistribution.R = byte.Parse(dataGridViewIntervals[dataGridViewIntervals.Columns["R"].Index, i].Value.ToString());
-                        tempTablColorDistribution.G = byte.Parse(dataGridViewIntervals[dataGridViewIntervals.Columns["G"].Index, i].Value.ToString());
-                        tempTablColorDistribution.B = byte.Parse(dataGridViewIntervals[dataGridViewIntervals.Columns["B"].Index, i].Value.ToString());
+                        colorVisual tempTablColorDistribution = new colorVisual()
+                                {
+                                    Nom = i,
+                                    Begin = float.Parse(dataGridViewIntervals[dataGridViewIntervals.Columns["Begin"].Index, i].Value.ToString()),
+                                    R = byte.Parse(dataGridViewIntervals[dataGridViewIntervals.Columns["R"].Index, i].Value.ToString()),
+                                    G = byte.Parse(dataGridViewIntervals[dataGridViewIntervals.Columns["G"].Index, i].Value.ToString()),
+                                    B = byte.Parse(dataGridViewIntervals[dataGridViewIntervals.Columns["B"].Index, i].Value.ToString())
+                                };
                         ListColorDistribution.Add(tempTablColorDistribution);
                     }
                 }
@@ -2796,7 +2800,7 @@ namespace PreAddTech
         {
 
         }
-        private void numericUpDownG1_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownG1_ValueChanged(object sender, EventArgs e)
         {
             cproc.changeColorLabel(labelRGB1, (int)numericUpDownR1.Value,
                                   (int)numericUpDownG1.Value, (int)numericUpDownB1.Value);
@@ -2806,7 +2810,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void labelRGB1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void LabelRGB1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDownR1,
                               numericUpDownG1, numericUpDownB1);
@@ -2816,13 +2820,13 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void labelRGB2_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void LabelRGB2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDownR2,
                               numericUpDownG2, numericUpDownB2);
         }
 
-        private void numericUpDownR2_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownR2_ValueChanged(object sender, EventArgs e)
         {
             cproc.changeColorLabel(labelRGB2, (int)numericUpDownR2.Value,
                                   (int)numericUpDownG2.Value, (int)numericUpDownB2.Value);
@@ -2834,8 +2838,8 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void AnalColorVisual_Enter(object sender, EventArgs e)
         {
-            numericUpDownG1_ValueChanged(sender, e);
-            numericUpDownR2_ValueChanged(sender, e);
+            NumericUpDownG1_ValueChanged(sender, e);
+            NumericUpDownR2_ValueChanged(sender, e);
             if (ListStl.Count != 0 && numericUpDownIntVisual.Value > ListStl.Count)
             {
                 MessageBox.Show("Количество интервалов меньше количества граней в модели.", "Предупреждение!");
@@ -2847,7 +2851,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridViewIntervals_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewIntervals_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //игнорирование нажатия вне кнопки
             if (e.RowIndex < 0 || e.ColumnIndex != dataGridViewIntervals.Columns["SetColor"].Index) return;
@@ -2880,7 +2884,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonSavePLY_Click(object sender, EventArgs e)
+        private void ToolStripButtonSavePLY_Click(object sender, EventArgs e)
         {
             if (ListStl.Count == 0 || (ListStl2.Count == 0 && toolStripComboBoxStrategicVisual.SelectedIndex == 7))
             {
@@ -2898,14 +2902,14 @@ namespace PreAddTech
                 {
                     if (listVertex.Count == 0)
                     {
-                        var tempList = MyProclistVertex.translationSTLtoListVertex(ListStl, toolStripProgressBarVisualization);
+                        var tempList = MyProclistVertex.TranslationSTLtoListVertex(ListStl, toolStripProgressBarVisualization);
                         listVertex = (List<base_vertex>)tempList[0];
                         ListStl = (List<base_stl>)tempList[1];
                     }
                 }
                 else
                 {
-                        var tempList2 = MyProclistVertex.translationSTLtoListVertex(ListStl2, toolStripProgressBarVisualization);
+                        var tempList2 = MyProclistVertex.TranslationSTLtoListVertex(ListStl2, toolStripProgressBarVisualization);
                         listVertex2 = (List<base_vertex>)tempList2[0];
                         ListStl2 = (List<base_stl>)tempList2[1];
                 }
@@ -2985,7 +2989,6 @@ namespace PreAddTech
                     }
                     sw.Close();
                     
-                    ///
                     //dataGridViewVariantsVisualization
                     //NameFile
                     dataGridViewVariantsVisualization[dataGridViewVariantsVisualization.Columns
@@ -3184,7 +3187,7 @@ namespace PreAddTech
                                                            (EndTime - StartTime).Minutes + " мин " +
                                                            (EndTime - StartTime).Seconds + " с " +
                                                            (EndTime - StartTime).Milliseconds + " мс";
-                    ///
+                    
                     //dataGridViewVariantsVisualization
                     //NameFile
                     dataGridViewVariantsVisualization[dataGridViewVariantsVisualization.Columns
@@ -3302,7 +3305,7 @@ namespace PreAddTech
                                                            (EndTime - StartTime).Minutes + " мин " +
                                                            (EndTime - StartTime).Seconds + " с " +
                                                            (EndTime - StartTime).Milliseconds + " мс";
-                    ///
+                    //
                     //dataGridViewVariantsVisualization
                     //NameFile
                     dataGridViewVariantsVisualization[dataGridViewVariantsVisualization.Columns
@@ -3329,7 +3332,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButton6_Click(object sender, EventArgs e)
+        private void ToolStripButton6_Click(object sender, EventArgs e)
         {
             MyProcedures proc = new MyProcedures();
             toolStripStatusLabelCreateVoxel.Text = "Сохранение модели...";
@@ -3435,7 +3438,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridViewVariantsVisualization_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewVariantsVisualization_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //игнорирование нажатия вне кнопки
             if (e.RowIndex < 0) return;
@@ -3509,7 +3512,7 @@ namespace PreAddTech
                     formGistogram.Show();
                     formGistogram.Text = dataGridViewVariantsVisualization
                                          [dataGridViewVariantsVisualization.Columns["Parametr"].Index, e.RowIndex].Value.ToString();
-                    ///
+                    //
                     //Предварительная очистка данных гистограммы
                     formGistogram.chartGistogram.Series.Clear();
                     formGistogram.chartGistogram.Series.Dispose();
@@ -3520,7 +3523,7 @@ namespace PreAddTech
                                      [dataGridViewVariantsVisualization.Columns["MinInterval"].Index, e.RowIndex].Value.ToString());
                     formGistogram.chartGistogram.ChartAreas[0].AxisX.Maximum = double.Parse(dataGridViewVariantsVisualization
                          [dataGridViewVariantsVisualization.Columns["MaxInterval"].Index, e.RowIndex].Value.ToString());
-                    ///
+                    //
                     //Предварительная очистка данных графика интегральной функции
                     formGistogram.chartIntegral.Series.Clear();
                     formGistogram.chartIntegral.Series.Dispose();
@@ -3582,7 +3585,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBoxGist_CheckStateChanged(object sender, EventArgs e)
+        private void CheckBoxGist_CheckStateChanged(object sender, EventArgs e)
         {
             if (checkBoxGist.CheckState == CheckState.Checked)
             {
@@ -3599,7 +3602,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripComboBoxStrategicVisual_TextChanged(object sender, EventArgs e)
+        private void ToolStripComboBoxStrategicVisual_TextChanged(object sender, EventArgs e)
         {
             toolStripButtonColorVisual.Enabled = false;
             toolStripButtonSavePLY.Enabled = false;
@@ -3609,7 +3612,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void numericUpDownIntVisual_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownIntVisual_ValueChanged(object sender, EventArgs e)
         {
             if (textBoxRazmahPar.Text.Trim() != "")
             textBoxSizeInt.Text = (float.Parse(textBoxRazmahPar.Text) / (int)numericUpDownIntVisual.Value).ToString("0.00E-00");
@@ -3619,7 +3622,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonXls_Click(object sender, EventArgs e)
+        private void ButtonXls_Click(object sender, EventArgs e)
         {
 
             try
@@ -3685,7 +3688,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonCalculateOrientation_Click(object sender, EventArgs e)
+        private void ToolStripButtonCalculateOrientation_Click(object sender, EventArgs e)
         {
             //Message
             toolStripStatusLabelInphoOrientation.Text = "Выполняется расчет...";
@@ -3695,7 +3698,7 @@ namespace PreAddTech
             MyProcedures proc = new MyProcedures();
             float[] resultStatParOrientation = new float[13];
             DateTime StartTime = DateTime.Now;
-            ///
+            //
             if (ListStl.Count == 0)
             {
                 MessageBox.Show("Нет данных для анализа");
@@ -3711,14 +3714,16 @@ namespace PreAddTech
             float value1varRelS = 0;
             float value2varRelS = 0;
             float value3varRelS = 0;
-            ///
+            //
             foreach (var item in ListStl)
             {
                 surfaceNormal tempSurfaceNormal = new surfaceNormal();
-                vertexXYZ tempvertexXYZ = new vertexXYZ();
-                tempvertexXYZ.X = item.X1;
-                tempvertexXYZ.Y = item.Y1;
-                tempvertexXYZ.Z = item.Z1;
+                vertexXYZ tempvertexXYZ = new vertexXYZ()
+                    {
+                        X = item.X1,
+                        Y = item.Y1,
+                        Z = item.Z1
+                    };
                 ListvertexXYZ.Add(tempvertexXYZ);
                 tempvertexXYZ.X = item.X2;
                 tempvertexXYZ.Y = item.Y2;
@@ -3784,7 +3789,7 @@ namespace PreAddTech
                     foreach (var item in uniqueVox)
                     {
                         
-                        tempMassiveParNormalsZ[p++] = proc.turnXY(item.ToArray()[0].X, item.ToArray()[0].Y, item.ToArray()[0].Z,
+                        tempMassiveParNormalsZ[p++] = proc.TurnXY(item.ToArray()[0].X, item.ToArray()[0].Y, item.ToArray()[0].Z,
                                                    i * float.Parse(toolStripComboBoxDX.Text),
                                                    j * float.Parse(toolStripComboBoxDY.Text))[2];
                     }
@@ -3792,7 +3797,7 @@ namespace PreAddTech
                     MassiveHeight.Add(height);
                     for (int k = 0; k < ListStlNormal.Count; k++)
                     {
-                        tempMassiveParNormals[k] = (float)(180*Math.Acos(proc.turnXY(
+                        tempMassiveParNormals[k] = (float)(180*Math.Acos(proc.TurnXY(
                                                    ListStlNormal[k].XN, ListStlNormal[k].YN, ListStlNormal[k].ZN,
                                                    i * float.Parse(toolStripComboBoxDX.Text), 
                                                    j * float.Parse(toolStripComboBoxDY.Text))[2])/Math.PI);
@@ -3856,7 +3861,7 @@ namespace PreAddTech
             }
         }
 
-        private void toolStripComboBoxDX_TextChanged(object sender, EventArgs e)
+        private void ToolStripComboBoxDX_TextChanged(object sender, EventArgs e)
         {
             try
             {
@@ -3870,14 +3875,14 @@ namespace PreAddTech
             }
         }
 
-        private void toolStripComboBoxDX_KeyPress(object sender, KeyPressEventArgs e)
+        private void ToolStripComboBoxDX_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!Char.IsNumber(e.KeyChar))
             { MessageBox.Show("Введено не число"); }
 
         }
 
-        private void toolStripComboBoxDY_KeyPress(object sender, KeyPressEventArgs e)
+        private void ToolStripComboBoxDY_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!Char.IsNumber(e.KeyChar))
             { MessageBox.Show("Введено не число"); }
@@ -3887,7 +3892,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridViewOrientation_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewOrientation_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //игнорирование нажатия вне кнопки
             if (e.RowIndex < 0) return;
@@ -3908,13 +3913,13 @@ namespace PreAddTech
                                          dataGridViewOrientation
                                          [dataGridViewOrientation.Columns["YOrient"].Index, e.RowIndex].Value.ToString() +
                                          " град.";
-                    ///
+                    //
                     //Предварительная очистка данных гистограммы
                     formGistogramOrientation.chartGistogram.Series.Clear();
                     formGistogramOrientation.chartGistogram.Series.Dispose();
                     formGistogramOrientation.chartGistogram.ChartAreas.Clear();
                     formGistogramOrientation.chartGistogram.ChartAreas.Add("ChartArea1");
-                    ///
+                    //
                     //Предварительная очистка данных графика интегральной функции
                     formGistogramOrientation.chartIntegral.Series.Clear();
                     formGistogramOrientation.chartIntegral.Series.Dispose();
@@ -3996,23 +4001,23 @@ namespace PreAddTech
 
                     foreach (var tempFace in ListStl)
                     {
-                        tempN = proc.turnXY(tempFace.XN, tempFace.YN, tempFace.ZN, turnX, turnY);
+                        tempN = proc.TurnXY(tempFace.XN, tempFace.YN, tempFace.ZN, turnX, turnY);
                         sw.WriteLine("facet normal " + tempN[0].ToString().Replace(',', '.') + 
                                                  " " + tempN[1].ToString().Replace(',', '.') + 
                                                  " " + tempN[2].ToString().Replace(',', '.'));
                         sw.WriteLine("outer loop");
 
-                        temp1 = proc.turnXY(tempFace.X1, tempFace.Y1, tempFace.Z1, turnX, turnY);
+                        temp1 = proc.TurnXY(tempFace.X1, tempFace.Y1, tempFace.Z1, turnX, turnY);
                         sw.WriteLine("vertex " + temp1[0].ToString().Replace(',', '.') + 
                                            " " + temp1[1].ToString().Replace(',', '.') + 
                                            " " + temp1[2].ToString().Replace(',', '.'));
 
-                        temp2 = proc.turnXY(tempFace.X2, tempFace.Y2, tempFace.Z2, turnX, turnY);
+                        temp2 = proc.TurnXY(tempFace.X2, tempFace.Y2, tempFace.Z2, turnX, turnY);
                         sw.WriteLine("vertex " + temp2[0].ToString().Replace(',', '.') +
                                            " " + temp2[1].ToString().Replace(',', '.') +
                                            " " + temp2[2].ToString().Replace(',', '.'));
 
-                        temp3 = proc.turnXY(tempFace.X3, tempFace.Y3, tempFace.Z3, turnX, turnY);
+                        temp3 = proc.TurnXY(tempFace.X3, tempFace.Y3, tempFace.Z3, turnX, turnY);
                         sw.WriteLine("vertex " + temp3[0].ToString().Replace(',', '.') +
                                            " " + temp3[1].ToString().Replace(',', '.') +
                                            " " + temp3[2].ToString().Replace(',', '.'));
@@ -4047,7 +4052,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonXlsOrient_Click(object sender, EventArgs e)
+        private void ButtonXlsOrient_Click(object sender, EventArgs e)
         {
             try
             {
@@ -4105,75 +4110,75 @@ namespace PreAddTech
         //процедуры цвета
         ColorProcedures cproc = new ColorProcedures();
 
-        private void numericUpDown1varR_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDown1varR_ValueChanged(object sender, EventArgs e)
         {
             cproc.changeColorLabel(label1var, (int)numericUpDown1varR.Value,
                                       (int)numericUpDown1varG.Value, (int)numericUpDown1varB.Value,
                                       (checkBox1var.CheckState == CheckState.Checked));
         }
 
-        private void numericUpDown2varR_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDown2varR_ValueChanged(object sender, EventArgs e)
         {
             cproc.changeColorLabel(label2var, (int)numericUpDown2varR.Value,
                                       (int)numericUpDown2varG.Value, (int)numericUpDown2varB.Value,
                                       (checkBox2var.CheckState == CheckState.Checked));
         }
 
-        private void numericUpDown3varR_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDown3varR_ValueChanged(object sender, EventArgs e)
         {
             cproc.changeColorLabel(label3var, (int)numericUpDown3varR.Value,
                                       (int)numericUpDown3varG.Value, (int)numericUpDown3varB.Value,
                                       (checkBox3var.CheckState == CheckState.Checked));
         }
 
-        private void numericUpDownIntOrientation_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownIntOrientation_ValueChanged(object sender, EventArgs e)
         {
             textBoxIntOrient.Text = (180 / numericUpDownIntOrientation.Value).ToString("###.0");
         }
 
-        private void numericUpDown1varAngleMin_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDown1varAngleMin_ValueChanged(object sender, EventArgs e)
         {
             if (numericUpDown1varAngleMin.Value >= numericUpDown1varAngleMax.Value)
             { numericUpDown1varAngleMin.Value = numericUpDown1varAngleMax.Value - 1; }
         }
 
-        private void numericUpDown2varAngleMin_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDown2varAngleMin_ValueChanged(object sender, EventArgs e)
         {
             if (numericUpDown2varAngleMin.Value >= numericUpDown2varAngleMax.Value)
             { numericUpDown2varAngleMin.Value = numericUpDown2varAngleMax.Value - 1; }
         }
 
-        private void numericUpDown3varAngleMin_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDown3varAngleMin_ValueChanged(object sender, EventArgs e)
         {
             if (numericUpDown3varAngleMin.Value >= numericUpDown3varAngleMax.Value)
             { numericUpDown3varAngleMin.Value = numericUpDown3varAngleMax.Value - 1; }
         }
 
-        private void numericUpDown1varRelSMin_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDown1varRelSMin_ValueChanged(object sender, EventArgs e)
         {
             if (numericUpDown1varRelSMin.Value >= numericUpDown1varRelSMax.Value)
             { numericUpDown1varRelSMin.Value = numericUpDown1varRelSMax.Value - 1; }
         }
 
-        private void numericUpDown2varRelSMin_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDown2varRelSMin_ValueChanged(object sender, EventArgs e)
         {
             if (numericUpDown2varRelSMin.Value >= numericUpDown2varRelSMax.Value)
             { numericUpDown2varRelSMin.Value = numericUpDown2varRelSMax.Value - 1; }
         }
 
-        private void numericUpDown3varRelSMin_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDown3varRelSMin_ValueChanged(object sender, EventArgs e)
         {
             if (numericUpDown3varRelSMin.Value >= numericUpDown3varRelSMax.Value)
             { numericUpDown3varRelSMin.Value = numericUpDown3varRelSMax.Value - 1; }
         }
 
-        private void numericUpDownHMin_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownHMin_ValueChanged(object sender, EventArgs e)
         {
             if (numericUpDownHMin.Value >= numericUpDownHMax.Value)
             { numericUpDownHMin.Value = numericUpDownHMax.Value - 1; }
         }
 
-        private void checkBoxAndOrAddCondition_CheckStateChanged(object sender, EventArgs e)
+        private void CheckBoxAndOrAddCondition_CheckStateChanged(object sender, EventArgs e)
         {
             if (checkBoxAndOrAddCondition.CheckState == CheckState.Checked)
             {
@@ -4189,7 +4194,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonColorAnalysis_Click(object sender, EventArgs e)
+        private void ToolStripButtonColorAnalysis_Click(object sender, EventArgs e)
         {
             if (gistParMassiveOrientationDensity.Count == 0 || (checkBox1var.CheckState == CheckState.Unchecked &&
                 checkBox2var.CheckState == CheckState.Unchecked && checkBox3var.CheckState == CheckState.Unchecked))
@@ -4311,7 +4316,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonExpression_Click(object sender, EventArgs e)
+        private void ToolStripButtonExpression_Click(object sender, EventArgs e)
         {
             string expr = "4*2+2*4*5";
             
@@ -4322,7 +4327,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonLocalSettings_Click(object sender, EventArgs e)
+        private void ToolStripButtonLocalSettings_Click(object sender, EventArgs e)
         {
             PackingSettings formPackingSettings = new PackingSettings();
             formPackingSettings.Activate();
@@ -4353,7 +4358,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonPack_Click(object sender, EventArgs e)
+        private void ToolStripButtonPack_Click(object sender, EventArgs e)
         {
             if (toolStripComboBoxListModels.SelectedIndex == -1)
             { return; }
@@ -4384,8 +4389,8 @@ namespace PreAddTech
             }
             MyProcedures procPack = new MyProcedures();
             //Шаг построения
-            float step;
-            float.TryParse(toolStripTextBoxStep.Text, out step);
+            //float step;
+            float.TryParse(toolStripTextBoxStep.Text, out float step);
             //
             if (numModels == 0)
             {
@@ -4393,7 +4398,7 @@ namespace PreAddTech
                 toolStripStatusLabelLocation.ForeColor = Color.Black;
                 Application.DoEvents();
 
-                currentVoxels = procPack.moveVoxels(currentModel.Voxels,
+                currentVoxels = procPack.MoveVoxels(currentModel.Voxels,
                      ((PlantSettings.workXmin + PlantSettings.workXmax - currentModel.sizeX) / 2),
                      ((PlantSettings.workYmin + PlantSettings.workYmax - currentModel.sizeY) / 2),
                     0f,
@@ -4411,7 +4416,7 @@ namespace PreAddTech
             }
             else
             {
-                currentVoxels = procPack.moveVoxels(currentModel.Voxels,
+                currentVoxels = procPack.MoveVoxels(currentModel.Voxels,
                 ((PlantSettings.workXmin + PlantSettings.workXmax - currentModel.sizeX) / 2),
                 ((PlantSettings.workYmin + PlantSettings.workYmax - currentModel.sizeY) / 2),
                   0f,
@@ -4439,7 +4444,7 @@ namespace PreAddTech
             imageZY = new Bitmap(numY, numZ);
             toolStripStatusLabelLocation.Text = "Определение распределения объемов...";
             Application.DoEvents();
-            int[,,] dist = procPack.distribution(currentVoxels, numX, numY, numZ,
+            int[,,] dist = procPack.Distribution(currentVoxels, numX, numY, numZ,
                                              PlantSettings.workXmin,
                                              PlantSettings.workYmin,
                                              PlantSettings.workZmin,
@@ -4471,7 +4476,7 @@ namespace PreAddTech
                     for (int z = 0; z < numZ; z++)
                     { tempZ += dist[x, y, z]; }
                     int h = imageXY.Height - 1;
-                    tRGB = procPack.colorElementLineGarmonic(tempZ, 0, maxVoxelsInIntervalXY,
+                    tRGB = procPack.ColorElementLineGarmonic(tempZ, 0, maxVoxelsInIntervalXY,
                                                     RGB1[0], RGB1[1], RGB1[2],
                                                     RGB2[0], RGB2[1], RGB2[2]);
                     imageXY.SetPixel(y, h - x, Color.FromArgb(tRGB[0], tRGB[1], tRGB[2]));
@@ -4493,7 +4498,7 @@ namespace PreAddTech
                     for (int y = 0; y < numY; y++)
                     { tempY += dist[x, y, z]; }
                     int h = imageZX.Height - 1;
-                    tRGB = procPack.colorElementLineGarmonic(tempY, 0, maxVoxelsInIntervalXZ,
+                    tRGB = procPack.ColorElementLineGarmonic(tempY, 0, maxVoxelsInIntervalXZ,
                                                     RGB1[0], RGB1[1], RGB1[2],
                                                     RGB2[0], RGB2[1], RGB2[2]);
                     imageZX.SetPixel(x, h - z, Color.FromArgb(tRGB[0], tRGB[1], tRGB[2]));
@@ -4516,7 +4521,7 @@ namespace PreAddTech
                     for (int x = 0; x < numX; x++)
                     { tempX += dist[x, y, z]; }
                     int h = imageZY.Height - 1;
-                    tRGB = procPack.colorElementLineGarmonic(tempX, 0, maxVoxelsInIntervalZY,
+                    tRGB = procPack.ColorElementLineGarmonic(tempX, 0, maxVoxelsInIntervalZY,
                                                     RGB1[0], RGB1[1], RGB1[2],
                                                     RGB2[0], RGB2[1], RGB2[2]);
                     imageZY.SetPixel(y, h - z, Color.FromArgb(tRGB[0], tRGB[1], tRGB[2]));
@@ -4530,7 +4535,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        private void ToolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (toolStripComboBoxListModels.SelectedIndex != -1)
             {
@@ -4544,7 +4549,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonRGB1_Click(object sender, EventArgs e)
+        private void ToolStripButtonRGB1_Click(object sender, EventArgs e)
         {
             if (colorDialogSelect.ShowDialog() == DialogResult.OK)
             {
@@ -4556,7 +4561,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonRGB2_Click(object sender, EventArgs e)
+        private void ToolStripButtonRGB2_Click(object sender, EventArgs e)
         {
             if (colorDialogSelect.ShowDialog() == DialogResult.OK)
             {
@@ -4568,7 +4573,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void pictureBoxFront_DoubleClick(object sender, EventArgs e)
+        private void PictureBoxFront_DoubleClick(object sender, EventArgs e)
         {
             pictureBoxRight.Visible = !pictureBoxRight.Visible;
             pictureBoxTop.Visible = !pictureBoxTop.Visible;
@@ -4587,7 +4592,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void pictureBoxRight_Click(object sender, EventArgs e)
+        private void PictureBoxRight_Click(object sender, EventArgs e)
         {
             pictureBoxFront.Visible = !pictureBoxFront.Visible;
             pictureBoxTop.Visible = !pictureBoxTop.Visible;
@@ -4605,7 +4610,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void pictureBoxTop_Click(object sender, EventArgs e)
+        private void PictureBoxTop_Click(object sender, EventArgs e)
         {
             pictureBoxFront.Visible = !pictureBoxFront.Visible;
             pictureBoxRight.Visible = !pictureBoxRight.Visible;
@@ -4619,12 +4624,12 @@ namespace PreAddTech
             }
         }
         private bool nonNumberEntered = false;
-        private void toolStripTextBoxStep_KeyPress(object sender, KeyPressEventArgs e)
+        private void ToolStripTextBoxStep_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (nonNumberEntered == true) { e.Handled = true; }
         }
 
-        private void toolStripTextBoxStep_KeyDown(object sender, KeyEventArgs e)
+        private void ToolStripTextBoxStep_KeyDown(object sender, KeyEventArgs e)
         {
             nonNumberEntered = false;
 
@@ -4665,13 +4670,14 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonLayerCreate_Click(object sender, EventArgs e)
+        private void ToolStripButtonLayerCreate_Click(object sender, EventArgs e)
         {
             if (ListStl.Count == 0)
             {
                 MessageBox.Show("Нет исходных данных...", "Ошибка!");
                 return;
             }
+            ParMassiveLayerFract_anal.Clear();
             checkBoxVisualAnalysis.Enabled = false;
             numericUpDownRatioRtoL.Enabled = true;
             toolStripButtonLayerAnalysis.Enabled = true;
@@ -4683,19 +4689,19 @@ namespace PreAddTech
             
             MyProcedures proc = new MyProcedures();
             //Определение мин. и макс. координат вершин по оси Z
-            limits = proc.limitModel(ListStl); // [0] - minZ; [1] - maxZ
-
+            limits = proc.LimitModel(ListStl); // [0] - minZ; [1] - maxZ
             float[] coordinateSectionZ; //Массив координат расположения сечений
-            float stepConst; //Шаг построения
+
             //Выбрана стратегия с постоянным шагом построения
-            if (toolStripComboBoxLayerAnalysis.SelectedIndex == 0 && float.TryParse(toolStripTextBoxMinStep.Text, out stepConst))
+            if (toolStripComboBoxLayerAnalysis.SelectedIndex == 0 && float.TryParse(toolStripTextBoxMinStep.Text, out float stepConst))
             {
+                //float stepConst - Шаг построения                
                 coordinateSectionZ = new float[(int)Math.Ceiling((limits[1] - limits[0]) / stepConst)];
 
                 if (dataGridViewSetLayer.RowCount != 0)
                     dataGridViewSetLayer.Rows.Clear();
 
-                string[] strEmpty = new string[29];//Заполнение таблицы
+                string[] strEmpty = new string[dataGridViewSetLayer.ColumnCount - 5]; // Заполнение таблицы пустыми данными
 
                 for (int i = 0; i < coordinateSectionZ.Length; i++)
                 {
@@ -4712,12 +4718,7 @@ namespace PreAddTech
                                 strEmpty
                                 );
                 }
-            }
-            else
-            {
-                MessageBox.Show("Выбранная стратегия недоработана", "Ошибка!");
-                return;
-            }
+            
             listContour.Clear();
             float Perimeter;//Периметр
             float Section;//Площадь
@@ -4728,9 +4729,11 @@ namespace PreAddTech
                 proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Length - 1);
                 Perimeter = 0;
                 Section = 0;
-                base_curveContourSection tempContour = new base_curveContourSection();
-                tempContour.h = stepConst;
-                tempContour.Z = coordinateSectionZ.Length;
+                base_curveContourSection tempContour = new base_curveContourSection()
+                    {
+                        h = stepConst,
+                        Z = coordinateSectionZ.Length
+                    };
                 List<base_elementOfCurve> tempElementOfCurve = new List<base_elementOfCurve>();
                 //Массив данных для стат.анализа
                 List<float> tempMassiveParLayer = new List<float>();
@@ -4755,7 +4758,7 @@ namespace PreAddTech
                     if (pointSTL[0].Z <= coordinateSectionZ[i] && coordinateSectionZ[i] < pointSTL[2].Z && Math.Abs(item.ZN) != 1)
                     {
                         base_elementOfCurve tempElement = new base_elementOfCurve();
-                        PointF[] pointsCurve = proc.elementOfCurve(
+                        PointF[] pointsCurve = proc.ElementOfCurve(
                                             new Point3D() { X = item.X1, Y = item.Y1, Z = item.Z1 },
                                             new Point3D() { X = item.X2, Y = item.Y2, Z = item.Z2 },
                                             new Point3D() { X = item.X3, Y = item.Y3, Z = item.Z3 }, 
@@ -4767,8 +4770,8 @@ namespace PreAddTech
                         {
                             tempElement.num = num++;
                             tempElementOfCurve.Add(tempElement);
-                            Perimeter += proc.length(tempElement.point1, tempElement.point2);
-                            Section += proc.squareSection(tempElement.point1, tempElement.point2);
+                            Perimeter += proc.Length(tempElement.point1, tempElement.point2);
+                            Section += proc.SquareSection(tempElement.point1, tempElement.point2);
                             tempMassiveParLayer.Add((float)(Math.Acos(item.ZN) / Math.PI * 180));
                         }
                     }
@@ -4780,7 +4783,7 @@ namespace PreAddTech
                 //Площадь сечения
                 dataGridViewSetLayer[dataGridViewSetLayer.Columns["Ssection"].Index, i].Value = Section;
                 //Барицентр сечения
-                barCenter = proc.barycenterSection(tempElementOfCurve);
+                barCenter = proc.BarycenterSection(tempElementOfCurve);
                 dataGridViewSetLayer[dataGridViewSetLayer.Columns["centroidOfArea"].Index, i].Value = barCenter.ToString();
                 //Смещение центра тяжести контура от центра тяжести модели
                 dataGridViewSetLayer[dataGridViewSetLayer.Columns["Delta"].Index, i].Value = 0f;
@@ -4802,6 +4805,30 @@ namespace PreAddTech
 
                 ParMassiveLayer.Add(tempMassiveParLayer);
             }
+            }
+            //Выбрана стратегия с переменным шагом построения
+            else if (toolStripComboBoxLayerAnalysis.SelectedIndex == 1 && float.TryParse(toolStripTextBoxMinStep.Text, out float stepMin)
+                                                                       && float.TryParse(toolStripTextBoxMaxStep.Text, out float stepMax))
+            {
+                if (stepMin == stepMax)
+                {
+                    MessageBox.Show("Минимальная и максимальная величина шага построения совпадают", "Ошибка!");
+                    return;
+                }
+                //Первоначальный массив координат построения
+                //шаг построения - дискретность задания положения плоскости сечения
+                if (float.TryParse(SettingsUser.Default.PositionResolution.Replace('.',','), out float resolution))
+                { coordinateSectionZ = new float[(int)Math.Ceiling((limits[1] - limits[0]) / resolution)]; }
+                else
+                {
+                    MessageBox.Show("Проверьте правильность задания величины дискретности по оси Z \n" +
+                                    "в настройках системы.", "Ошибка!");
+                    return;
+                }
+
+
+            }
+            //
             toolStripStatusLabelLayerAnalysis.Text = "Данные по сечениям готовы";
             toolStripStatusLabelLayerAnalysis.ForeColor = Color.Black;
 
@@ -4809,22 +4836,30 @@ namespace PreAddTech
             numericUpDownCurentFractalAnalysis.Enabled = true;
         }
 
-        private void toolStripTextBoxMinStep_KeyPress(object sender, KeyPressEventArgs e)
+        private void ToolStripTextBoxMinStep_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Char.IsNumber(e.KeyChar))
-            { MessageBox.Show("Введено не число"); }
+                //if (!Char.IsDigit(e.KeyChar))
+                //{ MessageBox.Show("Введено не число"); }
         }
 
-        private void toolStripTextBoxMaxStep_KeyPress(object sender, KeyPressEventArgs e)
+        private void ToolStripTextBoxMaxStep_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Char.IsNumber(e.KeyChar))
-            { MessageBox.Show("Введено не число"); }
+
+                //if (!Char.IsNumber(e.KeyChar))
+                //{ MessageBox.Show("Введено не число"); }
         }
 
-        private void toolStripTextBoxMinStep_TextChanged(object sender, EventArgs e)
+        private void ToolStripTextBoxMinStep_TextChanged(object sender, EventArgs e)
         {
             toolStripStatusLabelLayerAnalysis.Text = "Изменились исходные данные.";
             toolStripStatusLabelLayerAnalysis.ForeColor = Color.Red;
+            if (float.TryParse(toolStripTextBoxMinStep.Text, out float min) && float.TryParse(toolStripTextBoxMaxStep.Text, out float max))
+            {
+                if ( min > max )
+                {
+                    toolStripTextBoxMaxStep.Text = toolStripTextBoxMinStep.Text;
+                }
+            }
         }
         /// <summary>
         /// Номер текущего сечения
@@ -4846,10 +4881,12 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridViewSetLayer_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewSetLayer_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //игнорирование нажатия вне кнопки
             if (e.RowIndex < 0) return;
+            //Запрет просмотра
+            if (dataGridViewSetLayer.Rows[e.RowIndex].Cells["Ssection"].Value.ToString().TrimEnd() == "0") return;
 
             dataGridViewSetLayer.Rows[e.RowIndex].DefaultCellStyle.Font = new Font(this.Font, FontStyle.Bold);
             numSection = e.RowIndex;
@@ -4862,6 +4899,7 @@ namespace PreAddTech
 
             //Просмотр гистограммы
             if (e.ColumnIndex == dataGridViewSetLayer.Columns["Nz"].Index &&
+                dataGridViewSetLayer.Rows[e.RowIndex].Cells["Nz"].Value != null &&
                 dataGridViewSetLayer.Rows[e.RowIndex].Cells["Nz"].Value.ToString().TrimEnd() == "Просмотр")
             {
                 try
@@ -4908,9 +4946,8 @@ namespace PreAddTech
                     MessageBox.Show(e17.Message);
                 }
             }
-
             //Просмотр второй гистограммы
-            if (e.ColumnIndex == dataGridViewSetLayer.Columns["Aadjacent"].Index &&
+            else if (e.ColumnIndex == dataGridViewSetLayer.Columns["Aadjacent"].Index &&
                 dataGridViewSetLayer.Rows[e.RowIndex].Cells["Aadjacent"].Value.ToString().TrimEnd() == "Просмотр")
             {
                 try
@@ -4964,7 +5001,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void panelReviewContourSection_Paint(object sender, PaintEventArgs e)
+        private void PanelReviewContourSection_Paint(object sender, PaintEventArgs e)
         {
             //Размеры поля для визуализации
             int Hvis = panelReviewContourSection.Height;
@@ -4973,9 +5010,9 @@ namespace PreAddTech
             float Hmodel = limits[5] - limits[4];
             float Wmodel = limits[3] - limits[2];
             //Масштаб
-            float Kscale = 1;
+            //float Kscale = 1;
 
-            if (dataGridViewSetLayer.RowCount != 0 && float.TryParse(toolStripComboBoxScale.Text, out Kscale))
+            if (dataGridViewSetLayer.RowCount != 0 && float.TryParse(toolStripComboBoxScale.Text, out float Kscale))
             {
                 //Количество контуров
                 int countContour = 0;
@@ -4996,17 +5033,17 @@ namespace PreAddTech
                         if (!item.insideOrOuterContour)
                         {
                             contourGraphics.DrawLine(myPen,
-                                                   transformationPointForVisualisation(item.point1, Kscale, 
+                                                   TransformationPointForVisualisation(item.point1, Kscale, 
                                                            limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis),
-                                                   transformationPointForVisualisation(item.point2, Kscale, 
+                                                   TransformationPointForVisualisation(item.point2, Kscale, 
                                                            limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis));
                         }
                         else
                         {
                             contourGraphics.DrawLine(myPen2,
-                                                   transformationPointForVisualisation(item.point1, Kscale,
+                                                   TransformationPointForVisualisation(item.point1, Kscale,
                                                            limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis),
-                                                   transformationPointForVisualisation(item.point2, Kscale,
+                                                   TransformationPointForVisualisation(item.point2, Kscale,
                                                            limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis));
                         }
                     }
@@ -5020,31 +5057,40 @@ namespace PreAddTech
                             if (!item.insideOrOuterContour)
                             {
                                 contourGraphics.DrawLine(myPen,
-                                                   transformationPointForVisualisation(item.point1, Kscale,
+                                                   TransformationPointForVisualisation(item.point1, Kscale,
                                                            limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis),
-                                                   transformationPointForVisualisation(item.point2, Kscale,
+                                                   TransformationPointForVisualisation(item.point2, Kscale,
                                                            limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis));
                             }
                             else
                             {
                                 contourGraphics.DrawLine(myPen2,
-                                                   transformationPointForVisualisation(item.point1, Kscale,
+                                                   TransformationPointForVisualisation(item.point1, Kscale,
                                                            limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis),
-                                                   transformationPointForVisualisation(item.point2, Kscale,
+                                                   TransformationPointForVisualisation(item.point2, Kscale,
                                                            limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis));
                             }
                         }
                     }
                 }
 
-                if (checkBoxVisualAnalysis.CheckState == CheckState.Checked)
+                if (ParMassiveLayerFract_anal.Count() == 0)
+                    return;
+
+                try
                 {
-                    foreach (var item in ParMassiveLayerFract_anal[numSection].pointR)
+                //Визуализация измерения длины контура методом масштабов
+                if (fractalMethod == FractalMethod.scale &&
+                checkBoxVisualAnalysis.CheckState == CheckState.Checked && 
+                    ParMassiveLayerFract_anal[numSection].PointR.Count != 0 )
+                {
+                    foreach (var item in ParMassiveLayerFract_anal[numSection].PointR)
                     {
                         if (numericUpDownCurentFractalAnalysis.Value == (item.nomMeasure + 1))
                         {
-                            PointF pointC = transformationPointForVisualisation(item.pointCentre, Kscale,
+                            PointF pointC = TransformationPointForVisualisation(item.pointCentre, Kscale,
                                                                limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis);
+
                             float R = 2 * Kscale * item.R > 1 ? 2 * Kscale * item.R : 1;
                             contourGraphics.DrawArc(myPen3, pointC.X - Kscale * item.R, 
                                                             pointC.Y - Kscale * item.R, 
@@ -5054,6 +5100,31 @@ namespace PreAddTech
                     }
                 }
 
+                //Визуализация измерения длины контура методом масштабов
+                if (fractalMethod == FractalMethod.cell &&
+                checkBoxVisualAnalysis.CheckState == CheckState.Checked &&
+                    ParMassiveLayerFract_anal[numSection].PointS.Count != 0)
+                {
+                    foreach (var item in ParMassiveLayerFract_anal[numSection].PointS)
+                    {
+                        if (numericUpDownCurentFractalAnalysis.Value == (item.nomMeasure + 1))
+                        {
+                            PointF point0 = TransformationPointForVisualisation(new PointF() { X = item.S[0].X, Y = item.S[1].Y }, Kscale,
+                                                               limits[2], limits[4], Wmodel, Hmodel, Wvis, Hvis);
+
+                            float R = Kscale * item.R > 1 ? Kscale * item.R : 1;
+
+                            Rectangle rectangle = new Rectangle((int)point0.X, (int)point0.Y, (int)R, (int)R);
+
+                            contourGraphics.DrawRectangle(myPen3, rectangle);
+                        }
+                    }
+                }
+                }
+                catch (Exception e25)
+                {
+                    MessageBox.Show(e25.Message);                    
+                }
                 labelCountContour.Text = "Количество контуров: " + countContour + ".";
                 //
                 myPen.Dispose();
@@ -5072,7 +5143,7 @@ namespace PreAddTech
         /// <param name="Wvis">Максимальный размер визуализации по оси X</param>
         /// <param name="Hvis">Максимальный размер визуализации по оси Y</param>
         /// <returns></returns>
-        PointF transformationPointForVisualisation(PointF P0, float Kscale, float minModelX, float minModelY, 
+        PointF TransformationPointForVisualisation(PointF P0, float Kscale, float minModelX, float minModelY, 
                                                    float Wmodel, float Hmodel, int Wvis, int Hvis)
         {
             PointF transformationP = new PointF()
@@ -5087,7 +5158,7 @@ namespace PreAddTech
         /// Цвет пера для прорисовки контура
         /// </summary>
         Color colorPen = Color.Red;
-        private void toolStripButtonColorLine_Click(object sender, EventArgs e)
+        private void ToolStripButtonColorLine_Click(object sender, EventArgs e)
         {
             if (colorDialogSelect.ShowDialog() == DialogResult.OK)
             {
@@ -5100,8 +5171,10 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridViewSetLayer_RowEnter(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewSetLayer_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
+            if (dataGridViewSetLayer.Rows[e.RowIndex].Cells["Ssection"].Value.ToString().TrimEnd() == "0") return;
+
             if (checkBoxPreview.CheckState == CheckState.Checked && 
                 checkBoxOneOrAll.CheckState != CheckState.Checked)
             {
@@ -5112,7 +5185,7 @@ namespace PreAddTech
             }
         }
 
-        private void checkBoxPreview_CheckStateChanged(object sender, EventArgs e)
+        private void CheckBoxPreview_CheckStateChanged(object sender, EventArgs e)
         {
             if (checkBoxPreview.CheckState == CheckState.Checked)
             { 
@@ -5124,7 +5197,7 @@ namespace PreAddTech
             }
         }
 
-        private void checkBoxOneOrAll_CheckStateChanged(object sender, EventArgs e)
+        private void CheckBoxOneOrAll_CheckStateChanged(object sender, EventArgs e)
         {
             if (checkBoxOneOrAll.CheckState == CheckState.Checked)
             {
@@ -5142,7 +5215,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemShow_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemShow_Click(object sender, EventArgs e)
         {
             dataGridViewSetLayer.Dock = DockStyle.Fill;
         }
@@ -5151,27 +5224,33 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemReduce_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemReduce_Click(object sender, EventArgs e)
         {
             dataGridViewSetLayer.Dock = DockStyle.None;
         }
         /// <summary>
-        /// Список фрактальной размерности
+        /// Список фрактальной размерности для метода масштабов
         /// </summary>
         List<float> ParMassiveLayerFD = new List<float>();
+
+        /// <summary>
+        /// Список фрактальной размерности для клеточного метода
+        /// </summary>
+        List<float> ParMassiveLayerFDS = new List<float>();
+
         /// <summary>
         /// Список результатов фрактального анализа
         /// </summary>
-        List<base_fract_anal> ParMassiveLayerFract_anal = new List<base_fract_anal>();
+        List<Base_fract_anal> ParMassiveLayerFract_anal = new List<Base_fract_anal>();
 
         /// <summary>
         /// Статистический анализ характеристик контура
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonLayerAnalysis_Click(object sender, EventArgs e)
+        private void ToolStripButtonLayerAnalysis_Click(object sender, EventArgs e)
         {
-            /// Статистические характеристики (результаты анализа по слоям)   
+            // Статистические характеристики (результаты анализа по слоям)   
             float[] resultStatParLayer = new float[13];
             float[] resultStatParLayerA = new float[13];
             //Определение контуров внешних/внутренних
@@ -5179,22 +5258,25 @@ namespace PreAddTech
 
             ParMassiveLayerA.Clear();
             ParMassiveLayerFD.Clear();
+            ParMassiveLayerFDS.Clear();
             ParMassiveLayerFract_anal.Clear();
             //Определение смежных углов элементов контура 
             //Определение фрактальной размерности
             for (int i = 0; i < listContour.Count; i++)
             {
                 proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, listContour.Count - 1);
-                List<base_elementOfCurve> listETemp = proc.listCloseContour(listContour[i].listElement, SettingsUser.Default.RoundingKoord);
-                ParMassiveLayerA.Add(proc.massiveAngleAdjacent(listETemp));
-                base_fract_anal fractal_analTemp = proc.fractalDimension(listETemp,
+                List<base_elementOfCurve> listETemp = proc.ListCloseContour(listContour[i].listElement, float.Parse(SettingsUser.Default.RoundingKoord.Replace('.',',')));
+                ParMassiveLayerA.Add(proc.MassiveAngleAdjacent(listETemp));
+                Base_fract_anal fractal_analTemp = proc.FractalDimension(listETemp,
                                       (int)numericUpDownCountFractalAnalysis.Value,
-                                      (int)numericUpDownRatioRtoL.Value,
-                                      checkBoxAbsOrRel.CheckState == CheckState.Checked);
-                ParMassiveLayerFD.Add(fractal_analTemp.mean());
+                                      (float)numericUpDownRatioRtoL.Value,
+                                      checkBoxAbsOrRel.CheckState == CheckState.Checked,
+                                      fractalMethod);
+                ParMassiveLayerFD.Add(fractal_analTemp.Mean());
+                ParMassiveLayerFDS.Add(fractal_analTemp.Mean(fractal_analTemp.FractalDimensionSquare));
                 ParMassiveLayerFract_anal.Add(fractal_analTemp);
             }
-            ///
+            //
             float Xcentre0 = 0;
             float Ycentre0 = 0;
             float volum = 0;
@@ -5229,9 +5311,8 @@ namespace PreAddTech
                     else
                     {
                         Stat_analysis statisticaPar = new Stat_analysis();
-                        /// <summary>
-                        /// Данные гистограммы по анализу слоев
-                        /// </summary>
+                        
+                        // Данные гистограммы по анализу слоев
                         List<Stat_analysis.elementGist> gistParLayer = new List<Stat_analysis.elementGist>();
 
                         gistParLayer = statisticaPar.Gist((ParMassiveLayer[i]).ToArray(), (int)numericUpDownLayerInt.Value);
@@ -5278,9 +5359,8 @@ namespace PreAddTech
                     else
                     {
                         Stat_analysis statisticaParA = new Stat_analysis();
-                        /// <summary>
-                        /// Данные гистограммы по анализу слоев
-                        /// </summary>
+
+                        // Данные гистограммы по анализу слоев
                         List<Stat_analysis.elementGist> gistParLayerA = new List<Stat_analysis.elementGist>();
 
                         gistParLayerA = statisticaParA.Gist((ParMassiveLayerA[i]).ToArray(), (int)numericUpDownLayerInt.Value);
@@ -5316,8 +5396,12 @@ namespace PreAddTech
             {
                 for (int i = 0; i < ParMassiveLayerFD.Count; i++)
                 {
-                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["Fractal_Size"].Index, i].Value =
+                    //Поле Fractal_Size_Scale
+                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["Fractal_Size_Scale"].Index, i].Value =
                             ParMassiveLayerFD[i].ToString("0.000");
+                    //Поле Fractal_Size_Square
+                    dataGridViewSetLayer[dataGridViewSetLayer.Columns["Fractal_Size_Square"].Index, i].Value =
+                            ParMassiveLayerFDS[i].ToString("0.000");
                 }
             }
             else
@@ -5328,7 +5412,7 @@ namespace PreAddTech
             toolStripStatusLabelLayerAnalysis.ForeColor = Color.Black;
         }
 
-        private void toolStripTextBoxFileName_Click(object sender, EventArgs e)
+        private void ToolStripTextBoxFileName_Click(object sender, EventArgs e)
         {
 
         }
@@ -5337,7 +5421,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonLayerSave_Click(object sender, EventArgs e)
+        private void ToolStripButtonLayerSave_Click(object sender, EventArgs e)
         {
             MyProcedures proc = new MyProcedures();
             proc.SaveDataGridInXlc(dataGridViewSetLayer);
@@ -5347,7 +5431,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void label1var_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void Label1var_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (checkBox1var.CheckState == CheckState.Checked)
             {
@@ -5360,7 +5444,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void label2var_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void Label2var_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (checkBox2var.CheckState == CheckState.Checked)
             {
@@ -5373,7 +5457,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void label3var_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void Label3var_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (checkBox3var.CheckState == CheckState.Checked && colorDialogSelect.ShowDialog() == DialogResult.OK)
             {
@@ -5386,16 +5470,16 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButton3D_Click(object sender, EventArgs e)
+        private void ToolStripButton3D_Click(object sender, EventArgs e)
         {
             if (ListVox.Count == 0) return;
 
-            toolStripButtonShowHistogramXYZ_Click(sender, e);
+            ToolStripButtonShowHistogramXYZ_Click(sender, e);
             toolStripButtonShowHistogramXYZ.Font = new Font(this.Font, FontStyle.Regular);
             toolStripButtonShowHistogram3D.Font = new Font(this.Font, FontStyle.Bold);
             //resultStat3D, resultStat3DEmpty
-            ///0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-            /// 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+            //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
+            // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
             float[] resultStat = new float[13];
             if (toolStripComboBoxShowAnalysis.SelectedIndex == 0) resultStat = resultStat3D;
             else if (toolStripComboBoxShowAnalysis.SelectedIndex == 1) resultStat = resultStat3DEmpty; 
@@ -5427,7 +5511,7 @@ namespace PreAddTech
             analize3D.Show();
         }
 
-        private void toolStripButtonOpenVoxModel_Click(object sender, EventArgs e)
+        private void ToolStripButtonOpenVoxModel_Click(object sender, EventArgs e)
         {
             MyProcedures proc = new MyProcedures();
             try
@@ -5521,8 +5605,7 @@ namespace PreAddTech
                 //Создание массива моделей для размещения на рабочей платформе
                 if (activeTask == ATPreparation.switchActiveTask.analizePacking)
                 {
-                    base_model model = new base_model();
-                    model.Name = toolStripTextBoxFileName.Text;
+                    base_model model = new base_model() { Name = toolStripTextBoxFileName.Text};
                     //model.Stl = ListStl;
                     //Создание списка вокселей для модели изделия
                     List<base_vox> tempListVox = new List<base_vox>();
@@ -5573,7 +5656,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="setChartType">Показывать значения X, Y, Z или XYZ</param> 
         /// <param name="setAbsRel">абсолютные или относительные</param>
-        private void SwitchChart(switchChartType setChartType, switchChartAbsRel setAbsRel)
+        private void SwitchChart(SwitchChartType setChartType, SwitchChartAbsRel setAbsRel)
         {
             Chart[] massiveChart = { chartHistogramVoxelX, chartHistogramVoxelY, chartHistogramVoxelZ, chartHistogramVoxelXYZ,
                                      chartHistogramVoxelXRelation, chartHistogramVoxelYRelation, chartHistogramVoxelZRelation,
@@ -5586,20 +5669,29 @@ namespace PreAddTech
             activeChart.Visible = true;
         }
 
-        private void numericUpDownCurentFractalAnalysis_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownCurentFractalAnalysis_ValueChanged(object sender, EventArgs e)
         {
             if (numericUpDownCurentFractalAnalysis.Value > numericUpDownCountFractalAnalysis.Value)
             {
                 numericUpDownCurentFractalAnalysis.Value = numericUpDownCountFractalAnalysis.Value;
             }
+            panelReviewContourSection.Refresh();
         }
-
-        private void numericUpDownCountFractalAnalysis_ValueChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Изменение номера меры для визуализации измерения контура  
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NumericUpDownCountFractalAnalysis_ValueChanged(object sender, EventArgs e)
         {
-            
+            if (numericUpDownCurentFractalAnalysis.Value > numericUpDownCountFractalAnalysis.Value)
+            {
+                numericUpDownCurentFractalAnalysis.Value = numericUpDownCountFractalAnalysis.Value;
+            }
+            panelReviewContourSection.Refresh();
         }
 
-        private void checkBoxAbsOrRel_CheckStateChanged(object sender, EventArgs e)
+        private void CheckBoxAbsOrRel_CheckStateChanged(object sender, EventArgs e)
         {
             if (checkBoxAbsOrRel.CheckState == CheckState.Checked)
             {
@@ -5611,22 +5703,77 @@ namespace PreAddTech
             }
         }
 
-        private void dataGridViewSetLayer_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        /// <summary>
+        /// Двойной щелчек мышью по таблице результатов послойного анализа
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridViewSetLayer_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //игнорирование нажатия вне объекта
             if (e.RowIndex < 0 || ParMassiveLayerFract_anal.Count == 0) return;
 
-            if (e.ColumnIndex == dataGridViewSetLayer.Columns["Fractal_Size"].Index &&
-                dataGridViewSetLayer.Rows[e.RowIndex].Cells["Fractal_Size"].Value.ToString().TrimEnd() != "")
+            if (e.ColumnIndex == dataGridViewSetLayer.Columns["Fractal_Size_Scale"].Index &&
+                dataGridViewSetLayer.Rows[e.RowIndex].Cells["Fractal_Size_Scale"].Value.ToString().TrimEnd() != "")
             {
                 FormResults dataRevision = new FormResults();
                 dataRevision.Activate();
                 dataRevision.ListStl = ListStl;
                 dataRevision.toolStripComboBoxResult.SelectedIndex = 1;
+                dataRevision.fractAnal = ParMassiveLayerFract_anal[numSection];
                 dataRevision.richTextBoxResultAnalysis.Text = dataRevision.revision[1] = 
                                                               ParMassiveLayerFract_anal[numSection].ToString();
                 dataRevision.Show();
             }
+
+            //
+            if (e.ColumnIndex == dataGridViewSetLayer.Columns["Fractal_Size_Square"].Index &&
+    dataGridViewSetLayer.Rows[e.RowIndex].Cells["Fractal_Size_Square"].Value.ToString().TrimEnd() != "")
+            {
+                FormResults dataRevision = new FormResults();
+                dataRevision.Activate();
+                dataRevision.ListStl = ListStl;
+                dataRevision.toolStripComboBoxResult.SelectedIndex = 2;
+                dataRevision.fractAnal = ParMassiveLayerFract_anal[numSection];
+                dataRevision.richTextBoxResultAnalysis.Text = dataRevision.revision[2] =
+                                                              ParMassiveLayerFract_anal[numSection].ToString(ParMassiveLayerFract_anal[numSection].FractalDimensionSquare);
+                dataRevision.Show();
+            }
+        }
+        /// <summary>
+        /// Изменение масштаба отображения сечения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripComboBoxScale_TextChanged(object sender, EventArgs e)
+        {
+            panelReviewContourSection.Refresh();
+        }
+
+        FractalMethod fractalMethod = FractalMethod.cell;
+
+        /// <summary>
+        /// Изменение метода определения фрактальной размерности
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckBoxMethod_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (checkBoxMethod.CheckState == CheckState.Checked)
+            {
+                checkBoxMethod.Text = "Клеточный метод";
+                fractalMethod = FractalMethod.cell;
+            }
+            else
+            {
+                checkBoxMethod.Text = "Метод масштабов";
+                fractalMethod = FractalMethod.scale;
+            }
+        }
+
+        private void ToolStripComboBox2_Click(object sender, EventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -5634,7 +5781,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripComboBox3_TextChanged(object sender, EventArgs e)
+        private void ToolStripComboBox3_TextChanged(object sender, EventArgs e)
         {
             if (toolStripComboBox3.SelectedIndex == 1) // 2. Просмотр и записать в файл
             {
@@ -5649,7 +5796,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonFractalDimension_Click(object sender, EventArgs e)
+        private void ToolStripButtonFractalDimension_Click(object sender, EventArgs e)
         {
 
         }

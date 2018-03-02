@@ -11,6 +11,9 @@ namespace PreAddTech
 {
     public partial class FormStatistics : Form
     {
+        /// <summary>
+        /// Экранная форма статистического анализа
+        /// </summary>
         public FormStatistics()
         {
             InitializeComponent();

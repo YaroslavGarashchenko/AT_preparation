@@ -38,7 +38,9 @@
             // 
             // richTextBoxResultAnalysis
             // 
-            this.richTextBoxResultAnalysis.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.richTextBoxResultAnalysis.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxResultAnalysis.Location = new System.Drawing.Point(0, 28);
             this.richTextBoxResultAnalysis.Name = "richTextBoxResultAnalysis";
             this.richTextBoxResultAnalysis.Size = new System.Drawing.Size(584, 353);
@@ -70,10 +72,13 @@
             // 
             this.toolStripComboBoxResult.Items.AddRange(new object[] {
             "Площадь и объем триангуляционной модели",
-            "Результаты анализа фрактальной размерности"});
+            "Результаты анализа фрактальной размерности методом масштабов",
+            "Результаты анализа фрактальной размерности клеточным методом",
+            "Полные данные анализа фрактальной размерности"});
             this.toolStripComboBoxResult.Name = "toolStripComboBoxResult";
-            this.toolStripComboBoxResult.Size = new System.Drawing.Size(350, 25);
+            this.toolStripComboBoxResult.Size = new System.Drawing.Size(450, 25);
             this.toolStripComboBoxResult.Text = "Выбор...";
+            this.toolStripComboBoxResult.ToolTipText = "Выбор данных для просмотра";
             // 
             // FormResults
             // 
@@ -82,6 +87,8 @@
             this.ClientSize = new System.Drawing.Size(584, 381);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.richTextBoxResultAnalysis);
+            this.MaximumSize = new System.Drawing.Size(800, 600);
+            this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "FormResults";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Результаты анализов исследуемых признаков";
@@ -95,6 +102,9 @@
         #endregion
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        /// <summary>
+        /// Поле просмотра результатов исследования
+        /// </summary>
         public System.Windows.Forms.RichTextBox richTextBoxResultAnalysis;
         public System.Windows.Forms.ToolStripComboBox toolStripComboBoxResult;
     }

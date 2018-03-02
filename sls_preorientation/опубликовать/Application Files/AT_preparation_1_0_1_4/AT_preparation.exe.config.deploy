@@ -46,9 +46,6 @@
             <setting name="RoundingKoord" serializeAs="String">
                 <value>0.0001</value>
             </setting>
-            <setting name="PositionResolution" serializeAs="String">
-                <value>0.01</value>
-            </setting>
         </PreAddTech.SettingsUser>
         <PreAddTech.Settings_AT>
             <setting name="FoxProPath" serializeAs="String">
@@ -80,9 +77,6 @@
             </setting>
             <setting name="RoundingKoord" serializeAs="String">
                 <value>0.0001</value>
-            </setting>
-            <setting name="PositionResolution" serializeAs="String">
-                <value>0.01</value>
             </setting>
         </PreAddTech.Settings_AT>
     </userSettings>

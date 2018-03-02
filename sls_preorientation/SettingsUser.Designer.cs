@@ -12,7 +12,7 @@ namespace PreAddTech {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
     public sealed partial class SettingsUser : global::System.Configuration.ApplicationSettingsBase {
         
         private static SettingsUser defaultInstance = ((SettingsUser)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new SettingsUser())));
@@ -122,7 +122,7 @@ namespace PreAddTech {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsDescriptionAttribute("Программа для просмотра STL")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("e:\\App_0P\\GLC_Player_2_2_0\\glc_player.exe")]
+        [global::System.Configuration.DefaultSettingValueAttribute("d:\\App_0P\\GLC_Player_2_2_0\\glc_player.exe")]
         public string GLC_PlayerPuth {
             get {
                 return ((string)(this["GLC_PlayerPuth"]));
@@ -138,7 +138,7 @@ namespace PreAddTech {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsDescriptionAttribute("Программа Magics")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("E:\\App\\Materialise\\Magics 19.01\\Magics.exe")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files\\Materialise\\Materialise Magics 21.0\\Magics.exe")]
         public string MagicsPuth {
             get {
                 return ((string)(this["MagicsPuth"]));
@@ -150,7 +150,7 @@ namespace PreAddTech {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\Program Files (x86)\\MSOffice\\Office12\\EXCEL.EXE")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files (x86)\\Microsoft Office\\Office12\\EXCEL.EXE")]
         public string ExcelPath {
             get {
                 return ((string)(this["ExcelPath"]));
@@ -163,12 +163,24 @@ namespace PreAddTech {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.0001")]
-        public float RoundingKoord {
+        public string RoundingKoord {
             get {
-                return ((float)(this["RoundingKoord"]));
+                return ((string)(this["RoundingKoord"]));
             }
             set {
                 this["RoundingKoord"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        public string PositionResolution {
+            get {
+                return ((string)(this["PositionResolution"]));
+            }
+            set {
+                this["PositionResolution"] = value;
             }
         }
     }

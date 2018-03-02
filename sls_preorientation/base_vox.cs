@@ -64,6 +64,9 @@ namespace PreAddTech
         /// размер вокселя по координате X
         /// </summary>
         private float sizeX;
+        /// <summary>
+        /// Размер вокселя по координате X
+        /// </summary>
         public float SizeX
         {
             get {return sizeX;}
