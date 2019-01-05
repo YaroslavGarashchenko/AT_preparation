@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.dataGridViewSYS = new System.Windows.Forms.DataGridView();
+            this.Par = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NamePar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonDefolt = new System.Windows.Forms.Button();
             this.openFileDialogSelectFile = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxNumPar = new System.Windows.Forms.TextBox();
-            this.Par = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NamePar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSYS)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,6 +59,41 @@
             this.dataGridViewSYS.Size = new System.Drawing.Size(900, 511);
             this.dataGridViewSYS.TabIndex = 0;
             this.dataGridViewSYS.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewSYS_CellContentDoubleClick);
+            this.dataGridViewSYS.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewSYS_CellContentDoubleClick);
+            // 
+            // Par
+            // 
+            this.Par.HeaderText = "Описание параметра";
+            this.Par.MaxInputLength = 100;
+            this.Par.Name = "Par";
+            this.Par.ReadOnly = true;
+            this.Par.Width = 350;
+            // 
+            // NamePar
+            // 
+            this.NamePar.HeaderText = "Переменная";
+            this.NamePar.MaxInputLength = 100;
+            this.NamePar.Name = "NamePar";
+            this.NamePar.ReadOnly = true;
+            this.NamePar.Width = 150;
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Значение";
+            this.Value.MaxInputLength = 200;
+            this.Value.Name = "Value";
+            this.Value.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Value.ToolTipText = "Вызов диалогового окна для выбора файла (DoubleClick)";
+            this.Value.Width = 250;
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Тип переменной";
+            this.Type.MaxInputLength = 50;
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            this.Type.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Type.Width = 150;
             // 
             // buttonSave
             // 
@@ -107,40 +142,6 @@
             this.textBoxNumPar.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.textBoxNumPar.Size = new System.Drawing.Size(56, 20);
             this.textBoxNumPar.TabIndex = 4;
-            // 
-            // Par
-            // 
-            this.Par.HeaderText = "Описание параметра";
-            this.Par.MaxInputLength = 100;
-            this.Par.Name = "Par";
-            this.Par.ReadOnly = true;
-            this.Par.Width = 350;
-            // 
-            // NamePar
-            // 
-            this.NamePar.HeaderText = "Переменная";
-            this.NamePar.MaxInputLength = 100;
-            this.NamePar.Name = "NamePar";
-            this.NamePar.ReadOnly = true;
-            this.NamePar.Width = 150;
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Значение";
-            this.Value.MaxInputLength = 200;
-            this.Value.Name = "Value";
-            this.Value.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Value.ToolTipText = "Вызов диалогового окна для выбора файла (DoubleClick)";
-            this.Value.Width = 250;
-            // 
-            // Type
-            // 
-            this.Type.HeaderText = "Тип переменной";
-            this.Type.MaxInputLength = 50;
-            this.Type.Name = "Type";
-            this.Type.ReadOnly = true;
-            this.Type.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Type.Width = 150;
             // 
             // SettingSys
             // 

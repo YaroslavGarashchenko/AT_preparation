@@ -37,11 +37,12 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <DocumentationFile>
     </DocumentationFile>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,7 +66,7 @@
     <ManifestKeyFile>AT_preparation_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -74,7 +75,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GeneticAlgorithm">
@@ -91,6 +92,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -117,6 +119,12 @@
     <Compile Include="FormAnalysis.Designer.cs">
       <DependentUpon>FormAnalysis.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAnalysisSteps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAnalysisSteps.Designer.cs">
+      <DependentUpon>FormAnalysisSteps.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormDitribution3D.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,12 +149,19 @@
     <Compile Include="FormResults.Designer.cs">
       <DependentUpon>FormResults.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStatAnal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStatAnal.Designer.cs">
+      <DependentUpon>FormStatAnal.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStatistics.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormStatistics.Designer.cs">
       <DependentUpon>FormStatistics.cs</DependentUpon>
     </Compile>
+    <Compile Include="GeneralVariable.cs" />
     <Compile Include="MyProcedures.cs" />
     <Compile Include="PackingSettings.cs">
       <SubType>Form</SubType>
@@ -173,6 +188,7 @@
     <Compile Include="SettingSys.Designer.cs">
       <DependentUpon>SettingSys.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings_AT.cs" />
     <Compile Include="Settings_AT.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -186,12 +202,18 @@
       <DependentUpon>ATPreparation.cs</DependentUpon>
     </Compile>
     <Compile Include="Stat_analysis.cs" />
+    <Compile Include="Stat_criterion.cs" />
+    <Compile Include="VarDatas.cs" />
+    <Compile Include="variable_step.cs" />
     <Compile Include="VarModels.cs" />
     <EmbeddedResource Include="AboutProgram.resx">
       <DependentUpon>AboutProgram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAnalysis.resx">
       <DependentUpon>FormAnalysis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAnalysisSteps.resx">
+      <DependentUpon>FormAnalysisSteps.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDitribution3D.resx">
       <DependentUpon>FormDitribution3D.cs</DependentUpon>
@@ -204,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormResults.resx">
       <DependentUpon>FormResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStatAnal.resx">
+      <DependentUpon>FormStatAnal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStatistics.resx">
       <DependentUpon>FormStatistics.cs</DependentUpon>
@@ -223,6 +248,7 @@
     </Compile>
     <EmbeddedResource Include="ATPreparation.resx">
       <DependentUpon>ATPreparation.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingSys.resx">
       <DependentUpon>SettingSys.cs</DependentUpon>
@@ -231,6 +257,7 @@
     <None Include="AT_preparation_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\PlantParameters.datasource" />
+    <None Include="Properties\DataSources\VarDatas.datasource" />
     <None Include="Properties\DataSources\VarModels.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -258,6 +285,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="RULERS.ICO" />
+    <Content Include="VarDatas.xml" />
     <Content Include="VarModels.xml">
       <SubType>Designer</SubType>
     </Content>

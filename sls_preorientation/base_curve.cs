@@ -8,12 +8,12 @@ namespace PreAddTech
     /// <summary>
     /// Класс описания контура сечения 3D-модели
     /// </summary>
-    public class base_curveContourSection
+    public class Base_curveContourSection
     {
         /// <summary>
         /// Высота слоя h
         /// </summary>
-        public float h { get; set; }
+        public float H { get; set; }
         /// <summary>
         /// Координата сечения по оси Z
         /// </summary>
@@ -21,14 +21,11 @@ namespace PreAddTech
         /// <summary>
         /// Метка внутреннего/внешнего контура (True - внешний контур, Fаlse - внутренний контур)
         /// </summary>
-        public object insideOrOuterContour { get; set; }
+        public object InsideOrOuterContour { get; set; }
         /// <summary>
         /// Список точек контура
         /// </summary>
-        public List<base_elementOfCurve> listElement { get; set; }
+        public List<base_elementOfCurve> ListElement { get; set; }
     }
-    /// <summary>
-    /// Внутренний/внешний контур
-    /// </summary>
-    enum inout { inside, outer };
+
 }

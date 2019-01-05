@@ -330,7 +330,7 @@
             this.buttonEvaluation.Name = "buttonEvaluation";
             this.buttonEvaluation.Size = new System.Drawing.Size(210, 42);
             this.buttonEvaluation.TabIndex = 6;
-            this.buttonEvaluation.Text = "Результаты анализа";
+            this.buttonEvaluation.Text = "Статистический анализ исследуемых признаков";
             this.buttonEvaluation.UseVisualStyleBackColor = true;
             this.buttonEvaluation.Click += new System.EventHandler(this.buttonEvaluation_Click_1);
             // 

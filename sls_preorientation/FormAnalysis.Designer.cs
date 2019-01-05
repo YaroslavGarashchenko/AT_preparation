@@ -42,6 +42,28 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAnalysis));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -72,28 +94,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAnalysis));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStripHistogram = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemTypeDiagram = new System.Windows.Forms.ToolStripComboBox();
             this.ToolStripMenuItemColorSсhemе = new System.Windows.Forms.ToolStripComboBox();
@@ -201,6 +204,7 @@
             this.numericUpDownRatioRtoL = new System.Windows.Forms.NumericUpDown();
             this.checkBoxVisualAnalysis = new System.Windows.Forms.CheckBox();
             this.checkBoxMethod = new System.Windows.Forms.CheckBox();
+            this.checkBoxAnalysisErrorForm = new System.Windows.Forms.CheckBox();
             this.contextMenuStripdataGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemShow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemReduce = new System.Windows.Forms.ToolStripMenuItem();
@@ -208,41 +212,7 @@
             this.saveFileDialogPly = new System.Windows.Forms.SaveFileDialog();
             this.AnalLayer = new System.Windows.Forms.TabPage();
             this.dataGridViewSetLayer = new System.Windows.Forms.DataGridView();
-            this.NumLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HeightLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HeightPlaсement = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.P = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ssection = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.centroidOfArea = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Delta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Fractal_Size_Scale = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Fractal_Size_Square = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nz = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Aadjacent = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.NzMinInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzMaxInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzRange = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzDispersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzSigma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzMean = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzKasim = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzKeks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzKv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzMeana = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzModa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NzMediana = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AMinInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AMaxInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ARange = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ADispersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ASigma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AMean = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AKasim = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AKeks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AKv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AMeana = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AModa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AMediana = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkBoxFractalAnalysis = new System.Windows.Forms.CheckBox();
             this.statusStripLayerAnalysis = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBarLayerAnalysis = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabelLayerAnalysis = new System.Windows.Forms.ToolStripStatusLabel();
@@ -255,6 +225,11 @@
             this.toolStripTextBoxMinStep = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator57 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTextBoxMaxStep = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator38 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripTextBoxError = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator70 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripTextBoxLimitF = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripComboBoxTypeTrim = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator61 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator67 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonColorLine = new System.Windows.Forms.ToolStripButton();
@@ -266,8 +241,9 @@
             this.toolStripSeparator60 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator69 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonLayerSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator38 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator64 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripComboBoxCountColumnForSave = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButtonSaveData = new System.Windows.Forms.ToolStripButton();
             this.AnalColorVisual = new System.Windows.Forms.TabPage();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBarVisualization = new System.Windows.Forms.ToolStripProgressBar();
@@ -580,6 +556,58 @@
             this.toolStripStatusLabel_time_loud = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_info = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlCreationVoxelModel = new System.Windows.Forms.TabControl();
+            this.NumLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HeightLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HeightPlaсement = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.P = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Ssection = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.centroidOfArea = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Delta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Fractal_Size_Scale = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Fractal_Size_Square = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nz = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Aadjacent = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.NzMinInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzMaxInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzRange = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzDispersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzSigma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzMean = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzKasim = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzKeks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzKv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzMeana = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzModa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzMediana = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AMinInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AMaxInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ARange = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ADispersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ASigma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AMean = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AKasim = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AKeks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AKv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AMeana = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AModa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AMediana = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Error = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.EMinInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EMaxInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ERange = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EDispersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ESigma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EMean = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EKasim = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EKeks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EKv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EMeana = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EModa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EMediana = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzFull = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.NzFullMinInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzFullMaxInterval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NzFullRange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStripHistogram.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLayerInt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownIntVisual)).BeginInit();
@@ -677,6 +705,7 @@
             // 
             // contextMenuStripHistogram
             // 
+            this.contextMenuStripHistogram.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStripHistogram.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemTypeDiagram,
             this.ToolStripMenuItemColorSсhemе,
@@ -760,7 +789,7 @@
             // checkBoxPreview
             // 
             this.checkBoxPreview.AutoSize = true;
-            this.checkBoxPreview.Location = new System.Drawing.Point(11, 377);
+            this.checkBoxPreview.Location = new System.Drawing.Point(11, 362);
             this.checkBoxPreview.Name = "checkBoxPreview";
             this.checkBoxPreview.Size = new System.Drawing.Size(141, 17);
             this.checkBoxPreview.TabIndex = 18;
@@ -772,7 +801,7 @@
             // checkBoxOneOrAll
             // 
             this.checkBoxOneOrAll.AutoSize = true;
-            this.checkBoxOneOrAll.Location = new System.Drawing.Point(11, 399);
+            this.checkBoxOneOrAll.Location = new System.Drawing.Point(11, 383);
             this.checkBoxOneOrAll.Name = "checkBoxOneOrAll";
             this.checkBoxOneOrAll.Size = new System.Drawing.Size(142, 17);
             this.checkBoxOneOrAll.TabIndex = 19;
@@ -2162,11 +2191,11 @@
             // checkBoxAbsOrRel
             // 
             this.checkBoxAbsOrRel.AutoSize = true;
-            this.checkBoxAbsOrRel.Location = new System.Drawing.Point(11, 421);
+            this.checkBoxAbsOrRel.Location = new System.Drawing.Point(11, 404);
             this.checkBoxAbsOrRel.Name = "checkBoxAbsOrRel";
-            this.checkBoxAbsOrRel.Size = new System.Drawing.Size(156, 17);
+            this.checkBoxAbsOrRel.Size = new System.Drawing.Size(121, 17);
             this.checkBoxAbsOrRel.TabIndex = 29;
-            this.checkBoxAbsOrRel.Text = "Относительные значения";
+            this.checkBoxAbsOrRel.Text = "Относит. значения";
             this.toolTip1.SetToolTip(this.checkBoxAbsOrRel, "Анализ оценки сложности контура (абс./отн. исходные значения)");
             this.checkBoxAbsOrRel.UseVisualStyleBackColor = true;
             this.checkBoxAbsOrRel.CheckStateChanged += new System.EventHandler(this.CheckBoxAbsOrRel_CheckStateChanged);
@@ -2184,7 +2213,7 @@
             // numericUpDownCountFractalAnalysis
             // 
             this.numericUpDownCountFractalAnalysis.Enabled = false;
-            this.numericUpDownCountFractalAnalysis.Location = new System.Drawing.Point(108, 448);
+            this.numericUpDownCountFractalAnalysis.Location = new System.Drawing.Point(108, 449);
             this.numericUpDownCountFractalAnalysis.Maximum = new decimal(new int[] {
             10,
             0,
@@ -2201,7 +2230,7 @@
             this.numericUpDownCountFractalAnalysis.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.toolTip1.SetToolTip(this.numericUpDownCountFractalAnalysis, "Количество итераций при определении фрактальной размерности");
             this.numericUpDownCountFractalAnalysis.Value = new decimal(new int[] {
-            5,
+            2,
             0,
             0,
             0});
@@ -2210,7 +2239,7 @@
             // numericUpDownCurentFractalAnalysis
             // 
             this.numericUpDownCurentFractalAnalysis.Enabled = false;
-            this.numericUpDownCurentFractalAnalysis.Location = new System.Drawing.Point(204, 448);
+            this.numericUpDownCurentFractalAnalysis.Location = new System.Drawing.Point(204, 449);
             this.numericUpDownCurentFractalAnalysis.Maximum = new decimal(new int[] {
             10,
             0,
@@ -2252,7 +2281,7 @@
             0,
             0,
             65536});
-            this.numericUpDownRatioRtoL.Location = new System.Drawing.Point(11, 448);
+            this.numericUpDownRatioRtoL.Location = new System.Drawing.Point(11, 449);
             this.numericUpDownRatioRtoL.Minimum = new decimal(new int[] {
             1,
             0,
@@ -2273,11 +2302,11 @@
             // 
             this.checkBoxVisualAnalysis.AutoSize = true;
             this.checkBoxVisualAnalysis.Enabled = false;
-            this.checkBoxVisualAnalysis.Location = new System.Drawing.Point(175, 421);
+            this.checkBoxVisualAnalysis.Location = new System.Drawing.Point(11, 426);
             this.checkBoxVisualAnalysis.Name = "checkBoxVisualAnalysis";
-            this.checkBoxVisualAnalysis.Size = new System.Drawing.Size(98, 17);
+            this.checkBoxVisualAnalysis.Size = new System.Drawing.Size(218, 17);
             this.checkBoxVisualAnalysis.TabIndex = 33;
-            this.checkBoxVisualAnalysis.Text = "Визуализация";
+            this.checkBoxVisualAnalysis.Text = "Визуализация фрактального анализа";
             this.toolTip1.SetToolTip(this.checkBoxVisualAnalysis, "Визуализация анализа");
             this.checkBoxVisualAnalysis.UseVisualStyleBackColor = true;
             // 
@@ -2286,7 +2315,7 @@
             this.checkBoxMethod.AutoSize = true;
             this.checkBoxMethod.Checked = true;
             this.checkBoxMethod.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxMethod.Location = new System.Drawing.Point(175, 377);
+            this.checkBoxMethod.Location = new System.Drawing.Point(161, 405);
             this.checkBoxMethod.Name = "checkBoxMethod";
             this.checkBoxMethod.Size = new System.Drawing.Size(115, 17);
             this.checkBoxMethod.TabIndex = 34;
@@ -2295,8 +2324,20 @@
             this.checkBoxMethod.UseVisualStyleBackColor = true;
             this.checkBoxMethod.CheckStateChanged += new System.EventHandler(this.CheckBoxMethod_CheckStateChanged);
             // 
+            // checkBoxAnalysisErrorForm
+            // 
+            this.checkBoxAnalysisErrorForm.AutoSize = true;
+            this.checkBoxAnalysisErrorForm.Location = new System.Drawing.Point(161, 362);
+            this.checkBoxAnalysisErrorForm.Name = "checkBoxAnalysisErrorForm";
+            this.checkBoxAnalysisErrorForm.Size = new System.Drawing.Size(132, 17);
+            this.checkBoxAnalysisErrorForm.TabIndex = 36;
+            this.checkBoxAnalysisErrorForm.Text = "Анализ погрешности";
+            this.toolTip1.SetToolTip(this.checkBoxAnalysisErrorForm, "Анализ погрешности формы");
+            this.checkBoxAnalysisErrorForm.UseVisualStyleBackColor = true;
+            // 
             // contextMenuStripdataGrid
             // 
+            this.contextMenuStripdataGrid.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStripdataGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemShow,
             this.toolStripMenuItemReduce});
@@ -2325,6 +2366,7 @@
             // AnalLayer
             // 
             this.AnalLayer.Controls.Add(this.dataGridViewSetLayer);
+            this.AnalLayer.Controls.Add(this.checkBoxFractalAnalysis);
             this.AnalLayer.Controls.Add(this.checkBoxMethod);
             this.AnalLayer.Controls.Add(this.checkBoxVisualAnalysis);
             this.AnalLayer.Controls.Add(this.numericUpDownRatioRtoL);
@@ -2338,6 +2380,7 @@
             this.AnalLayer.Controls.Add(this.checkBoxPreview);
             this.AnalLayer.Controls.Add(this.panelReviewContourSection);
             this.AnalLayer.Controls.Add(this.toolStripLayerAnalysis);
+            this.AnalLayer.Controls.Add(this.checkBoxAnalysisErrorForm);
             this.AnalLayer.Location = new System.Drawing.Point(4, 22);
             this.AnalLayer.Name = "AnalLayer";
             this.AnalLayer.Padding = new System.Windows.Forms.Padding(3);
@@ -2349,7 +2392,6 @@
             // dataGridViewSetLayer
             // 
             this.dataGridViewSetLayer.AllowUserToAddRows = false;
-            this.dataGridViewSetLayer.AllowUserToDeleteRows = false;
             this.dataGridViewSetLayer.AllowUserToResizeColumns = false;
             this.dataGridViewSetLayer.AllowUserToResizeRows = false;
             this.dataGridViewSetLayer.CausesValidation = false;
@@ -2389,370 +2431,71 @@
             this.AKv,
             this.AMeana,
             this.AModa,
-            this.AMediana});
+            this.AMediana,
+            this.Error,
+            this.EMinInterval,
+            this.EMaxInterval,
+            this.ERange,
+            this.EDispersion,
+            this.ESigma,
+            this.EMean,
+            this.EKasim,
+            this.EKeks,
+            this.EKv,
+            this.EMeana,
+            this.EModa,
+            this.EMediana,
+            this.NzFull,
+            this.NzFullMinInterval,
+            this.NzFullMaxInterval,
+            this.NzFullRange});
             this.dataGridViewSetLayer.ContextMenuStrip = this.contextMenuStripdataGrid;
             this.dataGridViewSetLayer.Location = new System.Drawing.Point(11, 36);
             this.dataGridViewSetLayer.MultiSelect = false;
             this.dataGridViewSetLayer.Name = "dataGridViewSetLayer";
             this.dataGridViewSetLayer.ReadOnly = true;
             this.dataGridViewSetLayer.RowHeadersVisible = false;
-            this.dataGridViewSetLayer.Size = new System.Drawing.Size(276, 333);
+            this.dataGridViewSetLayer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewSetLayer.Size = new System.Drawing.Size(276, 320);
             this.dataGridViewSetLayer.TabIndex = 16;
             this.dataGridViewSetLayer.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewSetLayer_CellClick);
             this.dataGridViewSetLayer.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewSetLayer_CellDoubleClick);
+            this.dataGridViewSetLayer.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridViewSetLayer_ColumnHeaderMouseDoubleClick);
             this.dataGridViewSetLayer.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewSetLayer_RowEnter);
             // 
-            // NumLayer
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.NumLayer.DefaultCellStyle = dataGridViewCellStyle1;
-            this.NumLayer.FillWeight = 55F;
-            this.NumLayer.Frozen = true;
-            this.NumLayer.HeaderText = "Номер";
-            this.NumLayer.MaxInputLength = 8;
-            this.NumLayer.Name = "NumLayer";
-            this.NumLayer.ReadOnly = true;
-            this.NumLayer.ToolTipText = "Номер слоя";
-            this.NumLayer.Width = 55;
-            // 
-            // HeightLayer
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.HeightLayer.DefaultCellStyle = dataGridViewCellStyle2;
-            this.HeightLayer.FillWeight = 50F;
-            this.HeightLayer.HeaderText = "h";
-            this.HeightLayer.MaxInputLength = 8;
-            this.HeightLayer.Name = "HeightLayer";
-            this.HeightLayer.ReadOnly = true;
-            this.HeightLayer.ToolTipText = "Высота слоя";
-            this.HeightLayer.Width = 50;
-            // 
-            // HeightPlaсement
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.HeightPlaсement.DefaultCellStyle = dataGridViewCellStyle3;
-            this.HeightPlaсement.FillWeight = 50F;
-            this.HeightPlaсement.HeaderText = "Z";
-            this.HeightPlaсement.MaxInputLength = 8;
-            this.HeightPlaсement.MinimumWidth = 40;
-            this.HeightPlaсement.Name = "HeightPlaсement";
-            this.HeightPlaсement.ReadOnly = true;
-            this.HeightPlaсement.ToolTipText = "Расположение слоя по оси Z";
-            this.HeightPlaсement.Width = 50;
-            // 
-            // P
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.NullValue = null;
-            this.P.DefaultCellStyle = dataGridViewCellStyle4;
-            this.P.FillWeight = 65F;
-            this.P.HeaderText = "Периметр";
-            this.P.MaxInputLength = 10;
-            this.P.Name = "P";
-            this.P.ReadOnly = true;
-            this.P.Width = 65;
-            // 
-            // Ssection
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Ssection.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Ssection.FillWeight = 80F;
-            this.Ssection.HeaderText = "Площадь";
-            this.Ssection.MaxInputLength = 12;
-            this.Ssection.MinimumWidth = 55;
-            this.Ssection.Name = "Ssection";
-            this.Ssection.ReadOnly = true;
-            this.Ssection.Width = 80;
-            // 
-            // centroidOfArea
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.centroidOfArea.DefaultCellStyle = dataGridViewCellStyle6;
-            this.centroidOfArea.FillWeight = 140F;
-            this.centroidOfArea.HeaderText = "Центр тяжести сечения";
-            this.centroidOfArea.MaxInputLength = 20;
-            this.centroidOfArea.Name = "centroidOfArea";
-            this.centroidOfArea.ReadOnly = true;
-            this.centroidOfArea.Width = 140;
-            // 
-            // Delta
-            // 
-            this.Delta.HeaderText = "Смещение L0";
-            this.Delta.MaxInputLength = 20;
-            this.Delta.Name = "Delta";
-            this.Delta.ReadOnly = true;
-            // 
-            // Fractal_Size_Scale
-            // 
-            this.Fractal_Size_Scale.HeaderText = "Фракт.разм.(метод масштабов)";
-            this.Fractal_Size_Scale.MaxInputLength = 20;
-            this.Fractal_Size_Scale.Name = "Fractal_Size_Scale";
-            this.Fractal_Size_Scale.ReadOnly = true;
-            // 
-            // Fractal_Size_Square
-            // 
-            this.Fractal_Size_Square.HeaderText = "Фракт.разм.(клет.метод)";
-            this.Fractal_Size_Square.MaxInputLength = 20;
-            this.Fractal_Size_Square.Name = "Fractal_Size_Square";
-            this.Fractal_Size_Square.ReadOnly = true;
-            // 
-            // Nz
-            // 
-            this.Nz.HeaderText = "Гистограмма ";
-            this.Nz.MinimumWidth = 50;
-            this.Nz.Name = "Nz";
-            this.Nz.ReadOnly = true;
-            this.Nz.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Nz.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Nz.Text = "Nz (угол)";
-            // 
-            // Aadjacent
-            // 
-            this.Aadjacent.HeaderText = "Гистограмма ";
-            this.Aadjacent.Name = "Aadjacent";
-            this.Aadjacent.ReadOnly = true;
-            this.Aadjacent.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Aadjacent.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Aadjacent.Text = "Смежный угол";
-            // 
-            // NzMinInterval
-            // 
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzMinInterval.DefaultCellStyle = dataGridViewCellStyle7;
-            this.NzMinInterval.HeaderText = "Мин. Nz";
-            this.NzMinInterval.MaxInputLength = 20;
-            this.NzMinInterval.Name = "NzMinInterval";
-            this.NzMinInterval.ReadOnly = true;
-            // 
-            // NzMaxInterval
-            // 
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzMaxInterval.DefaultCellStyle = dataGridViewCellStyle8;
-            this.NzMaxInterval.HeaderText = "Макс. Nz";
-            this.NzMaxInterval.MaxInputLength = 20;
-            this.NzMaxInterval.Name = "NzMaxInterval";
-            this.NzMaxInterval.ReadOnly = true;
-            // 
-            // NzRange
-            // 
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzRange.DefaultCellStyle = dataGridViewCellStyle9;
-            this.NzRange.HeaderText = "Размах Nz";
-            this.NzRange.MaxInputLength = 20;
-            this.NzRange.Name = "NzRange";
-            this.NzRange.ReadOnly = true;
-            // 
-            // NzDispersion
-            // 
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzDispersion.DefaultCellStyle = dataGridViewCellStyle10;
-            this.NzDispersion.HeaderText = "Дисперсия Nz";
-            this.NzDispersion.MaxInputLength = 20;
-            this.NzDispersion.Name = "NzDispersion";
-            this.NzDispersion.ReadOnly = true;
-            // 
-            // NzSigma
-            // 
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzSigma.DefaultCellStyle = dataGridViewCellStyle11;
-            this.NzSigma.HeaderText = "Среднекв.отклон. Nz";
-            this.NzSigma.MaxInputLength = 20;
-            this.NzSigma.Name = "NzSigma";
-            this.NzSigma.ReadOnly = true;
-            // 
-            // NzMean
-            // 
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzMean.DefaultCellStyle = dataGridViewCellStyle12;
-            this.NzMean.HeaderText = "Ср. арифм. Nz";
-            this.NzMean.MaxInputLength = 20;
-            this.NzMean.Name = "NzMean";
-            this.NzMean.ReadOnly = true;
-            // 
-            // NzKasim
-            // 
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzKasim.DefaultCellStyle = dataGridViewCellStyle13;
-            this.NzKasim.HeaderText = "Коэф. асиметрии Nz";
-            this.NzKasim.MaxInputLength = 20;
-            this.NzKasim.Name = "NzKasim";
-            this.NzKasim.ReadOnly = true;
-            // 
-            // NzKeks
-            // 
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzKeks.DefaultCellStyle = dataGridViewCellStyle14;
-            this.NzKeks.HeaderText = "Коэф. эксцесса Nz";
-            this.NzKeks.MaxInputLength = 20;
-            this.NzKeks.Name = "NzKeks";
-            this.NzKeks.ReadOnly = true;
-            // 
-            // NzKv
-            // 
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzKv.DefaultCellStyle = dataGridViewCellStyle15;
-            this.NzKv.HeaderText = "Коэф. вариации Nz";
-            this.NzKv.MaxInputLength = 20;
-            this.NzKv.Name = "NzKv";
-            this.NzKv.ReadOnly = true;
-            // 
-            // NzMeana
-            // 
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzMeana.DefaultCellStyle = dataGridViewCellStyle16;
-            this.NzMeana.HeaderText = "Меана Nz";
-            this.NzMeana.MaxInputLength = 20;
-            this.NzMeana.Name = "NzMeana";
-            this.NzMeana.ReadOnly = true;
-            // 
-            // NzModa
-            // 
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzModa.DefaultCellStyle = dataGridViewCellStyle17;
-            this.NzModa.HeaderText = "Мода Nz";
-            this.NzModa.MaxInputLength = 20;
-            this.NzModa.Name = "NzModa";
-            this.NzModa.ReadOnly = true;
-            // 
-            // NzMediana
-            // 
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.NzMediana.DefaultCellStyle = dataGridViewCellStyle18;
-            this.NzMediana.HeaderText = "Медиана Nz";
-            this.NzMediana.MaxInputLength = 20;
-            this.NzMediana.Name = "NzMediana";
-            this.NzMediana.ReadOnly = true;
-            // 
-            // AMinInterval
-            // 
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.AMinInterval.DefaultCellStyle = dataGridViewCellStyle19;
-            this.AMinInterval.HeaderText = "Мин. А";
-            this.AMinInterval.MaxInputLength = 20;
-            this.AMinInterval.Name = "AMinInterval";
-            this.AMinInterval.ReadOnly = true;
-            // 
-            // AMaxInterval
-            // 
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.AMaxInterval.DefaultCellStyle = dataGridViewCellStyle20;
-            this.AMaxInterval.HeaderText = "Макс. А";
-            this.AMaxInterval.MaxInputLength = 20;
-            this.AMaxInterval.Name = "AMaxInterval";
-            this.AMaxInterval.ReadOnly = true;
-            // 
-            // ARange
-            // 
-            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ARange.DefaultCellStyle = dataGridViewCellStyle21;
-            this.ARange.HeaderText = "Размах А";
-            this.ARange.MaxInputLength = 20;
-            this.ARange.Name = "ARange";
-            this.ARange.ReadOnly = true;
-            // 
-            // ADispersion
-            // 
-            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ADispersion.DefaultCellStyle = dataGridViewCellStyle22;
-            this.ADispersion.HeaderText = "Дисперсия А";
-            this.ADispersion.MaxInputLength = 20;
-            this.ADispersion.Name = "ADispersion";
-            this.ADispersion.ReadOnly = true;
-            // 
-            // ASigma
-            // 
-            dataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ASigma.DefaultCellStyle = dataGridViewCellStyle23;
-            this.ASigma.HeaderText = "Среднекв.отклон. А";
-            this.ASigma.MaxInputLength = 20;
-            this.ASigma.Name = "ASigma";
-            this.ASigma.ReadOnly = true;
-            // 
-            // AMean
-            // 
-            dataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.AMean.DefaultCellStyle = dataGridViewCellStyle24;
-            this.AMean.HeaderText = "Ср. арифм. А";
-            this.AMean.MaxInputLength = 20;
-            this.AMean.Name = "AMean";
-            this.AMean.ReadOnly = true;
-            // 
-            // AKasim
-            // 
-            dataGridViewCellStyle25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.AKasim.DefaultCellStyle = dataGridViewCellStyle25;
-            this.AKasim.HeaderText = "Коэф. асиметрии А";
-            this.AKasim.MaxInputLength = 20;
-            this.AKasim.Name = "AKasim";
-            this.AKasim.ReadOnly = true;
-            // 
-            // AKeks
-            // 
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.AKeks.DefaultCellStyle = dataGridViewCellStyle26;
-            this.AKeks.HeaderText = "Коэф. эксцесса А";
-            this.AKeks.MaxInputLength = 20;
-            this.AKeks.Name = "AKeks";
-            this.AKeks.ReadOnly = true;
-            // 
-            // AKv
-            // 
-            dataGridViewCellStyle27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.AKv.DefaultCellStyle = dataGridViewCellStyle27;
-            this.AKv.HeaderText = "Коэф. вариации А";
-            this.AKv.MaxInputLength = 20;
-            this.AKv.Name = "AKv";
-            this.AKv.ReadOnly = true;
-            // 
-            // AMeana
-            // 
-            dataGridViewCellStyle28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.AMeana.DefaultCellStyle = dataGridViewCellStyle28;
-            this.AMeana.HeaderText = "Меана А";
-            this.AMeana.MaxInputLength = 20;
-            this.AMeana.Name = "AMeana";
-            this.AMeana.ReadOnly = true;
-            // 
-            // AModa
-            // 
-            dataGridViewCellStyle29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.AModa.DefaultCellStyle = dataGridViewCellStyle29;
-            this.AModa.HeaderText = "Мода А";
-            this.AModa.MaxInputLength = 20;
-            this.AModa.Name = "AModa";
-            this.AModa.ReadOnly = true;
-            // 
-            // AMediana
-            // 
-            dataGridViewCellStyle30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.AMediana.DefaultCellStyle = dataGridViewCellStyle30;
-            this.AMediana.HeaderText = "Медиана А";
-            this.AMediana.MaxInputLength = 20;
-            this.AMediana.Name = "AMediana";
-            this.AMediana.ReadOnly = true;
+            // checkBoxFractalAnalysis
+            // 
+            this.checkBoxFractalAnalysis.AutoSize = true;
+            this.checkBoxFractalAnalysis.Location = new System.Drawing.Point(161, 384);
+            this.checkBoxFractalAnalysis.Name = "checkBoxFractalAnalysis";
+            this.checkBoxFractalAnalysis.Size = new System.Drawing.Size(137, 17);
+            this.checkBoxFractalAnalysis.TabIndex = 35;
+            this.checkBoxFractalAnalysis.Text = "Фрактальный анализ";
+            this.checkBoxFractalAnalysis.UseVisualStyleBackColor = true;
             // 
             // statusStripLayerAnalysis
             // 
+            this.statusStripLayerAnalysis.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStripLayerAnalysis.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBarLayerAnalysis,
             this.toolStripStatusLabelLayerAnalysis});
-            this.statusStripLayerAnalysis.Location = new System.Drawing.Point(3, 507);
+            this.statusStripLayerAnalysis.Location = new System.Drawing.Point(3, 504);
             this.statusStripLayerAnalysis.Name = "statusStripLayerAnalysis";
-            this.statusStripLayerAnalysis.Size = new System.Drawing.Size(906, 22);
+            this.statusStripLayerAnalysis.Size = new System.Drawing.Size(906, 25);
             this.statusStripLayerAnalysis.TabIndex = 15;
             this.statusStripLayerAnalysis.Text = "statusStrip6";
             // 
             // toolStripProgressBarLayerAnalysis
             // 
             this.toolStripProgressBarLayerAnalysis.Name = "toolStripProgressBarLayerAnalysis";
-            this.toolStripProgressBarLayerAnalysis.Size = new System.Drawing.Size(400, 16);
+            this.toolStripProgressBarLayerAnalysis.Size = new System.Drawing.Size(400, 19);
             this.toolStripProgressBarLayerAnalysis.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 
             // toolStripStatusLabelLayerAnalysis
             // 
             this.toolStripStatusLabelLayerAnalysis.ForeColor = System.Drawing.Color.Red;
             this.toolStripStatusLabelLayerAnalysis.Name = "toolStripStatusLabelLayerAnalysis";
-            this.toolStripStatusLabelLayerAnalysis.Size = new System.Drawing.Size(122, 17);
+            this.toolStripStatusLabelLayerAnalysis.Size = new System.Drawing.Size(122, 20);
             this.toolStripStatusLabelLayerAnalysis.Text = "Расчет не выполнен.";
             // 
             // panelReviewContourSection
@@ -2769,6 +2512,7 @@
             // 
             // toolStripLayerAnalysis
             // 
+            this.toolStripLayerAnalysis.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripLayerAnalysis.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonLayerCreate,
             this.toolStripSeparator55,
@@ -2777,6 +2521,11 @@
             this.toolStripTextBoxMinStep,
             this.toolStripSeparator57,
             this.toolStripTextBoxMaxStep,
+            this.toolStripSeparator38,
+            this.toolStripTextBoxError,
+            this.toolStripSeparator70,
+            this.toolStripTextBoxLimitF,
+            this.toolStripComboBoxTypeTrim,
             this.toolStripSeparator61,
             this.toolStripSeparator67,
             this.toolStripButtonColorLine,
@@ -2788,11 +2537,12 @@
             this.toolStripSeparator60,
             this.toolStripSeparator69,
             this.toolStripButtonLayerSave,
-            this.toolStripSeparator38,
-            this.toolStripSeparator64});
+            this.toolStripSeparator64,
+            this.toolStripComboBoxCountColumnForSave,
+            this.toolStripButtonSaveData});
             this.toolStripLayerAnalysis.Location = new System.Drawing.Point(3, 3);
             this.toolStripLayerAnalysis.Name = "toolStripLayerAnalysis";
-            this.toolStripLayerAnalysis.Size = new System.Drawing.Size(906, 25);
+            this.toolStripLayerAnalysis.Size = new System.Drawing.Size(906, 27);
             this.toolStripLayerAnalysis.TabIndex = 14;
             this.toolStripLayerAnalysis.Text = "toolStrip3";
             // 
@@ -2802,66 +2552,109 @@
             this.toolStripButtonLayerCreate.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLayerCreate.Image")));
             this.toolStripButtonLayerCreate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonLayerCreate.Name = "toolStripButtonLayerCreate";
-            this.toolStripButtonLayerCreate.Size = new System.Drawing.Size(131, 22);
-            this.toolStripButtonLayerCreate.Text = "Формирование слоев";
+            this.toolStripButtonLayerCreate.Size = new System.Drawing.Size(74, 24);
+            this.toolStripButtonLayerCreate.Text = "Рассекание";
             this.toolStripButtonLayerCreate.ToolTipText = "Формирование слоев по заданной стратегии";
             this.toolStripButtonLayerCreate.Click += new System.EventHandler(this.ToolStripButtonLayerCreate_Click);
             // 
             // toolStripSeparator55
             // 
             this.toolStripSeparator55.Name = "toolStripSeparator55";
-            this.toolStripSeparator55.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator55.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripComboBoxLayerAnalysis
             // 
-            this.toolStripComboBoxLayerAnalysis.DropDownWidth = 150;
+            this.toolStripComboBoxLayerAnalysis.DropDownWidth = 350;
             this.toolStripComboBoxLayerAnalysis.Items.AddRange(new object[] {
             "Постоянный шаг",
-            "Переменный шаг"});
+            "Переменный шаг (упрощенный расчет)",
+            "Переменный шаг (по микросечениям)",
+            "Переменный шаг (усечение интервала углов)"});
             this.toolStripComboBoxLayerAnalysis.MaxDropDownItems = 16;
             this.toolStripComboBoxLayerAnalysis.Name = "toolStripComboBoxLayerAnalysis";
-            this.toolStripComboBoxLayerAnalysis.Size = new System.Drawing.Size(150, 25);
+            this.toolStripComboBoxLayerAnalysis.Size = new System.Drawing.Size(180, 27);
             this.toolStripComboBoxLayerAnalysis.Text = "Постоянный шаг";
             this.toolStripComboBoxLayerAnalysis.ToolTipText = "Выбор стратегии задания шага построения";
             // 
             // toolStripSeparator56
             // 
             this.toolStripSeparator56.Name = "toolStripSeparator56";
-            this.toolStripSeparator56.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator56.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripTextBoxMinStep
             // 
             this.toolStripTextBoxMinStep.MaxLength = 10;
             this.toolStripTextBoxMinStep.Name = "toolStripTextBoxMinStep";
-            this.toolStripTextBoxMinStep.Size = new System.Drawing.Size(50, 25);
-            this.toolStripTextBoxMinStep.Text = "1";
+            this.toolStripTextBoxMinStep.Size = new System.Drawing.Size(35, 27);
+            this.toolStripTextBoxMinStep.Text = "0,1";
             this.toolStripTextBoxMinStep.ToolTipText = "Минимальный шаг построения";
-            this.toolStripTextBoxMinStep.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ToolStripTextBoxMinStep_KeyPress);
             this.toolStripTextBoxMinStep.TextChanged += new System.EventHandler(this.ToolStripTextBoxMinStep_TextChanged);
             // 
             // toolStripSeparator57
             // 
             this.toolStripSeparator57.Name = "toolStripSeparator57";
-            this.toolStripSeparator57.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator57.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripTextBoxMaxStep
             // 
+            this.toolStripTextBoxMaxStep.MaxLength = 10;
             this.toolStripTextBoxMaxStep.Name = "toolStripTextBoxMaxStep";
-            this.toolStripTextBoxMaxStep.Size = new System.Drawing.Size(50, 25);
-            this.toolStripTextBoxMaxStep.Text = "1";
+            this.toolStripTextBoxMaxStep.Size = new System.Drawing.Size(35, 27);
+            this.toolStripTextBoxMaxStep.Text = "0,3";
             this.toolStripTextBoxMaxStep.ToolTipText = "Максимальный шаг построения";
-            this.toolStripTextBoxMaxStep.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ToolStripTextBoxMaxStep_KeyPress);
             this.toolStripTextBoxMaxStep.TextChanged += new System.EventHandler(this.ToolStripTextBoxMinStep_TextChanged);
+            // 
+            // toolStripSeparator38
+            // 
+            this.toolStripSeparator38.Name = "toolStripSeparator38";
+            this.toolStripSeparator38.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripTextBoxError
+            // 
+            this.toolStripTextBoxError.MaxLength = 10;
+            this.toolStripTextBoxError.Name = "toolStripTextBoxError";
+            this.toolStripTextBoxError.Size = new System.Drawing.Size(55, 27);
+            this.toolStripTextBoxError.Text = "0,1 мм";
+            this.toolStripTextBoxError.ToolTipText = "Максимальная величина отклонения формы";
+            this.toolStripTextBoxError.TextChanged += new System.EventHandler(this.ToolStripTextBoxError_TextChanged);
+            // 
+            // toolStripSeparator70
+            // 
+            this.toolStripSeparator70.Name = "toolStripSeparator70";
+            this.toolStripSeparator70.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripTextBoxLimitF
+            // 
+            this.toolStripTextBoxLimitF.MaxLength = 10;
+            this.toolStripTextBoxLimitF.Name = "toolStripTextBoxLimitF";
+            this.toolStripTextBoxLimitF.Size = new System.Drawing.Size(45, 27);
+            this.toolStripTextBoxLimitF.Text = "5 %";
+            this.toolStripTextBoxLimitF.ToolTipText = "Величина относительного усечения гистограммы по площади поверхности";
+            this.toolStripTextBoxLimitF.TextChanged += new System.EventHandler(this.ToolStripTextBoxLimitF_TextChanged);
+            // 
+            // toolStripComboBoxTypeTrim
+            // 
+            this.toolStripComboBoxTypeTrim.DropDownHeight = 80;
+            this.toolStripComboBoxTypeTrim.IntegralHeight = false;
+            this.toolStripComboBoxTypeTrim.Items.AddRange(new object[] {
+            "Мин. и макс. углы",
+            "Мин. углы",
+            "Макс. углы"});
+            this.toolStripComboBoxTypeTrim.MaxDropDownItems = 3;
+            this.toolStripComboBoxTypeTrim.Name = "toolStripComboBoxTypeTrim";
+            this.toolStripComboBoxTypeTrim.Size = new System.Drawing.Size(125, 27);
+            this.toolStripComboBoxTypeTrim.Text = "Мин. и макс. углы";
+            this.toolStripComboBoxTypeTrim.ToolTipText = "Вид усечения гистограммы распределения углов наклона нормалей";
             // 
             // toolStripSeparator61
             // 
             this.toolStripSeparator61.Name = "toolStripSeparator61";
-            this.toolStripSeparator61.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator61.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator67
             // 
             this.toolStripSeparator67.Name = "toolStripSeparator67";
-            this.toolStripSeparator67.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator67.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButtonColorLine
             // 
@@ -2869,14 +2662,15 @@
             this.toolStripButtonColorLine.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonColorLine.Image")));
             this.toolStripButtonColorLine.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonColorLine.Name = "toolStripButtonColorLine";
-            this.toolStripButtonColorLine.Size = new System.Drawing.Size(84, 22);
-            this.toolStripButtonColorLine.Text = "Цвет контура";
+            this.toolStripButtonColorLine.Size = new System.Drawing.Size(37, 24);
+            this.toolStripButtonColorLine.Text = "Цвет";
+            this.toolStripButtonColorLine.ToolTipText = "Цвет контура";
             this.toolStripButtonColorLine.Click += new System.EventHandler(this.ToolStripButtonColorLine_Click);
             // 
             // toolStripSeparator68
             // 
             this.toolStripSeparator68.Name = "toolStripSeparator68";
-            this.toolStripSeparator68.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator68.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripComboBoxScale
             // 
@@ -2894,20 +2688,20 @@
             "8,0",
             "10"});
             this.toolStripComboBoxScale.Name = "toolStripComboBoxScale";
-            this.toolStripComboBoxScale.Size = new System.Drawing.Size(75, 25);
+            this.toolStripComboBoxScale.Size = new System.Drawing.Size(75, 27);
             this.toolStripComboBoxScale.Text = "1,0";
-            this.toolStripComboBoxScale.ToolTipText = "Масштаб";
+            this.toolStripComboBoxScale.ToolTipText = "Масштаб отображения";
             this.toolStripComboBoxScale.TextChanged += new System.EventHandler(this.ToolStripComboBoxScale_TextChanged);
             // 
             // toolStripSeparator58
             // 
             this.toolStripSeparator58.Name = "toolStripSeparator58";
-            this.toolStripSeparator58.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator58.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator59
             // 
             this.toolStripSeparator59.Name = "toolStripSeparator59";
-            this.toolStripSeparator59.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator59.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButtonLayerAnalysis
             // 
@@ -2916,20 +2710,20 @@
             this.toolStripButtonLayerAnalysis.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLayerAnalysis.Image")));
             this.toolStripButtonLayerAnalysis.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonLayerAnalysis.Name = "toolStripButtonLayerAnalysis";
-            this.toolStripButtonLayerAnalysis.Size = new System.Drawing.Size(140, 22);
-            this.toolStripButtonLayerAnalysis.Text = "Статистический анализ";
+            this.toolStripButtonLayerAnalysis.Size = new System.Drawing.Size(51, 24);
+            this.toolStripButtonLayerAnalysis.Text = "Анализ";
             this.toolStripButtonLayerAnalysis.ToolTipText = "Статистический анализ ";
             this.toolStripButtonLayerAnalysis.Click += new System.EventHandler(this.ToolStripButtonLayerAnalysis_Click);
             // 
             // toolStripSeparator60
             // 
             this.toolStripSeparator60.Name = "toolStripSeparator60";
-            this.toolStripSeparator60.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator60.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator69
             // 
             this.toolStripSeparator69.Name = "toolStripSeparator69";
-            this.toolStripSeparator69.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator69.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButtonLayerSave
             // 
@@ -2937,20 +2731,41 @@
             this.toolStripButtonLayerSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLayerSave.Image")));
             this.toolStripButtonLayerSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonLayerSave.Name = "toolStripButtonLayerSave";
-            this.toolStripButtonLayerSave.Size = new System.Drawing.Size(69, 22);
+            this.toolStripButtonLayerSave.Size = new System.Drawing.Size(69, 24);
             this.toolStripButtonLayerSave.Text = "Сохранить";
             this.toolStripButtonLayerSave.ToolTipText = "Сохранить данные анализа в файл XLS-формата";
             this.toolStripButtonLayerSave.Click += new System.EventHandler(this.ToolStripButtonLayerSave_Click);
             // 
-            // toolStripSeparator38
-            // 
-            this.toolStripSeparator38.Name = "toolStripSeparator38";
-            this.toolStripSeparator38.Size = new System.Drawing.Size(6, 25);
-            // 
             // toolStripSeparator64
             // 
             this.toolStripSeparator64.Name = "toolStripSeparator64";
-            this.toolStripSeparator64.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator64.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripComboBoxCountColumnForSave
+            // 
+            this.toolStripComboBoxCountColumnForSave.AutoToolTip = true;
+            this.toolStripComboBoxCountColumnForSave.Items.AddRange(new object[] {
+            "5",
+            "7",
+            "9",
+            "23",
+            "35",
+            "47",
+            "51"});
+            this.toolStripComboBoxCountColumnForSave.Name = "toolStripComboBoxCountColumnForSave";
+            this.toolStripComboBoxCountColumnForSave.Size = new System.Drawing.Size(75, 23);
+            this.toolStripComboBoxCountColumnForSave.Text = "5";
+            this.toolStripComboBoxCountColumnForSave.ToolTipText = "Количество колонок для сохранения данных";
+            // 
+            // toolStripButtonSaveData
+            // 
+            this.toolStripButtonSaveData.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonSaveData.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSaveData.Image")));
+            this.toolStripButtonSaveData.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSaveData.Name = "toolStripButtonSaveData";
+            this.toolStripButtonSaveData.Size = new System.Drawing.Size(113, 19);
+            this.toolStripButtonSaveData.Text = "Сохранить данные";
+            this.toolStripButtonSaveData.ToolTipText = "Сохранить данные для системы анализа";
             // 
             // AnalColorVisual
             // 
@@ -2975,26 +2790,27 @@
             // 
             // statusStrip2
             // 
+            this.statusStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBarVisualization,
             this.toolStripStatusLabelColorVisual});
-            this.statusStrip2.Location = new System.Drawing.Point(3, 507);
+            this.statusStrip2.Location = new System.Drawing.Point(3, 504);
             this.statusStrip2.Name = "statusStrip2";
-            this.statusStrip2.Size = new System.Drawing.Size(906, 22);
+            this.statusStrip2.Size = new System.Drawing.Size(906, 25);
             this.statusStrip2.TabIndex = 12;
             this.statusStrip2.Text = "statusStrip2";
             // 
             // toolStripProgressBarVisualization
             // 
             this.toolStripProgressBarVisualization.Name = "toolStripProgressBarVisualization";
-            this.toolStripProgressBarVisualization.Size = new System.Drawing.Size(400, 16);
+            this.toolStripProgressBarVisualization.Size = new System.Drawing.Size(400, 19);
             this.toolStripProgressBarVisualization.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 
             // toolStripStatusLabelColorVisual
             // 
             this.toolStripStatusLabelColorVisual.ForeColor = System.Drawing.Color.Red;
             this.toolStripStatusLabelColorVisual.Name = "toolStripStatusLabelColorVisual";
-            this.toolStripStatusLabelColorVisual.Size = new System.Drawing.Size(122, 17);
+            this.toolStripStatusLabelColorVisual.Size = new System.Drawing.Size(122, 20);
             this.toolStripStatusLabelColorVisual.Text = "Расчет не выполнен.";
             // 
             // label40
@@ -3039,14 +2855,14 @@
             this.S,
             this.V,
             this.SetColor});
-            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle31.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewIntervals.DefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewIntervals.DefaultCellStyle = dataGridViewCellStyle34;
             this.dataGridViewIntervals.Location = new System.Drawing.Point(3, 5);
             this.dataGridViewIntervals.Name = "dataGridViewIntervals";
             this.dataGridViewIntervals.Size = new System.Drawing.Size(486, 130);
@@ -3436,6 +3252,7 @@
             // 
             // toolStripColorVisual
             // 
+            this.toolStripColorVisual.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripColorVisual.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonСalculate,
             this.toolStripSeparator23,
@@ -3583,25 +3400,26 @@
             // 
             // statusStrip3
             // 
+            this.statusStrip3.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBarOrientation,
             this.toolStripStatusLabelInphoOrientation});
-            this.statusStrip3.Location = new System.Drawing.Point(0, 510);
+            this.statusStrip3.Location = new System.Drawing.Point(0, 507);
             this.statusStrip3.Name = "statusStrip3";
-            this.statusStrip3.Size = new System.Drawing.Size(912, 22);
+            this.statusStrip3.Size = new System.Drawing.Size(912, 25);
             this.statusStrip3.TabIndex = 1;
             this.statusStrip3.Text = "statusStrip3";
             // 
             // toolStripProgressBarOrientation
             // 
             this.toolStripProgressBarOrientation.Name = "toolStripProgressBarOrientation";
-            this.toolStripProgressBarOrientation.Size = new System.Drawing.Size(400, 16);
+            this.toolStripProgressBarOrientation.Size = new System.Drawing.Size(400, 19);
             // 
             // toolStripStatusLabelInphoOrientation
             // 
             this.toolStripStatusLabelInphoOrientation.ForeColor = System.Drawing.Color.Red;
             this.toolStripStatusLabelInphoOrientation.Name = "toolStripStatusLabelInphoOrientation";
-            this.toolStripStatusLabelInphoOrientation.Size = new System.Drawing.Size(203, 17);
+            this.toolStripStatusLabelInphoOrientation.Size = new System.Drawing.Size(203, 20);
             this.toolStripStatusLabelInphoOrientation.Text = "Массив исходных данных не создан";
             // 
             // label41
@@ -3808,8 +3626,8 @@
             // 
             // VariantOrient
             // 
-            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.VariantOrient.DefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.VariantOrient.DefaultCellStyle = dataGridViewCellStyle35;
             this.VariantOrient.Frozen = true;
             this.VariantOrient.HeaderText = "№";
             this.VariantOrient.MaxInputLength = 10;
@@ -3820,8 +3638,8 @@
             // 
             // ColumnHeight
             // 
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnHeight.DefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnHeight.DefaultCellStyle = dataGridViewCellStyle36;
             this.ColumnHeight.HeaderText = "Высота изделия";
             this.ColumnHeight.MaxInputLength = 10;
             this.ColumnHeight.Name = "ColumnHeight";
@@ -3830,8 +3648,8 @@
             // 
             // Reaserch1varRelS
             // 
-            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Reaserch1varRelS.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Reaserch1varRelS.DefaultCellStyle = dataGridViewCellStyle37;
             this.Reaserch1varRelS.HeaderText = "Площадь 1-й вар.";
             this.Reaserch1varRelS.MaxInputLength = 12;
             this.Reaserch1varRelS.Name = "Reaserch1varRelS";
@@ -3841,8 +3659,8 @@
             // 
             // Reaserch2varRelS
             // 
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Reaserch2varRelS.DefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Reaserch2varRelS.DefaultCellStyle = dataGridViewCellStyle38;
             this.Reaserch2varRelS.HeaderText = "Площадь 2-й вар.";
             this.Reaserch2varRelS.MaxInputLength = 12;
             this.Reaserch2varRelS.Name = "Reaserch2varRelS";
@@ -3852,8 +3670,8 @@
             // 
             // Reaserch3varRelS
             // 
-            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Reaserch3varRelS.DefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Reaserch3varRelS.DefaultCellStyle = dataGridViewCellStyle39;
             this.Reaserch3varRelS.HeaderText = "Площадь 3-й вар.";
             this.Reaserch3varRelS.MaxInputLength = 12;
             this.Reaserch3varRelS.Name = "Reaserch3varRelS";
@@ -3873,8 +3691,8 @@
             // 
             // CountIntOrient
             // 
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.CountIntOrient.DefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.CountIntOrient.DefaultCellStyle = dataGridViewCellStyle40;
             this.CountIntOrient.HeaderText = "Кол.интерв.";
             this.CountIntOrient.MaxInputLength = 3;
             this.CountIntOrient.Name = "CountIntOrient";
@@ -3883,8 +3701,8 @@
             // 
             // MinIntervalOrient
             // 
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.MinIntervalOrient.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.MinIntervalOrient.DefaultCellStyle = dataGridViewCellStyle41;
             this.MinIntervalOrient.HeaderText = "Мин.";
             this.MinIntervalOrient.MaxInputLength = 10;
             this.MinIntervalOrient.MinimumWidth = 35;
@@ -3894,8 +3712,8 @@
             // 
             // MaxIntervalOrient
             // 
-            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.MaxIntervalOrient.DefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.MaxIntervalOrient.DefaultCellStyle = dataGridViewCellStyle42;
             this.MaxIntervalOrient.HeaderText = "Макс.";
             this.MaxIntervalOrient.MaxInputLength = 10;
             this.MaxIntervalOrient.MinimumWidth = 35;
@@ -3905,8 +3723,8 @@
             // 
             // RangeOrient
             // 
-            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.RangeOrient.DefaultCellStyle = dataGridViewCellStyle40;
+            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.RangeOrient.DefaultCellStyle = dataGridViewCellStyle43;
             this.RangeOrient.HeaderText = "Размах";
             this.RangeOrient.MaxInputLength = 10;
             this.RangeOrient.Name = "RangeOrient";
@@ -3914,8 +3732,8 @@
             // 
             // dOrient
             // 
-            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dOrient.DefaultCellStyle = dataGridViewCellStyle41;
+            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dOrient.DefaultCellStyle = dataGridViewCellStyle44;
             this.dOrient.HeaderText = "Дисперсия";
             this.dOrient.MaxInputLength = 10;
             this.dOrient.Name = "dOrient";
@@ -3923,8 +3741,8 @@
             // 
             // sOrient
             // 
-            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.sOrient.DefaultCellStyle = dataGridViewCellStyle42;
+            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.sOrient.DefaultCellStyle = dataGridViewCellStyle45;
             this.sOrient.HeaderText = "Среднекв.отклон.";
             this.sOrient.MaxInputLength = 10;
             this.sOrient.Name = "sOrient";
@@ -3932,8 +3750,8 @@
             // 
             // EOrient
             // 
-            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.EOrient.DefaultCellStyle = dataGridViewCellStyle43;
+            dataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.EOrient.DefaultCellStyle = dataGridViewCellStyle46;
             this.EOrient.HeaderText = "Ср. арифмет.";
             this.EOrient.MaxInputLength = 12;
             this.EOrient.Name = "EOrient";
@@ -3941,8 +3759,8 @@
             // 
             // KaOrient
             // 
-            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.KaOrient.DefaultCellStyle = dataGridViewCellStyle44;
+            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.KaOrient.DefaultCellStyle = dataGridViewCellStyle47;
             this.KaOrient.HeaderText = "Коэф.асиметрии";
             this.KaOrient.MaxInputLength = 32;
             this.KaOrient.Name = "KaOrient";
@@ -3951,8 +3769,8 @@
             // 
             // KeOrient
             // 
-            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.KeOrient.DefaultCellStyle = dataGridViewCellStyle45;
+            dataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.KeOrient.DefaultCellStyle = dataGridViewCellStyle48;
             this.KeOrient.HeaderText = "Коэф. эксцесса";
             this.KeOrient.MaxInputLength = 32;
             this.KeOrient.Name = "KeOrient";
@@ -3961,8 +3779,8 @@
             // 
             // KvOrient
             // 
-            dataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.KvOrient.DefaultCellStyle = dataGridViewCellStyle46;
+            dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.KvOrient.DefaultCellStyle = dataGridViewCellStyle49;
             this.KvOrient.HeaderText = "Коэф. вариации";
             this.KvOrient.MaxInputLength = 32;
             this.KvOrient.Name = "KvOrient";
@@ -3971,8 +3789,8 @@
             // 
             // MeanaOrient
             // 
-            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.MeanaOrient.DefaultCellStyle = dataGridViewCellStyle47;
+            dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.MeanaOrient.DefaultCellStyle = dataGridViewCellStyle50;
             this.MeanaOrient.HeaderText = "Меана";
             this.MeanaOrient.MaxInputLength = 32;
             this.MeanaOrient.Name = "MeanaOrient";
@@ -3980,8 +3798,8 @@
             // 
             // ModaOrient
             // 
-            dataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ModaOrient.DefaultCellStyle = dataGridViewCellStyle48;
+            dataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ModaOrient.DefaultCellStyle = dataGridViewCellStyle51;
             this.ModaOrient.HeaderText = "Мода";
             this.ModaOrient.MaxInputLength = 32;
             this.ModaOrient.Name = "ModaOrient";
@@ -3989,8 +3807,8 @@
             // 
             // MedianaOrient
             // 
-            dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.MedianaOrient.DefaultCellStyle = dataGridViewCellStyle49;
+            dataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.MedianaOrient.DefaultCellStyle = dataGridViewCellStyle52;
             this.MedianaOrient.HeaderText = "Медиана";
             this.MedianaOrient.MaxInputLength = 32;
             this.MedianaOrient.Name = "MedianaOrient";
@@ -3998,8 +3816,8 @@
             // 
             // XOrient
             // 
-            dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.XOrient.DefaultCellStyle = dataGridViewCellStyle50;
+            dataGridViewCellStyle53.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.XOrient.DefaultCellStyle = dataGridViewCellStyle53;
             this.XOrient.HeaderText = "Угол поворота вокруг оси X";
             this.XOrient.MaxInputLength = 10;
             this.XOrient.MinimumWidth = 35;
@@ -4009,8 +3827,8 @@
             // 
             // YOrient
             // 
-            dataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.YOrient.DefaultCellStyle = dataGridViewCellStyle51;
+            dataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.YOrient.DefaultCellStyle = dataGridViewCellStyle54;
             this.YOrient.HeaderText = "Угол поворота вокруг оси Y";
             this.YOrient.MaxInputLength = 10;
             this.YOrient.MinimumWidth = 35;
@@ -4028,6 +3846,7 @@
             // 
             // toolStrip3
             // 
+            this.toolStrip3.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonCalculateOrientation,
             this.toolStripSeparator25,
@@ -4209,7 +4028,7 @@
             this.AnalLocation.Padding = new System.Windows.Forms.Padding(3);
             this.AnalLocation.Size = new System.Drawing.Size(912, 532);
             this.AnalLocation.TabIndex = 9;
-            this.AnalLocation.Text = "Рациональное размещение";
+            this.AnalLocation.Text = "Размещение изделий";
             this.AnalLocation.ToolTipText = "Рациональное размещение в рабочей области построения установки";
             this.AnalLocation.UseVisualStyleBackColor = true;
             // 
@@ -4360,12 +4179,13 @@
             // 
             // statusStrip5
             // 
+            this.statusStrip5.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBarLocation,
             this.toolStripStatusLabelLocation});
-            this.statusStrip5.Location = new System.Drawing.Point(3, 507);
+            this.statusStrip5.Location = new System.Drawing.Point(3, 504);
             this.statusStrip5.Name = "statusStrip5";
-            this.statusStrip5.Size = new System.Drawing.Size(906, 22);
+            this.statusStrip5.Size = new System.Drawing.Size(906, 25);
             this.statusStrip5.TabIndex = 4;
             this.statusStrip5.Text = "statusStrip1";
             // 
@@ -4373,7 +4193,7 @@
             // 
             this.toolStripProgressBarLocation.MarqueeAnimationSpeed = 10;
             this.toolStripProgressBarLocation.Name = "toolStripProgressBarLocation";
-            this.toolStripProgressBarLocation.Size = new System.Drawing.Size(400, 16);
+            this.toolStripProgressBarLocation.Size = new System.Drawing.Size(400, 19);
             this.toolStripProgressBarLocation.Step = 1;
             // 
             // toolStripStatusLabelLocation
@@ -4381,7 +4201,7 @@
             this.toolStripStatusLabelLocation.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.toolStripStatusLabelLocation.ForeColor = System.Drawing.Color.Red;
             this.toolStripStatusLabelLocation.Name = "toolStripStatusLabelLocation";
-            this.toolStripStatusLabelLocation.Size = new System.Drawing.Size(159, 17);
+            this.toolStripStatusLabelLocation.Size = new System.Drawing.Size(159, 20);
             this.toolStripStatusLabelLocation.Text = "Массив данных не создан  ";
             // 
             // labelZ1
@@ -4395,6 +4215,7 @@
             // 
             // toolStripLocation
             // 
+            this.toolStripLocation.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripLocation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonPack,
             this.toolStripSeparator42,
@@ -4420,7 +4241,7 @@
             this.toolStripSeparator53});
             this.toolStripLocation.Location = new System.Drawing.Point(3, 3);
             this.toolStripLocation.Name = "toolStripLocation";
-            this.toolStripLocation.Size = new System.Drawing.Size(906, 25);
+            this.toolStripLocation.Size = new System.Drawing.Size(906, 27);
             this.toolStripLocation.TabIndex = 3;
             this.toolStripLocation.Text = "toolStrip5";
             // 
@@ -4430,24 +4251,24 @@
             this.toolStripButtonPack.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPack.Image")));
             this.toolStripButtonPack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonPack.Name = "toolStripButtonPack";
-            this.toolStripButtonPack.Size = new System.Drawing.Size(81, 22);
+            this.toolStripButtonPack.Size = new System.Drawing.Size(81, 24);
             this.toolStripButtonPack.Text = "Размещение";
             this.toolStripButtonPack.Click += new System.EventHandler(this.ToolStripButtonPack_Click);
             // 
             // toolStripSeparator42
             // 
             this.toolStripSeparator42.Name = "toolStripSeparator42";
-            this.toolStripSeparator42.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator42.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator43
             // 
             this.toolStripSeparator43.Name = "toolStripSeparator43";
-            this.toolStripSeparator43.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator43.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripComboBoxListModels
             // 
             this.toolStripComboBoxListModels.Name = "toolStripComboBoxListModels";
-            this.toolStripComboBoxListModels.Size = new System.Drawing.Size(250, 25);
+            this.toolStripComboBoxListModels.Size = new System.Drawing.Size(250, 27);
             this.toolStripComboBoxListModels.Text = "Выбор модели...";
             // 
             // toolStripButtonDelete
@@ -4456,7 +4277,7 @@
             this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(24, 24);
             this.toolStripButtonDelete.Text = "Удаление";
             this.toolStripButtonDelete.ToolTipText = "Удаление текущей модели";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.ToolStripButtonDelete_Click);
@@ -4464,12 +4285,12 @@
             // toolStripSeparator44
             // 
             this.toolStripSeparator44.Name = "toolStripSeparator44";
-            this.toolStripSeparator44.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator44.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator45
             // 
             this.toolStripSeparator45.Name = "toolStripSeparator45";
-            this.toolStripSeparator45.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator45.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButtonLocalAnalysis
             // 
@@ -4477,19 +4298,20 @@
             this.toolStripButtonLocalAnalysis.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLocalAnalysis.Image")));
             this.toolStripButtonLocalAnalysis.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonLocalAnalysis.Name = "toolStripButtonLocalAnalysis";
-            this.toolStripButtonLocalAnalysis.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButtonLocalAnalysis.Size = new System.Drawing.Size(51, 24);
             this.toolStripButtonLocalAnalysis.Text = "Анализ";
             this.toolStripButtonLocalAnalysis.ToolTipText = "Анализ размещения моделей";
+            this.toolStripButtonLocalAnalysis.Click += new System.EventHandler(this.toolStripButtonLocalAnalysis_Click);
             // 
             // toolStripSeparator46
             // 
             this.toolStripSeparator46.Name = "toolStripSeparator46";
-            this.toolStripSeparator46.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator46.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator47
             // 
             this.toolStripSeparator47.Name = "toolStripSeparator47";
-            this.toolStripSeparator47.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator47.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButtonLocalSettings
             // 
@@ -4497,7 +4319,7 @@
             this.toolStripButtonLocalSettings.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLocalSettings.Image")));
             this.toolStripButtonLocalSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonLocalSettings.Name = "toolStripButtonLocalSettings";
-            this.toolStripButtonLocalSettings.Size = new System.Drawing.Size(75, 22);
+            this.toolStripButtonLocalSettings.Size = new System.Drawing.Size(75, 24);
             this.toolStripButtonLocalSettings.Text = "Параметры";
             this.toolStripButtonLocalSettings.ToolTipText = "Параметры установки";
             this.toolStripButtonLocalSettings.Click += new System.EventHandler(this.ToolStripButtonLocalSettings_Click);
@@ -4505,17 +4327,17 @@
             // toolStripSeparator48
             // 
             this.toolStripSeparator48.Name = "toolStripSeparator48";
-            this.toolStripSeparator48.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator48.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator49
             // 
             this.toolStripSeparator49.Name = "toolStripSeparator49";
-            this.toolStripSeparator49.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator49.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripLabel3
             // 
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(29, 22);
+            this.toolStripLabel3.Size = new System.Drawing.Size(29, 24);
             this.toolStripLabel3.Text = "Шаг";
             this.toolStripLabel3.ToolTipText = "Шаг перемещения";
             // 
@@ -4523,7 +4345,7 @@
             // 
             this.toolStripTextBoxStep.MaxLength = 6;
             this.toolStripTextBoxStep.Name = "toolStripTextBoxStep";
-            this.toolStripTextBoxStep.Size = new System.Drawing.Size(50, 25);
+            this.toolStripTextBoxStep.Size = new System.Drawing.Size(50, 27);
             this.toolStripTextBoxStep.Text = "2";
             this.toolStripTextBoxStep.ToolTipText = "Шаг перемещения (визуализации), мм";
             this.toolStripTextBoxStep.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ToolStripTextBoxStep_KeyDown);
@@ -4532,12 +4354,12 @@
             // toolStripSeparator51
             // 
             this.toolStripSeparator51.Name = "toolStripSeparator51";
-            this.toolStripSeparator51.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator51.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator50
             // 
             this.toolStripSeparator50.Name = "toolStripSeparator50";
-            this.toolStripSeparator50.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator50.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButtonRGB1
             // 
@@ -4546,15 +4368,15 @@
             this.toolStripButtonRGB1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRGB1.Image")));
             this.toolStripButtonRGB1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRGB1.Name = "toolStripButtonRGB1";
-            this.toolStripButtonRGB1.Size = new System.Drawing.Size(123, 22);
-            this.toolStripButtonRGB1.Text = "RGB Незаполненное";
+            this.toolStripButtonRGB1.Size = new System.Drawing.Size(49, 24);
+            this.toolStripButtonRGB1.Text = "RGB V0";
             this.toolStripButtonRGB1.ToolTipText = "RGB незаполненного объема";
             this.toolStripButtonRGB1.Click += new System.EventHandler(this.ToolStripButtonRGB1_Click);
             // 
             // toolStripSeparator54
             // 
             this.toolStripSeparator54.Name = "toolStripSeparator54";
-            this.toolStripSeparator54.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator54.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButtonRGB2
             // 
@@ -4564,20 +4386,20 @@
             this.toolStripButtonRGB2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRGB2.Image")));
             this.toolStripButtonRGB2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRGB2.Name = "toolStripButtonRGB2";
-            this.toolStripButtonRGB2.Size = new System.Drawing.Size(110, 22);
-            this.toolStripButtonRGB2.Text = "RGB Заполненное";
+            this.toolStripButtonRGB2.Size = new System.Drawing.Size(49, 24);
+            this.toolStripButtonRGB2.Text = "RGB V1";
             this.toolStripButtonRGB2.ToolTipText = "Цвет для заполненного объема";
             this.toolStripButtonRGB2.Click += new System.EventHandler(this.ToolStripButtonRGB2_Click);
             // 
             // toolStripSeparator52
             // 
             this.toolStripSeparator52.Name = "toolStripSeparator52";
-            this.toolStripSeparator52.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator52.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator53
             // 
             this.toolStripSeparator53.Name = "toolStripSeparator53";
-            this.toolStripSeparator53.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator53.Size = new System.Drawing.Size(6, 27);
             // 
             // AnalVox
             // 
@@ -4619,6 +4441,7 @@
             // 
             // toolStrip2
             // 
+            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonStatAnal,
             this.toolStripSeparator12,
@@ -5321,12 +5144,13 @@
             // 
             // statusStrip_CreateVox
             // 
+            this.statusStrip_CreateVox.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip_CreateVox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBarCreateVoxel,
             this.toolStripStatusLabelCreateVoxel});
-            this.statusStrip_CreateVox.Location = new System.Drawing.Point(0, 510);
+            this.statusStrip_CreateVox.Location = new System.Drawing.Point(0, 507);
             this.statusStrip_CreateVox.Name = "statusStrip_CreateVox";
-            this.statusStrip_CreateVox.Size = new System.Drawing.Size(912, 22);
+            this.statusStrip_CreateVox.Size = new System.Drawing.Size(912, 25);
             this.statusStrip_CreateVox.TabIndex = 1;
             this.statusStrip_CreateVox.Text = "statusStrip1";
             // 
@@ -5334,7 +5158,7 @@
             // 
             this.toolStripProgressBarCreateVoxel.MarqueeAnimationSpeed = 10;
             this.toolStripProgressBarCreateVoxel.Name = "toolStripProgressBarCreateVoxel";
-            this.toolStripProgressBarCreateVoxel.Size = new System.Drawing.Size(400, 16);
+            this.toolStripProgressBarCreateVoxel.Size = new System.Drawing.Size(400, 19);
             this.toolStripProgressBarCreateVoxel.Step = 1;
             // 
             // toolStripStatusLabelCreateVoxel
@@ -5342,7 +5166,7 @@
             this.toolStripStatusLabelCreateVoxel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.toolStripStatusLabelCreateVoxel.ForeColor = System.Drawing.Color.Red;
             this.toolStripStatusLabelCreateVoxel.Name = "toolStripStatusLabelCreateVoxel";
-            this.toolStripStatusLabelCreateVoxel.Size = new System.Drawing.Size(159, 17);
+            this.toolStripStatusLabelCreateVoxel.Size = new System.Drawing.Size(159, 20);
             this.toolStripStatusLabelCreateVoxel.Text = "Массив данных не создан  ";
             // 
             // panel1
@@ -5440,6 +5264,7 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Calculate_size,
             this.toolStripSeparator4,
@@ -5767,26 +5592,27 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBarCreateTable,
             this.toolStripStatusLabel2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 510);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 507);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(912, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(912, 25);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripProgressBarCreateTable
             // 
             this.toolStripProgressBarCreateTable.Name = "toolStripProgressBarCreateTable";
-            this.toolStripProgressBarCreateTable.Size = new System.Drawing.Size(400, 16);
+            this.toolStripProgressBarCreateTable.Size = new System.Drawing.Size(400, 19);
             this.toolStripProgressBarCreateTable.Step = 1;
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.ForeColor = System.Drawing.Color.Red;
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(151, 17);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(151, 20);
             this.toolStripStatusLabel2.Text = "Массив данных не создан ";
             // 
             // dataGridView1
@@ -5808,6 +5634,7 @@
             this.bindingNavigator1.CountItem = null;
             this.bindingNavigator1.CountItemFormat = "/ {0}";
             this.bindingNavigator1.DeleteItem = null;
+            this.bindingNavigator1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton2,
             this.toolStripSeparator2,
@@ -5825,7 +5652,7 @@
             this.bindingNavigator1.MovePreviousItem = null;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = null;
-            this.bindingNavigator1.Size = new System.Drawing.Size(912, 25);
+            this.bindingNavigator1.Size = new System.Drawing.Size(912, 27);
             this.bindingNavigator1.TabIndex = 2;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -5834,19 +5661,19 @@
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(242, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(242, 24);
             this.toolStripButton2.Text = "Создание таблицы данных треугольников";
             this.toolStripButton2.Click += new System.EventHandler(this.ToolStripButton2_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripComboBox3
             // 
@@ -5856,7 +5683,7 @@
             "2. Просмотр и записать в файл",
             "3. Записать в массив для расчетов"});
             this.toolStripComboBox3.Name = "toolStripComboBox3";
-            this.toolStripComboBox3.Size = new System.Drawing.Size(220, 25);
+            this.toolStripComboBox3.Size = new System.Drawing.Size(220, 27);
             this.toolStripComboBox3.Text = "3. Записать в массив для расчетов";
             this.toolStripComboBox3.ToolTipText = "Выбор операции";
             this.toolStripComboBox3.TextChanged += new System.EventHandler(this.ToolStripComboBox3_TextChanged);
@@ -5864,12 +5691,12 @@
             // toolStripSeparator21
             // 
             this.toolStripSeparator21.Name = "toolStripSeparator21";
-            this.toolStripSeparator21.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator21.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator17
             // 
             this.toolStripSeparator17.Name = "toolStripSeparator17";
-            this.toolStripSeparator17.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator17.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButton4
             // 
@@ -5877,7 +5704,7 @@
             this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton4.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton4.Text = "toolStripButton4";
             this.toolStripButton4.ToolTipText = "Расчет свойств";
             this.toolStripButton4.Click += new System.EventHandler(this.ToolStripButton4_Click);
@@ -5888,7 +5715,7 @@
             this.toolStripButtonSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSave.Image")));
             this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSave.Name = "toolStripButtonSave";
-            this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSave.Size = new System.Drawing.Size(24, 24);
             this.toolStripButtonSave.Text = "Создание массива для расчетов";
             this.toolStripButtonSave.ToolTipText = "Сохранение БД";
             this.toolStripButtonSave.Click += new System.EventHandler(this.ToolStripButton5_Click);
@@ -5896,7 +5723,7 @@
             // toolStripTextBox2
             // 
             this.toolStripTextBox2.Name = "toolStripTextBox2";
-            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 25);
+            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 27);
             this.toolStripTextBox2.Text = "10";
             // 
             // OpenSTL
@@ -5916,9 +5743,9 @@
             this.richTextBox_review.BackColor = System.Drawing.SystemColors.Control;
             this.richTextBox_review.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox_review.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox_review.Location = new System.Drawing.Point(0, 25);
+            this.richTextBox_review.Location = new System.Drawing.Point(0, 27);
             this.richTextBox_review.Name = "richTextBox_review";
-            this.richTextBox_review.Size = new System.Drawing.Size(912, 485);
+            this.richTextBox_review.Size = new System.Drawing.Size(912, 480);
             this.richTextBox_review.TabIndex = 0;
             this.richTextBox_review.Text = "Не выбран файл...";
             this.richTextBox_review.TextChanged += new System.EventHandler(this.RichTextBox1_TextChanged);
@@ -5926,6 +5753,7 @@
             // toolStrip_OpenSTL
             // 
             this.toolStrip_OpenSTL.BackColor = System.Drawing.Color.Transparent;
+            this.toolStrip_OpenSTL.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip_OpenSTL.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripSeparator62,
@@ -5941,7 +5769,7 @@
             this.toolStripSeparator63});
             this.toolStrip_OpenSTL.Location = new System.Drawing.Point(0, 0);
             this.toolStrip_OpenSTL.Name = "toolStrip_OpenSTL";
-            this.toolStrip_OpenSTL.Size = new System.Drawing.Size(912, 25);
+            this.toolStrip_OpenSTL.Size = new System.Drawing.Size(912, 27);
             this.toolStrip_OpenSTL.TabIndex = 1;
             this.toolStrip_OpenSTL.Text = "toolStrip1";
             // 
@@ -5951,7 +5779,7 @@
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Red;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(58, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(58, 24);
             this.toolStripButton1.Text = "Открыть";
             this.toolStripButton1.ToolTipText = "Выбрать STL-файл";
             this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1_Click);
@@ -5959,21 +5787,21 @@
             // toolStripSeparator62
             // 
             this.toolStripSeparator62.Name = "toolStripSeparator62";
-            this.toolStripSeparator62.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator62.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripTextBoxFileName
             // 
             this.toolStripTextBoxFileName.AutoToolTip = true;
             this.toolStripTextBoxFileName.Name = "toolStripTextBoxFileName";
             this.toolStripTextBoxFileName.ReadOnly = true;
-            this.toolStripTextBoxFileName.Size = new System.Drawing.Size(300, 25);
+            this.toolStripTextBoxFileName.Size = new System.Drawing.Size(300, 27);
             this.toolStripTextBoxFileName.ToolTipText = "Путь к файлу";
             this.toolStripTextBoxFileName.Click += new System.EventHandler(this.ToolStripTextBoxFileName_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripTextBoxVol
             // 
@@ -5981,7 +5809,7 @@
             this.toolStripTextBoxVol.MaxLength = 3;
             this.toolStripTextBoxVol.Name = "toolStripTextBoxVol";
             this.toolStripTextBoxVol.ReadOnly = true;
-            this.toolStripTextBoxVol.Size = new System.Drawing.Size(40, 25);
+            this.toolStripTextBoxVol.Size = new System.Drawing.Size(40, 27);
             this.toolStripTextBoxVol.Text = "100";
             this.toolStripTextBoxVol.ToolTipText = "Количество строк для просмотра (1...999)";
             // 
@@ -5993,7 +5821,7 @@
             "количество строк",
             "весь файл"});
             this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(120, 25);
+            this.toolStripComboBox1.Size = new System.Drawing.Size(120, 27);
             this.toolStripComboBox1.Text = "количество строк";
             this.toolStripComboBox1.ToolTipText = "0";
             this.toolStripComboBox1.TextChanged += new System.EventHandler(this.ToolStripComboBox1_TextChanged);
@@ -6001,7 +5829,7 @@
             // toolStripSeparator37
             // 
             this.toolStripSeparator37.Name = "toolStripSeparator37";
-            this.toolStripSeparator37.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator37.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripComboBox2
             // 
@@ -6013,15 +5841,14 @@
             "2. Бинарный формат файла (Binary)"});
             this.toolStripComboBox2.MaxDropDownItems = 2;
             this.toolStripComboBox2.Name = "toolStripComboBox2";
-            this.toolStripComboBox2.Size = new System.Drawing.Size(225, 25);
+            this.toolStripComboBox2.Size = new System.Drawing.Size(225, 27);
             this.toolStripComboBox2.Text = "2. Бинарный формат файла (Binary)";
             this.toolStripComboBox2.ToolTipText = "Выбор STL формата";
-            this.toolStripComboBox2.Click += new System.EventHandler(this.ToolStripComboBox2_Click);
             // 
             // toolStripSeparator35
             // 
             this.toolStripSeparator35.Name = "toolStripSeparator35";
-            this.toolStripSeparator35.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator35.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripDropDownButton1
             // 
@@ -6031,7 +5858,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(102, 22);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(106, 24);
             this.toolStripDropDownButton1.Text = "Просмотр...";
             // 
             // блокнотToolStripMenuItem
@@ -6051,23 +5878,24 @@
             // toolStripSeparator36
             // 
             this.toolStripSeparator36.Name = "toolStripSeparator36";
-            this.toolStripSeparator36.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator36.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator63
             // 
             this.toolStripSeparator63.Name = "toolStripSeparator63";
-            this.toolStripSeparator63.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator63.Size = new System.Drawing.Size(6, 27);
             // 
             // statusStrip_OpenSTL
             // 
+            this.statusStrip_OpenSTL.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip_OpenSTL.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBarOpenSTL,
             this.toolStripStatusLabel_time_loud,
             this.toolStripStatusLabel_info});
-            this.statusStrip_OpenSTL.Location = new System.Drawing.Point(0, 510);
+            this.statusStrip_OpenSTL.Location = new System.Drawing.Point(0, 507);
             this.statusStrip_OpenSTL.Name = "statusStrip_OpenSTL";
             this.statusStrip_OpenSTL.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip_OpenSTL.Size = new System.Drawing.Size(912, 22);
+            this.statusStrip_OpenSTL.Size = new System.Drawing.Size(912, 25);
             this.statusStrip_OpenSTL.TabIndex = 2;
             this.statusStrip_OpenSTL.Text = "statusStrip1";
             // 
@@ -6075,19 +5903,19 @@
             // 
             this.toolStripProgressBarOpenSTL.MarqueeAnimationSpeed = 50;
             this.toolStripProgressBarOpenSTL.Name = "toolStripProgressBarOpenSTL";
-            this.toolStripProgressBarOpenSTL.Size = new System.Drawing.Size(400, 16);
+            this.toolStripProgressBarOpenSTL.Size = new System.Drawing.Size(400, 19);
             this.toolStripProgressBarOpenSTL.Step = 1;
             // 
             // toolStripStatusLabel_time_loud
             // 
             this.toolStripStatusLabel_time_loud.Name = "toolStripStatusLabel_time_loud";
-            this.toolStripStatusLabel_time_loud.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusLabel_time_loud.Size = new System.Drawing.Size(10, 20);
             this.toolStripStatusLabel_time_loud.Text = " ";
             // 
             // toolStripStatusLabel_info
             // 
             this.toolStripStatusLabel_info.Name = "toolStripStatusLabel_info";
-            this.toolStripStatusLabel_info.Size = new System.Drawing.Size(142, 17);
+            this.toolStripStatusLabel_info.Size = new System.Drawing.Size(142, 20);
             this.toolStripStatusLabel_info.Text = "Количество символов: 0";
             // 
             // tabControlCreationVoxelModel
@@ -6108,6 +5936,560 @@
             this.tabControlCreationVoxelModel.Size = new System.Drawing.Size(920, 558);
             this.tabControlCreationVoxelModel.TabIndex = 0;
             // 
+            // NumLayer
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.NumLayer.DefaultCellStyle = dataGridViewCellStyle1;
+            this.NumLayer.FillWeight = 55F;
+            this.NumLayer.Frozen = true;
+            this.NumLayer.HeaderText = "Номер";
+            this.NumLayer.MaxInputLength = 8;
+            this.NumLayer.Name = "NumLayer";
+            this.NumLayer.ReadOnly = true;
+            this.NumLayer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NumLayer.ToolTipText = "Номер слоя";
+            this.NumLayer.Width = 55;
+            // 
+            // HeightLayer
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.HeightLayer.DefaultCellStyle = dataGridViewCellStyle2;
+            this.HeightLayer.FillWeight = 50F;
+            this.HeightLayer.Frozen = true;
+            this.HeightLayer.HeaderText = "h";
+            this.HeightLayer.MaxInputLength = 8;
+            this.HeightLayer.MinimumWidth = 30;
+            this.HeightLayer.Name = "HeightLayer";
+            this.HeightLayer.ReadOnly = true;
+            this.HeightLayer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.HeightLayer.ToolTipText = "Высота слоя";
+            this.HeightLayer.Width = 50;
+            // 
+            // HeightPlaсement
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.HeightPlaсement.DefaultCellStyle = dataGridViewCellStyle3;
+            this.HeightPlaсement.FillWeight = 50F;
+            this.HeightPlaсement.HeaderText = "Z";
+            this.HeightPlaсement.MaxInputLength = 8;
+            this.HeightPlaсement.MinimumWidth = 40;
+            this.HeightPlaсement.Name = "HeightPlaсement";
+            this.HeightPlaсement.ReadOnly = true;
+            this.HeightPlaсement.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.HeightPlaсement.ToolTipText = "Координата расположения слоя по оси Z";
+            this.HeightPlaсement.Width = 50;
+            // 
+            // P
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.NullValue = null;
+            this.P.DefaultCellStyle = dataGridViewCellStyle4;
+            this.P.FillWeight = 65F;
+            this.P.HeaderText = "Периметр";
+            this.P.MaxInputLength = 10;
+            this.P.Name = "P";
+            this.P.ReadOnly = true;
+            this.P.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.P.ToolTipText = "Периметр контура";
+            this.P.Width = 65;
+            // 
+            // Ssection
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Ssection.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Ssection.FillWeight = 80F;
+            this.Ssection.HeaderText = "Площадь";
+            this.Ssection.MaxInputLength = 12;
+            this.Ssection.MinimumWidth = 55;
+            this.Ssection.Name = "Ssection";
+            this.Ssection.ReadOnly = true;
+            this.Ssection.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Ssection.ToolTipText = "Площадь сечения модели";
+            this.Ssection.Width = 80;
+            // 
+            // centroidOfArea
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.centroidOfArea.DefaultCellStyle = dataGridViewCellStyle6;
+            this.centroidOfArea.FillWeight = 120F;
+            this.centroidOfArea.HeaderText = "Центр тяжести";
+            this.centroidOfArea.MaxInputLength = 20;
+            this.centroidOfArea.Name = "centroidOfArea";
+            this.centroidOfArea.ReadOnly = true;
+            this.centroidOfArea.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.centroidOfArea.ToolTipText = "Центр тяжести сечения";
+            this.centroidOfArea.Width = 140;
+            // 
+            // Delta
+            // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Delta.DefaultCellStyle = dataGridViewCellStyle7;
+            this.Delta.HeaderText = "Смещение L0";
+            this.Delta.MaxInputLength = 20;
+            this.Delta.Name = "Delta";
+            this.Delta.ReadOnly = true;
+            this.Delta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Delta.ToolTipText = "Величина смещения центра тяжести сечения от общего центра";
+            // 
+            // Fractal_Size_Scale
+            // 
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Fractal_Size_Scale.DefaultCellStyle = dataGridViewCellStyle8;
+            this.Fractal_Size_Scale.HeaderText = "Фракт.разм.(метод масштабов)";
+            this.Fractal_Size_Scale.MaxInputLength = 20;
+            this.Fractal_Size_Scale.MinimumWidth = 50;
+            this.Fractal_Size_Scale.Name = "Fractal_Size_Scale";
+            this.Fractal_Size_Scale.ReadOnly = true;
+            this.Fractal_Size_Scale.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Fractal_Size_Scale.ToolTipText = "Фрактальная размерность (метод масштабов)";
+            this.Fractal_Size_Scale.Width = 120;
+            // 
+            // Fractal_Size_Square
+            // 
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Fractal_Size_Square.DefaultCellStyle = dataGridViewCellStyle9;
+            this.Fractal_Size_Square.HeaderText = "Фракт.разм.(клет.метод)";
+            this.Fractal_Size_Square.MaxInputLength = 20;
+            this.Fractal_Size_Square.Name = "Fractal_Size_Square";
+            this.Fractal_Size_Square.ReadOnly = true;
+            this.Fractal_Size_Square.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Fractal_Size_Square.ToolTipText = "Фрактальная размерность (клеточный метод)";
+            this.Fractal_Size_Square.Width = 120;
+            // 
+            // Nz
+            // 
+            this.Nz.HeaderText = "Гистограмма Nz";
+            this.Nz.MinimumWidth = 50;
+            this.Nz.Name = "Nz";
+            this.Nz.ReadOnly = true;
+            this.Nz.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Nz.Text = "Нет данных";
+            this.Nz.ToolTipText = "Nz (угол между векторами Z и нормали грани), по количеству граней";
+            // 
+            // Aadjacent
+            // 
+            this.Aadjacent.HeaderText = "Гистограмма A";
+            this.Aadjacent.MinimumWidth = 50;
+            this.Aadjacent.Name = "Aadjacent";
+            this.Aadjacent.ReadOnly = true;
+            this.Aadjacent.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Aadjacent.Text = "Нет данных";
+            this.Aadjacent.ToolTipText = "Смежный угол между элементами контура";
+            // 
+            // NzMinInterval
+            // 
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzMinInterval.DefaultCellStyle = dataGridViewCellStyle10;
+            this.NzMinInterval.HeaderText = "Мин. Nz";
+            this.NzMinInterval.MaxInputLength = 20;
+            this.NzMinInterval.Name = "NzMinInterval";
+            this.NzMinInterval.ReadOnly = true;
+            this.NzMinInterval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzMinInterval.ToolTipText = "Минимальная величина";
+            // 
+            // NzMaxInterval
+            // 
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzMaxInterval.DefaultCellStyle = dataGridViewCellStyle11;
+            this.NzMaxInterval.HeaderText = "Макс. Nz";
+            this.NzMaxInterval.MaxInputLength = 20;
+            this.NzMaxInterval.Name = "NzMaxInterval";
+            this.NzMaxInterval.ReadOnly = true;
+            this.NzMaxInterval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzMaxInterval.ToolTipText = "Максимальная величина";
+            // 
+            // NzRange
+            // 
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzRange.DefaultCellStyle = dataGridViewCellStyle12;
+            this.NzRange.HeaderText = "Размах Nz";
+            this.NzRange.MaxInputLength = 20;
+            this.NzRange.Name = "NzRange";
+            this.NzRange.ReadOnly = true;
+            this.NzRange.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzRange.ToolTipText = "Размах величин";
+            // 
+            // NzDispersion
+            // 
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzDispersion.DefaultCellStyle = dataGridViewCellStyle13;
+            this.NzDispersion.HeaderText = "Дисперсия Nz";
+            this.NzDispersion.MaxInputLength = 20;
+            this.NzDispersion.Name = "NzDispersion";
+            this.NzDispersion.ReadOnly = true;
+            this.NzDispersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzDispersion.ToolTipText = "Дисперсия";
+            // 
+            // NzSigma
+            // 
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzSigma.DefaultCellStyle = dataGridViewCellStyle14;
+            this.NzSigma.HeaderText = "Среднекв.отклон. Nz";
+            this.NzSigma.MaxInputLength = 20;
+            this.NzSigma.MinimumWidth = 50;
+            this.NzSigma.Name = "NzSigma";
+            this.NzSigma.ReadOnly = true;
+            this.NzSigma.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzSigma.ToolTipText = "Среднеквадратическое.отклонение";
+            this.NzSigma.Width = 120;
+            // 
+            // NzMean
+            // 
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzMean.DefaultCellStyle = dataGridViewCellStyle15;
+            this.NzMean.HeaderText = "Ср. арифм. Nz";
+            this.NzMean.MaxInputLength = 20;
+            this.NzMean.Name = "NzMean";
+            this.NzMean.ReadOnly = true;
+            this.NzMean.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzMean.ToolTipText = "Среднеарифметическое значение";
+            // 
+            // NzKasim
+            // 
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzKasim.DefaultCellStyle = dataGridViewCellStyle16;
+            this.NzKasim.HeaderText = "Коэф. асиметрии Nz";
+            this.NzKasim.MaxInputLength = 20;
+            this.NzKasim.Name = "NzKasim";
+            this.NzKasim.ReadOnly = true;
+            this.NzKasim.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzKasim.ToolTipText = "Коэффициент асиметрии";
+            // 
+            // NzKeks
+            // 
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzKeks.DefaultCellStyle = dataGridViewCellStyle17;
+            this.NzKeks.HeaderText = "Коэф. эксцесса Nz";
+            this.NzKeks.MaxInputLength = 20;
+            this.NzKeks.Name = "NzKeks";
+            this.NzKeks.ReadOnly = true;
+            this.NzKeks.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzKeks.ToolTipText = "Коэффициент эксцесса";
+            // 
+            // NzKv
+            // 
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzKv.DefaultCellStyle = dataGridViewCellStyle18;
+            this.NzKv.HeaderText = "Коэффициент вариации Nz";
+            this.NzKv.MaxInputLength = 20;
+            this.NzKv.Name = "NzKv";
+            this.NzKv.ReadOnly = true;
+            this.NzKv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzKv.Width = 120;
+            // 
+            // NzMeana
+            // 
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzMeana.DefaultCellStyle = dataGridViewCellStyle19;
+            this.NzMeana.HeaderText = "Меана Nz";
+            this.NzMeana.MaxInputLength = 20;
+            this.NzMeana.Name = "NzMeana";
+            this.NzMeana.ReadOnly = true;
+            this.NzMeana.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // NzModa
+            // 
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzModa.DefaultCellStyle = dataGridViewCellStyle20;
+            this.NzModa.HeaderText = "Мода Nz";
+            this.NzModa.MaxInputLength = 20;
+            this.NzModa.Name = "NzModa";
+            this.NzModa.ReadOnly = true;
+            this.NzModa.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // NzMediana
+            // 
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.NzMediana.DefaultCellStyle = dataGridViewCellStyle21;
+            this.NzMediana.HeaderText = "Медиана Nz";
+            this.NzMediana.MaxInputLength = 20;
+            this.NzMediana.Name = "NzMediana";
+            this.NzMediana.ReadOnly = true;
+            this.NzMediana.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // AMinInterval
+            // 
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AMinInterval.DefaultCellStyle = dataGridViewCellStyle22;
+            this.AMinInterval.HeaderText = "Мин. А";
+            this.AMinInterval.MaxInputLength = 20;
+            this.AMinInterval.Name = "AMinInterval";
+            this.AMinInterval.ReadOnly = true;
+            this.AMinInterval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.AMinInterval.ToolTipText = "Минимальная величина";
+            // 
+            // AMaxInterval
+            // 
+            dataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AMaxInterval.DefaultCellStyle = dataGridViewCellStyle23;
+            this.AMaxInterval.HeaderText = "Макс. А";
+            this.AMaxInterval.MaxInputLength = 20;
+            this.AMaxInterval.Name = "AMaxInterval";
+            this.AMaxInterval.ReadOnly = true;
+            this.AMaxInterval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.AMaxInterval.ToolTipText = "Максимальная величина";
+            // 
+            // ARange
+            // 
+            dataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ARange.DefaultCellStyle = dataGridViewCellStyle24;
+            this.ARange.HeaderText = "Размах А";
+            this.ARange.MaxInputLength = 20;
+            this.ARange.Name = "ARange";
+            this.ARange.ReadOnly = true;
+            this.ARange.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ARange.ToolTipText = "Размах";
+            // 
+            // ADispersion
+            // 
+            dataGridViewCellStyle25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ADispersion.DefaultCellStyle = dataGridViewCellStyle25;
+            this.ADispersion.HeaderText = "Дисперсия А";
+            this.ADispersion.MaxInputLength = 20;
+            this.ADispersion.Name = "ADispersion";
+            this.ADispersion.ReadOnly = true;
+            this.ADispersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ADispersion.ToolTipText = "Дисперсия";
+            // 
+            // ASigma
+            // 
+            dataGridViewCellStyle26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ASigma.DefaultCellStyle = dataGridViewCellStyle26;
+            this.ASigma.HeaderText = "Среднекв.отклон. А";
+            this.ASigma.MaxInputLength = 20;
+            this.ASigma.Name = "ASigma";
+            this.ASigma.ReadOnly = true;
+            this.ASigma.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ASigma.ToolTipText = "Среднеквадратическое отклонение";
+            // 
+            // AMean
+            // 
+            dataGridViewCellStyle27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AMean.DefaultCellStyle = dataGridViewCellStyle27;
+            this.AMean.HeaderText = "Ср. арифм. А";
+            this.AMean.MaxInputLength = 20;
+            this.AMean.Name = "AMean";
+            this.AMean.ReadOnly = true;
+            this.AMean.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.AMean.ToolTipText = "Среднеарифметическое значение";
+            // 
+            // AKasim
+            // 
+            dataGridViewCellStyle28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AKasim.DefaultCellStyle = dataGridViewCellStyle28;
+            this.AKasim.HeaderText = "Коэф. асиметрии А";
+            this.AKasim.MaxInputLength = 20;
+            this.AKasim.Name = "AKasim";
+            this.AKasim.ReadOnly = true;
+            this.AKasim.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.AKasim.ToolTipText = "Коэффициент асиметрии";
+            // 
+            // AKeks
+            // 
+            dataGridViewCellStyle29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AKeks.DefaultCellStyle = dataGridViewCellStyle29;
+            this.AKeks.HeaderText = "Коэф. эксцесса А";
+            this.AKeks.MaxInputLength = 20;
+            this.AKeks.Name = "AKeks";
+            this.AKeks.ReadOnly = true;
+            this.AKeks.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.AKeks.ToolTipText = "Коэффициент эксцесса";
+            // 
+            // AKv
+            // 
+            dataGridViewCellStyle30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AKv.DefaultCellStyle = dataGridViewCellStyle30;
+            this.AKv.HeaderText = "Коэф. вариации А";
+            this.AKv.MaxInputLength = 20;
+            this.AKv.Name = "AKv";
+            this.AKv.ReadOnly = true;
+            this.AKv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.AKv.ToolTipText = "Коэффициент вариации";
+            // 
+            // AMeana
+            // 
+            dataGridViewCellStyle31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AMeana.DefaultCellStyle = dataGridViewCellStyle31;
+            this.AMeana.HeaderText = "Меана А";
+            this.AMeana.MaxInputLength = 20;
+            this.AMeana.Name = "AMeana";
+            this.AMeana.ReadOnly = true;
+            this.AMeana.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // AModa
+            // 
+            dataGridViewCellStyle32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AModa.DefaultCellStyle = dataGridViewCellStyle32;
+            this.AModa.HeaderText = "Мода А";
+            this.AModa.MaxInputLength = 20;
+            this.AModa.Name = "AModa";
+            this.AModa.ReadOnly = true;
+            this.AModa.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // AMediana
+            // 
+            dataGridViewCellStyle33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AMediana.DefaultCellStyle = dataGridViewCellStyle33;
+            this.AMediana.HeaderText = "Медиана А";
+            this.AMediana.MaxInputLength = 20;
+            this.AMediana.Name = "AMediana";
+            this.AMediana.ReadOnly = true;
+            this.AMediana.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Error
+            // 
+            this.Error.HeaderText = "Гистограмма E";
+            this.Error.MinimumWidth = 50;
+            this.Error.Name = "Error";
+            this.Error.ReadOnly = true;
+            this.Error.Text = "Нет данных";
+            this.Error.ToolTipText = "Погрешность формы (максимальное отклонение на участке поверхности)";
+            // 
+            // EMinInterval
+            // 
+            this.EMinInterval.HeaderText = "Мин. Е";
+            this.EMinInterval.MaxInputLength = 20;
+            this.EMinInterval.Name = "EMinInterval";
+            this.EMinInterval.ReadOnly = true;
+            this.EMinInterval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EMinInterval.ToolTipText = "Минимальная величина отклонения формы";
+            // 
+            // EMaxInterval
+            // 
+            this.EMaxInterval.HeaderText = "Макс. Е";
+            this.EMaxInterval.MaxInputLength = 20;
+            this.EMaxInterval.Name = "EMaxInterval";
+            this.EMaxInterval.ReadOnly = true;
+            this.EMaxInterval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EMaxInterval.ToolTipText = "Максимальная величина отклонения формы";
+            // 
+            // ERange
+            // 
+            this.ERange.HeaderText = "Размах Е";
+            this.ERange.MaxInputLength = 20;
+            this.ERange.Name = "ERange";
+            this.ERange.ReadOnly = true;
+            this.ERange.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ERange.ToolTipText = "Размах отклонения формы";
+            // 
+            // EDispersion
+            // 
+            this.EDispersion.HeaderText = "Дисперсия E";
+            this.EDispersion.MaxInputLength = 20;
+            this.EDispersion.Name = "EDispersion";
+            this.EDispersion.ReadOnly = true;
+            this.EDispersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EDispersion.ToolTipText = "Дисперсия отклонения формы";
+            // 
+            // ESigma
+            // 
+            this.ESigma.HeaderText = "Среднекв.отклон. Е";
+            this.ESigma.MaxInputLength = 20;
+            this.ESigma.Name = "ESigma";
+            this.ESigma.ReadOnly = true;
+            this.ESigma.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ESigma.ToolTipText = "Среднеквадратическое отклонение";
+            // 
+            // EMean
+            // 
+            this.EMean.HeaderText = "Ср. арифм. E";
+            this.EMean.MaxInputLength = 20;
+            this.EMean.Name = "EMean";
+            this.EMean.ReadOnly = true;
+            this.EMean.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EMean.ToolTipText = "Среднеарифметическое значение";
+            // 
+            // EKasim
+            // 
+            this.EKasim.HeaderText = "Коэф. асиметрии E";
+            this.EKasim.MaxInputLength = 20;
+            this.EKasim.Name = "EKasim";
+            this.EKasim.ReadOnly = true;
+            this.EKasim.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EKasim.ToolTipText = "Коэффициент асиметрии";
+            // 
+            // EKeks
+            // 
+            this.EKeks.HeaderText = "Коэф. эксцесса E";
+            this.EKeks.MaxInputLength = 20;
+            this.EKeks.Name = "EKeks";
+            this.EKeks.ReadOnly = true;
+            this.EKeks.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EKeks.ToolTipText = "Коэффициент эксцесса";
+            // 
+            // EKv
+            // 
+            this.EKv.HeaderText = "Коэф. вариации E";
+            this.EKv.MaxInputLength = 20;
+            this.EKv.Name = "EKv";
+            this.EKv.ReadOnly = true;
+            this.EKv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EKv.ToolTipText = "Коэффициент вариации";
+            // 
+            // EMeana
+            // 
+            this.EMeana.HeaderText = "Меана E";
+            this.EMeana.MaxInputLength = 20;
+            this.EMeana.Name = "EMeana";
+            this.EMeana.ReadOnly = true;
+            this.EMeana.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EMeana.ToolTipText = "Меана";
+            // 
+            // EModa
+            // 
+            this.EModa.HeaderText = "Мода E";
+            this.EModa.MaxInputLength = 20;
+            this.EModa.Name = "EModa";
+            this.EModa.ReadOnly = true;
+            this.EModa.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EModa.ToolTipText = "Мода";
+            // 
+            // EMediana
+            // 
+            this.EMediana.HeaderText = "Медиана E";
+            this.EMediana.MaxInputLength = 20;
+            this.EMediana.Name = "EMediana";
+            this.EMediana.ReadOnly = true;
+            this.EMediana.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EMediana.ToolTipText = "Медиана";
+            // 
+            // NzFull
+            // 
+            this.NzFull.HeaderText = "Гистограмма Nz (слоя)";
+            this.NzFull.Name = "NzFull";
+            this.NzFull.ReadOnly = true;
+            this.NzFull.Text = "Нет данных";
+            this.NzFull.ToolTipText = "Nz (угол между векторами Z и нормали грани) для всего слоя";
+            // 
+            // NzFullMinInterval
+            // 
+            this.NzFullMinInterval.HeaderText = "Мин. Nz full";
+            this.NzFullMinInterval.MaxInputLength = 20;
+            this.NzFullMinInterval.Name = "NzFullMinInterval";
+            this.NzFullMinInterval.ReadOnly = true;
+            this.NzFullMinInterval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzFullMinInterval.ToolTipText = "Минимальная величина Nz full";
+            // 
+            // NzFullMaxInterval
+            // 
+            this.NzFullMaxInterval.HeaderText = "Макс. Nz full";
+            this.NzFullMaxInterval.MaxInputLength = 20;
+            this.NzFullMaxInterval.MinimumWidth = 50;
+            this.NzFullMaxInterval.Name = "NzFullMaxInterval";
+            this.NzFullMaxInterval.ReadOnly = true;
+            this.NzFullMaxInterval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzFullMaxInterval.ToolTipText = "Максимальная величина Nz full";
+            // 
+            // NzFullRange
+            // 
+            this.NzFullRange.HeaderText = "Размах Nz full";
+            this.NzFullRange.MaxInputLength = 20;
+            this.NzFullRange.MinimumWidth = 50;
+            this.NzFullRange.Name = "NzFullRange";
+            this.NzFullRange.ReadOnly = true;
+            this.NzFullRange.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NzFullRange.ToolTipText = "Размах Nz full";
+            // 
             // FormAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -6116,9 +6498,10 @@
             this.ClientSize = new System.Drawing.Size(920, 558);
             this.Controls.Add(this.tabControlCreationVoxelModel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(940, 600);
+            this.MinimumSize = new System.Drawing.Size(940, 597);
             this.Name = "FormAnalysis";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -6706,6 +7089,14 @@
         private System.Windows.Forms.NumericUpDown numericUpDownRatioRtoL;
         private System.Windows.Forms.CheckBox checkBoxVisualAnalysis;
         private System.Windows.Forms.CheckBox checkBoxMethod;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxLimitF;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxError;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator70;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxTypeTrim;
+        private System.Windows.Forms.CheckBox checkBoxFractalAnalysis;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxCountColumnForSave;
+        private System.Windows.Forms.CheckBox checkBoxAnalysisErrorForm;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSaveData;
         private System.Windows.Forms.DataGridViewTextBoxColumn NumLayer;
         private System.Windows.Forms.DataGridViewTextBoxColumn HeightLayer;
         private System.Windows.Forms.DataGridViewTextBoxColumn HeightPlaсement;
@@ -6741,6 +7132,23 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn AMeana;
         private System.Windows.Forms.DataGridViewTextBoxColumn AModa;
         private System.Windows.Forms.DataGridViewTextBoxColumn AMediana;
+        private System.Windows.Forms.DataGridViewButtonColumn Error;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EMinInterval;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EMaxInterval;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ERange;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EDispersion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ESigma;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EMean;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EKasim;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EKeks;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EKv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EMeana;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EModa;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EMediana;
+        private System.Windows.Forms.DataGridViewButtonColumn NzFull;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NzFullMinInterval;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NzFullMaxInterval;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NzFullRange;
     }
 }
 

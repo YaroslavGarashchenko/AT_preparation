@@ -18,7 +18,7 @@ namespace PreAddTech
         {
             InitializeComponent();
         }
-        string mainHelp = Application.StartupPath + @"\help\index.html";
+        string mainHelp = Application.StartupPath + @"\Help\index.html";
         private void FormHelp_Load(object sender, EventArgs e)
         {
             try

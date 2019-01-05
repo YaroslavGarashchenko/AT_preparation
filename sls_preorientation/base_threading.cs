@@ -16,5 +16,28 @@ namespace PreAddTech
         {
             return Environment.ProcessorCount;
         }
+
+        /// <summary>
+        /// Определение многоядерности процессора
+        /// </summary>
+        /// <returns>true - многоядерный, false - одноядерный</returns>
+        public bool MultiCore()
+        {
+            return CoreProsessor() != 1;
+        }
+        
+        /// <summary>
+        /// Неработающий метод 
+        /// </summary>
+        /// <param name="masiveObj"></param>
+        /// <param name="delProcessing"></param>
+        /// <returns></returns>
+        static object[] MultiProcessing(object[] masiveObj, Delegate delProcessing)
+        {
+            
+
+            return new object[10];
+        }
     }
+
 }

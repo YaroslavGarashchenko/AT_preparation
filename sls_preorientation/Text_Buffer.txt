@@ -1,4 +1,149 @@
-﻿            //resultStat_ 0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
+﻿List<object> gistParMassiveLayer = new List<object>();
+
+//Вывод данных на гистограмму распределения
+                    Series seriesStatisticalPar = new Series();
+                    Series seriesStatisticalPar2 = new Series();
+                    List<Stat_analysis.elementGist> gistParTemp = new List<Stat_analysis.elementGist>();
+
+                    gistParTemp = (List<Stat_analysis.elementGist>)gistParMassiveLayer[e.RowIndex];
+
+                    float SumInt = 0;
+                    float SumPar = 0;
+                    //Относительные величины
+                    for (int i = 0; i < gistParTemp.Count; i++)
+                    {
+                        SumPar += gistParTemp[i].Y;
+                    }
+                    //
+                    for (int i = 0; i < gistParTemp.Count; i++)
+                    {
+                        seriesStatisticalPar.Points.Add(
+                            new DataPoint(Math.Round((gistParTemp[i].Xmin + gistParTemp[i].Xmax) / 2, 2), gistParTemp[i].Y / SumPar));
+                        SumInt += gistParTemp[i].Y;
+                        seriesStatisticalPar2.Points.Add(
+                            new DataPoint(Math.Round((gistParTemp[i].Xmin + gistParTemp[i].Xmax) / 2, 2), SumInt / SumPar));
+                    }
+                    seriesStatisticalPar2.ChartArea =
+                    seriesStatisticalPar.ChartArea = "ChartArea1";
+                    seriesStatisticalPar2.ChartType =
+                    seriesStatisticalPar.ChartType = SeriesChartType.Column;
+                    formGistogram.chartIntegral.Palette =
+                    formGistogram.chartGistogram.Palette = ChartColorPalette.BrightPastel;
+
+                    formGistogram.chartGistogram.Series.Add(seriesStatisticalPar);
+                    formGistogram.chartIntegral.Series.Add(seriesStatisticalPar2);
+
+********************************************************************************
+        /// <summary>
+        /// Вывод формы со статистическим анализом данных в текущей колонке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridViewSetLayer_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == -1 || dataGridViewSetLayer.Rows.Count <= 3)
+                return;
+
+            float[] researchMassive = new float[dataGridViewSetLayer.Rows.Count];
+            //dataGridViewSetLayer
+            for (int i = 0; i < dataGridViewSetLayer.Rows.Count; i++)
+            {
+                 researchMassive[i] = float.Parse((string)dataGridViewSetLayer.Rows[i].Cells[e.ColumnIndex].Value);
+            }
+            FormAnalysisSteps analysisSteps = new FormAnalysisSteps();
+
+            foreach (float item in researchMassive)
+            {
+                analysisSteps.richTextBoxData.AppendText(item.ToString() + "\n");
+            }
+            analysisSteps.Activate();
+            analysisSteps.Show();
+        }
+
+2018/03/25****************************************************************************************************************************
+                int maxCountIteration = (int)(limitZmax / resolutionZ);
+                //Определение погрешности
+                for (int i = 0; i < maxCountIteration; i++)
+                {
+                    ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i++, coordinateResolutionZ.Count() - 1);
+
+                    SurfaceSection.AddRange(listSurfaceSectionAll.Where(
+                                            j => j.CoordinateSectionZ <= coordinateResolutionZ[i] &&
+                                                 j.CoordinateSectionZ >= coordinateResolutionZ[i] - stepMax1).ToList());
+
+                    for (int k = 0; k < SurfaceSection.Count; k++)
+                    {
+                    SurfaceSection[k].Error = Math.Abs(SurfaceSection[k].ZN) == 1 || SurfaceSection[k].ZN == 0 ? 0f :
+                                                        (coordinateResolutionZ[i] - SurfaceSection[k].CoordinateSectionZ) *
+                                                        (float)Math.Sqrt(1 - SurfaceSection[k].ZN * SurfaceSection[k].ZN);
+                    }
+                }
+**************************************************************************************************************************************
+                /*
+                if (threading.MultiCore())
+                {
+                    int ThreadsCount = threading.CoreProsessor();
+                    Thread[] threads = new Thread[ThreadsCount];
+                    //MessageBox.Show("Несколько ядер № = " + threading.CoreProsessor());
+
+                    List<base_stl>[] massiveListStl = new List<base_stl>[ThreadsCount];
+                    //Размер временных таблиц для каждого потока
+                    //первые таблицы
+                    int lengthListStlFirst = ListStl.Count / threading.CoreProsessor();
+
+                    //последняя таблица
+                    int lengthListStlLast = ListStl.Count - lengthListStlFirst * (ThreadsCount - 1);
+
+                    //Результат расчета - список треугольников с площадью и углом наклона
+                    List<surfaceSection>[] listSurfaceSection = new List<surfaceSection>[ThreadsCount];
+
+                    for (int i = 0; i < ThreadsCount; i++)
+                    {
+                        if (i < ThreadsCount - 1)
+                        { massiveListStl[i] = ListStl.Where(s => (s.Nom > i * lengthListStlFirst && s.Nom <= (i + 1) * lengthListStlFirst)).ToList<base_stl>(); }
+                        else
+                        { massiveListStl[i] = ListStl.Where(s => s.Nom > i * lengthListStlFirst).ToList<base_stl>(); }
+
+                    }
+                    //Перечисление массива должно выполняться отдельно
+                    int pmas = 0;
+
+                    for (int n = 0; n < ThreadsCount; n++)
+                    {
+                        //threads[j] = new Thread(new ThreadStart( proc.VariableStep(massiveListStl[j], coordinateSectionZ, resolution) ));
+
+                        threads[n] = new Thread(new ThreadStart(() =>
+                        {
+                            //listSurfaceSectionAll.AddRange(proc.VariableStep(massiveListStl[n], coordinateSectionZ, resolution));
+                            listSurfaceSection[pmas] = new List<surfaceSection>();
+                            listSurfaceSection[pmas].AddRange(proc.VariableStep(massiveListStl[pmas], coordinateSectionZ, resolution));
+                            pmas++;
+                            Thread.Sleep(100);
+                        }));
+                        
+                    }
+                    for (int k = 0; k < ThreadsCount; k++)
+                    {
+                        threads[k].Start();
+                    }
+                    for (int m = 0; m < ThreadsCount; m++)
+                    {
+                        threads[m].Join();
+                    }
+                    for (int i = 0; i < ThreadsCount; i++)
+                    {
+                        listSurfaceSectionAll.AddRange(listSurfaceSection[i]);
+                    }
+
+                }
+                else
+                {
+                    listSurfaceSectionAll = proc.VariableStep(ListStl, coordinateSectionZ, resolution);
+                }
+                */
+
+
+            //resultStat_ 0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
             for (int j = 0; j < (int)numericUpDownNumIntX.Value; j++)
             {
                 float minX = j * resultStat_X[0];

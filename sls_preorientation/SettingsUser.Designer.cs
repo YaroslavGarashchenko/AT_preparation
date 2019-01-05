@@ -183,5 +183,20 @@ namespace PreAddTech {
                 this["PositionResolution"] = value;
             }
         }
+        
+        /// <summary>
+        /// Многопоточная обработка данных
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Многопоточная обработка данных")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool Multithreading {
+            get {
+                return ((bool)(this["Multithreading"]));
+            }
+            set {
+                this["Multithreading"] = value;
+            }
+        }
     }
 }

@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Drawing;
 using MSExel = Microsoft.Office.Interop.Excel;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PreAddTech
 {
@@ -120,7 +122,7 @@ namespace PreAddTech
         /// <param name="Item1"></param>
         /// <param name="Item2"></param>
         /// <returns></returns>
-        public double AngleBetweenNormals(base_stl Item1, base_stl Item2)
+        public double AngleBetweenNormals(Base_stl Item1, Base_stl Item2)
         {
             double A1, B1, C1, A2, B2, C2;
             A1 = NormABC(Item1)[0];
@@ -130,7 +132,7 @@ namespace PreAddTech
             B2 = NormABC(Item2)[1];
             C2 = NormABC(Item2)[2];
             //cos fi
-            double fi = (A1*A2 + B1*B2 + C1*C2)/(Math.Sqrt((A1 * A1 + B1 * B1 + C1 * C1) * (A2 * A2 + B2 * B2 + C2 * C2)));
+            double fi = (A1 * A2 + B1 * B2 + C1 * C2) / (Math.Sqrt((A1 * A1 + B1 * B1 + C1 * C1) * (A2 * A2 + B2 * B2 + C2 * C2)));
             return fi;
         }
         /// <summary>
@@ -138,10 +140,10 @@ namespace PreAddTech
         /// </summary>
         /// <param name="Item1"></param>
         /// <returns></returns>
-        double[] NormABC(base_stl Item1)
+        double[] NormABC(Base_stl Item1)
         {
             double[] normABC = new double[3];
-            normABC[0] = (Item1.Y2 - Item1.Y1)*(Item1.Z3 - Item1.Z1) - (Item1.Y3 - Item1.Y1) * (Item1.Z2 - Item1.Z1);
+            normABC[0] = (Item1.Y2 - Item1.Y1) * (Item1.Z3 - Item1.Z1) - (Item1.Y3 - Item1.Y1) * (Item1.Z2 - Item1.Z1);
             normABC[1] = -1 * (Item1.X2 - Item1.X1) * (Item1.Z3 - Item1.Z1) - (Item1.X3 - Item1.X1) * (Item1.Z2 - Item1.Z1);
             normABC[2] = (Item1.X2 - Item1.X1) * (Item1.Y3 - Item1.Y1) - (Item1.X3 - Item1.X1) * (Item1.Y2 - Item1.Y1);
             return normABC;
@@ -149,7 +151,7 @@ namespace PreAddTech
         /// <summary>
         /// Проверка смежности треугольных граней
         /// </summary>
-        public bool Contiguity(base_stl Item1, base_stl Item2)
+        public bool Contiguity(Base_stl Item1, Base_stl Item2)
         {
             //Количество совпадающих вершин
             int vertexGeneral = 0;
@@ -166,12 +168,12 @@ namespace PreAddTech
                 (Item1.X3 == Item2.X3 && Item1.Y3 == Item2.Y3 && Item1.Z3 == Item2.Z3))
             { vertexGeneral++; }
 
-            return vertexGeneral == 2 ? true:false ;
+            return vertexGeneral == 2 ? true : false;
         }
         /// <summary>
         /// Количество смежных треугольных граней по вершинам (проверка рациональности модели)
         /// </summary>
-        public int ContiguityVertex(base_stl Item1, base_stl Item2)
+        public int ContiguityVertex(Base_stl Item1, Base_stl Item2)
         {
             //Количество совпадающих вершин
             int vertexGeneral = 0;
@@ -198,7 +200,7 @@ namespace PreAddTech
         /// <param name="G"></param>
         /// <param name="B"></param>
         /// <returns></returns>
-        public float[] ConvertRGBHSV (byte R, byte G, byte B)
+        public float[] ConvertRGBHSV(byte R, byte G, byte B)
         {
             float[] HSV = new float[3];
             return HSV;
@@ -208,9 +210,9 @@ namespace PreAddTech
         /// </summary>
         /// <param name="puthFileSTL">Путь к STL файлу</param>
         /// <returns></returns>
-        public List<base_stl> TranslationSTLtoList(string puthFileSTL)
+        public List<Base_stl> TranslationSTLtoList(string puthFileSTL)
         {
-            List<base_stl> ListStl = new List<base_stl>();
+            List<Base_stl> ListStl = new List<Base_stl>();
             //
             try
             {
@@ -224,7 +226,7 @@ namespace PreAddTech
                         for (uint ui = 0; ui < numTr; ui++)
                         {
                             Application.DoEvents();
-                            base_stl TrStl = new base_stl();
+                            Base_stl TrStl = new Base_stl();
                             // нормальный вектор
                             TrStl.XN = br.ReadSingle(); TrStl.YN = br.ReadSingle(); TrStl.ZN = br.ReadSingle();
                             // 1 вершина
@@ -251,12 +253,12 @@ namespace PreAddTech
         /// <summary>
         /// Список вершин
         /// </summary>
-        List<base_vertex> listVertex = new List<base_vertex>();
+        List<Base_vertex> listVertex = new List<Base_vertex>();
 
         /// <summary>
         /// Процедура перевода данных из List base_stl  в List base_vertex 
         /// </summary>
-        public List<object> TranslationSTLtoListVertex(List<base_stl> ListStl, ToolStripProgressBar ProgressBar)
+        public List<object> TranslationSTLtoListVertex(List<Base_stl> ListStl, ToolStripProgressBar ProgressBar)
         {
             List<object> listResult = new List<object>();
             //Номер вершины
@@ -265,9 +267,9 @@ namespace PreAddTech
             listVertex.Clear();
             for (int k = 0; k < ListStl.Count; k++)
             {
-                base_vertex tempVertex1 = new base_vertex() { X = ListStl[k].X1, Y = ListStl[k].Y1, Z = ListStl[k].Z1 };
-                base_vertex tempVertex2 = new base_vertex() { X = ListStl[k].X2, Y = ListStl[k].Y2, Z = ListStl[k].Z2 };
-                base_vertex tempVertex3 = new base_vertex() { X = ListStl[k].X3, Y = ListStl[k].Y3, Z = ListStl[k].Z3 };
+                Base_vertex tempVertex1 = new Base_vertex() { X = ListStl[k].X1, Y = ListStl[k].Y1, Z = ListStl[k].Z1 };
+                Base_vertex tempVertex2 = new Base_vertex() { X = ListStl[k].X2, Y = ListStl[k].Y2, Z = ListStl[k].Z2 };
+                Base_vertex tempVertex3 = new Base_vertex() { X = ListStl[k].X3, Y = ListStl[k].Y3, Z = ListStl[k].Z3 };
                 //Метка совпадения вершин
                 bool bVertex1 = false;
                 bool bVertex2 = false;
@@ -328,14 +330,14 @@ namespace PreAddTech
         /// <summary>
         /// Список вершин
         /// </summary>
-        List<base_vertex> listVertex2 = new List<base_vertex>();
+        List<Base_vertex> listVertex2 = new List<Base_vertex>();
 
         /// <summary>
         /// Процедура (второй вариант) перевода данных из List base_stl  в List base_vertex 
         /// </summary>
         /// <param name="ListStl"></param>
         /// <returns></returns>
-        public List<object> TranslationSTLtoListVertex2(List<base_stl> ListStl, ToolStripProgressBar ProgressBar)
+        public List<object> TranslationSTLtoListVertex2(List<Base_stl> ListStl, ToolStripProgressBar ProgressBar)
         {
             List<object> listResult = new List<object>();
             //Номер вершины
@@ -345,7 +347,7 @@ namespace PreAddTech
 
             for (int k = 0; k < ListStl.Count; k++)
             {
-            base_vertex tempVertex1 = new base_vertex();
+                Base_vertex tempVertex1 = new Base_vertex();
                 tempVertex1.X = ListStl[k].X1;
                 tempVertex1.Y = ListStl[k].Y1;
                 tempVertex1.Z = ListStl[k].Z1;
@@ -365,14 +367,14 @@ namespace PreAddTech
             int uniqueVoxCount = uniqueVox.Count();
             foreach (var item in uniqueVox)
             {
-                base_vertex tempVertex = new base_vertex();
+                Base_vertex tempVertex = new Base_vertex();
                 tempVertex.X = item.ToArray()[0].X;
                 tempVertex.Y = item.ToArray()[0].Y;
                 tempVertex.Z = item.ToArray()[0].Z;
                 tempVertex.Nom = nomVertex++;
                 listVertex2.Add(tempVertex);
-            for (int i = 0; i < ListStl.Count; i++)
-            {
+                for (int i = 0; i < ListStl.Count; i++)
+                {
                     if (tempVertex.X == ListStl[i].X1 && tempVertex.Y == ListStl[i].Y1 && tempVertex.Z == ListStl[i].Z1)
                     {
                         ListStl[i].NomV1 = tempVertex.Nom;
@@ -385,9 +387,9 @@ namespace PreAddTech
                     {
                         ListStl[i].NomV3 = tempVertex.Nom;
                     }
-            }
+                }
                 ProgressBarRefresh(ProgressBar, nomVertex, uniqueVoxCount);
-            }            
+            }
             listResult.Add(listVertex2);
             listResult.Add(ListStl);
 
@@ -402,8 +404,8 @@ namespace PreAddTech
         /// <param name="count">Общее количество объема данных</param>
         public void ProgressBarRefresh(ToolStripProgressBar ProgressBar, int i, int count)
         {
-            if(count != 0)
-            ProgressBar.Value = (int)(ProgressBar.Minimum + (ProgressBar.Maximum - ProgressBar.Minimum) * i / count);
+            if (count != 0)
+                ProgressBar.Value = (int)(ProgressBar.Minimum + (ProgressBar.Maximum - ProgressBar.Minimum) * i / count);
             Application.DoEvents();
         }
         //Углы поворота модели вокруг осей X и Y
@@ -425,7 +427,7 @@ namespace PreAddTech
             return new float[]{ (float)(X * Math.Cos(angleYrad) + Z * Math.Sin(angleYrad)),
                                 (float)((X * Math.Sin(angleYrad) - Z * Math.Cos(angleYrad)) * Math.Sin(angleXrad) +
                                 Y * Math.Cos(angleXrad)),
-                                (float)((-1*X * Math.Sin(angleYrad) + Z * Math.Cos(angleYrad)) * Math.Cos(angleXrad) + 
+                                (float)((-1*X * Math.Sin(angleYrad) + Z * Math.Cos(angleYrad)) * Math.Cos(angleXrad) +
                                 Y * Math.Sin(angleXrad))};
         }
 
@@ -439,7 +441,7 @@ namespace PreAddTech
         /// <param name="oldXmin">старая координата по оси X</param>
         /// <param name="oldYmin">старая координата по оси Y</param>
         /// <param name="oldZmin">старая координата по оси Z</param>
-        public List<base_vox> MoveVoxels(List<base_vox> voxModel, float newXmin, float newYmin, float newZmin, 
+        public List<base_vox> MoveVoxels(List<base_vox> voxModel, float newXmin, float newYmin, float newZmin,
                                float oldXmin, float oldYmin, float oldZmin,
                                    ToolStripProgressBar tempProgressBar)
         {
@@ -519,7 +521,7 @@ namespace PreAddTech
         /// <param name="G2">компонента G для макс.значения</param>
         /// <param name="B2">компонента B для макс.значения</param>
         /// <returns></returns>
-        public int[] ColorElementLine(int X, int Xmin, int Xmax, 
+        public int[] ColorElementLine(int X, int Xmin, int Xmax,
                                   int R1, int G1, int B1,
                                   int R2, int G2, int B2)
         {
@@ -570,6 +572,7 @@ namespace PreAddTech
             if (RGB[2] > 255) { RGB[2] = 255; }
             return RGB;
         }
+
         /// <summary>
         /// Точка пересечения плоскости с линией заданной двумя точками
         /// </summary>
@@ -584,11 +587,38 @@ namespace PreAddTech
         public PointF PlaneCrossLine(float X1, float Y1, float Z1, float X2, float Y2, float Z2, float Z0)
         {
             float t = (Z0 - Z1) / (Z2 - Z1);
-            PointF tempPoint = new PointF() { X = X1 + (X2 - X1) * t,
-                                              Y = Y1 + (Y2 - Y1) * t };
+            PointF tempPoint = new PointF()
+            {
+                X = X1 + (X2 - X1) * t,
+                Y = Y1 + (Y2 - Y1) * t
+            };
 
             return tempPoint;
         }
+
+        /// <summary>
+        /// Точка пересечения плоскости с линией заданной двумя точками
+        /// </summary>
+        /// <param name="X1">координата первой точки по оси X</param>
+        /// <param name="Y1">координата первой точки по оси Y</param>
+        /// <param name="Z1">координата первой точки по оси Z</param>
+        /// <param name="X2">координата второй точки по оси X</param>
+        /// <param name="Y2">координата второй точки по оси Y</param>
+        /// <param name="Z2">координата второй точки по оси Z</param>
+        /// <param name="Z0">координита плоскости по оси Z</param>
+        /// <returns></returns>
+        public PointF PlaneCrossLine(Point3D p1, Point3D p2, float Z0)
+        {
+            float t = (Z0 - p1.Z) / (p2.Z - p1.Z);
+            PointF tempPoint = new PointF()
+            {
+                X = p1.X + (p2.X - p1.X) * t,
+                Y = p1.Y + (p2.Y - p1.Y) * t
+            };
+
+            return tempPoint;
+        }
+
         /// <summary>
         /// Расстояние между двумя точками
         /// </summary>
@@ -599,6 +629,40 @@ namespace PreAddTech
         {
             return (float)Math.Sqrt((P1.X - P2.X) * (P1.X - P2.X) + (P1.Y - P2.Y) * (P1.Y - P2.Y));
         }
+
+        /// <summary>
+        /// Расстояние между двумя точками
+        /// </summary>
+        /// <param name="P1">Первая точка</param>
+        /// <param name="P2">Вторая точка</param>
+        /// <returns></returns>
+        public float Length(float P1X, float P1Y, float P2X, float P2Y)
+        {
+            return (float)Math.Sqrt((P1X - P2X) * (P1X - P2X) + (P1Y - P2Y) * (P1Y - P2Y));
+        }
+
+        /// <summary>
+        /// Расстояние между двумя точками
+        /// </summary>
+        /// <param name="P1">Первая точка</param>
+        /// <param name="P2">Вторая точка</param>
+        /// <returns></returns>
+        public float Length(float P1X, float P1Y, float P1Z, float P2X, float P2Y, float P2Z)
+        {
+            return (float)Math.Sqrt((P1X - P2X) * (P1X - P2X) + (P1Y - P2Y) * (P1Y - P2Y) + (P1Z - P2Z) * (P1Z - P2Z));
+        }
+
+        /// <summary>
+        /// Расстояние между двумя точками
+        /// </summary>
+        /// <param name="P1">Первая точка</param>
+        /// <param name="P2">Вторая точка</param>
+        /// <returns></returns>
+        public float Length(Point3D P1, Point3D P2)
+        {
+            return (float)Math.Sqrt((P1.X - P2.X) * (P1.X - P2.X) + (P1.Y - P2.Y) * (P1.Y - P2.Y) + (P1.Z - P2.Z) * (P1.Z - P2.Z));
+        }
+
         /// <summary>
         /// Площадь многоугольника (сумма площадей по двум вершинам ребер)
         /// </summary>
@@ -610,7 +674,7 @@ namespace PreAddTech
             //return Math.Abs((P1.X + P2.X) * (P1.Y - P2.Y) / 2);
             return (P1.X + P2.X) * (P1.Y - P2.Y) / 2;
         }
-        
+
         /// <summary>
         /// Барицентр (центр тяжести) многоугольника по списку координат вершин ребер
         /// </summary>
@@ -635,7 +699,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="ListStl"></param>
         /// <returns>Массив: 0-minZ, 1-maxZ, 2-minX, 3-maxX, 4-minY, 5-maxY</returns>
-        public float[] LimitModelOld(List<base_stl> ListStl)
+        public float[] LimitModelOld(List<Base_stl> ListStl)
         {
             float[] limits = new float[6] { float.MaxValue, float.MinValue,
                                             float.MaxValue, float.MinValue,
@@ -674,11 +738,11 @@ namespace PreAddTech
         /// </summary>
         /// <param name="ListStl"></param>
         /// <returns>Массив: 0-minZ, 1-maxZ, 2-minX, 3-maxX, 4-minY, 5-maxY</returns>
-        public float[] LimitModel(List<base_stl> ListStl)
+        public float[] LimitModel(List<Base_stl> ListStl)
         {
-            float[] tempZ = new float[3*ListStl.Count];
-            float[] tempX = new float[3*ListStl.Count];
-            float[] tempY = new float[3*ListStl.Count];
+            float[] tempZ = new float[3 * ListStl.Count];
+            float[] tempX = new float[3 * ListStl.Count];
+            float[] tempY = new float[3 * ListStl.Count];
             //
             for (int i = 0; i < ListStl.Count; i++)
             {
@@ -762,7 +826,7 @@ namespace PreAddTech
                         //    goto Finish;
                     }
                 }
-            //Finish: numCoincidence = 0;
+                //Finish: numCoincidence = 0;
             }
 
             //Номер контура
@@ -780,13 +844,13 @@ namespace PreAddTech
                     //Поиск номера
                     while (searchNum != finishNum && i++ < listE.Count())
                     {
-                        if ( searchNum == -1) break;
+                        if (searchNum == -1) break;
                         /*
                         if (listE[searchNum].numAdjacent1 == current + 1)
                         {
                         */
-                            listE[searchNum].iContour = numContour;
-                            searchNum = listE[searchNum].numAdjacent2 - 1;
+                        listE[searchNum].iContour = numContour;
+                        searchNum = listE[searchNum].numAdjacent2 - 1;
                         /*
                     }*/
                         /*
@@ -797,7 +861,7 @@ namespace PreAddTech
                             searchNum = listE[searchNum].numAdjacent1 - 1;
                         }
                         */
-                        if (searchNum == 0 ) break;
+                        if (searchNum == 0) break;
                     }
                     listE[finishNum].iContour = numContour;
                 }
@@ -825,7 +889,7 @@ namespace PreAddTech
                     if (subList[i].Count() <= 2)
                         numBug++;
                 }
-                if (numContour-numBug <= 1)
+                if (numContour - numBug <= 1)
                 {
                     return listE;
                 }
@@ -833,7 +897,7 @@ namespace PreAddTech
                 //Площадь отдельных контуров
                 float[] sumContour = new float[numContour];
                 //метка внешнего контура
-                bool[] outContour = new bool[numContour];   
+                bool[] outContour = new bool[numContour];
                 //
                 for (int i = 0; i < numContour; i++)
                 {
@@ -846,7 +910,7 @@ namespace PreAddTech
                         for (int j = 0; j < listE.Count(); j++)
                         {
                             if (listE[j].iContour == i)
-                            listE[j].insideOrOuterContour = false;
+                                listE[j].insideOrOuterContour = false;
                         }
                     }
                 }
@@ -888,7 +952,7 @@ namespace PreAddTech
         /// Сохранение данных DataGridView в XLS файл
         /// </summary>
         /// <param name="dataGridView"></param>
-        public void SaveDataGridInXlc(DataGridView dataGridView)
+        public void SaveDataGridInXlc(DataGridView dataGridView, ToolStripProgressBar tempProgressBar, int columnSave)
         {
             try
             {
@@ -899,10 +963,13 @@ namespace PreAddTech
 
                 for (int j = 0; j < dataGridView.ColumnCount; j++)
                     ExcelApp.Cells[1, j + 1] = dataGridView.Columns[j].HeaderText;
+                columnSave = columnSave < dataGridView.ColumnCount ? columnSave : dataGridView.ColumnCount;
                 //
                 for (int i = 0; i < dataGridView.Rows.Count; i++)
                 {
-                    for (int j = 0; j < dataGridView.ColumnCount; j++)
+                    ProgressBarRefresh(tempProgressBar, i, dataGridView.Rows.Count);
+
+                    for (int j = 0; j < columnSave; j++)
                     {
                         ExcelApp.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value;
                     }
@@ -923,9 +990,11 @@ namespace PreAddTech
                 //
                 for (int i = 0; i < dataGridView.Rows.Count; i++)
                 {
-                    for (int j = 0; j < dataGridView.ColumnCount; j++)
+                    ProgressBarRefresh(tempProgressBar, i, dataGridView.Rows.Count);
+
+                    for (int j = 0; j < columnSave; j++)
                     {
-                        if ( dataGridView.Rows[i].Cells[j].Value != null )
+                        if (dataGridView.Rows[i].Cells[j].Value != null)
                         {
                             clipboardTable += dataGridView.Rows[i].Cells[j].Value.ToString();
                         }
@@ -938,7 +1007,7 @@ namespace PreAddTech
                     clipboardTable += "\n";
                 }
                 Clipboard.SetText(clipboardTable);
-                MessageBox.Show( "Данные таблицы помещены в буфер обмена. \n\n" + err.Message,
+                MessageBox.Show("Данные таблицы помещены в буфер обмена. \n\n" + err.Message,
                                  "Проблемы с приложением MS Excel");
             }
         }
@@ -950,7 +1019,7 @@ namespace PreAddTech
         /// <param name="P3">Третяя вершина</param>
         /// <param name="Z">Координата расположения плоскости по оси Z</param>
         /// <returns></returns>
-        public PointF[] ElementOfCurveOld (Point3D P1, Point3D P2, Point3D P3, float Z)
+        public PointF[] ElementOfCurveOld(Point3D P1, Point3D P2, Point3D P3, float Z)
         {
             /*
              base_elementOfCurve tempElement = new base_elementOfCurve();
@@ -1118,7 +1187,7 @@ namespace PreAddTech
             float[] MS = new float[CountFractalAnalysis]; // Мера для метода клеток
 
             //Клеточный метод определения фрактальной размерности 
-            if ( fractalMethod == FractalMethod.cell || fractalMethod == FractalMethod.scale )
+            if (fractalMethod == FractalMethod.cell || fractalMethod == FractalMethod.scale)
             {
                 ResultFractalAnalysis.FractalMethod = FractalMethod.cell;
                 //Мин. и макс. координаты контуров в сечении
@@ -1334,7 +1403,7 @@ namespace PreAddTech
             }
             return ResultFractalAnalysis;
         }
-        
+
         /// <summary>
         /// Определение длины отрезка контура
         /// </summary>
@@ -1345,7 +1414,7 @@ namespace PreAddTech
         /// <returns></returns>
         float LengthContourFromStartToPoint(List<base_elementOfCurve> listE, int numElement1, int numElement2, PointF EndPoint)
         {
-            if (listE.Count == 0 ) return 0f;
+            if (listE.Count == 0) return 0f;
             //if ( numElement1 <= 0 || numElement2 <= 0) return Length(listE[numElement2].point1, EndPoint);
             float lengthContour = 0;
             int numElement = numElement1;
@@ -1368,7 +1437,7 @@ namespace PreAddTech
         /// <returns>true - точка внутри отрезка</returns>
         bool LocatePointInLine(PointF linePoint1, PointF linePoint2, PointF Point3)
         {
-            float length13 = (float)Math.Sqrt((linePoint1.X - Point3.X) * (linePoint1.X - Point3.X) + 
+            float length13 = (float)Math.Sqrt((linePoint1.X - Point3.X) * (linePoint1.X - Point3.X) +
                                               (linePoint1.Y - Point3.Y) * (linePoint1.Y - Point3.Y));
             float length12 = (float)Math.Sqrt((linePoint1.X - linePoint2.X) * (linePoint1.X - linePoint2.X) +
                                               (linePoint1.Y - linePoint2.Y) * (linePoint1.Y - linePoint2.Y));
@@ -1395,7 +1464,7 @@ namespace PreAddTech
 
             float[] pointsX = new float[2] { l1.X, l2.X };
             //Случаи попадания горизонтальных линий
-            if ( l1.Y == l2.Y )
+            if (l1.Y == l2.Y)
             {
                 if (pointsX.Min() <= s2.X && pointsX.Max() >= s1.X)
                 {
@@ -1404,9 +1473,9 @@ namespace PreAddTech
                 return false;
             }
 
-            float[] pointsY = new float[2] { l1.Y, l2.Y };            
+            float[] pointsY = new float[2] { l1.Y, l2.Y };
             //Случаи попадания вертикальных линий
-            if ( l1.X == l2.X )
+            if (l1.X == l2.X)
             {
 
                 if (pointsY.Min() <= s2.Y && pointsY.Max() >= s1.Y)
@@ -1416,8 +1485,8 @@ namespace PreAddTech
                 return false;
             }
             //Случаи полного попадания отрезка
-            if ( l1.X <= s2.X && l1.X >= s1.X && l1.Y <= s2.Y && l1.Y >= s1.Y &&
-                 l2.X <= s2.X && l2.X >= s1.X && l2.Y <= s2.Y && l2.Y >= s1.Y )
+            if (l1.X <= s2.X && l1.X >= s1.X && l1.Y <= s2.Y && l1.Y >= s1.Y &&
+                 l2.X <= s2.X && l2.X >= s1.X && l2.Y <= s2.Y && l2.Y >= s1.Y)
             {
                 return true;
             }
@@ -1452,6 +1521,366 @@ namespace PreAddTech
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Создание списка фрагментов трансформированных треугольников
+        /// </summary>
+        /// <param name="ListStl">Список треугольников</param>
+        /// <param name="coordinateSectionZ">Массив координат слоев по оси Z</param>
+        /// <param name="step">Величина шага</param>
+        /// <returns></returns>
+        public List<SurfaceSection> ListTTriangle(List<Base_stl> ListStl, List<float> coordinateSectionZ,
+                                                 float step, ToolStripProgressBar toolStripProgressBarLayerAnalysis)
+        {
+            List<SurfaceSection> tempElementSection = new List<SurfaceSection>();
+            List<TransformedTriangle> listTransformedTriangle = new List<TransformedTriangle>();
+
+            //Многопоточная обработка
+            if (SettingsUser.Default.Multithreading && new Base_threading().MultiCore())
+            {
+                int N = ListStl.Count;
+
+                Parallel.For(0, N, i =>
+                 {
+                     listTransformedTriangle.AddRange((new SurfaceSection()).TransformTriangle(
+                                                      new List<Point3D>() {
+                                                      new Point3D() { X = ListStl[i].X1, Y = ListStl[i].Y1, Z = ListStl[i].Z1 },
+                                                      new Point3D() { X = ListStl[i].X2, Y = ListStl[i].Y2, Z = ListStl[i].Z2 },
+                                                      new Point3D() { X = ListStl[i].X3, Y = ListStl[i].Y3, Z = ListStl[i].Z3 }
+                                                      },
+                                                      ListStl[i].ZN));
+                 });
+            }
+            else
+            {
+                for (int i = 0; i < ListStl.Count; i++)
+                {
+                    SurfaceSection surface = new SurfaceSection();
+                    List<Point3D> pointSTL0 = new List<Point3D>();
+                    pointSTL0.Add(new Point3D() { X = ListStl[i].X1, Y = ListStl[i].Y1, Z = ListStl[i].Z1 });
+                    pointSTL0.Add(new Point3D() { X = ListStl[i].X2, Y = ListStl[i].Y2, Z = ListStl[i].Z2 });
+                    pointSTL0.Add(new Point3D() { X = ListStl[i].X3, Y = ListStl[i].Y3, Z = ListStl[i].Z3 });
+
+                    listTransformedTriangle.AddRange(surface.TransformTriangle(pointSTL0, ListStl[i].ZN));
+                }
+            }
+            int iteration = 0;
+
+            //Рассечение 3D-модели плоскостями
+            //float Section = 0; //Площадь
+            foreach (var item in listTransformedTriangle)
+            {
+                ProgressBarRefresh(toolStripProgressBarLayerAnalysis, iteration++, listTransformedTriangle.Count() - 1);
+
+                if (item != null)
+                    foreach (var itemS in coordinateSectionZ.Where(u => u >= (item.Z1 - step) && u <= item.Z2))
+                    {
+                        SurfaceSection tempElement = new SurfaceSection()
+                        {
+                            CoordinateSectionZ = itemS,
+                            Str = SurfaceAreaSection(item, itemS, step),
+                            ZN = (float)(Math.Acos(item.ZN) / Math.PI * 180)
+                        };
+                        tempElementSection.Add(tempElement);
+                    }
+            }
+            return tempElementSection;
+        }
+
+        /// <summary>
+        /// Площадь треугольной грани рассеченной двумя плоскостями
+        /// </summary>
+        /// <param name="pointSTL">Список вершин треугольника</param>
+        /// <param name="coordinateSectionZ"></param>
+        /// <param name="step"></param>
+        /// <returns></returns>
+        static float SurfaceAreaSection(TransformedTriangle transformedTriangle, float coordinateSectionZ, float step)
+        {
+            float area = 0f;
+
+            //Треугольник полностью в слое
+            if (transformedTriangle.Z1 >= coordinateSectionZ && transformedTriangle.Z2 <= coordinateSectionZ + step)
+            {
+                area = transformedTriangle.S == 0f ? (transformedTriangle.Z2 - transformedTriangle.Z1) *
+                       (new float[] { transformedTriangle.H1, transformedTriangle.H2 }).Max() / 2 :
+                       transformedTriangle.S;
+                return area;
+            }
+
+            //Треугольник снизу и сверху слоя (слой внитри)
+            if (transformedTriangle.Z1 < coordinateSectionZ && transformedTriangle.Z2 > coordinateSectionZ + step)
+            {
+                area = step * (transformedTriangle.H1 +
+                                (transformedTriangle.H2 - transformedTriangle.H1) *
+                                (coordinateSectionZ + step / 2 - transformedTriangle.Z1) /
+                                (transformedTriangle.Z2 - transformedTriangle.Z1));
+                return area;
+            }
+
+            //Треугольник частично в слое (снизу, вершина 3 попадает в слой)
+            if (transformedTriangle.Z2 >= coordinateSectionZ && transformedTriangle.Z2 <= coordinateSectionZ + step)
+            {
+                area = (transformedTriangle.Z2 - coordinateSectionZ) *
+                                    (transformedTriangle.H1 +
+                                    (transformedTriangle.H2 - transformedTriangle.H1) *
+                                    (transformedTriangle.Z2 - transformedTriangle.Z1 - (transformedTriangle.Z2 - coordinateSectionZ) / 2) /
+                                    (transformedTriangle.Z2 - transformedTriangle.Z1));
+                return area;
+            }
+
+            //Треугольник частично в слое (сверху)
+            if (transformedTriangle.Z1 >= coordinateSectionZ && transformedTriangle.Z1 <= coordinateSectionZ + step)
+            {
+                area = (coordinateSectionZ + step - transformedTriangle.Z1) *
+                                    (transformedTriangle.H1 +
+                                    (transformedTriangle.H2 - transformedTriangle.H1) *
+                                    ((coordinateSectionZ + step - transformedTriangle.Z1) / 2) /
+                                    (transformedTriangle.Z2 - transformedTriangle.Z1));
+                return area;
+            }
+            return area;
+        }
+
+        /// <summary>
+        /// Минимальный угол отклонения нормали от оси Z в сечении (стратегия построения с переменным шагом)
+        /// </summary>
+        /// <param name="ListStl"></param>
+        /// <param name="coordinateSectionZ"></param>
+        /// <returns></returns>
+        public float MinAngleZNormalsInSection(List<Base_stl> ListStl, float coordinateSectionZ)
+        {
+            float minAngle = 90;
+            foreach (var item in ListStl)
+            {
+                List<Point3D> pointSTL0 = new List<Point3D>();
+                List<Point3D> pointSTL = new List<Point3D>();
+                pointSTL0.Add(new Point3D() { X = item.X1, Y = item.Y1, Z = item.Z1 });
+                pointSTL0.Add(new Point3D() { X = item.X2, Y = item.Y2, Z = item.Z2 });
+                pointSTL0.Add(new Point3D() { X = item.X3, Y = item.Y3, Z = item.Z3 });
+
+                pointSTL = pointSTL0.OrderBy(point => point.Z).ToList<Point3D>();
+
+                // пересечение треугольной грани участвующей в формировании контура
+                if (pointSTL[0].Z <= coordinateSectionZ && coordinateSectionZ < pointSTL[2].Z && Math.Abs(item.ZN) != 1)
+                {
+                    float tempAngle = 90 - (float)Math.Abs(90 - Math.Acos(item.ZN) / Math.PI * 180);
+                    minAngle = minAngle < tempAngle ? minAngle : tempAngle;
+                }
+            }
+
+            return minAngle;
+        }
+
+        /// <summary>
+        /// Создание списка шагов построения по стратегии с переменным шагом (упрощенный расчет)
+        /// </summary>
+        /// <param name="ListStl">Список треугольников</param>
+        /// <param name="errorMax1">Максимальная погрешность формы</param>
+        /// <param name="limitZmax">Наибольшая координата 3D-модели</param>
+        /// <param name="stepMin1">Минимальный шаг построения</param>
+        /// <param name="stepMax1">Максимальный шаг построения</param>
+        /// <param name="coordinateSectionZ">Список координат сечений модели по оси Z</param>
+        /// <param name="toolStripProgressBarLayerAnalysis">Обновление панели прогресса</param>
+        /// <returns>Список шагов построения</returns>
+        public List<float> ListStep(List<Base_stl> ListStl, float errorMax1, float limitZmax, float stepMin1, float stepMax1,
+                                    List<float> coordinateSectionZ, ToolStripProgressBar toolStripProgressBarLayerAnalysis)
+        {
+            List<float> listStep = new List<float>();
+            int iteration = 0;
+
+            while (coordinateSectionZ[coordinateSectionZ.Count - 1] < limitZmax - stepMin1)
+            {
+                ProgressBarRefresh(toolStripProgressBarLayerAnalysis, iteration++, coordinateSectionZ.Count() - 1);
+
+                float minAngle = MinAngleZNormalsInSection(ListStl, coordinateSectionZ[coordinateSectionZ.Count - 1]);
+                float tempStep = stepMin1;
+                if (minAngle == 0) tempStep = stepMin1;
+                else if (minAngle == 90) tempStep = stepMax1;
+                else
+                {
+                    tempStep = errorMax1 / (float)Math.Cos(Math.PI * minAngle / 180);
+                    if (float.TryParse(SettingsUser.Default.PositionResolution.Replace('.', ','), out float resolution))
+                    { tempStep = resolution * (float)Math.Round(tempStep / resolution); }
+                    if (tempStep < stepMin1) tempStep = stepMin1;
+                    if (stepMax1 < tempStep) tempStep = stepMax1;
+                }
+                coordinateSectionZ.Add(coordinateSectionZ[coordinateSectionZ.Count - 1] + tempStep);
+                listStep.Add(tempStep);
+            }
+            listStep.Add(stepMin1);
+
+            return listStep;
+        }
+
+        /// <summary>
+        /// Создание списка шагов построения по стратегии с переменным шагом (расчет по сечениям дискретности)
+        /// </summary>
+        /// <param name="ListStl">Список треугольников</param>
+        /// <param name="errorMax1">Максимальная погрешность формы</param>
+        /// <param name="limitZmax">Наибольшая координата 3D-модели</param>
+        /// <param name="stepMin1">Минимальный шаг построения</param>
+        /// <param name="stepMax1">Максимальный шаг построения</param>
+        /// <param name="coordinateSectionZ">Список координат сечений модели по оси Z</param>
+        /// <param name="toolStripProgressBarLayerAnalysis">Обновление панели прогресса</param>
+        /// <returns>Список шагов построения</returns>
+        public List<float[]> ListStepByResolution(List<Base_stl> ListStl, float errorMax1, float limitZmin, float limitZmax, float stepMin1,
+                                                float stepMax1, List<float> coordinateResolutionZ, List<SurfaceSection> listSurfaceSectionAll,
+                                                ToolStripProgressBar toolStripProgressBarLayerAnalysis, float resolutionZ, TrimHistogram trim,
+                                                float volumTrim)
+        {
+            List<float[]> listStep = new List<float[]>();
+            //Первая координата
+            List<float> listcoordinateZ = new List<float>();
+            listcoordinateZ.Add(limitZmin);
+            int iteration = 0;
+            int maxIteration = (int)((limitZmax - limitZmin) / stepMin1);
+            float nextCoordinateZ = limitZmin;
+
+            while (listcoordinateZ[listcoordinateZ.Count - 1] + stepMin1 < limitZmax)
+            {
+                ProgressBarRefresh(toolStripProgressBarLayerAnalysis, iteration++, maxIteration);
+                //Миним. координата слоя
+                float minZtemp = listcoordinateZ[listcoordinateZ.Count - 1];
+                //Массив исходных данных для расчета
+                List<SurfaceSection> SurfaceSection = listSurfaceSectionAll.Where(
+                                            j => j.CoordinateSectionZ <= minZtemp + stepMax1 &&
+                                                 j.CoordinateSectionZ >= minZtemp).OrderBy(o => o.ZN).ToList();
+                if (trim != TrimHistogram.no)
+                {
+                    //Площадь усечения поверхности в слое
+                    float surfaceTrim = SurfaceSection.Sum(s => s.Str) * volumTrim / 100;
+                    int leftTrim = 0;
+                    int rightTrim = 0;
+                    float tempSum = 0;
+                    //Количество элементов для удаления слева интервала
+                    if (trim == TrimHistogram.leftTrim)
+                    {
+                        for (int i = 0; i < SurfaceSection.Count(); i++)
+                        {
+                            tempSum += SurfaceSection[i].Str;
+                            if (tempSum >= surfaceTrim) { leftTrim = i; break; }
+                        }
+                    }
+                    //Количество элементов для удаления справа интервала
+                    else if (trim == TrimHistogram.rightTrim)
+                    {
+                        for (int i = SurfaceSection.Count() - 1; i > 0; i--)
+                        {
+                            tempSum += SurfaceSection[i].Str;
+                            if (tempSum >= surfaceTrim) { rightTrim = i; break; }
+                        }
+                    }
+                    //Количество элементов для удаления c обоих сторон интервала
+                    else if (trim == TrimHistogram.allTrim)
+                    {
+                        for (int i = 0; i < SurfaceSection.Count(); i++)
+                        {
+                            tempSum += SurfaceSection[i].Str;
+                            if (tempSum >= surfaceTrim / 2) { leftTrim = i; break; }
+                        }
+                        tempSum = 0;
+                        for (int i = SurfaceSection.Count() - 1; i > 0; i--)
+                        {
+                            tempSum += SurfaceSection[i].Str;
+                            if (tempSum >= surfaceTrim / 2) { rightTrim = i; break; }
+                        }
+                    }
+                    if (rightTrim != 0)
+                    {
+                        int endDelete = SurfaceSection.Count - rightTrim; //Количество удаляемых элементов
+                        SurfaceSection.RemoveRange(rightTrim, endDelete);
+                    }
+                    SurfaceSection.RemoveRange(0, leftTrim);
+                }
+                for (int k = 0; k < SurfaceSection.Count; k++)
+                {
+                    SurfaceSection[k].Error = SurfaceSection[k].ZN == 0 || SurfaceSection[k].ZN == 180 ? 0f :
+                                              (SurfaceSection[k].CoordinateSectionZ - minZtemp) *
+                                              (float)Math.Abs(Math.Cos(Math.PI * SurfaceSection[k].ZN / 180));
+                }
+                //Определение шагов построения
+                if (SurfaceSection.Where(z => z.CoordinateSectionZ > listcoordinateZ[listcoordinateZ.Count - 1] &&
+                                              z.CoordinateSectionZ <= listcoordinateZ[listcoordinateZ.Count - 1] + stepMax1 &&
+                                              z.Error > errorMax1).Count() == 0)
+                {
+                    nextCoordinateZ = listcoordinateZ[listcoordinateZ.Count - 1] + stepMax1 > limitZmax ?
+                                      listcoordinateZ[listcoordinateZ.Count - 1] + stepMin1 > limitZmax ?
+                                      listcoordinateZ[listcoordinateZ.Count - 1] + stepMin1 : limitZmax
+                                      :
+                                      listcoordinateZ[listcoordinateZ.Count - 1] + stepMax1;
+                }
+                else
+                {
+                    nextCoordinateZ = SurfaceSection.Where(z => z.CoordinateSectionZ > listcoordinateZ[listcoordinateZ.Count - 1] &&
+                                                                z.CoordinateSectionZ <= listcoordinateZ[listcoordinateZ.Count - 1] + stepMax1 &&
+                                                                z.Error > errorMax1).
+                                                                Min(m => m.CoordinateSectionZ) - resolutionZ;
+                    nextCoordinateZ = nextCoordinateZ < listcoordinateZ[listcoordinateZ.Count - 1] + stepMin1 ?
+                                      listcoordinateZ[listcoordinateZ.Count - 1] + stepMin1 :
+                                      nextCoordinateZ > listcoordinateZ[listcoordinateZ.Count - 1] + stepMax1 ?
+                                      listcoordinateZ[listcoordinateZ.Count - 1] + stepMax1 : nextCoordinateZ;
+                }
+                listcoordinateZ.Add(nextCoordinateZ);
+            }
+            for (int i = 0; i < listcoordinateZ.Count() - 1; i++)
+            {   // [0] - Шаг построения, [1] - Координаты слоев
+                listStep.Add(new float[] { listcoordinateZ[i + 1] - listcoordinateZ[i], listcoordinateZ[i] });
+            }
+            return listStep;
+        }
+        /// <summary>
+        /// Корректировка последних слоев
+        /// </summary>
+        /// <param name="limitZmax">Максимальная координата изделия по оси Z</param>
+        /// <param name="stepMin1">Минимальный шаг построения</param>
+        /// <param name="stepMax1">Максимальный шаг построения</param>
+        /// <param name="coordinateSectionZ">Список координат слоев</param>
+        /// <param name="listStep">Список шагов построения</param>
+        public void CorrectFinishLayering (float limitZmax, float stepMin1, float stepMax1, 
+                                           List<float> coordinateSectionZ, List<float> listStepSectionZ)
+        {
+
+        }
+        
+        /// <summary>
+        /// Создание списка трансформированных треугольников с информацией о величине погрешности и площади участка грани
+        /// </summary>
+        /// <param name="ListStl"></param>
+        /// <param name="coordinateSectionZ"></param>
+        /// <returns></returns>
+        public List<List<SurfaceSection>> MassiveErrorSurface(List<Base_stl> ListStl, List<float> coordinateSectionZ,
+                                                                   float resolutionZ, ToolStripProgressBar progressBarAnalysis)
+        {
+            List<SurfaceSection> listSurface = ListTTriangle(ListStl, coordinateSectionZ, resolutionZ, progressBarAnalysis);
+            List<List<SurfaceSection>> result = new List<List<SurfaceSection>>();
+            for (int z = 0; z < coordinateSectionZ.Count(); z++)
+            {
+                ProgressBarRefresh(progressBarAnalysis, z, coordinateSectionZ.Count()-1);
+                float zmax;
+                List<SurfaceSection> tempSurface = new List<SurfaceSection>();
+                tempSurface = listSurface.Where(S => S.CoordinateSectionZ == coordinateSectionZ[z]).ToList<SurfaceSection>();
+                if (z < coordinateSectionZ.Count() - 1)
+                {
+                    //tempSurface = listSurface.Where(S => S.CoordinateSectionZ >= coordinateSectionZ[z] &&
+                    //                                  S.CoordinateSectionZ < coordinateSectionZ[z + 1]).ToList<SurfaceSection>();
+                    zmax = coordinateSectionZ[z + 1];
+                }
+                else
+                {
+                    //tempSurface = listSurface.Where(S => S.CoordinateSectionZ >= coordinateSectionZ[z]).ToList<SurfaceSection>();
+                    zmax = ListStl.Max(stl => stl.MaxZ());
+                }
+                int kmax = tempSurface.Count;
+                for (int k = 0; k < kmax; k++)
+                {
+                    tempSurface[k].Error = tempSurface[k].ZN == 0 || tempSurface[k].ZN == 180 ? 0f :
+                                               Math.Abs((tempSurface[k].CoordinateSectionZ - zmax) *
+                                               (float)Math.Cos(Math.PI * tempSurface[k].ZN / 180));
+                }
+                result.Add(tempSurface);
+            }
+            return result;
         }
     }
 }

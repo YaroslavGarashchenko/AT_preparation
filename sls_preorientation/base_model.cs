@@ -17,7 +17,7 @@ namespace PreAddTech
         /// <summary>
         /// Список граней
         /// </summary>
-        public List<base_stl> Stl { get; set; }
+        public List<Base_stl> Stl { get; set; }
         /// <summary>
         /// Список вокселей
         /// </summary>
@@ -41,7 +41,7 @@ namespace PreAddTech
         /// <summary>
         /// Список вершин
         /// </summary>
-        public List<base_vertex> Vertexs { get; set; }
+        public List<Base_vertex> Vertexs { get; set; }
         /// <summary>
         /// Исходный размер модели по оси X
         /// </summary>
