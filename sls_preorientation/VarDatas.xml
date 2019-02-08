@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Variants>
+  <Variant id="1">
+    <check>false</check>
+    <number>1</number>
+    <group>1</group>
+    <name></name>
+    <path></path>
+    <selectAnalyse></selectAnalyse>
+    <resultAnalyse></resultAnalyse>
+    <dataAnalyse></dataAnalyse>
+    <dateTime>2018/07/22; 16:59</dateTime>
+    <comment>Расчет 1</comment>
+    <history></history>
+  </Variant>
+  <Variant id="2">
+    <check>false</check>
+    <number>2</number>
+    <group>1</group>
+    <name></name>
+    <path></path>
+    <selectAnalyse></selectAnalyse>
+    <resultAnalyse></resultAnalyse>
+    <dataAnalyse></dataAnalyse>
+    <dateTime>2018/07/22; 16:59</dateTime>
+    <comment>Расчет 2</comment>
+    <history></history>
+  </Variant>
+  <Variant id="3">
+    <check>false</check>
+    <number>3</number>
+    <group>2</group>
+    <name></name>
+    <path></path>
+    <resultAnalyse></resultAnalyse>
+    <dataAnalyse></dataAnalyse>
+    <dateTime>2018/07/22; 17:00</dateTime>
+    <comment>Расчет 3</comment>
+    <history></history>
+  </Variant>
+</Variants>

@@ -35,5 +35,8 @@
     <Setting Name="PositionResolution" Type="System.String" Scope="User">
       <Value Profile="(Default)">0.01</Value>
     </Setting>
+    <Setting Name="Multithreading" Description="Многопоточная обработка данных" GenerateDefaultValueInCode="false" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Text;
+using System.Drawing;
+using System.Linq;
+using System.Collections.Generic;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PreAddTech
 {
     /// <summary>
     /// класс описания треугольной грани для stl файла
     /// </summary>
-    public class base_stl
+    public class Base_stl
     {
         /// <summary>
         /// порядковый номер треугольника
@@ -434,7 +436,7 @@ namespace PreAddTech
     /// <summary>
     /// класс описания вершины треугольной грани для stl файла
     /// </summary>
-    public class base_vertex
+    public class Base_vertex
     {
         /// <summary>
         /// Номер вершины
@@ -465,7 +467,7 @@ namespace PreAddTech
     /// <summary>
     /// Координаты вершин и вектора нормали с площадью треугольника
     /// </summary>
-    public struct surfaceNormal
+    public struct SurfaceNormal
     {
         public float X1 { get; set; }
         public float X2 { get; set; }
@@ -482,13 +484,105 @@ namespace PreAddTech
         public float Str{ get; set; }
 
     }
+
     /// <summary>
     /// Координаты вершин треугольника
     /// </summary>
-    public struct vertexXYZ
+    public struct VertexXYZ
     {
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
+    }
+
+    /// <summary>
+    /// Фрагмент поверхности попадаемый в слой
+    /// </summary>
+    public class SurfaceSection
+    {
+        /// <summary>
+        /// Трансформация треугольника для ускорения определения части площади (преобразование пространственно заданной грани в подобный плоский)
+        /// </summary>
+        /// <param name="pointSTL">Список вершин треугольной грани</param>
+        /// <param name="ZN">Нормаль треугольника по оси Z</param>
+        /// <returns></returns>
+        public List<TransformedTriangle> TransformTriangle(List<Point3D> pointSTL, float ZN)
+        {
+            List<TransformedTriangle> listTransformedTriangle = new List<TransformedTriangle>();
+
+            MyProcedures proc = new MyProcedures();
+            List<Point3D> pointSTL0 = pointSTL.OrderBy(p => p.Z).ToList<Point3D>();
+            float h1, h2, zn = ZN;
+
+            if (Math.Abs(ZN) == 1)
+            {
+                listTransformedTriangle.Add(new TransformedTriangle() { Z1 = pointSTL0[0].Z, H1 = 0, Z2 = pointSTL0[2].Z, H2 = 0, ZN = zn,
+                    S = (float)proc.Str(pointSTL[0].X, pointSTL[0].Y, pointSTL[0].Z, 
+                                        pointSTL[1].X, pointSTL[1].Y, pointSTL[1].Z, 
+                                        pointSTL[2].X, pointSTL[2].Y, pointSTL[2].Z)
+                });
+                return listTransformedTriangle;
+            }
+
+            if (pointSTL0[0].Z == pointSTL0[1].Z)
+            {
+                h1 = proc.Length(pointSTL0[0], pointSTL0[1]);
+                h2 = 0f;
+                listTransformedTriangle.Add(new TransformedTriangle() { Z1 = pointSTL0[0].Z, H1 = h1, Z2 = pointSTL0[2].Z, H2 = h2, ZN = zn, S = 0 });
+                return listTransformedTriangle;
+            }
+
+            if (pointSTL0[1].Z == pointSTL0[2].Z)
+            {
+                h1 = 0f;
+                h2 = proc.Length(pointSTL0[1], pointSTL0[2]);
+                listTransformedTriangle.Add(new TransformedTriangle() { Z1 = pointSTL0[0].Z, H1 = h1, Z2 = pointSTL0[2].Z, H2 = h2, ZN = zn, S = 0 });
+                return listTransformedTriangle;
+            }
+
+                h1 = 0f;
+                PointF p2 = proc.PlaneCrossLine(pointSTL0[0], pointSTL0[2], pointSTL0[1].Z);
+                h2 = proc.Length(pointSTL0[1], new Point3D {X = p2.X, Y = p2.Y, Z = pointSTL0[1].Z });
+            listTransformedTriangle.Add(new TransformedTriangle() { Z1 = pointSTL0[0].Z, H1 = h1, Z2 = pointSTL0[1].Z, H2 = h2, ZN = zn, S = 0 });
+            listTransformedTriangle.Add(new TransformedTriangle() { Z1 = pointSTL0[1].Z, H1 = h2, Z2 = pointSTL0[2].Z, H2 = h1, ZN = zn, S = 0 });
+            return listTransformedTriangle;
+        }
+
+        /// <summary>
+        /// Координата сечения по оси Z
+        /// </summary>
+        public float CoordinateSectionZ { get; set; }
+
+        /// <summary>
+        /// Коэффициент нормали по оси Z (в градусах угла)
+        /// </summary>
+        public float ZN { get; set; }
+
+        /// <summary>
+        /// Площадь части треугольника попавшего в сечение
+        /// </summary>
+        public float Str { get; set; }
+
+        /// <summary>
+        /// Величина погрешности (для определения переменного шага построения)
+        /// </summary>
+        public float Error { get; set; }
+    }
+
+    /// <summary>
+    /// Треугольник (координаты по оси Z и высоты H) 
+    /// </summary>
+    public class TransformedTriangle
+    {
+        //Первая точка (мин. Z)
+        public float Z1;
+        public float H1;
+        //Вторая точка (макс. Z)
+        public float Z2;
+        public float H2;
+        //Площадь треугольника
+        public float S;
+        //Нормаль треугольника
+        public float ZN;
     }
 }

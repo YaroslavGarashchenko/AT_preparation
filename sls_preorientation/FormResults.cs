@@ -22,7 +22,7 @@ namespace PreAddTech
         /// <summary>
         /// Временно...?
         /// </summary>
-        public List<base_stl> ListStl;
+        public List<Base_stl> ListStl;
         /// <summary>
         /// Сохранение результатов расчета
         /// </summary>
@@ -33,7 +33,7 @@ namespace PreAddTech
         /// </summary>
         public Base_fract_anal fractAnal;
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void ToolStripButton1_Click(object sender, EventArgs e)
         {
             if (toolStripComboBoxResult.SelectedIndex == 0)
             {

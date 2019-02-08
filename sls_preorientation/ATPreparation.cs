@@ -538,7 +538,7 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void buttonEvaluation_Click_1(object sender, EventArgs e)
         {
-            FormResults formEvaluation = new FormResults();
+            FormStatAnal formEvaluation = new FormStatAnal();
             formEvaluation.Activate();
             formEvaluation.Show();
             //Запись данных в историю

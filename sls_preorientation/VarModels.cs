@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PreAddTech
 {
+    /// <summary>
+    /// Класс варианта рассчета
+    /// </summary>
     class VarModels
     {
         /// <summary>

@@ -62,6 +62,9 @@ namespace PreAddTech
             //Точность задания координат по оси Z (дискретность)
             dataGridViewSYS.Rows.Add(
             "Дискретность задания координат по оси Z", "PositionResolution", SettingsUser.Default.PositionResolution, "float");
+            //Поддержка многопоточной обработки данных
+            dataGridViewSYS.Rows.Add(
+            "Многопоточная обработка данных", "Multithreading", SettingsUser.Default.Multithreading, "bool");
         }
         /// <summary>
         /// Сохранение изменений настроек
@@ -74,8 +77,14 @@ namespace PreAddTech
             {
                 try
                 {
+                    if (dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, i].Value.ToString() == "Путь к файлу" ||
+                        dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, i].Value.ToString() == "float")
                     SettingsUser.Default[dataGridViewSYS[dataGridViewSYS.Columns["NamePar"].Index, i].Value.ToString()] =
                         dataGridViewSYS[dataGridViewSYS.Columns["Value"].Index, i].Value.ToString();
+
+                    if (dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, i].Value.ToString() == "bool")
+                        SettingsUser.Default[dataGridViewSYS[dataGridViewSYS.Columns["NamePar"].Index, i].Value.ToString()] =
+                            bool.Parse(dataGridViewSYS[dataGridViewSYS.Columns["Value"].Index, i].Value.ToString());
                 }
                 catch (Exception e6)
                 {
@@ -126,6 +135,9 @@ namespace PreAddTech
             //Точность задания координат по оси Z (дискретность)
             dataGridViewSYS.Rows.Add(
             "Дискретность задания координат по оси Z", "PositionResolution", Settings_AT.Default.PositionResolution, "float");
+            //Поддержка многопоточной обработки данных
+            dataGridViewSYS.Rows.Add(
+            "Многопоточная обработка данных", "Multithreading", Settings_AT.Default.Multithreading, "bool");
         }
         /// <summary>
         /// Задание пути к файлу
@@ -134,11 +146,27 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void DataGridViewSYS_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || e.ColumnIndex != dataGridViewSYS.Columns["Value"].Index ||
-                dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, e.RowIndex].Value.ToString() != "Путь к файлу") return;
-            if (openFileDialogSelectFile.ShowDialog() == DialogResult.OK)
+            if (e.RowIndex < 0 || e.ColumnIndex != dataGridViewSYS.Columns["Value"].Index)
+            { return; }
+
+            if ( dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, e.RowIndex].Value.ToString() == "Путь к файлу")
             {
-                dataGridViewSYS[e.ColumnIndex, e.RowIndex].Value = openFileDialogSelectFile.FileName;
+                if (openFileDialogSelectFile.ShowDialog() == DialogResult.OK)
+                {
+                    dataGridViewSYS[e.ColumnIndex, e.RowIndex].Value = openFileDialogSelectFile.FileName;
+                }
+            }
+
+            if (dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, e.RowIndex].Value.ToString().Trim() == "bool")
+            {
+                if (dataGridViewSYS[dataGridViewSYS.Columns["Value"].Index, e.RowIndex].Value.ToString().ToLower() != "true")
+                {
+                    dataGridViewSYS[dataGridViewSYS.Columns["Value"].Index, e.RowIndex].Value = "true";
+                }
+                else
+                {
+                    dataGridViewSYS[dataGridViewSYS.Columns["Value"].Index, e.RowIndex].Value = "false";
+                }
             }
         }
     }

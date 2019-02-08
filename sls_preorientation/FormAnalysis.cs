@@ -11,8 +11,11 @@ using System.Diagnostics;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml;
 using System.Linq;
+using System.Media;
+using System.Threading;
 using MSExel = Microsoft.Office.Interop.Excel;
 using btl.generic;
+
 
 
 namespace PreAddTech
@@ -23,7 +26,6 @@ namespace PreAddTech
         {
             InitializeComponent();
         }
-
         private void RichTextBox1_TextChanged(object sender, EventArgs e)
         {
             int textlength = richTextBox_review.TextLength;
@@ -141,7 +143,7 @@ namespace PreAddTech
                             uint numTr = br.ReadUInt32();
                             countTr = (int)numTr;
                             int ProgressBarNumTr = countTr - 1;
-                            base_stl[] TrStl = new base_stl[numTr];
+                            Base_stl[] TrStl = new Base_stl[numTr];
                             richTextBox_review.Text += "Количество треугольников: " + numTr.ToString("###,0") + " шт." + "\n";
                             StreamWriter sw = new StreamWriter(VibFileName.Remove(VibFileName.LastIndexOf('.'), 4) + "_ascii.txt", false);
                             for (uint ui = 0; ui < numTr; ui++)
@@ -243,7 +245,7 @@ namespace PreAddTech
             }
         }
         //Mассив данных о треугольниках для расчетов
-        public List<base_stl> ListStl = new List<base_stl>();
+        public List<Base_stl> ListStl = new List<Base_stl>();
         /// <summary>
         /// Преобразование stl файла в БД
         /// </summary>
@@ -435,7 +437,7 @@ namespace PreAddTech
                                 break;
                             case "2":
                                 //Просмотр и записать в файл
-                                base_stl TrSTL1 = new base_stl()
+                                Base_stl TrSTL1 = new Base_stl()
                                                   { X1 = float.Parse(x1),
                                                     Y1 = float.Parse(y1),
                                                     Z1 = float.Parse(z1),
@@ -456,7 +458,7 @@ namespace PreAddTech
                                 //
                                 break;
                             case "3":
-                                base_stl TrSTL = new base_stl()
+                                Base_stl TrSTL = new Base_stl()
                                                  {
                                                     Nom = int.Parse(StrNom),
                                                     X1 = float.Parse(x1),
@@ -771,7 +773,7 @@ namespace PreAddTech
                                 SizeZ = SizeZ
                             };
                         //Простановка метки модели
-                        if (MPeresZ.Count > 1 && Math.IEEERemainder((double)MPeresZ.Count, 2) == 0)
+                        if (MPeresZ.Count > 1 && MPeresZ.Count % 2 == 0)
                         {
                             for (int n = 0; n < MPeresZ.Count;)
                             {
@@ -1465,18 +1467,7 @@ namespace PreAddTech
                 textBoxDataHistogram.Text += (i + 1) + ") Xmin = " + gistY[i].Xmin + "; Xmax = " + gistY[i].Xmax + "; Y = " + gistY[i].Y +
                                               "  (" + (gistY[i].Y / gistYSum[i].Y).ToString("N03") + "); \r\n";
             }
-            /*
-            int i = 0;
-            foreach (var temp in gistY)
-            {
-                seriesStatisticalDataY.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2), temp.Y));
-                seriesStatisticalDataYRelation.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2),
-                    temp.Y / ((ListVox.Count) / (float)numericUpDownNumIntY.Value)));
 
-                textBoxDataHistogram.Text += ++i + ") Xmin = " + temp.Xmin + "; Xmax = " + temp.Xmax + "; Y = " + temp.Y +
-                                              "  (" + (temp.Y / (ListVox.Count / (float)numericUpDownNumIntX.Value)).ToString("N03") + "); \r\n";
-            }
-            */
             seriesStatisticalDataY.ChartArea = "ChartArea1";
             seriesStatisticalDataY.Name = "Гистограмма распределения плотности вокселей модели по оси Y";
             seriesStatisticalDataY.ChartType = SeriesChartType.Column;
@@ -1545,18 +1536,6 @@ namespace PreAddTech
                                               "  (" + (gistZ[i].Y / gistZSum[i].Y).ToString("N03") + "); \r\n";
             }
 
-            /*
-            int i = 0;
-            foreach (var temp in gistZ)
-            {
-                seriesStatisticalDataZ.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2), temp.Y));
-                seriesStatisticalDataZRelation.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2),
-                                  temp.Y / ((ListVox.Count) / (float)numericUpDownNumIntZ.Value)));
-
-                textBoxDataHistogram.Text += ++i + ") Xmin = " + temp.Xmin + "; Xmax = " + temp.Xmax + "; Y = " + temp.Y +
-                                              "  (" + (temp.Y / (ListVox.Count / (float)numericUpDownNumIntX.Value)).ToString("N03") + "); \r\n";
-            }
-            */
             seriesStatisticalDataZ.Name = "Гистограмма распределения плотности вокселей модели по оси Z";
             seriesStatisticalDataZ.ChartType = SeriesChartType.Column;
             chartHistogramVoxelZ.Palette = ChartColorPalette.BrightPastel;
@@ -1636,19 +1615,6 @@ namespace PreAddTech
                                               "  (" + (gistX[i].Y / gistXSum[i].Y).ToString("N03") + "); \r\n";
             }
 
-            /*
-            int i = 0;
-            foreach (var temp in gistX)
-            {
-                seriesStatisticalDataX.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2), temp.Y));
-                seriesStatisticalDataXRelation.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2),
-                    temp.Y / ((CountVoxelsX * CountVoxelsY * CountVoxelsZ) / (float)numericUpDownNumIntX.Value)));
-
-                textBoxDataHistogram.Text += ++i + "X) Xmin = " + temp.Xmin + "; Xmax = " + temp.Xmax + "; Y = " + temp.Y +
-                                              "  (" + (temp.Y / (ListVox.Count / (float)numericUpDownNumIntX.Value)).ToString("N03") + "); \r\n";
-
-            }
-            */
             seriesStatisticalDataX.ChartType = SeriesChartType.Column;
             seriesStatisticalDataXRelation.ChartType = SeriesChartType.Column;
 
@@ -1673,18 +1639,7 @@ namespace PreAddTech
                 textBoxDataHistogram.Text += (i + 1) + ") Xmin = " + gistY[i].Xmin + "; Xmax = " + gistY[i].Xmax + "; Y = " + gistY[i].Y +
                                               "  (" + (gistY[i].Y / gistYSum[i].Y).ToString("N03") + "); \r\n";
             }
-            /*
-            int j = 0;
-            foreach (var temp in gistY)
-            {
-                seriesStatisticalDataY.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2), temp.Y));
-                seriesStatisticalDataYRelation.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2),
-                    temp.Y / ((CountVoxelsX * CountVoxelsY * CountVoxelsZ) / (float)numericUpDownNumIntY.Value)));
 
-                textBoxDataHistogram.Text += ++j + "Y) Xmin = " + temp.Xmin + "; Xmax = " + temp.Xmax + "; Y = " + temp.Y +
-                                              "  (" + (temp.Y / (ListVox.Count / (float)numericUpDownNumIntX.Value)).ToString("N03") + "); \r\n";
-            }
-            */
             seriesStatisticalDataY.ChartType = SeriesChartType.Column;
             seriesStatisticalDataYRelation.ChartType = SeriesChartType.Column;
 
@@ -1709,18 +1664,7 @@ namespace PreAddTech
                 textBoxDataHistogram.Text += (i + 1) + ") Xmin = " + gistZ[i].Xmin + "; Xmax = " + gistZ[i].Xmax + "; Y = " + gistZ[i].Y +
                                               "  (" + (gistZ[i].Y / gistZSum[i].Y).ToString("N03") + "); \r\n";
             }
-            /*
-            int k = 0;
-            foreach (var temp in gistZ)
-            {
-                seriesStatisticalDataZ.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2), temp.Y));
-                seriesStatisticalDataZRelation.Points.Add(new DataPoint(Math.Round((temp.Xmin + temp.Xmax) / 2, 2),
-                    temp.Y / ((CountVoxelsX * CountVoxelsY * CountVoxelsZ) / (float)numericUpDownNumIntZ.Value)));
 
-                textBoxDataHistogram.Text += ++k + "Z) Xmin = " + temp.Xmin + "; Xmax = " + temp.Xmax + "; Y = " + temp.Y +
-                                              "  (" + (temp.Y / (ListVox.Count / (float)numericUpDownNumIntX.Value)).ToString("N03") + "); \r\n";
-            }
-            */
             seriesStatisticalDataZ.ChartType = SeriesChartType.Column;
             seriesStatisticalDataZRelation.ChartType = SeriesChartType.Column;
 
@@ -1928,7 +1872,7 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            toolStripComboBoxCountColumnForSave.Text = "1";
         }
         /// <summary>
         ///Метка заполненности таблицы интервалов для цветовой визуализации 
@@ -1957,7 +1901,7 @@ namespace PreAddTech
         /// <summary>
         /// Список граней базовой модели (сферы)
         /// </summary>
-        List<base_stl> ListStl2 = new List<base_stl>();
+        List<Base_stl> ListStl2 = new List<Base_stl>();
         /// <summary>
         /// Основная форма приложения
         /// </summary>
@@ -2272,7 +2216,7 @@ namespace PreAddTech
                                     (ListStl[j].ZN < -0.999F && Math.Abs(zenit[0] - ListStl[j].ZN) < azimutError)) )
                                 {
                                     tempValue += 1 / (float)numPoleTr;
-                                    tempSValue += (float)((base_stl)ListStl[j]).CalcSTr()[3] / numPoleTr;
+                                    tempSValue += (float)((Base_stl)ListStl[j]).CalcSTr()[3] / numPoleTr;
                                     //tempSValue += (float)((base_stl)ListStl[j]).CalcSTr()[3] / numPoleTr / (float)((base_stl)ListStl2[i]).CalcSTr()[3];
                                 }
                                 else if (
@@ -2284,7 +2228,7 @@ namespace PreAddTech
                                 {
                                       tempValue++;
                                     //tempSValue += (float)((base_stl)ListStl[j]).CalcSTr()[3] / (float)((base_stl)ListStl2[i]).CalcSTr()[3];
-                                    tempSValue += (float)((base_stl)ListStl[j]).CalcSTr()[3];
+                                    tempSValue += (float)((Base_stl)ListStl[j]).CalcSTr()[3];
                                     
                                 }
                             }
@@ -2443,9 +2387,9 @@ namespace PreAddTech
                                     nomTr = i;
                                 }
                             }
-                                if (Math.IEEERemainder(nomTr + 1, 2) == 0)
+                                if ((nomTr + 1) % 2 == 0)
                                 { tempMassivePar.Add(MPeresZ[nomTr] - MPeresZ[nomTr - 1]); }
-                                else if (Math.IEEERemainder(nomTr + 1, 2) == 1)
+                                else if ((nomTr + 1) % 2 == 1)
                                 {
                                     if (MPeresZ.Count >= nomTr + 2)
                                     {
@@ -2876,8 +2820,8 @@ namespace PreAddTech
         /// <summary>
         /// Список вершин
         /// </summary>
-        List<base_vertex> listVertex = new List<base_vertex>();
-        List<base_vertex> listVertex2 = new List<base_vertex>();
+        List<Base_vertex> listVertex = new List<Base_vertex>();
+        List<Base_vertex> listVertex2 = new List<Base_vertex>();
 
         /// <summary>
         /// Сохранение данных о триангуляционной модели в формат PLY, AMF, XLS 
@@ -2903,15 +2847,15 @@ namespace PreAddTech
                     if (listVertex.Count == 0)
                     {
                         var tempList = MyProclistVertex.TranslationSTLtoListVertex(ListStl, toolStripProgressBarVisualization);
-                        listVertex = (List<base_vertex>)tempList[0];
-                        ListStl = (List<base_stl>)tempList[1];
+                        listVertex = (List<Base_vertex>)tempList[0];
+                        ListStl = (List<Base_stl>)tempList[1];
                     }
                 }
                 else
                 {
                         var tempList2 = MyProclistVertex.TranslationSTLtoListVertex(ListStl2, toolStripProgressBarVisualization);
-                        listVertex2 = (List<base_vertex>)tempList2[0];
-                        ListStl2 = (List<base_stl>)tempList2[1];
+                        listVertex2 = (List<Base_vertex>)tempList2[0];
+                        ListStl2 = (List<Base_stl>)tempList2[1];
                 }
             }
             EndTime = DateTime.Now;
@@ -3573,6 +3517,7 @@ namespace PreAddTech
 
                     formGistogram.chartGistogram.Series.Add(seriesStatisticalPar);
                     formGistogram.chartIntegral.Series.Add(seriesStatisticalPar2);
+                    formGistogram.seriesDensity = seriesStatisticalPar;
                 }
                 catch (Exception e17)
                 {
@@ -3704,8 +3649,8 @@ namespace PreAddTech
                 MessageBox.Show("Нет данных для анализа");
                 return;
             }
-            List<surfaceNormal> ListStlNormal = new List<surfaceNormal>();
-            List<vertexXYZ> ListvertexXYZ = new List<vertexXYZ>();
+            List<SurfaceNormal> ListStlNormal = new List<SurfaceNormal>();
+            List<VertexXYZ> ListvertexXYZ = new List<VertexXYZ>();
             //
             MassiveHeight.Clear();
             // Площадь модели
@@ -3717,8 +3662,8 @@ namespace PreAddTech
             //
             foreach (var item in ListStl)
             {
-                surfaceNormal tempSurfaceNormal = new surfaceNormal();
-                vertexXYZ tempvertexXYZ = new vertexXYZ()
+                SurfaceNormal tempSurfaceNormal = new SurfaceNormal();
+                VertexXYZ tempvertexXYZ = new VertexXYZ()
                     {
                         X = item.X1,
                         Y = item.Y1,
@@ -3962,6 +3907,7 @@ namespace PreAddTech
 
                     formGistogramOrientation.chartGistogram.Series.Add(seriesStatisticalPar);
                     formGistogramOrientation.chartIntegral.Series.Add(seriesStatisticalPar2);
+                    formGistogramOrientation.seriesDensity = seriesStatisticalPar;
                 }
                 catch (Exception e17)
                 {
@@ -4647,7 +4593,7 @@ namespace PreAddTech
         /// <summary>
         /// Список конутров набора сечений 3D-модели
         /// </summary>
-        List<base_curveContourSection> listContour = new List<base_curveContourSection>();
+        List<Base_curveContourSection> listContour = new List<Base_curveContourSection>();
 
         /// <summary>
         /// Предельные координаты модели
@@ -4655,11 +4601,36 @@ namespace PreAddTech
         /// </summary>
         float[] limits = new float[6];
 
+        /// <summary>
+        /// Список гистограмм распределения углов наклона нормалей
+        /// </summary>
         List<object> gistParMassiveLayer = new List<object>();
+        List<object> gistParMassiveLayerFull = new List<object>();
+        /// <summary>
+        /// Список гистограмм распределения углов межгранных
+        /// </summary>
         List<object> gistParMassiveLayerA = new List<object>();
 
+        /// <summary>
+        /// Список гистограмм распределения погрешностей формы (высоты ступенек)
+        /// </summary>
+        List<object> gistParMassiveLayerE = new List<object>();
+
+        /// <summary>
+        /// Массив данных для анализа углов наклона нормалей
+        /// </summary>
         List<List<float>> ParMassiveLayer = new List<List<float>>();
+        List<List<float>> ParMassiveLayerFull = new List<List<float>>();
+        /// <summary>
+        /// Массив данных для анализа углов межгранных
+        /// </summary>
         List<List<float>> ParMassiveLayerA = new List<List<float>>();
+
+        /// <summary>
+        /// Массив данных для анализа отклонений формы
+        /// </summary>
+        List<List<SurfaceSection>> ParMassiveLayerE = new List<List<SurfaceSection>>();
+
         /// <summary>
         /// Список данных для расчета смещения ц.т. сечения от центра модели
         /// </summary>
@@ -4672,11 +4643,11 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void ToolStripButtonLayerCreate_Click(object sender, EventArgs e)
         {
-            if (ListStl.Count == 0)
-            {
-                MessageBox.Show("Нет исходных данных...", "Ошибка!");
-                return;
-            }
+            if (ListStl.Count == 0) { MessageBox.Show("Нет исходных данных...", "Ошибка!"); return; }
+            toolStripStatusLabelLayerAnalysis.Text = "В процессе расчета...";
+            toolStripStatusLabelLayerAnalysis.ForeColor = Color.Green;
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             ParMassiveLayerFract_anal.Clear();
             checkBoxVisualAnalysis.Enabled = false;
             numericUpDownRatioRtoL.Enabled = true;
@@ -4685,55 +4656,138 @@ namespace PreAddTech
             ParMassiveLayer.Clear();
             gistParMassiveLayerA.Clear();
             ParMassiveLayerA.Clear();
+            gistParMassiveLayerE.Clear();
+            ParMassiveLayerE.Clear();
+            gistParMassiveLayerFull.Clear();
+            ParMassiveLayerFull.Clear();
             ShXYCentre.Clear();
-            
             MyProcedures proc = new MyProcedures();
-            //Определение мин. и макс. координат вершин по оси Z
-            limits = proc.LimitModel(ListStl); // [0] - minZ; [1] - maxZ
-            float[] coordinateSectionZ; //Массив координат расположения сечений
+            Base_threading threading = new Base_threading();
+
+            limits = proc.LimitModel(ListStl); // Определение мин. и макс. координат модели [0] - minZ; [1] - maxZ
+            List<float> coordinateSectionZ = new List<float>(); //Список координат расположения сечений 
+            if (dataGridViewSetLayer.RowCount != 0) dataGridViewSetLayer.Rows.Clear();
+            char[] trimChars = new char[3] { ' ', 'м', '%' }; // Символы для удаления в конце строки
+            string[] strEmpty = new string[dataGridViewSetLayer.ColumnCount - 5]; // Заполнение таблицы пустыми данными
+            float resolutionZ = float.Parse(SettingsUser.Default.PositionResolution.Replace('.', ',')); // Дискретность по оси Z
+            List<float> listStep = new List<float>(); //Список шагов построения
+
+            //Первый слой
+            float tempZ = (float)(resolutionZ * Math.Round(limits[0] / resolutionZ));
+            coordinateSectionZ.Add((float)Math.Round(tempZ < limits[0] ? tempZ + resolutionZ : tempZ, 3));
+            int iteration = 0;
 
             //Выбрана стратегия с постоянным шагом построения
             if (toolStripComboBoxLayerAnalysis.SelectedIndex == 0 && float.TryParse(toolStripTextBoxMinStep.Text, out float stepConst))
             {
-                //float stepConst - Шаг построения                
-                coordinateSectionZ = new float[(int)Math.Ceiling((limits[1] - limits[0]) / stepConst)];
-
-                if (dataGridViewSetLayer.RowCount != 0)
-                    dataGridViewSetLayer.Rows.Clear();
-
-                string[] strEmpty = new string[dataGridViewSetLayer.ColumnCount - 5]; // Заполнение таблицы пустыми данными
-
-                for (int i = 0; i < coordinateSectionZ.Length; i++)
+                while (coordinateSectionZ[coordinateSectionZ.Count() - 1] < limits[1] - stepConst)
                 {
-                    coordinateSectionZ[i] = (float)Math.Round(limits[0] + i*stepConst, 3);
-                    proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Length - 1);
-
-                    //Добавление в dataGridViewSetLayer
-                    dataGridViewSetLayer.Rows.Add(
-                                i+1,
-                                stepConst,
-                                coordinateSectionZ[i],
-                                "",
-                                "",
-                                strEmpty
-                                );
+                    proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, iteration++, coordinateSectionZ.Count() - 1);
+                    coordinateSectionZ.Add(coordinateSectionZ[coordinateSectionZ.Count() - 1] + stepConst);
                 }
-            
+                for (int i = 0; i < coordinateSectionZ.Count(); i++)
+                { listStep.Add(stepConst); }
+            }
+
+            //Выбрана стратегия с переменным шагом построения (упрощенный расчет)
+            //Определяем углы наклона граней только попавших в плоскость сечения
+            else if (toolStripComboBoxLayerAnalysis.SelectedIndex == 1 && float.TryParse(toolStripTextBoxMinStep.Text, out float stepMin1)
+                                                                       && float.TryParse(toolStripTextBoxMaxStep.Text, out float stepMax1)
+                                                                       && float.TryParse(toolStripTextBoxError.Text.TrimEnd(trimChars), 
+                                                                          out float errorMax1))
+            {
+                if (stepMin1 == stepMax1) { MessageBox.Show("Минимальная и максимальная величина шага построения совпадают", "Ошибка!"); return; }
+                listStep = proc.ListStep(ListStl, errorMax1, limits[1], stepMin1, stepMax1, coordinateSectionZ, 
+                                         toolStripProgressBarLayerAnalysis);
+            }
+            //Выбрана стратегия с переменным шагом построения (микросечения)
+            else if (toolStripComboBoxLayerAnalysis.SelectedIndex == 2 && float.TryParse(toolStripTextBoxMinStep.Text, out float stepMin2)
+                                                                       && float.TryParse(toolStripTextBoxMaxStep.Text, out float stepMax2)
+                                                                       && float.TryParse(toolStripTextBoxError.Text.TrimEnd(trimChars),
+                                                                          out float errorMax2))
+            {
+                if (stepMin2 == stepMax2) { MessageBox.Show("Минимальная и максимальная величина шага построения совпадают", "Ошибка!"); return;}
+
+                List<float> coordinateResolutionZ = new List<float>() { coordinateSectionZ[0] };
+
+                //Первоначальный массив координат построения по дискретности задания положения плоскости сечения
+                while (coordinateResolutionZ[coordinateResolutionZ.Count() - 1] < limits[1])
+                { coordinateResolutionZ.Add((float)Math.Round(coordinateResolutionZ[coordinateResolutionZ.Count() - 1] + resolutionZ, 3)); }
+
+                List<SurfaceSection> listSurfaceSectionAll = new List<SurfaceSection>();
+                listSurfaceSectionAll = proc.ListTTriangle(ListStl, coordinateResolutionZ, resolutionZ, toolStripProgressBarLayerAnalysis);
+
+                List<float[]> listStepAndZ = proc.ListStepByResolution(ListStl, errorMax2, coordinateSectionZ[0], limits[1], 
+                                                                       stepMin2, stepMax2, coordinateResolutionZ,
+                                                                       listSurfaceSectionAll, toolStripProgressBarLayerAnalysis, resolutionZ,
+                                                                       TrimHistogram.no, 0f);
+
+                listStep = listStepAndZ.Select(i => i[0]).ToList(); // Шаги построения
+                coordinateSectionZ = listStepAndZ.Select(i => i[1]).ToList(); // Координаты слоев по оси Z
+            }
+            //Выбрана стратегия с переменным шагом построения (микросечения) и усечением по площади
+            else if (toolStripComboBoxLayerAnalysis.SelectedIndex == 3 && float.TryParse(toolStripTextBoxMinStep.Text, out float stepMin3)
+                                                                       && float.TryParse(toolStripTextBoxMaxStep.Text, out float stepMax3)
+                                                      && float.TryParse(toolStripTextBoxError.Text.TrimEnd(trimChars), out float errorMax3)
+                                                     && float.TryParse(toolStripTextBoxLimitF.Text.TrimEnd(trimChars), out float volumTrim))
+            {
+                if (stepMin3 == stepMax3) { MessageBox.Show("Минимальная и максимальная величина шага построения совпадают", "Ошибка!"); return; }
+
+                List<float> coordinateResolutionZ = new List<float>() { coordinateSectionZ[0] };
+                //Первоначальный массив координат построения по дискретности задания положения плоскости сечения
+                while (coordinateResolutionZ[coordinateResolutionZ.Count() - 1] < limits[1])
+                { coordinateResolutionZ.Add((float)Math.Round(coordinateResolutionZ[coordinateResolutionZ.Count() - 1] + resolutionZ, 3)); }
+
+                List<SurfaceSection> listSurfaceSectionAll = new List<SurfaceSection>();
+                listSurfaceSectionAll = proc.ListTTriangle(ListStl, coordinateResolutionZ, resolutionZ, toolStripProgressBarLayerAnalysis);
+
+                TrimHistogram selectTrimHistogram = TrimHistogram.no;
+                if (toolStripComboBoxTypeTrim.SelectedIndex == 0) selectTrimHistogram = TrimHistogram.allTrim;
+                else if (toolStripComboBoxTypeTrim.SelectedIndex == 1) selectTrimHistogram = TrimHistogram.leftTrim;
+                else if (toolStripComboBoxTypeTrim.SelectedIndex == 2) selectTrimHistogram = TrimHistogram.rightTrim;
+
+                List<float[]> listStepAndZ = proc.ListStepByResolution(ListStl, errorMax3, coordinateSectionZ[0], limits[1],
+                                                                       stepMin3, stepMax3, coordinateResolutionZ,
+                                                                       listSurfaceSectionAll, toolStripProgressBarLayerAnalysis, resolutionZ,
+                                                                       selectTrimHistogram, volumTrim);
+
+                listStep = listStepAndZ.Select(i => i[0]).ToList(); // Шаги построения
+                coordinateSectionZ = listStepAndZ.Select(i => i[1]).ToList(); // Координаты слоев по оси Z
+            }
+            else
+            { return; }
+
+            if (coordinateSectionZ.Count() == 0) return; 
+
+            for (int i = 0; i < coordinateSectionZ.Count(); i++)
+            {
+                proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Count() - 1);
+                //Добавление в dataGridViewSetLayer
+                dataGridViewSetLayer.Rows.Add(
+                            i + 1,
+                            Math.Round(listStep[i], 3),
+                            Math.Round(coordinateSectionZ[i], 3),
+                            "",
+                            "",
+                            strEmpty
+                            );
+            }
+
             listContour.Clear();
             float Perimeter;//Периметр
             float Section;//Площадь
             PointF barCenter;//Барицентр
             //Рассечение 3D-модели плоскостями
-            for (int i = 0; i < coordinateSectionZ.Length; i++)
+            for (int i = 0; i < coordinateSectionZ.Count(); i++)
             {
-                proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Length - 1);
+                proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, coordinateSectionZ.Count() - 1);
                 Perimeter = 0;
                 Section = 0;
-                base_curveContourSection tempContour = new base_curveContourSection()
-                    {
-                        h = stepConst,
-                        Z = coordinateSectionZ.Length
-                    };
+                Base_curveContourSection tempContour = new Base_curveContourSection()
+                {
+                    H = listStep[i],
+                    Z = coordinateSectionZ[i]
+                };
                 List<base_elementOfCurve> tempElementOfCurve = new List<base_elementOfCurve>();
                 //Массив данных для стат.анализа
                 List<float> tempMassiveParLayer = new List<float>();
@@ -4743,17 +4797,11 @@ namespace PreAddTech
                 foreach (var item in ListStl)
                 {
                     List<Point3D> pointSTL0 = new List<Point3D>();
-                    List<Point3D> pointSTL = new List<Point3D>();
                     pointSTL0.Add(new Point3D() { X = item.X1, Y = item.Y1, Z = item.Z1 });
                     pointSTL0.Add(new Point3D() { X = item.X2, Y = item.Y2, Z = item.Z2 });
                     pointSTL0.Add(new Point3D() { X = item.X3, Y = item.Y3, Z = item.Z3 });
+                    List<Point3D> pointSTL = pointSTL0.OrderBy(point => point.Z).ToList();
 
-                    IEnumerable<Point3D> orderPoint = pointSTL0.OrderBy(point => point.Z);
-                    
-                    foreach (Point3D itemPoint in orderPoint)
-                    {
-                        pointSTL.Add(itemPoint);
-                    }
                     // пересечение треугольной грани участвующей в формировании контура
                     if (pointSTL[0].Z <= coordinateSectionZ[i] && coordinateSectionZ[i] < pointSTL[2].Z && Math.Abs(item.ZN) != 1)
                     {
@@ -4761,7 +4809,7 @@ namespace PreAddTech
                         PointF[] pointsCurve = proc.ElementOfCurve(
                                             new Point3D() { X = item.X1, Y = item.Y1, Z = item.Z1 },
                                             new Point3D() { X = item.X2, Y = item.Y2, Z = item.Z2 },
-                                            new Point3D() { X = item.X3, Y = item.Y3, Z = item.Z3 }, 
+                                            new Point3D() { X = item.X3, Y = item.Y3, Z = item.Z3 },
                                             coordinateSectionZ[i]);
                         tempElement.point1 = pointsCurve[0];
                         tempElement.point2 = pointsCurve[1];
@@ -4775,8 +4823,8 @@ namespace PreAddTech
                             tempMassiveParLayer.Add((float)(Math.Acos(item.ZN) / Math.PI * 180));
                         }
                     }
-                }
-                tempContour.listElement = tempElementOfCurve;
+                    }
+                tempContour.ListElement = tempElementOfCurve;
                 listContour.Add(tempContour);
                 //Периметр
                 dataGridViewSetLayer[dataGridViewSetLayer.Columns["P"].Index, i].Value = Math.Round(Perimeter, 3);
@@ -4796,61 +4844,50 @@ namespace PreAddTech
 
                 //Добавление в массив для рассчета цетра тяжести 3D-модели
                 ShXYCentreLayer[0] = Section;
-                ShXYCentreLayer[1] = stepConst;
-                ShXYCentreLayer[2] = float.IsNaN(barCenter.X) ? 0: barCenter.X;
-                ShXYCentreLayer[3] = float.IsNaN(barCenter.X) ? 0: barCenter.Y;
+                ShXYCentreLayer[1] = listStep[i];
+                ShXYCentreLayer[2] = float.IsNaN(barCenter.X) ? 0 : barCenter.X;
+                ShXYCentreLayer[3] = float.IsNaN(barCenter.X) ? 0 : barCenter.Y;
 
                 ShXYCentre.Add(ShXYCentreLayer);
                 //Данные для стат.анализа
 
                 ParMassiveLayer.Add(tempMassiveParLayer);
             }
-            }
-            //Выбрана стратегия с переменным шагом построения
-            else if (toolStripComboBoxLayerAnalysis.SelectedIndex == 1 && float.TryParse(toolStripTextBoxMinStep.Text, out float stepMin)
-                                                                       && float.TryParse(toolStripTextBoxMaxStep.Text, out float stepMax))
-            {
-                if (stepMin == stepMax)
-                {
-                    MessageBox.Show("Минимальная и максимальная величина шага построения совпадают", "Ошибка!");
-                    return;
-                }
-                //Первоначальный массив координат построения
-                //шаг построения - дискретность задания положения плоскости сечения
-                if (float.TryParse(SettingsUser.Default.PositionResolution.Replace('.',','), out float resolution))
-                { coordinateSectionZ = new float[(int)Math.Ceiling((limits[1] - limits[0]) / resolution)]; }
-                else
-                {
-                    MessageBox.Show("Проверьте правильность задания величины дискретности по оси Z \n" +
-                                    "в настройках системы.", "Ошибка!");
-                    return;
-                }
+            //Создание списка погрешностей для анализа
+            //if (checkBoxAnalysisErrorForm.CheckState == CheckState.Checked)
+            ParMassiveLayerE = proc.MassiveErrorSurface(ListStl, coordinateSectionZ, resolutionZ, toolStripProgressBarLayerAnalysis);
 
-
-            }
+            watch.Stop();
+            TimeSpan ts = watch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
             //
-            toolStripStatusLabelLayerAnalysis.Text = "Данные по сечениям готовы";
+            toolStripStatusLabelLayerAnalysis.Text = "Данные по сечениям готовы. Время создания: " + elapsedTime;
             toolStripStatusLabelLayerAnalysis.ForeColor = Color.Black;
-
+            PlaySound();
             numericUpDownCountFractalAnalysis.Enabled = true;
             numericUpDownCurentFractalAnalysis.Enabled = true;
         }
-
-        private void ToolStripTextBoxMinStep_KeyPress(object sender, KeyPressEventArgs e)
+        /// <summary>
+        /// Звук сигнала окончания расчета
+        /// </summary>
+        private void PlaySound()
         {
-                //if (!Char.IsDigit(e.KeyChar))
-                //{ MessageBox.Show("Введено не число"); }
-        }
-
-        private void ToolStripTextBoxMaxStep_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-                //if (!Char.IsNumber(e.KeyChar))
-                //{ MessageBox.Show("Введено не число"); }
+            try
+            {
+                SoundPlayer simpleSound = new SoundPlayer(Application.StartupPath + @"\Media\Ring.wav");
+                simpleSound.Play();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!");
+            }
         }
 
         private void ToolStripTextBoxMinStep_TextChanged(object sender, EventArgs e)
         {
+            toolStripTextBoxMinStep.Text = String.Concat<char>(toolStripTextBoxMinStep.Text.ToCharArray().Where(c => char.IsDigit(c) || c == ','));
+            toolStripTextBoxMaxStep.Text = String.Concat<char>(toolStripTextBoxMaxStep.Text.ToCharArray().Where(c => char.IsDigit(c) || c == ','));
+
             toolStripStatusLabelLayerAnalysis.Text = "Изменились исходные данные.";
             toolStripStatusLabelLayerAnalysis.ForeColor = Color.Red;
             if (float.TryParse(toolStripTextBoxMinStep.Text, out float min) && float.TryParse(toolStripTextBoxMaxStep.Text, out float max))
@@ -4890,11 +4927,10 @@ namespace PreAddTech
 
             dataGridViewSetLayer.Rows[e.RowIndex].DefaultCellStyle.Font = new Font(this.Font, FontStyle.Bold);
             numSection = e.RowIndex;
-            tempElementOfCurveSection = listContour[numSection].listElement;
+            tempElementOfCurveSection = listContour[numSection].ListElement;
 
             if (checkBoxOneOrAll.CheckState == CheckState.Checked)
-            tempElementOfCurveSectionMassive.Add(listContour[numSection].listElement);
-
+            tempElementOfCurveSectionMassive.Add(listContour[numSection].ListElement);
             panelReviewContourSection.Refresh();
 
             //Просмотр гистограммы
@@ -4906,22 +4942,18 @@ namespace PreAddTech
                 {
                     FormGist formGistogram = new FormGist();
                     formGistogram.Activate();
+                    formGistogram.Text += ": Угол Nz (" + (e.RowIndex + 1) + " слой), по отн.количеству граней";
                     formGistogram.Show();
-
                     //Вывод данных на гистограмму распределения
                     Series seriesStatisticalPar = new Series();
                     Series seriesStatisticalPar2 = new Series();
                     List<Stat_analysis.elementGist> gistParTemp = new List<Stat_analysis.elementGist>();
-
                     gistParTemp = (List<Stat_analysis.elementGist>)gistParMassiveLayer[e.RowIndex];
 
-                    float SumInt = 0;
-                    float SumPar = 0;
+                    float SumInt = 0, SumPar = 0;
                     //Относительные величины
                     for (int i = 0; i < gistParTemp.Count; i++)
-                    {
-                        SumPar += gistParTemp[i].Y;
-                    }
+                    { SumPar += gistParTemp[i].Y; }
                     //
                     for (int i = 0; i < gistParTemp.Count; i++)
                     {
@@ -4937,14 +4969,12 @@ namespace PreAddTech
                     seriesStatisticalPar.ChartType = SeriesChartType.Column;
                     formGistogram.chartIntegral.Palette =
                     formGistogram.chartGistogram.Palette = ChartColorPalette.BrightPastel;
-
                     formGistogram.chartGistogram.Series.Add(seriesStatisticalPar);
                     formGistogram.chartIntegral.Series.Add(seriesStatisticalPar2);
+                    formGistogram.seriesDensity = seriesStatisticalPar;
                 }
                 catch (Exception e17)
-                {
-                    MessageBox.Show(e17.Message);
-                }
+                { MessageBox.Show(e17.Message); }
             }
             //Просмотр второй гистограммы
             else if (e.ColumnIndex == dataGridViewSetLayer.Columns["Aadjacent"].Index &&
@@ -4954,8 +4984,8 @@ namespace PreAddTech
                 {
                     FormGist formGistogram = new FormGist();
                     formGistogram.Activate();
+                    formGistogram.Text += ": Смежный угол (" + (e.RowIndex + 1) + " слой)";
                     formGistogram.Show();
-
                     //Вывод данных на гистограмму распределения
                     Series seriesStatisticalParA = new Series();
                     Series seriesStatisticalParA2 = new Series();
@@ -4963,13 +4993,10 @@ namespace PreAddTech
 
                     gistParTempA = (List<Stat_analysis.elementGist>)gistParMassiveLayerA[e.RowIndex];
 
-                    float SumIntA = 0;
-                    float SumParA = 0;
+                    float SumIntA = 0, SumParA = 0;
                     //Относительные величины
                     for (int i = 0; i < gistParTempA.Count; i++)
-                    {
-                        SumParA += gistParTempA[i].Y;
-                    }
+                    { SumParA += gistParTempA[i].Y; }
                     //
                     for (int i = 0; i < gistParTempA.Count; i++)
                     {
@@ -4979,20 +5006,93 @@ namespace PreAddTech
                         seriesStatisticalParA2.Points.Add(
                             new DataPoint(Math.Round((gistParTempA[i].Xmin + gistParTempA[i].Xmax) / 2, 2), SumIntA / SumParA));
                     }
-                    seriesStatisticalParA2.ChartArea =
-                    seriesStatisticalParA.ChartArea = "ChartArea1";
-                    seriesStatisticalParA2.ChartType =
-                    seriesStatisticalParA.ChartType = SeriesChartType.Column;
+                    seriesStatisticalParA2.ChartArea = seriesStatisticalParA.ChartArea = "ChartArea1";
+                    seriesStatisticalParA2.ChartType = seriesStatisticalParA.ChartType = SeriesChartType.Column;
                     formGistogram.chartIntegral.Palette =
                     formGistogram.chartGistogram.Palette = ChartColorPalette.BrightPastel;
-
                     formGistogram.chartGistogram.Series.Add(seriesStatisticalParA);
                     formGistogram.chartIntegral.Series.Add(seriesStatisticalParA2);
+                    formGistogram.seriesDensity = seriesStatisticalParA;
                 }
                 catch (Exception e17)
+                { MessageBox.Show(e17.Message); }
+            }
+            //Просмотр третьей гистограммы
+            else if (e.ColumnIndex == dataGridViewSetLayer.Columns["Error"].Index &&
+                dataGridViewSetLayer.Rows[e.RowIndex].Cells["Error"].Value.ToString().TrimEnd() == "Просмотр")
+            {
+                try
                 {
-                    MessageBox.Show(e17.Message);
+                    FormGist formGistogram = new FormGist();
+                    formGistogram.Activate();
+                    formGistogram.Text += ": Погрешность формы (" + (e.RowIndex + 1) + " слой)";
+                    formGistogram.Show();
+                    //Вывод данных на гистограмму распределения
+                    Series seriesStatisticalParE = new Series();
+                    Series seriesStatisticalParE2 = new Series();
+                    List<Stat_analysis.elementGist> gistParTempE = (List<Stat_analysis.elementGist>)gistParMassiveLayerE[e.RowIndex];
+
+                    float SumIntE = 0; float SumParE = 0;
+                    //Относительные величины
+                    for (int i = 0; i < gistParTempE.Count; i++)
+                    { SumParE += gistParTempE[i].Y; }
+                    //
+                    for (int i = 0; i < gistParTempE.Count; i++)
+                    {
+                        seriesStatisticalParE.Points.Add(
+                            new DataPoint(Math.Round((gistParTempE[i].Xmin + gistParTempE[i].Xmax) / 2, 2), gistParTempE[i].Y / SumParE));
+                        SumIntE += gistParTempE[i].Y;
+                        seriesStatisticalParE2.Points.Add(
+                            new DataPoint(Math.Round((gistParTempE[i].Xmin + gistParTempE[i].Xmax) / 2, 2), SumIntE / SumParE));
+                    }
+                    seriesStatisticalParE2.ChartArea = seriesStatisticalParE.ChartArea = "ChartArea1";
+                    seriesStatisticalParE2.ChartType = seriesStatisticalParE.ChartType = SeriesChartType.Column;
+                    formGistogram.chartIntegral.Palette =
+                    formGistogram.chartGistogram.Palette = ChartColorPalette.BrightPastel;
+                    formGistogram.chartGistogram.Series.Add(seriesStatisticalParE);
+                    formGistogram.chartIntegral.Series.Add(seriesStatisticalParE2);
+                    formGistogram.seriesDensity = seriesStatisticalParE;
                 }
+                catch (Exception e18)
+                { MessageBox.Show(e18.Message); }
+            }
+            //Просмотр четвертой гистограммы
+            else if (e.ColumnIndex == dataGridViewSetLayer.Columns["NzFull"].Index &&
+                dataGridViewSetLayer.Rows[e.RowIndex].Cells["NzFull"].Value.ToString().TrimEnd() == "Просмотр")
+            {
+                try
+                {
+                    FormGist formGistogramNz = new FormGist();
+                    formGistogramNz.Activate();
+                    formGistogramNz.Text += ": Угол Nz для всего слоя (" + (e.RowIndex + 1) + " слой), по отн.площади граней";
+                    formGistogramNz.Show();
+                    //Вывод данных на гистограмму распределения
+                    Series seriesStatisticalParNz = new Series();
+                    Series seriesStatisticalParNz2 = new Series();
+                    List<Stat_analysis.elementGist> gistParTempNz = (List<Stat_analysis.elementGist>)gistParMassiveLayerFull[e.RowIndex];
+
+                    float SumIntNz = 0; float SumParNz = 0;
+                    //Относительные величины
+                    for (int i = 0; i < gistParTempNz.Count; i++)
+                    { SumParNz += gistParTempNz[i].Y; }
+                    //
+                    for (int i = 0; i < gistParTempNz.Count; i++)
+                    {
+                        seriesStatisticalParNz.Points.Add(
+                            new DataPoint(Math.Round((gistParTempNz[i].Xmin + gistParTempNz[i].Xmax) / 2, 2), gistParTempNz[i].Y / SumParNz));
+                        SumIntNz += gistParTempNz[i].Y;
+                        seriesStatisticalParNz2.Points.Add(
+                            new DataPoint(Math.Round((gistParTempNz[i].Xmin + gistParTempNz[i].Xmax) / 2, 2), SumIntNz / SumParNz));
+                    }
+                    seriesStatisticalParNz2.ChartArea = seriesStatisticalParNz.ChartArea = "ChartArea1";
+                    seriesStatisticalParNz2.ChartType = seriesStatisticalParNz.ChartType = SeriesChartType.Column;
+                    formGistogramNz.chartIntegral.Palette = formGistogramNz.chartGistogram.Palette = ChartColorPalette.BrightPastel;
+                    formGistogramNz.chartGistogram.Series.Add(seriesStatisticalParNz);
+                    formGistogramNz.chartIntegral.Series.Add(seriesStatisticalParNz2);
+                    formGistogramNz.seriesDensity = seriesStatisticalParNz;
+                }
+                catch (Exception e19)
+                { MessageBox.Show(e19.Message); }
             }
         }
 
@@ -5180,7 +5280,7 @@ namespace PreAddTech
             {
                 dataGridViewSetLayer.Rows[e.RowIndex].DefaultCellStyle.Font = new Font(this.Font, FontStyle.Bold);
                 numSection = e.RowIndex;
-                tempElementOfCurveSection = listContour[numSection].listElement;
+                tempElementOfCurveSection = listContour[numSection].ListElement;
                 panelReviewContourSection.Refresh();
             }
         }
@@ -5228,6 +5328,7 @@ namespace PreAddTech
         {
             dataGridViewSetLayer.Dock = DockStyle.None;
         }
+        
         /// <summary>
         /// Список фрактальной размерности для метода масштабов
         /// </summary>
@@ -5250,12 +5351,15 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void ToolStripButtonLayerAnalysis_Click(object sender, EventArgs e)
         {
+            toolStripStatusLabelLayerAnalysis.Text = "В процессе анализа...";
+            toolStripStatusLabelLayerAnalysis.ForeColor = Color.Green; 
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             // Статистические характеристики (результаты анализа по слоям)   
             float[] resultStatParLayer = new float[13];
             float[] resultStatParLayerA = new float[13];
-            //Определение контуров внешних/внутренних
+            //Процедуры
             MyProcedures proc = new MyProcedures();
-
             ParMassiveLayerA.Clear();
             ParMassiveLayerFD.Clear();
             ParMassiveLayerFDS.Clear();
@@ -5265,21 +5369,21 @@ namespace PreAddTech
             for (int i = 0; i < listContour.Count; i++)
             {
                 proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, listContour.Count - 1);
-                List<base_elementOfCurve> listETemp = proc.ListCloseContour(listContour[i].listElement, float.Parse(SettingsUser.Default.RoundingKoord.Replace('.',',')));
+                List<base_elementOfCurve> listETemp = proc.ListCloseContour(listContour[i].ListElement, float.Parse(SettingsUser.Default.RoundingKoord.Replace('.',',')));
                 ParMassiveLayerA.Add(proc.MassiveAngleAdjacent(listETemp));
-                Base_fract_anal fractal_analTemp = proc.FractalDimension(listETemp,
-                                      (int)numericUpDownCountFractalAnalysis.Value,
-                                      (float)numericUpDownRatioRtoL.Value,
-                                      checkBoxAbsOrRel.CheckState == CheckState.Checked,
-                                      fractalMethod);
-                ParMassiveLayerFD.Add(fractal_analTemp.Mean());
-                ParMassiveLayerFDS.Add(fractal_analTemp.Mean(fractal_analTemp.FractalDimensionSquare));
-                ParMassiveLayerFract_anal.Add(fractal_analTemp);
+                if (checkBoxFractalAnalysis.CheckState == CheckState.Checked)
+                {
+                    Base_fract_anal fractal_analTemp = proc.FractalDimension(listETemp,
+                                          (int)numericUpDownCountFractalAnalysis.Value,
+                                          (float)numericUpDownRatioRtoL.Value,
+                                          checkBoxAbsOrRel.CheckState == CheckState.Checked,
+                                          fractalMethod);
+                    ParMassiveLayerFD.Add(fractal_analTemp.Mean());
+                    ParMassiveLayerFDS.Add(fractal_analTemp.Mean(fractal_analTemp.FractalDimensionSquare));
+                    ParMassiveLayerFract_anal.Add(fractal_analTemp);
+                }
             }
-            //
-            float Xcentre0 = 0;
-            float Ycentre0 = 0;
-            float volum = 0;
+            float Xcentre0 = 0, Ycentre0 = 0, volum = 0;
             //Определение смещения центра тяжести для каждого слоя
             //ShXYCentre
             for (int j = 0; j < ShXYCentre.Count; j++)
@@ -5303,6 +5407,7 @@ namespace PreAddTech
             {
                 for (int i = 0; i < ParMassiveLayer.Count; i++)
                 {
+                    proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, ParMassiveLayer.Count - 1);
                     if (ParMassiveLayer[i].Count < 3)
                     {
                         dataGridViewSetLayer[dataGridViewSetLayer.Columns["Nz"].Index, i].Value = "Нет данных";
@@ -5311,13 +5416,11 @@ namespace PreAddTech
                     else
                     {
                         Stat_analysis statisticaPar = new Stat_analysis();
-                        
-                        // Данные гистограммы по анализу слоев
-                        List<Stat_analysis.elementGist> gistParLayer = new List<Stat_analysis.elementGist>();
 
+                        // Данные гистограммы по анализу слоев (по относительному количеству треугольников)
+                        List<Stat_analysis.elementGist> gistParLayer = new List<Stat_analysis.elementGist>();
                         gistParLayer = statisticaPar.Gist((ParMassiveLayer[i]).ToArray(), (int)numericUpDownLayerInt.Value);
                         gistParMassiveLayer.Add(gistParLayer);
-                        //
                         resultStatParLayer = statisticaPar.Stat((ParMassiveLayer[i]).ToArray(), gistParLayer);
                         //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
                         // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
@@ -5349,7 +5452,7 @@ namespace PreAddTech
             {
                 for (int i = 0; i < ParMassiveLayerA.Count; i++)
                 {
-                    //MessageBox.Show("(ParMassiveLayerA[i]).ToArray() - " + i + " - " + ParMassiveLayerA[i].Count);
+                    proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, ParMassiveLayerA.Count - 1);
 
                     if (ParMassiveLayerA[i].Count < 2)
                     {
@@ -5392,10 +5495,11 @@ namespace PreAddTech
             { return; }
 
             //Фрактальная размерность контуров
-            if (ParMassiveLayerFD.Count != 0)
+            if (ParMassiveLayerFD.Count != 0 && checkBoxFractalAnalysis.CheckState == CheckState.Checked)
             {
                 for (int i = 0; i < ParMassiveLayerFD.Count; i++)
                 {
+                    proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, ParMassiveLayerFD.Count - 1);
                     //Поле Fractal_Size_Scale
                     dataGridViewSetLayer[dataGridViewSetLayer.Columns["Fractal_Size_Scale"].Index, i].Value =
                             ParMassiveLayerFD[i].ToString("0.000");
@@ -5404,12 +5508,88 @@ namespace PreAddTech
                             ParMassiveLayerFDS[i].ToString("0.000");
                 }
             }
-            else
-            { return; }
 
+            //Анализ погрешностей формы
+            if (checkBoxAnalysisErrorForm.CheckState == CheckState.Checked)
+            {
+                List<float[]> ParMassiveLayerErrorForm = new List<float[]>();
+                List<float[]> ParMassiveLayerNzFull = new List<float[]>();
+                List<float[]> ParMassiveLayerSurface = new List<float[]>();
+                for (int j = 0; j < ParMassiveLayerE.Count; j++)
+                {
+                    float[] tempMassiveE = new float[ParMassiveLayerE[j].Count];
+                    float[] tempMassiveNz = new float[ParMassiveLayerE[j].Count];
+                    float[] tempMassiveS = new float[ParMassiveLayerE[j].Count];
+                    for (int i = 0; i < ParMassiveLayerE[j].Count; i++)
+                    {
+                        tempMassiveE[i] = ParMassiveLayerE[j][i].Error;
+                        tempMassiveNz[i] = ParMassiveLayerE[j][i].ZN;
+                        tempMassiveS[i] = ParMassiveLayerE[j][i].Str;
+                    }
+                    ParMassiveLayerErrorForm.Add(tempMassiveE);
+                    ParMassiveLayerNzFull.Add(tempMassiveNz);
+                    ParMassiveLayerSurface.Add(tempMassiveS);
+                }
+
+                for (int i = 0; i < ParMassiveLayerErrorForm.Count; i++)
+                {
+                    proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, ParMassiveLayerErrorForm.Count - 1);
+
+                    if (ParMassiveLayerErrorForm[i].Count() != 0)
+                    {
+                        Stat_analysis statisticaParE = new Stat_analysis();
+                        Stat_analysis statisticaParNzFull = new Stat_analysis();
+                        // Данные гистограммы по анализу слоев
+                        List<Stat_analysis.elementGist> gistParLayerE = new List<Stat_analysis.elementGist>();
+                        List<Stat_analysis.elementGist> gistParLayerNzFull = new List<Stat_analysis.elementGist>();
+                        gistParLayerE = statisticaParE.Gist(ParMassiveLayerErrorForm[i], (int)numericUpDownLayerInt.Value, 
+                                                        ParMassiveLayerSurface[i]);
+                        gistParMassiveLayerE.Add(gistParLayerE);
+                        gistParLayerNzFull = statisticaParNzFull.Gist(ParMassiveLayerNzFull[i], (int)numericUpDownLayerInt.Value,
+                                                        ParMassiveLayerSurface[i]); // По относительной площади гистограмма
+                        gistParMassiveLayerFull.Add(gistParLayerNzFull);
+                        //
+                        float[] resultStatParLayerE = statisticaParE.Stat(ParMassiveLayerErrorForm[i], gistParLayerE);
+                        float[] resultStatParLayerNzFull = statisticaParNzFull.Stat(ParMassiveLayerNzFull[i], gistParLayerNzFull);
+                        //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
+                        // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+                        if (resultStatParLayerE[2] > 0)
+                        { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Error"].Index, i].Value = "Просмотр"; }
+                        else { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Error"].Index, i].Value = "Нет данных"; }
+                        if (resultStatParLayerNzFull[2] > 0)
+                        { dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzFull"].Index, i].Value = "Просмотр"; }
+                        else { dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzFull"].Index, i].Value = "Нет данных"; }
+
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EMinInterval"].Index, i].Value = resultStatParLayerE[0];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EMaxInterval"].Index, i].Value = resultStatParLayerE[1];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["ERange"].Index, i].Value = resultStatParLayerE[2];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EDispersion"].Index, i].Value = resultStatParLayerE[3];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["ESigma"].Index, i].Value = resultStatParLayerE[4];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EMean"].Index, i].Value = resultStatParLayerE[5];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EKasim"].Index, i].Value = resultStatParLayerE[6];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EKeks"].Index, i].Value = resultStatParLayerE[7];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EKv"].Index, i].Value = resultStatParLayerE[8];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EMeana"].Index, i].Value = resultStatParLayerE[9];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EModa"].Index, i].Value = resultStatParLayerE[10];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["EMediana"].Index, i].Value = resultStatParLayerE[11];
+
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzFullMinInterval"].Index, i].Value = 
+                            resultStatParLayerNzFull[0];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzFullMaxInterval"].Index, i].Value = 
+                            resultStatParLayerNzFull[1];
+                        dataGridViewSetLayer[dataGridViewSetLayer.Columns["NzFullRange"].Index, i].Value = 
+                            resultStatParLayerNzFull[2];
+                    }
+                }
+            }
+            watch.Stop();
+            TimeSpan ts = watch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+            //
             checkBoxVisualAnalysis.Enabled = true;
-            toolStripStatusLabelLayerAnalysis.Text ="Выполнен анализ стат. характеристик исследуемых признаков";
+            toolStripStatusLabelLayerAnalysis.Text = "Анализ выполнен. Время: " + elapsedTime;
             toolStripStatusLabelLayerAnalysis.ForeColor = Color.Black;
+            PlaySound();
         }
 
         private void ToolStripTextBoxFileName_Click(object sender, EventArgs e)
@@ -5423,8 +5603,19 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void ToolStripButtonLayerSave_Click(object sender, EventArgs e)
         {
+            toolStripStatusLabelLayerAnalysis.Text = "Сохранение данных стат.анализа в XLS-файл...";
             MyProcedures proc = new MyProcedures();
-            proc.SaveDataGridInXlc(dataGridViewSetLayer);
+            try
+            {
+                proc.SaveDataGridInXlc(dataGridViewSetLayer, toolStripProgressBarLayerAnalysis, 
+                                       int.Parse(toolStripComboBoxCountColumnForSave.Text));
+            }
+            catch (Exception e25)
+            {
+                MessageBox.Show(e25.Message, "Ошибка!");
+            }
+            
+            toolStripStatusLabelLayerAnalysis.Text = "Данные стат.анализа сохранены в XLS-файл.";
         }
         /// <summary>
         /// Выбор цвета для первого условия анализа данных
@@ -5771,7 +5962,117 @@ namespace PreAddTech
             }
         }
 
-        private void ToolStripComboBox2_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Изменение максимальной величины погрешности формы (отклонения от правильной формы)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripTextBoxError_TextChanged(object sender, EventArgs e)
+        {
+            if (float.TryParse(String.Concat<char>(toolStripTextBoxError.Text.ToCharArray().Where(c => char.IsDigit(c) || c == ',')), out float error))
+            {
+                toolStripTextBoxError.Text = error.ToString() + " мм";
+            }
+            else
+            {
+                MessageBox.Show("Введено не число!", "Ошибка...");
+            }
+        }
+
+        /// <summary>
+        /// Изменение величины урезания площади граней с предельным углом наклона для увеличения шага построения 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripTextBoxLimitF_TextChanged(object sender, EventArgs e)
+        {
+            if (float.TryParse(String.Concat<char>(toolStripTextBoxLimitF.Text.ToCharArray().Where(c => char.IsDigit(c) || c == ',')), out float digit))
+            { toolStripTextBoxLimitF.Text = digit.ToString() + " %"; }
+            else
+            { MessageBox.Show("Введено не число!", "Ошибка..."); }
+        }
+        
+        /// <summary>
+        /// Вывод формы со статистическим анализом данных в текущей колонке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridViewSetLayer_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                if (e.ColumnIndex <= 0 || dataGridViewSetLayer.Rows.Count <= 3 ||
+                    dataGridViewSetLayer.Columns[e.ColumnIndex].Name == "centroidOfArea" ||
+                    dataGridViewSetLayer.Columns[e.ColumnIndex].Name == "Nz" ||
+                    dataGridViewSetLayer.Columns[e.ColumnIndex].Name == "Aadjacent" ||
+                    dataGridViewSetLayer.Columns[e.ColumnIndex].Name == "Error" ||
+                    dataGridViewSetLayer.Rows[0].Cells[e.ColumnIndex].Value.ToString() == "")
+                    return;
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            float[] researchMassive = new float[dataGridViewSetLayer.Rows.Count];
+            float[] researchMassiveZ = new float[dataGridViewSetLayer.Rows.Count];
+            //dataGridViewSetLayer
+            for (int i = 0; i < dataGridViewSetLayer.Rows.Count; i++)
+            {
+                try
+                {
+                    researchMassive[i] = float.Parse(dataGridViewSetLayer.Rows[i].Cells[e.ColumnIndex].Value.ToString());
+                }
+                catch (Exception ex)
+                {
+                    //researchMassive[i] = 0f;
+                    MessageBox.Show(ex.Message, "Некорректные исследуемые данные!");
+                    return;
+                }
+                researchMassiveZ[i] = float.Parse(dataGridViewSetLayer.Rows[i].Cells["HeightPlaсement"].Value.ToString());
+            }
+            FormAnalysisSteps analysisSteps = new FormAnalysisSteps(); // Форма для анализа серии данных
+            foreach (float item in researchMassive)
+                analysisSteps.richTextBoxData.AppendText(item.ToString() + "\n");
+            //Вывод данных на гистограмму распределения
+            Stat_analysis statisticaPar = new Stat_analysis();
+            object[] resultStat = statisticaPar.ComplexAnalysis(researchMassive, (int)numericUpDownLayerInt.Value);
+            //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм.,...
+            float[] resultStatParLayer = (float[])resultStat[0];
+            Series seriesDensity = (Series)resultStat[1];
+            Series seriesIntegralFunction = (Series)resultStat[2];
+            float[] resultQuartile = (float[])resultStat[3];
+            analysisSteps.richTextBoxQuartile.Text = "Значения квартилей: \n";
+            for (int j = 0; j < resultQuartile.Length; j++)
+            {
+                analysisSteps.richTextBoxQuartile.AppendText(j + " - " + resultQuartile[j].ToString() + "\n");
+            }
+            //
+            Series seriesData = new Series(); // Перечисление исследуемого признака
+            Series seriesFunctionZ = new Series(); // Функция зависимости исследуемого признака от координаты по оси Z
+            for (int i = 0; i < researchMassive.Length; i++)
+            {
+                seriesData.Points.Add(new DataPoint(i + 1, researchMassive[i]));
+                seriesFunctionZ.Points.Add(new DataPoint(researchMassiveZ[i], researchMassive[i]));
+            }
+            seriesDensity.ChartArea = "ChartArea1";
+            seriesDensity.ChartType = SeriesChartType.Column;
+            analysisSteps.chartDependent.Palette = ChartColorPalette.BrightPastel;
+            analysisSteps.chartDependent.Series.Add(seriesDensity);
+            analysisSteps.researchMassive = researchMassive;
+            analysisSteps.researchMassiveZ = researchMassiveZ;
+            analysisSteps.resultStatParLayer = resultStatParLayer;
+            analysisSteps.seriesDensity = seriesDensity;
+            analysisSteps.seriesIntegralFunction = seriesIntegralFunction;
+            analysisSteps.seriesData = seriesData;
+            analysisSteps.seriesFunctionZ = seriesFunctionZ;
+            analysisSteps.numericUpDownNumIntervals.Value = numericUpDownLayerInt.Value;
+            analysisSteps.titleForm = string.Format( "Анализ по слоям \"{0}\": ", dataGridViewSetLayer.Columns[e.ColumnIndex].HeaderText);
+            //
+            analysisSteps.Activate();
+            analysisSteps.Show();
+        }
+
+        private void toolStripButtonLocalAnalysis_Click(object sender, EventArgs e)
         {
 
         }
