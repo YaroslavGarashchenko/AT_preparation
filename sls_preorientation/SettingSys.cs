@@ -31,40 +31,65 @@ namespace PreAddTech
             textBoxNumPar.Text = SettingsUser.Default.Properties.Count.ToString();
             //Заполнение таблицы
             dataGridViewSYS.Rows.Add(
-            "Система FoxPro", 
-            "FoxProPath", SettingsUser.Default.FoxProPath, "Путь к файлу");
+                "Система FoxPro", 
+                "FoxProPath", SettingsUser.Default.FoxProPath, "Путь к файлу");
             dataGridViewSYS.Rows.Add(
-            "Программа Book",
-            "BookPath", SettingsUser.Default.BookPath, "Путь к файлу");
+                "Программа Book",
+                "BookPath", SettingsUser.Default.BookPath, "Путь к файлу");
             dataGridViewSYS.Rows.Add(
-            "Cистема \"Создание триангуляционных моделей\"",
-            "Base_TriPath", SettingsUser.Default.Base_TriPath, "Путь к файлу");
+                "Cистема \"Создание триангуляционных моделей\"",
+                "Base_TriPath", SettingsUser.Default.Base_TriPath, "Путь к файлу");
             dataGridViewSYS.Rows.Add(
-            "Система \"Морфологический анализ триангуляционных моделей\"",
-            "Anal_MorPath", SettingsUser.Default.Anal_MorPath, "Путь к файлу");
+                "Система \"Морфологический анализ триангуляционных моделей\"",
+                "Anal_MorPath", SettingsUser.Default.Anal_MorPath, "Путь к файлу");
             dataGridViewSYS.Rows.Add(
-            "Cистема \"Интегрированные генеративные технологии(классификация технологий, характеристики оборудования)\"",
-            "RP_TechnPath", SettingsUser.Default.RP_TechnPath, "Путь к файлу");
+                "Cистема \"Интегрированные генеративные технологии(классификация технологий, характеристики оборудования)\"",
+                "RP_TechnPath", SettingsUser.Default.RP_TechnPath, "Путь к файлу");
             dataGridViewSYS.Rows.Add(
-            "Система \"Статистическое моделирование рабочих процессов интегрированных технологий\"",
-            "Stat_Mod", SettingsUser.Default.Stat_Mod, "Путь к файлу");
+                "Система \"Статистическое моделирование рабочих процессов интегрированных технологий\"",
+                "Stat_Mod", SettingsUser.Default.Stat_Mod, "Путь к файлу");
             dataGridViewSYS.Rows.Add(
-            "Программа для просмотра STL",
-            "GLC_PlayerPuth", SettingsUser.Default.GLC_PlayerPuth, "Путь к файлу");
+                "Программа для просмотра STL",
+                "GLC_PlayerPuth", SettingsUser.Default.GLC_PlayerPuth, "Путь к файлу");
             dataGridViewSYS.Rows.Add(
-            "Программа Magics", "MagicsPuth", SettingsUser.Default.MagicsPuth, "Путь к файлу");
+                "Программа Magics", "MagicsPuth", SettingsUser.Default.MagicsPuth, "Путь к файлу");
             //ExcelPath
             dataGridViewSYS.Rows.Add(
-            "Программа Excel", "ExcelPath", SettingsUser.Default.ExcelPath, "Путь к файлу");
+                "Программа Excel", "ExcelPath", SettingsUser.Default.ExcelPath, "Путь к файлу");
             //Точность округления координат вершин для операций сравнения
             dataGridViewSYS.Rows.Add(
-            "Точность сравнения координат вершин", "RoundingKoord", SettingsUser.Default.RoundingKoord, "float");
+                "Точность сравнения координат вершин", "RoundingKoord", SettingsUser.Default.RoundingKoord, "float");
             //Точность задания координат по оси Z (дискретность)
             dataGridViewSYS.Rows.Add(
-            "Дискретность задания координат по оси Z", "PositionResolution", SettingsUser.Default.PositionResolution, "float");
+                "Дискретность задания координат по оси Z", "PositionResolution", SettingsUser.Default.PositionResolution, "float");
             //Поддержка многопоточной обработки данных
             dataGridViewSYS.Rows.Add(
-            "Многопоточная обработка данных", "Multithreading", SettingsUser.Default.Multithreading, "bool");
+                "Многопоточная обработка данных", "Multithreading", SettingsUser.Default.Multithreading, "bool");
+            dataGridViewSYS.Rows.Add(
+                "Название установки", "NameEquipment", SettingsUser.Default.NameEquipment, "string");
+            // Параметры для размещения 3D-моделей изделий в рабочем пространстве
+            dataGridViewSYS.Rows.Add(
+                "Безопасное расстояние между моделями", "SafeDistanceBody", SettingsUser.Default.SafeDistanceBody, "float");
+            dataGridViewSYS.Rows.Add(
+                "Безопасное расстояние до границ платформы", "SafeDistanceBorder", SettingsUser.Default.SafeDistanceBorder, "float");
+            dataGridViewSYS.Rows.Add(
+                "Максимальная координата по оси X рабочей платформы", "WorkXmax", SettingsUser.Default.WorkXmax, "float");
+            dataGridViewSYS.Rows.Add(
+                "Минимальная координата по оси X рабочей платформы", "WorkXmin", SettingsUser.Default.WorkXmin, "float");
+            dataGridViewSYS.Rows.Add(
+                "Максимальная координата по оси Y рабочей платформы", "WorkYmax", SettingsUser.Default.WorkYmax, "float");
+            dataGridViewSYS.Rows.Add(
+                "Минимальная координата по оси Y рабочей платформы", "WorkYmin", SettingsUser.Default.WorkYmin, "float");
+            dataGridViewSYS.Rows.Add(
+                "Максимальная координата по оси Z рабочей платформы", "WorkZmax", SettingsUser.Default.WorkZmax, "float");
+            dataGridViewSYS.Rows.Add(
+                "Минимальная координата по оси Z рабочей платформы", "WorkZmin", SettingsUser.Default.WorkZmin, "float");
+            dataGridViewSYS.Rows.Add(
+                "Высота рабочего пространства установки", "WorkHeight", SettingsUser.Default.WorkHeight, "float");
+            dataGridViewSYS.Rows.Add(
+                "Длина платформы установки", "WorkLength", SettingsUser.Default.WorkLength, "float");
+            dataGridViewSYS.Rows.Add(
+                "Ширина платформы установки", "WorkWidth", SettingsUser.Default.WorkWidth, "float");
         }
         /// <summary>
         /// Сохранение изменений настроек
@@ -78,11 +103,12 @@ namespace PreAddTech
                 try
                 {
                     if (dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, i].Value.ToString() == "Путь к файлу" ||
+                        dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, i].Value.ToString() == "string" ||
                         dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, i].Value.ToString() == "float")
                     SettingsUser.Default[dataGridViewSYS[dataGridViewSYS.Columns["NamePar"].Index, i].Value.ToString()] =
                         dataGridViewSYS[dataGridViewSYS.Columns["Value"].Index, i].Value.ToString();
 
-                    if (dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, i].Value.ToString() == "bool")
+                    else if (dataGridViewSYS[dataGridViewSYS.Columns["Type"].Index, i].Value.ToString() == "bool")
                         SettingsUser.Default[dataGridViewSYS[dataGridViewSYS.Columns["NamePar"].Index, i].Value.ToString()] =
                             bool.Parse(dataGridViewSYS[dataGridViewSYS.Columns["Value"].Index, i].Value.ToString());
                 }
@@ -138,6 +164,31 @@ namespace PreAddTech
             //Поддержка многопоточной обработки данных
             dataGridViewSYS.Rows.Add(
             "Многопоточная обработка данных", "Multithreading", Settings_AT.Default.Multithreading, "bool");
+            dataGridViewSYS.Rows.Add(
+                "Название установки", "NameEquipment", Settings_AT.Default.NameEquipment, "string");
+            // Параметры для размещения 3D-моделей изделий в рабочем пространстве
+            dataGridViewSYS.Rows.Add(
+                "Безопасное расстояние между моделями", "SafeDistanceBody", Settings_AT.Default.SafeDistanceBody, "float");
+            dataGridViewSYS.Rows.Add(
+                "Безопасное расстояние до границ платформы", "SafeDistanceBorder", Settings_AT.Default.SafeDistanceBorder, "float");
+            dataGridViewSYS.Rows.Add(
+                "Максимальная координата по оси X рабочей платформы", "WorkXmax", Settings_AT.Default.WorkXmax, "float");
+            dataGridViewSYS.Rows.Add(
+                "Минимальная координата по оси X рабочей платформы", "WorkXmin", Settings_AT.Default.WorkXmin, "float");
+            dataGridViewSYS.Rows.Add(
+                "Максимальная координата по оси Y рабочей платформы", "WorkYmax", Settings_AT.Default.WorkYmax, "float");
+            dataGridViewSYS.Rows.Add(
+                "Минимальная координата по оси Y рабочей платформы", "WorkYmin", Settings_AT.Default.WorkYmin, "float");
+            dataGridViewSYS.Rows.Add(
+                "Максимальная координата по оси Z рабочей платформы", "WorkZmax", Settings_AT.Default.WorkZmax, "float");
+            dataGridViewSYS.Rows.Add(
+                "Минимальная координата по оси Z рабочей платформы", "WorkZmin", Settings_AT.Default.WorkZmin, "float");
+            dataGridViewSYS.Rows.Add(
+                "Высота рабочего пространства установки", "WorkHeight", Settings_AT.Default.WorkHeight, "float");
+            dataGridViewSYS.Rows.Add(
+                "Длина платформы установки", "WorkLength", Settings_AT.Default.WorkLength, "float");
+            dataGridViewSYS.Rows.Add(
+                "Ширина платформы установки", "WorkWidth", Settings_AT.Default.WorkWidth, "float");
         }
         /// <summary>
         /// Задание пути к файлу

@@ -8,7 +8,7 @@ namespace PreAddTech
     /// <summary>
     /// Класс процедур работы с цветом
     /// </summary>
-    class ColorProcedures
+    public class ColorProcedures
     {
         /// <summary>
         /// Изменение цвета объекта Label
@@ -18,7 +18,7 @@ namespace PreAddTech
         /// <param name="G"></param>
         /// <param name="B"></param>
         /// <param name="check"></param>
-        public void changeColorLabel(object objLabel, int R, int G, int B, bool check = true)
+        public void ChangeColorLabel(object objLabel, int R, int G, int B, bool check = true)
         {
             if (check)
             {
@@ -39,7 +39,15 @@ namespace PreAddTech
             }
         }
 
-        public void doubleClickColorLabel(object objLabel, ColorDialog colorDialogSelect, object R1,
+        /// <summary>
+        /// Задание цвета в форме выбора цвета по двойному щелчку на объекте Label
+        /// </summary>
+        /// <param name="objLabel"></param>
+        /// <param name="colorDialogSelect"></param>
+        /// <param name="R1"></param>
+        /// <param name="G1"></param>
+        /// <param name="B1"></param>
+        public void DoubleClickColorLabel(object objLabel, ColorDialog colorDialogSelect, object R1,
                                           object G1, object B1)
         {
             if (colorDialogSelect.ShowDialog() == DialogResult.OK)

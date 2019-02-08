@@ -117,15 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;buttonProperty.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="buttonSwitch.Text" xml:space="preserve">
+    <value>Distribution function</value>
   </data>
-  <data name="&gt;&gt;chartGistogram.Name" xml:space="preserve">
-    <value>chartGistogram</value>
+  <data name="buttonProperty.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="buttonComparison.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonComparison.Text" xml:space="preserve">
+    <value>Comparative analysis</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonTest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 25</value>
+  </data>
+  <data name="buttonTest.Text" xml:space="preserve">
+    <value>Statistical hypothesis testing</value>
+  </data>
+  <data name="comboBoxAlfa.Location" type="System.Drawing.Point, System.Drawing">
+    <value>575, 2</value>
+  </data>
   <data name="comboBoxAlfa.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 21</value>
+    <value>79, 21</value>
+  </data>
+  <data name="comboBoxAlfa.Text" xml:space="preserve">
+    <value>0,050</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3976,291 +3995,7 @@
         40WL5ZGFIgFDhgw5+sYbb/x/FovFTPfu3a0BeKT5f/7f/x9MVVoRcYJofAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="&gt;&gt;buttonSwitch.Name" xml:space="preserve">
-    <value>buttonSwitch</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chartGistogram.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="comboBoxAlfa.ItemHeight" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxResultVerify.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="buttonComparison.Location" type="System.Drawing.Point, System.Drawing">
-    <value>256, 0</value>
-  </data>
-  <data name="chartIntegral.Text" xml:space="preserve">
-    <value>chart1</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxResultVerify.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormGist</value>
-  </data>
-  <data name="buttonComparison.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;chartGistogram.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chartIntegral.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataVisualization.Charting.Chart, System.Windows.Forms.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</value>
-  </data>
-  <data name="buttonTest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>399, 0</value>
-  </data>
-  <data name="buttonTest.Text" xml:space="preserve">
-    <value>Проверка гипотезы</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="buttonComparison.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="comboBoxAlfa.Items1" xml:space="preserve">
-    <value>0,150</value>
-  </data>
-  <data name="&gt;&gt;propertyGridUniverse.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;buttonTest.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="comboBoxAlfa.Items5" xml:space="preserve">
-    <value>0,010</value>
-  </data>
-  <data name="chartGistogram.Size" type="System.Drawing.Size, System.Drawing">
-    <value>784, 400</value>
-  </data>
-  <data name="chartIntegral.Size" type="System.Drawing.Size, System.Drawing">
-    <value>784, 400</value>
-  </data>
-  <data name="propertyGridUniverse.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
-  </data>
-  <data name="buttonProperty.Location" type="System.Drawing.Point, System.Drawing">
-    <value>664, 0</value>
-  </data>
-  <data name="comboBoxAlfa.Text" xml:space="preserve">
-    <value>0,05</value>
-  </data>
-  <data name="&gt;&gt;buttonProperty.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="comboBoxAlfa.Items3" xml:space="preserve">
-    <value>0,050</value>
-  </data>
-  <data name="&gt;&gt;propertyGridUniverse.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="comboBoxAlfa.Items7" xml:space="preserve">
-    <value>0,001</value>
-  </data>
-  <data name="&gt;&gt;chartIntegral.Name" xml:space="preserve">
-    <value>chartIntegral</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlfa.Name" xml:space="preserve">
-    <value>comboBoxAlfa</value>
-  </data>
-  <data name="buttonProperty.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="buttonSwitch.Text" xml:space="preserve">
-    <value>Интегральная функция распределения</value>
-  </data>
-  <data name="richTextBoxResultVerify.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;propertyGridUniverse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="buttonComparison.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 25</value>
-  </data>
-  <data name="buttonComparison.Text" xml:space="preserve">
-    <value>Сравнительный анализ</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxResultVerify.Name" xml:space="preserve">
-    <value>richTextBoxResultVerify</value>
-  </data>
-  <data name="chartIntegral.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="&gt;&gt;buttonSwitch.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="chartIntegral.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="buttonSwitch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>-1, 0</value>
-  </data>
-  <data name="comboBoxAlfa.Items" xml:space="preserve">
-    <value>0,200</value>
-  </data>
-  <data name="comboBoxAlfa.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="comboBoxAlfa.Items4" xml:space="preserve">
-    <value>0,025</value>
-  </data>
-  <data name="&gt;&gt;chartGistogram.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataVisualization.Charting.Chart, System.Windows.Forms.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</value>
-  </data>
-  <data name="richTextBoxResultVerify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>501, 31</value>
-  </data>
-  <data name="richTextBoxResultVerify.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;buttonTest.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlfa.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;buttonComparison.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chartIntegral.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;richTextBoxResultVerify.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;propertyGridUniverse.Name" xml:space="preserve">
-    <value>propertyGridUniverse</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlfa.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonComparison.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="buttonProperty.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 25</value>
-  </data>
-  <data name="&gt;&gt;buttonSwitch.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;buttonComparison.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="propertyGridUniverse.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="buttonProperty.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="&gt;&gt;buttonProperty.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="buttonTest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 25</value>
-  </data>
-  <data name="richTextBoxResultVerify.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="propertyGridUniverse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>283, 375</value>
-  </data>
-  <data name="&gt;&gt;buttonTest.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;buttonTest.Name" xml:space="preserve">
-    <value>buttonTest</value>
-  </data>
-  <data name="comboBoxAlfa.MaxDropDownItems" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Гистограмма распределения</value>
+    <value>Histogram of the distribution</value>
   </data>
-  <data name="comboBoxAlfa.Items2" xml:space="preserve">
-    <value>0,100</value>
-  </data>
-  <data name="richTextBoxResultVerify.Size" type="System.Drawing.Size, System.Drawing">
-    <value>271, 357</value>
-  </data>
-  <data name="chartIntegral.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;buttonProperty.Name" xml:space="preserve">
-    <value>buttonProperty</value>
-  </data>
-  <data name="propertyGridUniverse.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt</value>
-  </data>
-  <data name="comboBoxAlfa.Items6" xml:space="preserve">
-    <value>0,005</value>
-  </data>
-  <data name="propertyGridUniverse.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="buttonTest.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="buttonProperty.Text" xml:space="preserve">
-    <value>Настройки</value>
-  </data>
-  <data name="&gt;&gt;chartGistogram.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;buttonComparison.Name" xml:space="preserve">
-    <value>buttonComparison</value>
-  </data>
-  <data name="buttonTest.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="&gt;&gt;buttonSwitch.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chartIntegral.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="propertyGridUniverse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>501, 25</value>
-  </data>
-  <data name="chartGistogram.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="buttonSwitch.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>784, 400</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="comboBoxAlfa.Location" type="System.Drawing.Point, System.Drawing">
-    <value>544, 2</value>
-  </data>
-  <data name="buttonSwitch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>250, 25</value>
-  </data>
-  <data name="chartGistogram.Text" xml:space="preserve">
-    <value>chart1</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlfa.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="chartGistogram.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>en</value>
-  </metadata>
 </root>

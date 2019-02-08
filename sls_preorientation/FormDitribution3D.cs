@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Globalization;
 
 namespace PreAddTech
 {
@@ -58,11 +59,11 @@ namespace PreAddTech
                 trackBarHeight.Maximum = intervalsZ;
                 currentH = coordinateH.Z;
             }
-            trackBarHeight_ValueChanged(sender, e);
+            TrackBarHeight_ValueChanged(sender, e);
             panelReview3D.Refresh();
         }
 
-        private void panelReview3D_Paint(object sender, PaintEventArgs e)
+        private void PanelReview3D_Paint(object sender, PaintEventArgs e)
         {
             try
             {
@@ -194,29 +195,29 @@ namespace PreAddTech
             }
         }
 
-        private void numericUpDownR1_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownR1_ValueChanged(object sender, EventArgs e)
         {
-            cproc.changeColorLabel(labelRGB1, (int)numericUpDownR1.Value,
+            cproc.ChangeColorLabel(labelRGB1, (int)numericUpDownR1.Value,
                                               (int)numericUpDownG1.Value,
                                               (int)numericUpDownB1.Value);
         }
 
-        private void numericUpDownR2_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownR2_ValueChanged(object sender, EventArgs e)
         {
-            cproc.changeColorLabel(labelRGB2, (int)numericUpDownR2.Value,
+            cproc.ChangeColorLabel(labelRGB2, (int)numericUpDownR2.Value,
                                               (int)numericUpDownG2.Value,
                                               (int)numericUpDownB2.Value);
         }
 
-        private void labelRGB1_DoubleClick(object sender, EventArgs e)
+        private void LabelRGB1_DoubleClick(object sender, EventArgs e)
         {
-            cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDownR1,
+            cproc.DoubleClickColorLabel(sender, colorDialogSelect, numericUpDownR1,
                                           numericUpDownG1, numericUpDownB1);
         }
 
-        private void labelRGB2_Click(object sender, EventArgs e)
+        private void LabelRGB2_Click(object sender, EventArgs e)
         {
-            cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDownR2,
+            cproc.DoubleClickColorLabel(sender, colorDialogSelect, numericUpDownR2,
                               numericUpDownG2, numericUpDownB2);
         }
         /// <summary>
@@ -228,11 +229,19 @@ namespace PreAddTech
         {
             labelСurrent.Text = "Z: 1/" + intervalsZ;
             trackBarHeight.Maximum = intervalsZ;
-            labelStat.Text = "Количество элементов декомпозиции: " +
+            if (CultureInfo.CurrentCulture.Name == "en")
+            {
+                labelStat.Text = "Number of subspaces: " +
                              (intervalsX * intervalsY * intervalsZ).ToString();
+            }
+            else
+            {
+                labelStat.Text = "Количество элементов декомпозиции: " +
+                             (intervalsX * intervalsY * intervalsZ).ToString();
+            }
         }
 
-        private void trackBarHeight_ValueChanged(object sender, EventArgs e)
+        private void TrackBarHeight_ValueChanged(object sender, EventArgs e)
         {
             panelReview3D.Refresh();
             if(currentH == coordinateH.X)
@@ -294,24 +303,36 @@ namespace PreAddTech
                     }
                 }
             }
-            labelStat.Text = "Количество элементов декомпозиции: " +
-                             (intervalsX * intervalsY * intervalsZ).ToString() + 
-                             "; пустых: " + emptyElement + "; полных: " + fullElement + 
-                             "; заполненных на 50...100%: " + limitElement + ".";
+            if (CultureInfo.CurrentCulture.Name == "en")
+            {
+                labelStat.Text = "Number of subspaces: " +
+                                    (intervalsX * intervalsY * intervalsZ).ToString() +
+                                    "; free: " + emptyElement + "; full: " + fullElement +
+                                    "; filled at 50...100%: " + limitElement + ".";
+            }
+            else
+            {
+                labelStat.Text = "Количество элементов декомпозиции: " +
+                                 (intervalsX * intervalsY * intervalsZ).ToString() + 
+                                 "; пустых: " + emptyElement + "; полных: " + fullElement + 
+                                 "; заполненных на 50...100%: " + limitElement + ".";                    
+            }
             try
             {
                 FormGist formGistogram = new FormGist();
                 if (checkBoxVoxelPartOrFree.CheckState == CheckState.Checked)
                 {
                     gist3D = statistica3D.Gist(tempMassiveVoxel3D.ToArray(), 10);
-                    formGistogram.Text = "Гистограмма распределения относительного объема " +
-                                         "заполнения элементов декомпозиции";
+                    formGistogram.Text = "Распределение заполненности материалом изделия по подпространствам";
+                    if(CultureInfo.CurrentCulture.Name == "en")
+                        formGistogram.Text = "Distribution of the material filling of the product in subspaces";
                 }
                 else
                 {
                     gist3D = statistica3D.Gist(tempMassiveVoxel3DEmpty.ToArray(), 10);
-                    formGistogram.Text = "Гистограмма распределения относительного объема " +
-                     "свободного пространства для элементов декомпозиции";
+                    formGistogram.Text = "Распределение свободного пространства по подпространствам";
+                    if (CultureInfo.CurrentCulture.Name == "en")
+                        formGistogram.Text = "Distribution of free space in subspaces";
                 }
                 
                 formGistogram.Activate();

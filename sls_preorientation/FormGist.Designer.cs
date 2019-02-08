@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGist));
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGist));
             this.chartGistogram = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.buttonSwitch = new System.Windows.Forms.Button();
             this.chartIntegral = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -48,125 +48,86 @@
             // 
             // chartGistogram
             // 
+            resources.ApplyResources(this.chartGistogram, "chartGistogram");
             chartArea1.Name = "ChartArea1";
             this.chartGistogram.ChartAreas.Add(chartArea1);
-            this.chartGistogram.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartGistogram.Location = new System.Drawing.Point(0, 0);
             this.chartGistogram.Name = "chartGistogram";
             series1.ChartArea = "ChartArea1";
             series1.Name = "Series1";
             this.chartGistogram.Series.Add(series1);
-            this.chartGistogram.Size = new System.Drawing.Size(784, 400);
-            this.chartGistogram.TabIndex = 0;
-            this.chartGistogram.Text = "chart1";
             // 
             // buttonSwitch
             // 
-            this.buttonSwitch.Location = new System.Drawing.Point(-1, 0);
+            resources.ApplyResources(this.buttonSwitch, "buttonSwitch");
             this.buttonSwitch.Name = "buttonSwitch";
-            this.buttonSwitch.Size = new System.Drawing.Size(250, 25);
-            this.buttonSwitch.TabIndex = 1;
-            this.buttonSwitch.Text = "Интегральная функция распределения";
             this.buttonSwitch.UseVisualStyleBackColor = true;
             this.buttonSwitch.Click += new System.EventHandler(this.ButtonSwitch_Click);
             // 
             // chartIntegral
             // 
+            resources.ApplyResources(this.chartIntegral, "chartIntegral");
             chartArea2.Name = "ChartArea1";
             this.chartIntegral.ChartAreas.Add(chartArea2);
-            this.chartIntegral.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartIntegral.Location = new System.Drawing.Point(0, 0);
             this.chartIntegral.Name = "chartIntegral";
             series2.ChartArea = "ChartArea1";
             series2.Name = "Series1";
             this.chartIntegral.Series.Add(series2);
-            this.chartIntegral.Size = new System.Drawing.Size(784, 400);
-            this.chartIntegral.TabIndex = 2;
-            this.chartIntegral.Text = "chart1";
             // 
             // buttonProperty
             // 
-            this.buttonProperty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonProperty.Location = new System.Drawing.Point(664, 0);
+            resources.ApplyResources(this.buttonProperty, "buttonProperty");
             this.buttonProperty.Name = "buttonProperty";
-            this.buttonProperty.Size = new System.Drawing.Size(120, 25);
-            this.buttonProperty.TabIndex = 8;
-            this.buttonProperty.Text = "Настройки";
             this.buttonProperty.UseVisualStyleBackColor = true;
             this.buttonProperty.Click += new System.EventHandler(this.ButtonProperty_Click);
             // 
             // propertyGridUniverse
             // 
-            this.propertyGridUniverse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.propertyGridUniverse.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.propertyGridUniverse.Location = new System.Drawing.Point(501, 25);
+            resources.ApplyResources(this.propertyGridUniverse, "propertyGridUniverse");
             this.propertyGridUniverse.Name = "propertyGridUniverse";
             this.propertyGridUniverse.SelectedObject = this.chartGistogram;
-            this.propertyGridUniverse.Size = new System.Drawing.Size(283, 375);
-            this.propertyGridUniverse.TabIndex = 9;
             this.propertyGridUniverse.ToolbarVisible = false;
-            this.propertyGridUniverse.Visible = false;
             // 
             // buttonComparison
             // 
-            this.buttonComparison.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonComparison.Location = new System.Drawing.Point(256, 0);
+            resources.ApplyResources(this.buttonComparison, "buttonComparison");
             this.buttonComparison.Name = "buttonComparison";
-            this.buttonComparison.Size = new System.Drawing.Size(136, 25);
-            this.buttonComparison.TabIndex = 17;
-            this.buttonComparison.Text = "Сравнительный анализ";
             this.buttonComparison.UseVisualStyleBackColor = true;
-            this.buttonComparison.Click += new System.EventHandler(this.buttonComparison_Click);
+            this.buttonComparison.Click += new System.EventHandler(this.ButtonComparison_Click);
             // 
             // buttonTest
             // 
-            this.buttonTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTest.Location = new System.Drawing.Point(399, 0);
+            resources.ApplyResources(this.buttonTest, "buttonTest");
             this.buttonTest.Name = "buttonTest";
-            this.buttonTest.Size = new System.Drawing.Size(136, 25);
-            this.buttonTest.TabIndex = 18;
-            this.buttonTest.Text = "Проверка гипотезы";
             this.buttonTest.UseVisualStyleBackColor = true;
-            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
+            this.buttonTest.Click += new System.EventHandler(this.ButtonTest_Click);
             // 
             // richTextBoxResultVerify
             // 
-            this.richTextBoxResultVerify.Location = new System.Drawing.Point(501, 31);
+            resources.ApplyResources(this.richTextBoxResultVerify, "richTextBoxResultVerify");
             this.richTextBoxResultVerify.Name = "richTextBoxResultVerify";
             this.richTextBoxResultVerify.ReadOnly = true;
-            this.richTextBoxResultVerify.Size = new System.Drawing.Size(271, 357);
-            this.richTextBoxResultVerify.TabIndex = 19;
-            this.richTextBoxResultVerify.Text = "";
-            this.richTextBoxResultVerify.Visible = false;
-            this.richTextBoxResultVerify.DoubleClick += new System.EventHandler(this.richTextBoxResultVerify_DoubleClick);
+            this.richTextBoxResultVerify.DoubleClick += new System.EventHandler(this.RichTextBoxResultVerify_DoubleClick);
             // 
             // comboBoxAlfa
             // 
+            resources.ApplyResources(this.comboBoxAlfa, "comboBoxAlfa");
             this.comboBoxAlfa.FormattingEnabled = true;
-            this.comboBoxAlfa.ItemHeight = 13;
             this.comboBoxAlfa.Items.AddRange(new object[] {
-            "0,200",
-            "0,150",
-            "0,100",
-            "0,050",
-            "0,025",
-            "0,010",
-            "0,005",
-            "0,001"});
-            this.comboBoxAlfa.Location = new System.Drawing.Point(544, 2);
-            this.comboBoxAlfa.MaxDropDownItems = 9;
+            resources.GetString("comboBoxAlfa.Items"),
+            resources.GetString("comboBoxAlfa.Items1"),
+            resources.GetString("comboBoxAlfa.Items2"),
+            resources.GetString("comboBoxAlfa.Items3"),
+            resources.GetString("comboBoxAlfa.Items4"),
+            resources.GetString("comboBoxAlfa.Items5"),
+            resources.GetString("comboBoxAlfa.Items6"),
+            resources.GetString("comboBoxAlfa.Items7")});
             this.comboBoxAlfa.Name = "comboBoxAlfa";
-            this.comboBoxAlfa.Size = new System.Drawing.Size(110, 21);
-            this.comboBoxAlfa.TabIndex = 21;
-            this.comboBoxAlfa.Text = "0,05";
             this.comboBoxAlfa.UseWaitCursor = true;
             // 
             // FormGist
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 400);
             this.Controls.Add(this.richTextBoxResultVerify);
             this.Controls.Add(this.comboBoxAlfa);
             this.Controls.Add(this.buttonTest);
@@ -177,11 +138,8 @@
             this.Controls.Add(this.chartGistogram);
             this.Controls.Add(this.chartIntegral);
             this.HelpButton = true;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormGist";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Гистограмма распределения";
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.chartGistogram)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartIntegral)).EndInit();

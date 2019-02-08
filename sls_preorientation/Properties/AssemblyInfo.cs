@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("The system of technological preparation of additive technologies")]
+[assembly: AssemblyTitle("The system of technological preparation of additive manufacturing")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("НТУ ХПИ")]
 [assembly: AssemblyProduct("AT_preparation")]
-[assembly: AssemblyCopyright("Copyright ©  2017 Гаращенко Ярослав Николаевич")]
+[assembly: AssemblyCopyright("Copyright ©  2019 Гаращенко Ярослав Николаевич")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // Можно задать все значения или принять номер построения и номер редакции по умолчанию, 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1.7")]
+[assembly: AssemblyVersion("1.0.1.9")]
 [assembly: AssemblyFileVersion("1.0.0.2")]

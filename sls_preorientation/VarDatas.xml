@@ -1,41 +1,126 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Variants>
   <Variant id="1">
-    <check>false</check>
-    <number>1</number>
-    <group>1</group>
-    <name></name>
-    <path></path>
-    <selectAnalyse></selectAnalyse>
-    <resultAnalyse></resultAnalyse>
-    <dataAnalyse></dataAnalyse>
-    <dateTime>2018/07/22; 16:59</dateTime>
-    <comment>Расчет 1</comment>
+    <SelectVar>true</SelectVar>
+    <Number>1</Number>
+    <Group>1</Group>
+    <Name></Name>
+    <Path></Path>
+    <SelectAnalyse></SelectAnalyse>
+    <ResultAnalyse></ResultAnalyse>
+    <ResearchMassive>
+      <f>0</f>
+      <f>0</f>
+      <f>0</f>
+    </ResearchMassive>
+    <ResearchMassiveZ>
+      <f>0</f>
+      <f>0</f>
+      <f>0</f>
+    </ResearchMassiveZ>
+    <ResultStatParLayer>
+      <min>0</min>
+      <max>0</max>
+      <delta>0</delta>
+      <D>0</D>
+      <sigma>0</sigma>
+      <m>0</m>
+      <Ka>0</Ka>
+      <Ke>0</Ke>
+      <Kv>0</Kv>
+      <Kv>0</Kv>
+      <meana>0</meana>
+      <moda>0</moda>
+      <mediana>0</mediana>
+      <N>0</N>
+    </ResultStatParLayer>
+    <SeriesDensity></SeriesDensity>
+    <SeriesIntegralFunction></SeriesIntegralFunction>
+    <SeriesData></SeriesData>
+    <SeriesFunctionZ></SeriesFunctionZ>
+    <dateTime>2019/01/26; 18:59</dateTime>
     <history></history>
   </Variant>
   <Variant id="2">
-    <check>false</check>
-    <number>2</number>
-    <group>1</group>
-    <name></name>
-    <path></path>
-    <selectAnalyse></selectAnalyse>
-    <resultAnalyse></resultAnalyse>
-    <dataAnalyse></dataAnalyse>
-    <dateTime>2018/07/22; 16:59</dateTime>
-    <comment>Расчет 2</comment>
+    <SelectVar>true</SelectVar>
+    <Number>2</Number>
+    <Group>1</Group>
+    <Name></Name>
+    <Path></Path>
+    <SelectAnalyse></SelectAnalyse>
+    <ResultAnalyse></ResultAnalyse>
+    <ResearchMassive>
+      <f>0</f>
+      <f>0</f>
+      <f>0</f>
+    </ResearchMassive>
+    <ResearchMassiveZ>
+      <f>0</f>
+      <f>0</f>
+      <f>0</f>
+    </ResearchMassiveZ>
+    <ResultStatParLayer>
+      <min>0</min>
+      <max>0</max>
+      <delta>0</delta>
+      <D>0</D>
+      <sigma>0</sigma>
+      <m>0</m>
+      <Ka>0</Ka>
+      <Ke>0</Ke>
+      <Kv>0</Kv>
+      <Kv>0</Kv>
+      <meana>0</meana>
+      <moda>0</moda>
+      <mediana>0</mediana>
+      <N>0</N>
+    </ResultStatParLayer>
+    <SeriesDensity></SeriesDensity>
+    <SeriesIntegralFunction></SeriesIntegralFunction>
+    <SeriesData></SeriesData>
+    <SeriesFunctionZ></SeriesFunctionZ>
+    <dateTime>2019/01/26; 18:59</dateTime>
     <history></history>
   </Variant>
   <Variant id="3">
-    <check>false</check>
-    <number>3</number>
-    <group>2</group>
-    <name></name>
-    <path></path>
-    <resultAnalyse></resultAnalyse>
-    <dataAnalyse></dataAnalyse>
-    <dateTime>2018/07/22; 17:00</dateTime>
-    <comment>Расчет 3</comment>
+    <SelectVar>true</SelectVar>
+    <Number>3</Number>
+    <Group>1</Group>
+    <Name></Name>
+    <Path></Path>
+    <SelectAnalyse></SelectAnalyse>
+    <ResultAnalyse></ResultAnalyse>
+    <ResearchMassive>
+      <f>0</f>
+      <f>0</f>
+      <f>0</f>
+    </ResearchMassive>
+    <ResearchMassiveZ>
+      <f>0</f>
+      <f>0</f>
+      <f>0</f>
+    </ResearchMassiveZ>
+    <ResultStatParLayer>
+      <min>0</min>
+      <max>0</max>
+      <delta>0</delta>
+      <D>0</D>
+      <sigma>0</sigma>
+      <m>0</m>
+      <Ka>0</Ka>
+      <Ke>0</Ke>
+      <Kv>0</Kv>
+      <Kv>0</Kv>
+      <meana>0</meana>
+      <moda>0</moda>
+      <mediana>0</mediana>
+      <N>0</N>
+    </ResultStatParLayer>
+    <SeriesDensity></SeriesDensity>
+    <SeriesIntegralFunction></SeriesIntegralFunction>
+    <SeriesData></SeriesData>
+    <SeriesFunctionZ></SeriesFunctionZ>
+    <dateTime>2019/01/26; 18:59</dateTime>
     <history></history>
   </Variant>
 </Variants>

@@ -1,4 +1,76 @@
-﻿List<object> gistParMassiveLayer = new List<object>();
+﻿            CultureInfo.CurrentCulture = new CultureInfo("en");
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
+            //RegionInfo.CurrentRegion = new RegionInfo("en");
+            CultureInfo.CurrentUICulture = new CultureInfo("en");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+
+new System.Threading.Thread(new ThreadStart(ShowFormAnalPacking)).Start();
+
+            //Многопоточная обработка
+            if (SettingsUser.Default.Multithreading && new Base_threading().MultiCore())
+            {
+
+//  Генетический алгоритм
+	public static double theActualFunction(double[] values)
+	{
+		if (values.GetLength(0) != 2)
+			throw new ArgumentOutOfRangeException("should only have 2 args");
+
+		double x = values[0];
+		double y = values[1];
+		double n = 9;  //  should be an int, but I don't want to waste time casting.
+
+		double f1 = Math.Pow(15*x*y*(1-x)*(1-y)*Math.Sin(n*Math.PI*x)*Math.Sin(n*Math.PI*y),2);
+		return f1;
+	}
+
+	public static void Main()
+	{
+        //  Crossover		= 80%
+        //  Mutation		=  5%
+        //  Population size = 100
+        //  Generations		= 2000
+        //  Genome size		= 2
+        GA ga = new GA(0.8, 0.05, 100, 2000, 2)
+        {
+            FitnessFunction = new GAFunction(theActualFunction),
+            Elitism = true
+        };
+        ga.Go();
+
+		double[] values;
+		double fitness;
+		ga.GetBest(out values, out fitness);
+		System.Console.WriteLine("Best ({0}):", fitness);
+		for (int i = 0 ; i < values.Length ; i++)
+			System.Console.WriteLine("{0} ", values[i]);
+		
+		ga.GetWorst(out values, out fitness);
+		System.Console.WriteLine("\nWorst ({0}):", fitness);
+		for (int i = 0 ; i < values.Length ; i++)
+			System.Console.WriteLine("{0} ", values[i]);
+		
+	}
+
+
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            MyProcedures proc = new MyProcedures();
+			Base_threading threading = new Base_threading();
+			proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, iteration++, coordinateSectionZ.Count() - 1);
+			****
+			////
+			****
+			watch.Stop();
+            TimeSpan ts = watch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+            //
+            toolStripStatusLabelLayerAnalysis.Text = "Данные по сечениям готовы. Время создания: " + elapsedTime;
+            toolStripStatusLabelLayerAnalysis.ForeColor = Color.Black;
+
+
+List<object> gistParMassiveLayer = new List<object>();
 
 //Вывод данных на гистограмму распределения
                     Series seriesStatisticalPar = new Series();

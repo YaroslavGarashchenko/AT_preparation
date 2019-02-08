@@ -204,6 +204,7 @@ namespace PreAddTech
             return minz;
         }
         private float maxx;
+
         /// <summary>
         /// Максимальное значение координат вершин по оси Х
         /// </summary>
@@ -236,6 +237,7 @@ namespace PreAddTech
             maxz = (maxz > z3) ? maxz : z3;
             return maxz;
         }
+
         /// <summary>
         /// Определение попадания точки с координатами X, Y в пределы треугольника
         /// </summary>
@@ -557,6 +559,11 @@ namespace PreAddTech
         /// Коэффициент нормали по оси Z (в градусах угла)
         /// </summary>
         public float ZN { get; set; }
+
+        /// <summary>
+        /// Координата нижней точки по оси Z
+        /// </summary>
+        public float ZB { get; set; }
 
         /// <summary>
         /// Площадь части треугольника попавшего в сечение

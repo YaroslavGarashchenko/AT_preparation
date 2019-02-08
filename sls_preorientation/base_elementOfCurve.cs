@@ -8,7 +8,7 @@ namespace PreAddTech
     /// <summary>
     /// Класс описания элемента контура (прямого отрезка)
     /// </summary>
-    public class base_elementOfCurve
+    public class Base_elementOfCurve
     {
         /// <summary>
         /// Порядковый номер

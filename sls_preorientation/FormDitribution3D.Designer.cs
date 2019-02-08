@@ -63,275 +63,194 @@
             // 
             // trackBarHeight
             // 
+            resources.ApplyResources(this.trackBarHeight, "trackBarHeight");
             this.trackBarHeight.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBarHeight.LargeChange = 2;
-            this.trackBarHeight.Location = new System.Drawing.Point(21, 50);
             this.trackBarHeight.Minimum = 1;
             this.trackBarHeight.Name = "trackBarHeight";
-            this.trackBarHeight.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarHeight.Size = new System.Drawing.Size(45, 473);
-            this.trackBarHeight.TabIndex = 0;
             this.trackBarHeight.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.trackBarHeight.Value = 1;
-            this.trackBarHeight.ValueChanged += new System.EventHandler(this.trackBarHeight_ValueChanged);
+            this.trackBarHeight.ValueChanged += new System.EventHandler(this.TrackBarHeight_ValueChanged);
             // 
             // labelСurrent
             // 
-            this.labelСurrent.AutoSize = true;
+            resources.ApplyResources(this.labelСurrent, "labelСurrent");
             this.labelСurrent.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelСurrent.Location = new System.Drawing.Point(22, 532);
             this.labelСurrent.Name = "labelСurrent";
-            this.labelСurrent.Size = new System.Drawing.Size(45, 15);
-            this.labelСurrent.TabIndex = 1;
-            this.labelСurrent.Text = "Z: 1/10";
             // 
             // buttonSection
             // 
-            this.buttonSection.Location = new System.Drawing.Point(12, 17);
+            resources.ApplyResources(this.buttonSection, "buttonSection");
             this.buttonSection.Name = "buttonSection";
-            this.buttonSection.Size = new System.Drawing.Size(63, 23);
-            this.buttonSection.TabIndex = 2;
-            this.buttonSection.Text = "XY";
             this.buttonSection.UseVisualStyleBackColor = true;
             this.buttonSection.Click += new System.EventHandler(this.buttonSection_Click);
             // 
             // numericUpDownB2
             // 
-            this.numericUpDownB2.Location = new System.Drawing.Point(623, 20);
+            resources.ApplyResources(this.numericUpDownB2, "numericUpDownB2");
             this.numericUpDownB2.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.numericUpDownB2.Name = "numericUpDownB2";
-            this.numericUpDownB2.Size = new System.Drawing.Size(52, 20);
-            this.numericUpDownB2.TabIndex = 40;
-            this.numericUpDownB2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownB2.ValueChanged += new System.EventHandler(this.numericUpDownR2_ValueChanged);
+            this.numericUpDownB2.ValueChanged += new System.EventHandler(this.NumericUpDownR2_ValueChanged);
             // 
             // numericUpDownG2
             // 
-            this.numericUpDownG2.Location = new System.Drawing.Point(554, 20);
+            resources.ApplyResources(this.numericUpDownG2, "numericUpDownG2");
             this.numericUpDownG2.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.numericUpDownG2.Name = "numericUpDownG2";
-            this.numericUpDownG2.Size = new System.Drawing.Size(52, 20);
-            this.numericUpDownG2.TabIndex = 39;
-            this.numericUpDownG2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownG2.ValueChanged += new System.EventHandler(this.numericUpDownR2_ValueChanged);
+            this.numericUpDownG2.ValueChanged += new System.EventHandler(this.NumericUpDownR2_ValueChanged);
             // 
             // numericUpDownR2
             // 
-            this.numericUpDownR2.Location = new System.Drawing.Point(487, 20);
+            resources.ApplyResources(this.numericUpDownR2, "numericUpDownR2");
             this.numericUpDownR2.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.numericUpDownR2.Name = "numericUpDownR2";
-            this.numericUpDownR2.Size = new System.Drawing.Size(52, 20);
-            this.numericUpDownR2.TabIndex = 38;
-            this.numericUpDownR2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownR2.ValueChanged += new System.EventHandler(this.numericUpDownR2_ValueChanged);
+            this.numericUpDownR2.ValueChanged += new System.EventHandler(this.NumericUpDownR2_ValueChanged);
             // 
             // labelRGB2
             // 
-            this.labelRGB2.AutoSize = true;
+            resources.ApplyResources(this.labelRGB2, "labelRGB2");
             this.labelRGB2.BackColor = System.Drawing.Color.Black;
             this.labelRGB2.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelRGB2.Location = new System.Drawing.Point(393, 23);
             this.labelRGB2.Name = "labelRGB2";
-            this.labelRGB2.Size = new System.Drawing.Size(79, 13);
-            this.labelRGB2.TabIndex = 37;
-            this.labelRGB2.Text = "Цвет (Kv=max)";
-            this.labelRGB2.Click += new System.EventHandler(this.labelRGB2_Click);
+            this.labelRGB2.Click += new System.EventHandler(this.LabelRGB2_Click);
             // 
             // numericUpDownB1
             // 
-            this.numericUpDownB1.Location = new System.Drawing.Point(315, 20);
+            resources.ApplyResources(this.numericUpDownB1, "numericUpDownB1");
             this.numericUpDownB1.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.numericUpDownB1.Name = "numericUpDownB1";
-            this.numericUpDownB1.Size = new System.Drawing.Size(52, 20);
-            this.numericUpDownB1.TabIndex = 36;
-            this.numericUpDownB1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDownB1.Value = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.numericUpDownB1.ValueChanged += new System.EventHandler(this.numericUpDownR1_ValueChanged);
+            this.numericUpDownB1.ValueChanged += new System.EventHandler(this.NumericUpDownR1_ValueChanged);
             // 
             // numericUpDownG1
             // 
-            this.numericUpDownG1.Location = new System.Drawing.Point(247, 20);
+            resources.ApplyResources(this.numericUpDownG1, "numericUpDownG1");
             this.numericUpDownG1.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.numericUpDownG1.Name = "numericUpDownG1";
-            this.numericUpDownG1.Size = new System.Drawing.Size(52, 20);
-            this.numericUpDownG1.TabIndex = 35;
-            this.numericUpDownG1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDownG1.Value = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.numericUpDownG1.ValueChanged += new System.EventHandler(this.numericUpDownR1_ValueChanged);
+            this.numericUpDownG1.ValueChanged += new System.EventHandler(this.NumericUpDownR1_ValueChanged);
             // 
             // numericUpDownR1
             // 
-            this.numericUpDownR1.Location = new System.Drawing.Point(180, 20);
+            resources.ApplyResources(this.numericUpDownR1, "numericUpDownR1");
             this.numericUpDownR1.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.numericUpDownR1.Name = "numericUpDownR1";
-            this.numericUpDownR1.Size = new System.Drawing.Size(52, 20);
-            this.numericUpDownR1.TabIndex = 34;
-            this.numericUpDownR1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDownR1.Value = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.numericUpDownR1.ValueChanged += new System.EventHandler(this.numericUpDownR1_ValueChanged);
+            this.numericUpDownR1.ValueChanged += new System.EventHandler(this.NumericUpDownR1_ValueChanged);
             // 
             // label53
             // 
-            this.label53.AutoSize = true;
-            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            resources.ApplyResources(this.label53, "label53");
             this.label53.ForeColor = System.Drawing.Color.Blue;
-            this.label53.Location = new System.Drawing.Point(332, 3);
             this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(15, 13);
-            this.label53.TabIndex = 31;
-            this.label53.Text = "B";
             // 
             // labelRGB1
             // 
-            this.labelRGB1.AutoSize = true;
+            resources.ApplyResources(this.labelRGB1, "labelRGB1");
             this.labelRGB1.BackColor = System.Drawing.Color.White;
-            this.labelRGB1.Location = new System.Drawing.Point(95, 23);
             this.labelRGB1.Name = "labelRGB1";
-            this.labelRGB1.Size = new System.Drawing.Size(69, 13);
-            this.labelRGB1.TabIndex = 33;
-            this.labelRGB1.Text = "Цвет (Kv =0)";
-            this.labelRGB1.DoubleClick += new System.EventHandler(this.labelRGB1_DoubleClick);
+            this.labelRGB1.DoubleClick += new System.EventHandler(this.LabelRGB1_DoubleClick);
             // 
             // label57
             // 
-            this.label57.AutoSize = true;
-            this.label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            resources.ApplyResources(this.label57, "label57");
             this.label57.ForeColor = System.Drawing.Color.Green;
-            this.label57.Location = new System.Drawing.Point(263, 3);
             this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(16, 13);
-            this.label57.TabIndex = 32;
-            this.label57.Text = "G";
             // 
             // label58
             // 
-            this.label58.AutoSize = true;
-            this.label58.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            resources.ApplyResources(this.label58, "label58");
             this.label58.ForeColor = System.Drawing.Color.Red;
-            this.label58.Location = new System.Drawing.Point(195, 3);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(16, 13);
-            this.label58.TabIndex = 30;
-            this.label58.Text = "R";
             // 
             // panelReview3D
             // 
-            this.panelReview3D.AutoScroll = true;
+            resources.ApplyResources(this.panelReview3D, "panelReview3D");
             this.panelReview3D.BackColor = System.Drawing.Color.OldLace;
             this.panelReview3D.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelReview3D.Controls.Add(this.labelStat);
-            this.panelReview3D.Location = new System.Drawing.Point(92, 50);
             this.panelReview3D.Name = "panelReview3D";
-            this.panelReview3D.Size = new System.Drawing.Size(820, 500);
-            this.panelReview3D.TabIndex = 41;
-            this.panelReview3D.Paint += new System.Windows.Forms.PaintEventHandler(this.panelReview3D_Paint);
+            this.panelReview3D.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelReview3D_Paint);
             // 
             // labelStat
             // 
-            this.labelStat.AutoSize = true;
-            this.labelStat.Location = new System.Drawing.Point(3, 482);
+            resources.ApplyResources(this.labelStat, "labelStat");
             this.labelStat.Name = "labelStat";
-            this.labelStat.Size = new System.Drawing.Size(201, 13);
-            this.labelStat.TabIndex = 0;
-            this.labelStat.Text = "Количество элементов декомпозиции";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            resources.ApplyResources(this.label1, "label1");
             this.label1.ForeColor = System.Drawing.Color.Blue;
-            this.label1.Location = new System.Drawing.Point(639, 3);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(15, 13);
-            this.label1.TabIndex = 43;
-            this.label1.Text = "B";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            resources.ApplyResources(this.label2, "label2");
             this.label2.ForeColor = System.Drawing.Color.Green;
-            this.label2.Location = new System.Drawing.Point(569, 3);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(16, 13);
-            this.label2.TabIndex = 44;
-            this.label2.Text = "G";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            resources.ApplyResources(this.label3, "label3");
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(501, 3);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(16, 13);
-            this.label3.TabIndex = 42;
-            this.label3.Text = "R";
             // 
             // checkBoxVoxelPartOrFree
             // 
-            this.checkBoxVoxelPartOrFree.AutoSize = true;
+            resources.ApplyResources(this.checkBoxVoxelPartOrFree, "checkBoxVoxelPartOrFree");
             this.checkBoxVoxelPartOrFree.Checked = true;
             this.checkBoxVoxelPartOrFree.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxVoxelPartOrFree.Location = new System.Drawing.Point(692, 22);
             this.checkBoxVoxelPartOrFree.Name = "checkBoxVoxelPartOrFree";
-            this.checkBoxVoxelPartOrFree.Size = new System.Drawing.Size(70, 17);
-            this.checkBoxVoxelPartOrFree.TabIndex = 45;
-            this.checkBoxVoxelPartOrFree.Text = "Изделие";
             this.checkBoxVoxelPartOrFree.UseVisualStyleBackColor = true;
             this.checkBoxVoxelPartOrFree.CheckStateChanged += new System.EventHandler(this.checkBoxVoxelPartOrFree_CheckStateChanged);
             // 
             // buttonGist
             // 
-            this.buttonGist.Location = new System.Drawing.Point(829, 17);
+            resources.ApplyResources(this.buttonGist, "buttonGist");
             this.buttonGist.Name = "buttonGist";
-            this.buttonGist.Size = new System.Drawing.Size(83, 23);
-            this.buttonGist.TabIndex = 46;
-            this.buttonGist.Text = "Гистограмма";
             this.buttonGist.UseVisualStyleBackColor = true;
             this.buttonGist.Click += new System.EventHandler(this.buttonGist_Click);
             // 
             // FormDitribution3D
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(924, 561);
             this.Controls.Add(this.buttonGist);
             this.Controls.Add(this.checkBoxVoxelPartOrFree);
             this.Controls.Add(this.label1);
@@ -353,12 +272,9 @@
             this.Controls.Add(this.labelСurrent);
             this.Controls.Add(this.trackBarHeight);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormDitribution3D";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Анализ распределения вокселей при объемной декомпозиции";
             this.Load += new System.EventHandler(this.FormDitribution3D_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownB2)).EndInit();

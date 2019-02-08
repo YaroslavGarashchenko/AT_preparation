@@ -9,6 +9,8 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
+using System.Threading;
+using System.Globalization;
 
 namespace PreAddTech
 {
@@ -22,13 +24,20 @@ namespace PreAddTech
         {
             InitializeComponent();
         }
+        //Список данных для анализа
+        public List<VarDatas> varDatasMassive = new List<VarDatas>();
+        
+        /// <summary>
+        /// Процесс для запуска внешних приложений
+        /// </summary>
         Process procBase = new Process();
+
         /// <summary>
         /// Вызов системы "Создание триангуляционных моделей"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button5_Click(object sender, EventArgs e)
+        private void ButtonFox_Click(object sender, EventArgs e)
         {
             try
             {
@@ -49,34 +58,43 @@ namespace PreAddTech
                 MessageBox.Show(e11.Message);
             }
         }
+
         /// <summary>
         /// Запуск подсистемы создания воксельной модели (декомпозиции)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button1_Click(object sender, EventArgs e)
+        private void ButtonCreateVoxModel_Click(object sender, EventArgs e)
         {
             FormAnalysis formCreateVoxModel = new FormAnalysis();
             formCreateVoxModel.Activate();
-            formCreateVoxModel.Show();
             formCreateVoxModel.AnalColorVisual.Dispose();
             formCreateVoxModel.AnalLocation.Dispose();
             formCreateVoxModel.AnalLayer.Dispose();
             formCreateVoxModel.analOrient.Dispose();
-            formCreateVoxModel.Text = ((Button)sender).Text;
-            activeTask = (int)switchActiveTask.analizeDecomposing;
-            formCreateVoxModel.activeTask = switchActiveTask.analizeDecomposing;
+            formCreateVoxModel.Show();
+            if (CultureInfo.CurrentCulture.Name == "en")
+            {
+                formCreateVoxModel.Text = "Structural reversible decomposition";
+            }
+            else
+            {
+                formCreateVoxModel.Text = ((Button)sender).Text;
+            }
+            activeTask = (int)SwitchActiveTask.analizeDecomposing;
+            formCreateVoxModel.activeTask = SwitchActiveTask.analizeDecomposing;
             //Запись данных в историю
             richTextBoxHistory.Text += "Дата: " + DateTime.Now.ToShortDateString() + ";  ";
             richTextBoxHistory.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
             richTextBoxHistory.Text += "Подсистема анализа декомпозиции изделия" + "\n";
         }
+
         /// <summary>
         /// Вызов программы просмотра STL файла
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button9_Click(object sender, EventArgs e)
+        private void ButtonGLC_Player_Click(object sender, EventArgs e)
         {
             try
             {
@@ -97,23 +115,25 @@ namespace PreAddTech
                 MessageBox.Show(e12.Message);
             }
         }
+
         /// <summary>
         /// Открытие блокнота для редактирования файла
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button10_Click(object sender, EventArgs e)
+        private void ButtonNotepad_Click(object sender, EventArgs e)
         {
             procBase.StartInfo.FileName = @"Notepad.exe";
             procBase.StartInfo.Arguments = "";
             procBase.Start();
         }
+
         /// <summary>
         /// Открытие системы "Статистическое моделирование рабочих процессов интегрированных технологий"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button7_Click(object sender, EventArgs e)
+        private void ButtonStat_Mod_Click(object sender, EventArgs e)
         {
             try
             {
@@ -134,12 +154,13 @@ namespace PreAddTech
                 MessageBox.Show(e13.Message);
             }
         }
+
         /// <summary>
         /// Открытие системы "Морфологический анализ триангуляционных моделей"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button6_Click(object sender, EventArgs e)
+        private void ButtonAnalMorfo_Click(object sender, EventArgs e)
         {
             try
             {
@@ -160,12 +181,13 @@ namespace PreAddTech
                 MessageBox.Show(e14.Message);
             }
         }
+
         /// <summary>
         /// Открытие системы "Интегрированные генеративные технологии (классификация технологий, характеристики оборудования)"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button8_Click(object sender, EventArgs e)
+        private void ButtonIGT_Click(object sender, EventArgs e)
         {
             try
             {
@@ -186,12 +208,13 @@ namespace PreAddTech
                 MessageBox.Show(e15.Message);
             }
         }
+
         /// <summary>
         /// Раскрытие на всю форму поля справки
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void richTextBox2_DoubleClick(object sender, EventArgs e)
+        private void RichTextBoxHistory_DoubleClick(object sender, EventArgs e)
         {
             if (richTextBoxHistory.Dock == DockStyle.None)
             {
@@ -207,17 +230,19 @@ namespace PreAddTech
             }
                 
         }
+
         /// <summary>
         /// Просмотр информации о программе
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button11_Click(object sender, EventArgs e)
+        private void ButtonAboutProgram_Click(object sender, EventArgs e)
         {
             AboutProgram formAboutProgram = new AboutProgram();
             formAboutProgram.Activate();
             formAboutProgram.Show();
         }
+
         /*
         /// <summary>
         /// Литература (Book)
@@ -246,8 +271,14 @@ namespace PreAddTech
             }
         }
         */
+        /// <summary>
+        /// Загрузка основной формы системы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ATPreparation_Load(object sender, EventArgs e)
         {
+            //Загрузка БД вариантов рассчетов
             try
             {
                 XmlDocument xDoc = new XmlDocument();
@@ -306,7 +337,7 @@ namespace PreAddTech
             }
         }
 
-        private void fillByToolStripButton_Click(object sender, EventArgs e)
+        private void FillByToolStripButton_Click(object sender, EventArgs e)
         {
 
         }
@@ -315,7 +346,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonSettings_Click(object sender, EventArgs e)
+        private void ButtonSettings_Click(object sender, EventArgs e)
         {
             SettingSys formSettingSys = new SettingSys();
             formSettingSys.Activate();
@@ -427,16 +458,6 @@ namespace PreAddTech
         }
 
         /// <summary>
-        /// Список решаемых задач
-        /// </summary>
-        public enum switchActiveTask {
-                                        analizeDecomposing = 0,
-                                        analizeOrientation,
-                                        analizeSlising,
-                                        analizePacking,
-                                        analizeVisual,
-                                        evaluation};
-        /// <summary>
         /// Активная решаемая задача
         /// </summary>
         public int activeTask;
@@ -446,18 +467,18 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button3_Click(object sender, EventArgs e)
+        private void ButtonAnalisysOrientation_Click(object sender, EventArgs e)
         {
             FormAnalysis formAnalisysOrientationModel = new FormAnalysis();
             formAnalisysOrientationModel.Activate();
-            formAnalisysOrientationModel.Show();
             formAnalisysOrientationModel.AnalVox.Dispose();
             formAnalisysOrientationModel.Vox_model.Dispose();
             formAnalisysOrientationModel.AnalLocation.Dispose();
             formAnalisysOrientationModel.AnalLayer.Dispose();
+            formAnalisysOrientationModel.Show();
             formAnalisysOrientationModel.Text = ((Button)sender).Text;
-            activeTask = (int)switchActiveTask.analizeOrientation;
-            formAnalisysOrientationModel.activeTask = switchActiveTask.analizeOrientation;
+            activeTask = (int)SwitchActiveTask.analizeOrientation;
+            formAnalisysOrientationModel.activeTask = SwitchActiveTask.analizeOrientation;
             //Запись данных в историю
             richTextBoxHistory.Text += "Дата: " + DateTime.Now.ToShortDateString() + ";  ";
             richTextBoxHistory.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
@@ -468,63 +489,74 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button2_Click(object sender, EventArgs e)
+        private void ButtonAnalisysLayer_Click(object sender, EventArgs e)
         {
             FormAnalysis formAnalisysLayerModel = new FormAnalysis();
             formAnalisysLayerModel.Activate();
-            formAnalisysLayerModel.Show();
             formAnalisysLayerModel.AnalVox.Dispose();
             formAnalisysLayerModel.Vox_model.Dispose();
             formAnalisysLayerModel.analOrient.Dispose();
             formAnalisysLayerModel.AnalColorVisual.Dispose();
             formAnalisysLayerModel.AnalLocation.Dispose();
+            formAnalisysLayerModel.Show();
             formAnalisysLayerModel.Text = ((Button)sender).Text;
-            activeTask = (int)switchActiveTask.analizeSlising;
-            formAnalisysLayerModel.activeTask = switchActiveTask.analizeSlising;
+            activeTask = (int)SwitchActiveTask.analizeSlising;
+            formAnalisysLayerModel.activeTask = SwitchActiveTask.analizeSlising;
             //Запись данных в историю
             richTextBoxHistory.Text += "Дата: " + DateTime.Now.ToShortDateString() + ";  ";
             richTextBoxHistory.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
             richTextBoxHistory.Text += "Подсистема послойного анализа модели" + "\n";
         }
+
         /// <summary>
         /// Подсистема рационального расположения моделей изделий на рабочей платформе установки
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button4_Click(object sender, EventArgs e)
+        private void ButtonAnalPacking_Click(object sender, EventArgs e)
         {
-            FormAnalysis formPacking = new FormAnalysis();
-            formPacking.Activate();
-            formPacking.Show();
-            formPacking.AnalVox.Dispose();
-            formPacking.AnalLayer.Dispose();
-            formPacking.AnalColorVisual.Dispose();
-            formPacking.analOrient.Dispose();
-            formPacking.Text = ((Button)sender).Text;
-            formPacking.activeTask = switchActiveTask.analizePacking;
+            ShowFormAnalPacking();
+            activeTask = (int)SwitchActiveTask.analizePacking;
             //Запись данных в историю
             richTextBoxHistory.Text += "Дата: " + DateTime.Now.ToShortDateString() + ";  ";
             richTextBoxHistory.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
             richTextBoxHistory.Text += "Подсистема рационального расположения моделей изделий на рабочей платформе установки" + "\n";
-            activeTask = (int)switchActiveTask.analizePacking;
+
         }
+        /// <summary>
+        /// Показать форму подсистемы расположения 3D-моделей изделий в рабочей области построения
+        /// </summary>
+        void ShowFormAnalPacking()
+        {
+            FormAnalysis formPacking = new FormAnalysis();
+            formPacking.Activate();
+            formPacking.ImportSTL.Dispose();
+            formPacking.AnalVox.Dispose();
+            formPacking.AnalLayer.Dispose();
+            formPacking.analOrient.Dispose();
+            formPacking.AnalColorVisual.Dispose();
+            formPacking.Text = "Подсистема расположения 3D-моделей изделий в рабочей области построения";
+            formPacking.Show();
+            formPacking.activeTask = SwitchActiveTask.analizePacking;
+        }
+
         /// <summary>
         /// Подсистема визуального анализа технологичности изделия
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonAnalysisManufacturability_Click(object sender, EventArgs e)
+        private void ButtonAnalysisManufacturability_Click(object sender, EventArgs e)
         {
             FormAnalysis formAnalysisManufacturability = new FormAnalysis();
             formAnalysisManufacturability.Activate();
-            formAnalysisManufacturability.Show();
             formAnalysisManufacturability.AnalVox.Dispose();
             formAnalysisManufacturability.Vox_model.Dispose();
             formAnalysisManufacturability.analOrient.Dispose();
             formAnalysisManufacturability.AnalLayer.Dispose();
             formAnalysisManufacturability.AnalLocation.Dispose();
+            formAnalysisManufacturability.Show();
             formAnalysisManufacturability.Text = ((Button)sender).Text;
-            formAnalysisManufacturability.activeTask = switchActiveTask.analizeVisual;
+            formAnalysisManufacturability.activeTask = SwitchActiveTask.analizeVisual;
             //Запись данных в историю
             richTextBoxHistory.Text += "Дата: " + DateTime.Now.ToShortDateString() + ";  ";
             richTextBoxHistory.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
@@ -536,7 +568,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonEvaluation_Click_1(object sender, EventArgs e)
+        private void ButtonEvaluation_Click_1(object sender, EventArgs e)
         {
             FormStatAnal formEvaluation = new FormStatAnal();
             formEvaluation.Activate();
@@ -552,11 +584,27 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonHelp_Click(object sender, EventArgs e)
+        private void ButtonHelp_Click(object sender, EventArgs e)
         {
             FormHelp formHelp = new FormHelp();
             formHelp.Activate();
             formHelp.Show();
+        }
+
+        private void ButtonLanguage_Click(object sender, EventArgs e)
+        {
+            if (buttonLanguage.Text == "Русский")
+            {
+            CultureInfo.CurrentCulture = new CultureInfo("ru");
+            CultureInfo.CurrentUICulture = new CultureInfo("ru");
+            buttonLanguage.Text = "English";
+            }
+            else if(buttonLanguage.Text == "English")
+            {
+                CultureInfo.CurrentCulture = new CultureInfo("en");
+                CultureInfo.CurrentUICulture = new CultureInfo("en");
+                buttonLanguage.Text = "Русский";
+            }
         }
     }
 }

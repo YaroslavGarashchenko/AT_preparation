@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Globalization;
 
 namespace PreAddTech
 {
@@ -34,17 +35,35 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void ButtonSwitch_Click(object sender, EventArgs e)
         {
-            if (buttonSwitch.Text == "Интегральная функция распределения")
+            if (CultureInfo.CurrentCulture.Name.Contains("en"))
             {
-                buttonSwitch.Text = "Плотность распределения";
-                chartIntegral.Visible = true;
-                chartGistogram.Visible = false;
+                if (buttonSwitch.Text == "Distribution function")
+                {
+                    buttonSwitch.Text = "Frequency function";
+                    chartIntegral.Visible = true;
+                    chartGistogram.Visible = false;
+                }
+                else
+                {
+                    buttonSwitch.Text = "Distribution function";
+                    chartIntegral.Visible = false;
+                    chartGistogram.Visible = true;
+                }
             }
             else
             {
-                buttonSwitch.Text = "Интегральная функция распределения";
-                chartIntegral.Visible = false;
-                chartGistogram.Visible = true;
+                if (buttonSwitch.Text == "Интегральная функция распределения")
+                {
+                    buttonSwitch.Text = "Плотность распределения";
+                    chartIntegral.Visible = true;
+                    chartGistogram.Visible = false;
+                }
+                else
+                {
+                    buttonSwitch.Text = "Интегральная функция распределения";
+                    chartIntegral.Visible = false;
+                    chartGistogram.Visible = true;
+                }
             }
         }
         /// <summary>
@@ -77,7 +96,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonComparison_Click(object sender, EventArgs e)
+        private void ButtonComparison_Click(object sender, EventArgs e)
         {
 
         }
@@ -92,7 +111,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonTest_Click(object sender, EventArgs e)
+        private void ButtonTest_Click(object sender, EventArgs e)
         {
             SeriesToList(seriesDensity);
             float[] statistics = analysis.Stat(data);
@@ -180,7 +199,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void richTextBoxResultVerify_DoubleClick(object sender, EventArgs e)
+        private void RichTextBoxResultVerify_DoubleClick(object sender, EventArgs e)
         {
             if(((RichTextBox)sender).Dock == DockStyle.Fill)
             {

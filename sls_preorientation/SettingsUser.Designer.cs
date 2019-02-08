@@ -12,7 +12,7 @@ namespace PreAddTech {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
     public sealed partial class SettingsUser : global::System.Configuration.ApplicationSettingsBase {
         
         private static SettingsUser defaultInstance = ((SettingsUser)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new SettingsUser())));
@@ -174,7 +174,7 @@ namespace PreAddTech {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.02")]
         public string PositionResolution {
             get {
                 return ((string)(this["PositionResolution"]));
@@ -196,6 +196,150 @@ namespace PreAddTech {
             }
             set {
                 this["Multithreading"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Vanguard Si2 SLS")]
+        public string NameEquipment {
+            get {
+                return ((string)(this["NameEquipment"]));
+            }
+            set {
+                this["NameEquipment"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public string SafeDistanceBody {
+            get {
+                return ((string)(this["SafeDistanceBody"]));
+            }
+            set {
+                this["SafeDistanceBody"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        public string SafeDistanceBorder {
+            get {
+                return ((string)(this["SafeDistanceBorder"]));
+            }
+            set {
+                this["SafeDistanceBorder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("190.5")]
+        public string WorkXmax {
+            get {
+                return ((string)(this["WorkXmax"]));
+            }
+            set {
+                this["WorkXmax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-190.5")]
+        public string WorkXmin {
+            get {
+                return ((string)(this["WorkXmin"]));
+            }
+            set {
+                this["WorkXmin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("165.1")]
+        public string WorkYmax {
+            get {
+                return ((string)(this["WorkYmax"]));
+            }
+            set {
+                this["WorkYmax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-167.64")]
+        public string WorkYmin {
+            get {
+                return ((string)(this["WorkYmin"]));
+            }
+            set {
+                this["WorkYmin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("457.2")]
+        public string WorkZmax {
+            get {
+                return ((string)(this["WorkZmax"]));
+            }
+            set {
+                this["WorkZmax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-2.54")]
+        public string WorkZmin {
+            get {
+                return ((string)(this["WorkZmin"]));
+            }
+            set {
+                this["WorkZmin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("460")]
+        public string WorkHeight {
+            get {
+                return ((string)(this["WorkHeight"]));
+            }
+            set {
+                this["WorkHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("381")]
+        public string WorkLength {
+            get {
+                return ((string)(this["WorkLength"]));
+            }
+            set {
+                this["WorkLength"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("333")]
+        public string WorkWidth {
+            get {
+                return ((string)(this["WorkWidth"]));
+            }
+            set {
+                this["WorkWidth"] = value;
             }
         }
     }

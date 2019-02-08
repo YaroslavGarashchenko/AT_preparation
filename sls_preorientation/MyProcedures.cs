@@ -8,6 +8,8 @@ using System.Drawing;
 using MSExel = Microsoft.Office.Interop.Excel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text;
+using System.Globalization;
 
 namespace PreAddTech
 {
@@ -206,7 +208,7 @@ namespace PreAddTech
             return HSV;
         }
         /// <summary>
-        /// Процедура перевода данных из STL файла в список List base_stl
+        /// Процедура перевода данных из STL файла (бинарный) в список List base_stl
         /// </summary>
         /// <param name="puthFileSTL">Путь к STL файлу</param>
         /// <returns></returns>
@@ -227,15 +229,10 @@ namespace PreAddTech
                         {
                             Application.DoEvents();
                             Base_stl TrStl = new Base_stl();
-                            // нормальный вектор
-                            TrStl.XN = br.ReadSingle(); TrStl.YN = br.ReadSingle(); TrStl.ZN = br.ReadSingle();
-                            // 1 вершина
-                            TrStl.X1 = br.ReadSingle(); TrStl.Y1 = br.ReadSingle(); TrStl.Z1 = br.ReadSingle();
-                            // 2 вершина
-                            TrStl.X2 = br.ReadSingle(); TrStl.Y2 = br.ReadSingle(); TrStl.Z2 = br.ReadSingle();
-                            // 3 вершина
-                            TrStl.X3 = br.ReadSingle(); TrStl.Y3 = br.ReadSingle(); TrStl.Z3 = br.ReadSingle();
-                            //
+                            TrStl.XN = br.ReadSingle(); TrStl.YN = br.ReadSingle(); TrStl.ZN = br.ReadSingle(); // нормальный вектор
+                            TrStl.X1 = br.ReadSingle(); TrStl.Y1 = br.ReadSingle(); TrStl.Z1 = br.ReadSingle(); // 1 вершина
+                            TrStl.X2 = br.ReadSingle(); TrStl.Y2 = br.ReadSingle(); TrStl.Z2 = br.ReadSingle(); // 2 вершина
+                            TrStl.X3 = br.ReadSingle(); TrStl.Y3 = br.ReadSingle(); TrStl.Z3 = br.ReadSingle(); // 3 вершина
                             AddAttr = br.ReadUInt16();
                             // запись в ListStl
                             ListStl.Add(TrStl);
@@ -250,6 +247,167 @@ namespace PreAddTech
             //
             return ListStl;
         }
+
+        /// <summary>
+        /// Процедура перевода данных из STL файла (текстовый) в список List base_stl
+        /// </summary>
+        /// <param name="puthFileSTL">Путь к STL файлу</param>
+        /// <returns></returns>
+        public List<Base_stl> TranslationSTLtexttoList(string puthFileSTL)
+        {
+            List<Base_stl> ListStl = new List<Base_stl>();
+            string VibFileName = puthFileSTL;
+            try
+            {
+                StreamReader sr4 = new StreamReader(VibFileName, Encoding.Default);
+                string str_temp = "";
+                int Nom = 0; // порядковый номер треугольника
+                string StrNom;
+                int NomVertex = 0; // порядковый номер вершины
+                string x1 = "", y1 = "", z1 = "", x2 = "", y2 = "", z2 = "", x3 = "", y3 = "", z3 = "", xn = "", yn = "", zn = "";
+                string[] p1; // вспомогательный массив
+                MyProcedures proc = new MyProcedures();
+                ListStl.Clear();
+
+                while (!sr4.EndOfStream)
+                {
+                    str_temp = sr4.ReadLine();
+                    if (str_temp.Trim().IndexOf("facet normal", 0) != -1)
+                    {
+                        ++Nom;
+                        p1 = str_temp.Trim().Split(new Char[] { ' ', '\t' });
+                        for (int i = 4; i > 1; i--)
+                        {
+                            switch (i)
+                            {
+                                case 4:
+                                    zn = p1[i].Trim();
+                                    break;
+                                case 3:
+                                    yn = p1[i].Trim();
+                                    break;
+                                case 2:
+                                    xn = p1[i].Trim();
+                                    break;
+                            }
+                            //Проверка на пустую запись
+                            if (p1[i].Trim() == "")
+                            {
+                                MessageBox.Show("Проблема c записью координат нормали треугольника");
+                                return new List<Base_stl>();
+                            }
+                        }
+                    }
+                    if (str_temp.IndexOf("vertex", 0) != -1)
+                    {
+                        ++NomVertex;
+                        p1 = str_temp.Remove(0, str_temp.IndexOf("vertex", 0) + 6).Trim().Split(new Char[] { ' ', '\t' });
+                        for (int i = 2; i >= 0; i--)
+                        {
+                            switch (NomVertex * 10 + i)
+                            {
+                                case 12:
+                                    z1 = p1[i].Trim();
+                                    //MessageBox.Show("z1 = " + z1);
+                                    break;
+                                case 11:
+                                    y1 = p1[i].Trim();
+                                    //MessageBox.Show("y1 = " + y1);
+                                    break;
+                                case 10:
+                                    x1 = p1[i].Trim();
+                                    //MessageBox.Show("x1 = " + x1);
+                                    break;
+                                case 22:
+                                    z2 = p1[i].Trim();
+                                    break;
+                                case 21:
+                                    y2 = p1[i].Trim();
+                                    break;
+                                case 20:
+                                    x2 = p1[i].Trim();
+                                    break;
+                                case 32:
+                                    z3 = p1[i].Trim();
+                                    break;
+                                case 31:
+                                    y3 = p1[i].Trim();
+                                    break;
+                                case 30:
+                                    x3 = p1[i].Trim();
+                                    break;
+                            }
+                            //Проверка на пустую запись
+                            if (p1[i].Trim() == "")
+                            {
+                                MessageBox.Show("Проблема c записью координат вершин. Номер проблемной грани - " + Nom);
+                                return new List<Base_stl>();
+                            }
+                        }
+                    }
+                    // Запись данных треугольника
+                    if (str_temp.Trim() == "endfacet")
+                    {
+                        StrNom = Nom.ToString();
+                        NomVertex = 0;
+                        if (x1.IndexOf(NumberFormatInfo.CurrentInfo.NumberDecimalSeparator) == -1)
+                        {
+                            if (NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == ".")
+                            {
+                                x1 = x1.Replace(',', '.'); y1 = y1.Replace(',', '.'); z1 = z1.Replace(',', '.');
+                                x2 = x2.Replace(',', '.'); y2 = y2.Replace(',', '.'); z2 = z2.Replace(',', '.');
+                                x3 = x3.Replace(',', '.'); y3 = y3.Replace(',', '.'); z3 = z3.Replace(',', '.');
+                                xn = xn.Replace(',', '.'); yn = yn.Replace(',', '.'); zn = zn.Replace(',', '.');
+                            }
+                            else if (NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == ",")
+                            {
+                                x1 = x1.Replace('.', ','); y1 = y1.Replace('.', ','); z1 = z1.Replace('.', ',');
+                                x2 = x2.Replace('.', ','); y2 = y2.Replace('.', ','); z2 = z2.Replace('.', ',');
+                                x3 = x3.Replace('.', ','); y3 = y3.Replace('.', ','); z3 = z3.Replace('.', ',');
+                                xn = xn.Replace('.', ','); yn = yn.Replace('.', ','); zn = zn.Replace('.', ',');
+                            }
+                        }
+                        if ((x1.IndexOf("e") != -1))
+                        {
+                            x1 = x1.Replace('e', 'E'); y1 = y1.Replace('e', 'E'); z1 = z1.Replace('e', 'E');
+                            x2 = x2.Replace('e', 'E'); y2 = y2.Replace('e', 'E'); z2 = z2.Replace('e', 'E');
+                            x3 = x3.Replace('e', 'E'); y3 = y3.Replace('e', 'E'); z3 = z3.Replace('e', 'E');
+                            xn = xn.Replace('e', 'E'); yn = yn.Replace('e', 'E'); zn = zn.Replace('e', 'E');
+                        }
+                                   Base_stl TrSTL = new Base_stl()
+                                    {
+                                        Nom = int.Parse(StrNom),
+                                        X1 = float.Parse(x1),
+                                        Y1 = float.Parse(y1),
+                                        Z1 = float.Parse(z1),
+                                        X2 = float.Parse(x2),
+                                        Y2 = float.Parse(y2),
+                                        Z2 = float.Parse(z2),
+                                        X3 = float.Parse(x3),
+                                        Y3 = float.Parse(y3),
+                                        Z3 = float.Parse(z3),
+                                        XN = float.Parse(xn),
+                                        YN = float.Parse(yn),
+                                        ZN = float.Parse(zn)
+                                    };
+                                    //Исходный цвет - серый
+                                    TrSTL.Rface = 128;
+                                    TrSTL.Gface = 128;
+                                    TrSTL.Bface = 128;
+
+                        ListStl.Add(TrSTL);
+                    }
+                }
+                sr4.Close();
+            }
+            catch (Exception e1)
+            {
+                MessageBox.Show(e1.ToString() + "\n Выбран не верный тип файла");
+            }
+            //
+            return ListStl;
+        }
+
         /// <summary>
         /// Список вершин
         /// </summary>
@@ -408,9 +566,12 @@ namespace PreAddTech
                 ProgressBar.Value = (int)(ProgressBar.Minimum + (ProgressBar.Maximum - ProgressBar.Minimum) * i / count);
             Application.DoEvents();
         }
+
         //Углы поворота модели вокруг осей X и Y
         double angleXrad;
         double angleYrad;
+        double angleZrad;
+
         /// <summary>
         /// Поворот системы координат вокруг осей X и Y
         /// </summary>
@@ -432,6 +593,39 @@ namespace PreAddTech
         }
 
         /// <summary>
+        /// Поворот вокруг оси Z
+        /// </summary>
+        /// <param name="X">координата точки по оси X</param>
+        /// <param name="Y">координата точки по оси Y</param>
+        /// <param name="angleZ">угол поворота</param>
+        /// <returns></returns>
+        public float[] TurnZ(float X, float Y, float angleZ)
+        {
+            //угол в радианах
+            angleZrad = Math.PI * angleZ / 180;
+            float X1 =  X * (float)Math.Cos(angleZrad) - Y * (float)Math.Sin(angleZrad);
+            float Y1 = X * (float)Math.Sin(angleZrad) + Y * (float)Math.Cos(angleZrad);
+            return new float[2] { X1, Y1 };
+        }
+
+        /// <summary>
+        /// Поворот системы координат вокруг осей X и Y и Z
+        /// </summary>
+        /// <param name="X">координата точки по оси X</param>
+        /// <param name="Y">координата точки по оси Y</param>
+        /// <param name="Z">координата точки по оси Z</param>
+        /// <returns>Массив XYZ точки в новой системе координат</returns>
+        public float[] TurnXYZ(float X, float Y, float Z, float angleX, float angleY, float angleZ)
+        {
+            //Варианты для перезагрузки через углы Эйлера
+            //https://ru.wikipedia.org/wiki/Матрица_поворота
+            //Поворот вокруг двух осей
+            float[] twoTurn = TurnXY(X, Y, Z, angleX, angleY);
+            float[] lastTurn = TurnZ(twoTurn[0], twoTurn[1], angleZ);
+            return new float[]{ lastTurn[0], lastTurn[1], twoTurn[2]};
+        }
+
+        /// <summary>
         /// Перемещение воксельной модели
         /// </summary>
         /// <param name="voxModel">воксельная модель</param>
@@ -441,16 +635,16 @@ namespace PreAddTech
         /// <param name="oldXmin">старая координата по оси X</param>
         /// <param name="oldYmin">старая координата по оси Y</param>
         /// <param name="oldZmin">старая координата по оси Z</param>
-        public List<base_vox> MoveVoxels(List<base_vox> voxModel, float newXmin, float newYmin, float newZmin,
+        public List<Base_vox> MoveVoxels(List<Base_vox> voxModel, float newXmin, float newYmin, float newZmin,
                                float oldXmin, float oldYmin, float oldZmin,
                                    ToolStripProgressBar tempProgressBar)
         {
-            List<base_vox> tempList = new List<base_vox>();
+            List<Base_vox> tempList = new List<Base_vox>();
 
             for (int i = 0; i < voxModel.Count; i++)
             {
                 ProgressBarRefresh(tempProgressBar, i, voxModel.Count);
-                base_vox tempVox = new base_vox()
+                Base_vox tempVox = new Base_vox()
                 {
                     Xv = voxModel[i].Xv + (newXmin - oldXmin),
                     Yv = voxModel[i].Yv + (newYmin - oldYmin),
@@ -459,6 +653,151 @@ namespace PreAddTech
                 tempList.Add(tempVox);
             }
             return tempList;
+        }
+        /// <summary>
+        /// Перемещение воксельной модели
+        /// </summary>
+        /// <param name="voxModel">Воксельная модель</param>
+        /// <param name="deltaX">Величина перемещения по оси X</param>
+        /// <param name="deltaY">Величина перемещения по оси Y</param>
+        /// <param name="deltaZ">Величина перемещения по оси Z</param>
+        /// <returns></returns>
+        public List<Base_vox> MoveVoxels(List<Base_vox> voxModel, float deltaX, float deltaY, float deltaZ)
+        {
+            if (deltaX != 0 || deltaY != 0 || deltaZ != 0)
+            {
+                List<Base_vox> tempVoxs = new List<Base_vox>();
+
+                for (int i = 0; i < voxModel.Count; i++)
+                {
+                    Base_vox baseVox = new Base_vox();
+                    baseVox.Xv = voxModel[i].Xv + deltaX;
+                    baseVox.Yv = voxModel[i].Yv + deltaY;
+                    baseVox.Zv = voxModel[i].Zv + deltaZ;
+                    tempVoxs.Add(baseVox);
+                }
+                return tempVoxs;
+            }
+            return voxModel;
+        }
+        
+        /// <summary>
+        /// Перемещение воксельной модели
+        /// </summary>
+        /// <param name="voxModel">Воксельная модель</param>
+        /// <param name="deltaX">Величина перемещения по оси X</param>
+        /// <param name="deltaY">Величина перемещения по оси Y</param>
+        /// <param name="deltaZ">Величина перемещения по оси Z</param>
+        /// <returns></returns>
+        public List<Base_vox> MoveVoxelsAuto(List<Base_vox> voxModel, float deltaX, float deltaY, float deltaZ)
+        {
+            if (deltaX != 0 || deltaY != 0 || deltaZ != 0)
+            {
+                for (int i = 0; i < voxModel.Count; i++)
+                {
+                    voxModel[i].Xv += deltaX;
+                    voxModel[i].Yv += deltaY;
+                    voxModel[i].Zv += deltaZ;
+                }
+            }
+            return voxModel;
+        }
+
+        /// <summary>
+        /// Поворот воксельной модели
+        /// </summary>
+        /// <param name="voxModel">Воксельная модель</param>
+        /// <param name="angleX">Угол поворота вокруг оси X</param>
+        /// <param name="angleY">Угол поворота вокруг оси Y</param>
+        /// <param name="angleZ">Угол поворота вокруг оси Z</param>
+        /// <returns></returns>
+        public List<Base_vox> RotationVoxels(List<Base_vox> voxModel, float angleX, float angleY, float angleZ)
+        {
+            if (angleX != 0 || angleY != 0 || angleZ != 0)
+            {
+                // Определение среднеарифметического центра для новой системы координат
+                float sumXc = 0, sumYc = 0, sumZc = 0;
+                for (int i = 0; i < voxModel.Count; i++)
+                {
+                    sumXc += voxModel[i].Xv;
+                    sumYc += voxModel[i].Yv;
+                    sumZc += voxModel[i].Zv;
+                }
+                float Xc = sumXc / voxModel.Count;
+                float Yc = sumYc / voxModel.Count;
+                float Zc = sumZc / voxModel.Count;
+                // Смещение в новую систему координат и поворот
+                for (int i = 0; i < voxModel.Count; i++)
+                {
+                    float[] point = TurnXYZ(voxModel[i].Xv - Xc, 
+                                            voxModel[i].Yv - Yc, 
+                                            voxModel[i].Zv - Zc, 
+                                            angleX, angleY, angleZ);
+
+                    voxModel[i].Xv = point[0] + Xc;
+                    voxModel[i].Yv = point[1] + Yc;
+                    voxModel[i].Zv = point[2] + Zc;
+                }
+            }
+            return voxModel;
+        }
+
+        /// <summary>
+        /// Поворот триангуляционной модели
+        /// </summary>
+        /// <param name="STLModel">Триангуляционная модель</param>
+        /// <param name="angleX">Угол поворота вокруг оси X</param>
+        /// <param name="angleY">Угол поворота вокруг оси Y</param>
+        /// <param name="angleZ">Угол поворота вокруг оси Z</param>
+        /// <returns></returns>
+        public List<Base_stl> RotationSTL(Base_model model)
+        {
+            List<Base_stl> tempSTL = model.Stl;
+
+            if (model.RotationX != 0 || model.RotationY != 0 || model.RotationZ != 0)
+            {
+                // Определение среднеарифметического центра для новой системы координат
+                float sumXc = 0, sumYc = 0, sumZc = 0;
+                for (int i = 0; i < model.Voxels.Count; i++)
+                {
+                    sumXc += model.Voxels[i].Xv;
+                    sumYc += model.Voxels[i].Yv;
+                    sumZc += model.Voxels[i].Zv;
+                }
+
+                float Xc = sumXc / model.Voxels.Count;
+                float Yc = sumYc / model.Voxels.Count;
+                float Zc = sumZc / model.Voxels.Count;
+                // Смещение в новую систему координат и поворот
+                for (int i = 0; i < model.Stl.Count; i++)
+                {
+                    float[] point1 = TurnXYZ(tempSTL[i].X1 - Xc,
+                                            tempSTL[i].Y1 - Yc,
+                                            tempSTL[i].Z1 - Zc,
+                                            model.RotationX, model.RotationY, model.RotationZ);
+                    float[] point2 = TurnXYZ(tempSTL[i].X2 - Xc,
+                                            tempSTL[i].Y2 - Yc,
+                                            tempSTL[i].Z2 - Zc,
+                                            model.RotationX, model.RotationY, model.RotationZ);
+                    float[] point3 = TurnXYZ(tempSTL[i].X3 - Xc,
+                                            tempSTL[i].Y3 - Yc,
+                                            tempSTL[i].Z3 - Zc,
+                                            model.RotationX, model.RotationY, model.RotationZ);
+
+                    tempSTL[i].X1 = point1[0] + Xc;
+                    tempSTL[i].Y1 = point1[1] + Yc;
+                    tempSTL[i].Z1 = point1[2] + Zc;
+
+                    tempSTL[i].X2 = point2[0] + Xc;
+                    tempSTL[i].Y2 = point2[1] + Yc;
+                    tempSTL[i].Z2 = point2[2] + Zc;
+
+                    tempSTL[i].X3 = point3[0] + Xc;
+                    tempSTL[i].Y3 = point3[1] + Yc;
+                    tempSTL[i].Z3 = point3[2] + Zc;
+                }
+            }
+            return tempSTL;
         }
 
         /// <summary>
@@ -469,7 +808,7 @@ namespace PreAddTech
         /// <param name="numY">количество интервалов по оси Y</param>
         /// <param name="numZ">количество интервалов по оси Z</param>
         /// <returns>массив распределения объемов по номерам интервалов</returns>
-        public int[,,] Distribution(List<base_vox> voxModel, int numX, int numY, int numZ,
+        public int[,,] Distribution(List<Base_vox> voxModel, int numX, int numY, int numZ,
                                    float Xmin, float Ymin, float Zmin, float step,
                                    ToolStripProgressBar tempProgressBar)
         {
@@ -478,7 +817,7 @@ namespace PreAddTech
             int num = 0;
             foreach (var item in voxModel)
             {
-                ProgressBarRefresh(tempProgressBar, num++, voxModel.Count);
+                ProgressBarRefresh(tempProgressBar, num++, voxModel.Count - 1);
                 for (int i = 0; i < numX; i++)
                 {
                     intXmin = Xmin + i * step;
@@ -508,6 +847,130 @@ namespace PreAddTech
             }
             return dist;
         }
+
+        /// <summary>
+        /// Распределение объемов воксельной модели
+        /// </summary>
+        /// <param name="voxModel">воксельная модель</param>
+        /// <param name="numX">количество интервалов по оси X</param>
+        /// <param name="numY">количество интервалов по оси Y</param>
+        /// <param name="numZ">количество интервалов по оси Z</param>
+        /// <returns>массив распределения объемов по номерам интервалов</returns>
+        public int[,,] Distribution(List<Base_vox> voxModel, int numX, int numY, int numZ,
+                                   float Xmin, float Ymin, float Zmin, float Xmax, float Ymax, float Zmax,
+                                   ToolStripProgressBar tempProgressBar)
+        {
+            int[,,] dist = new int[numX, numY, numZ];
+            float intXmin, intXmax, intYmin, intYmax, intZmin, intZmax;
+            float Xstep = (Xmax - Xmin) / numX;
+            float Ystep = (Ymax - Ymin) / numY;
+            float Zstep = (Zmax - Zmin) / numZ;
+
+            for (int i = 0; i < numX; i++)
+            {
+                ProgressBarRefresh(tempProgressBar, i, numX - 1);
+                for (int j = 0; j < numY; j++)
+                {
+                    for (int k = 0; k < numZ; k++)
+                    {
+                        intXmin = Xmin + i * Xstep;
+                        intXmax = Xmin + (i + 1) * Xstep;
+                        intYmin = Ymin + j * Ystep;
+                        intYmax = Ymin + (j + 1) * Ystep;
+                        intZmin = Zmin + k * Zstep;
+                        intZmax = Zmin + (k + 1) * Zstep;
+                        dist[i, j, k] = voxModel.Where(v => v.Xv >= intXmin && v.Xv < intXmax &&
+                                                            v.Yv >= intYmin && v.Yv < intYmax &&
+                                                            v.Zv >= intZmin && v.Zv < intZmax).Count();
+                    }
+                }
+            }
+            return dist;
+        }
+
+        /// <summary>
+        /// Распределение объемов воксельной модели
+        /// </summary>
+        /// <param name="voxModel">воксельная модель</param>
+        /// <param name="numX">количество интервалов по оси X</param>
+        /// <param name="numY">количество интервалов по оси Y</param>
+        /// <param name="numZ">количество интервалов по оси Z</param>
+        /// <returns>массив распределения объемов по номерам интервалов</returns>
+        public int[,,] Distribution(List<Base_vox> voxModel, int numX, int numY, int numZ,
+                                   float Xmin, float Ymin, float Zmin, float Xmax, float Ymax, float Zmax)
+        {
+            int[,,] dist = new int[numX, numY, numZ];
+            float intXmin, intXmax, intYmin, intYmax, intZmin, intZmax;
+            float Xstep = (Xmax - Xmin) / numX;
+            float Ystep = (Ymax - Ymin) / numY;
+            float Zstep = (Zmax - Zmin) / numZ;
+
+            for (int i = 0; i < numX; i++)
+            {
+                for (int j = 0; j < numY; j++)
+                {
+                    for (int k = 0; k < numZ; k++)
+                    {
+                        intXmin = Xmin + i * Xstep;
+                        intXmax = Xmin + (i + 1) * Xstep;
+                        intYmin = Ymin + j * Ystep;
+                        intYmax = Ymin + (j + 1) * Ystep;
+                        intZmin = Zmin + k * Zstep;
+                        intZmax = Zmin + (k + 1) * Zstep;
+                        dist[i, j, k] = voxModel.Where(v => v.Xv >= intXmin && v.Xv < intXmax &&
+                                                            v.Yv >= intYmin && v.Yv < intYmax &&
+                                                            v.Zv >= intZmin && v.Zv < intZmax).Count();
+                    }
+                }
+            }
+            return dist;
+        }
+
+        /// <summary>
+        /// Распределение объемов воксельной модели
+        /// </summary>
+        /// <param name="voxModel">воксельная модель</param>
+        /// <param name="numX">количество интервалов по оси X</param>
+        /// <param name="numY">количество интервалов по оси Y</param>
+        /// <param name="numZ">количество интервалов по оси Z</param>
+        /// <returns>массив распределения объемов по номерам интервалов</returns>
+        public int[,,] Distribution(List<Base_vox> voxModel, int numX, int numY, int numZ,
+                                   float Xmin, float Ymin, float Zmin, float step)
+        {
+            int[,,] dist = new int[numX, numY, numZ];
+            float intXmin, intXmax, intYmin, intYmax, intZmin, intZmax;
+            foreach (var item in voxModel)
+            {
+                for (int i = 0; i < numX; i++)
+                {
+                    intXmin = Xmin + i * step;
+                    intXmax = Xmin + (i + 1) * step;
+                    if (item.Xv >= intXmin && item.Xv < intXmax)
+                    {
+                        for (int j = 0; j < numY; j++)
+                        {
+                            intYmin = Ymin + j * step;
+                            intYmax = Ymin + (j + 1) * step;
+                            if (item.Yv >= intYmin && item.Yv < intYmax)
+                            {
+                                for (int k = 0; k < numZ; k++)
+                                {
+                                    intZmin = Zmin + k * step;
+                                    intZmax = Zmin + (k + 1) * step;
+
+                                    if (item.Zv >= intZmin && item.Zv < intZmax)
+                                    {
+                                        dist[i, j, k] += 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return dist;
+        }
+
         /// <summary>
         /// Окраска элементов по линейной зависимости
         /// </summary>
@@ -565,11 +1028,13 @@ namespace PreAddTech
             //B
             RGB[2] = ((B2 + B1) / 2 + (int)Math.Floor((decimal)((B2 - B1) / 2)
                 * ((decimal)Math.Cos(4 * Math.PI / 3 + 2 * Math.PI * (X - Xmin) / (Xmax - Xmin)))));
-
             //Исключения
-            if (RGB[0] > 255) { RGB[0] = 255; }
-            if (RGB[1] > 255) { RGB[1] = 255; }
-            if (RGB[2] > 255) { RGB[2] = 255; }
+            if (RGB[0] > 240) { RGB[0] = 255; }
+            if (RGB[1] > 240) { RGB[1] = 255; }
+            if (RGB[2] > 240) { RGB[2] = 255; }
+            if (RGB[0] <= 10)   { RGB[0] = 0; }
+            if (RGB[1] <= 10)   { RGB[1] = 0; }
+            if (RGB[2] <= 10)   { RGB[2] = 0; }
             return RGB;
         }
 
@@ -680,7 +1145,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="listElements">Список ребер</param>
         /// <returns>Возвращает координаты барицентра в виде PointF</returns>
-        public PointF BarycenterSection(List<base_elementOfCurve> listElements)
+        public PointF BarycenterSection(List<Base_elementOfCurve> listElements)
         {
             float Asquare = 0, Xb = 0, Yb = 0;
             foreach (var item in listElements)
@@ -767,11 +1232,11 @@ namespace PreAddTech
         /// <param name="listE">Список элементов контура</param>
         /// <param name="roundCoord">Точность сравнения координат вершин</param>
         /// <returns>listE</returns>
-        public List<base_elementOfCurve> ListCloseContour(List<base_elementOfCurve> listE, float roundCoord)
+        public List<Base_elementOfCurve> ListCloseContour(List<Base_elementOfCurve> listE, float roundCoord)
         {
             if (listE.Count < 3)
             {
-                return new List<base_elementOfCurve>();
+                return new List<Base_elementOfCurve>();
             }
 
             //Приведение в исходное положение
@@ -870,10 +1335,10 @@ namespace PreAddTech
             //Определение внешнего/внутреннего контура (true/false)
             if (numContour > 1)
             {
-                List<base_elementOfCurve>[] subList = new List<base_elementOfCurve>[numContour];
+                List<Base_elementOfCurve>[] subList = new List<Base_elementOfCurve>[numContour];
                 for (int i = 0; i < subList.Length; i++)
                 {
-                    subList[i] = new List<base_elementOfCurve>();
+                    subList[i] = new List<Base_elementOfCurve>();
                 }
                 foreach (var item in listE)
                 {
@@ -923,7 +1388,7 @@ namespace PreAddTech
         /// </summary>
         /// <param name="listE"></param>
         /// <returns></returns>
-        public List<float> MassiveAngleAdjacent(List<base_elementOfCurve> listE)
+        public List<float> MassiveAngleAdjacent(List<Base_elementOfCurve> listE)
         {
             List<float> result = new List<float>();
 
@@ -1159,7 +1624,7 @@ namespace PreAddTech
         /// <param name="absOrRelR">Аьсолютное или относительное значение меры</param>
         /// <param name="fractalMethod">Метод измерения (true  - метод масштабов)</param>
         /// <returns></returns>
-        public Base_fract_anal FractalDimension(List<base_elementOfCurve> listE, int CountFractalAnalysis, float ratioRtoL, bool absOrRelR, FractalMethod fractalMethod)
+        public Base_fract_anal FractalDimension(List<Base_elementOfCurve> listE, int CountFractalAnalysis, float ratioRtoL, bool absOrRelR, FractalMethod fractalMethod)
         {
             Base_fract_anal ResultFractalAnalysis = new Base_fract_anal();
             if (listE.Count < 3) { return ResultFractalAnalysis; }
@@ -1412,7 +1877,7 @@ namespace PreAddTech
         /// <param name="numElement2">Номер элемента конца отрезка</param>
         /// <param name="EndPoint">Точка конца отрезка</param>
         /// <returns></returns>
-        float LengthContourFromStartToPoint(List<base_elementOfCurve> listE, int numElement1, int numElement2, PointF EndPoint)
+        float LengthContourFromStartToPoint(List<Base_elementOfCurve> listE, int numElement1, int numElement2, PointF EndPoint)
         {
             if (listE.Count == 0) return 0f;
             //if ( numElement1 <= 0 || numElement2 <= 0) return Length(listE[numElement2].point1, EndPoint);
@@ -1519,7 +1984,6 @@ namespace PreAddTech
             {
                 return true;
             }
-
             return false;
         }
 
@@ -1539,18 +2003,16 @@ namespace PreAddTech
             //Многопоточная обработка
             if (SettingsUser.Default.Multithreading && new Base_threading().MultiCore())
             {
-                int N = ListStl.Count;
-
-                Parallel.For(0, N, i =>
-                 {
-                     listTransformedTriangle.AddRange((new SurfaceSection()).TransformTriangle(
+                foreach (var item in ListStl.AsParallel())
+                {
+                    listTransformedTriangle.AddRange((new SurfaceSection()).TransformTriangle(
                                                       new List<Point3D>() {
-                                                      new Point3D() { X = ListStl[i].X1, Y = ListStl[i].Y1, Z = ListStl[i].Z1 },
-                                                      new Point3D() { X = ListStl[i].X2, Y = ListStl[i].Y2, Z = ListStl[i].Z2 },
-                                                      new Point3D() { X = ListStl[i].X3, Y = ListStl[i].Y3, Z = ListStl[i].Z3 }
+                                                      new Point3D() { X = item.X1, Y = item.Y1, Z = item.Z1 },
+                                                      new Point3D() { X = item.X2, Y = item.Y2, Z = item.Z2 },
+                                                      new Point3D() { X = item.X3, Y = item.Y3, Z = item.Z3 }
                                                       },
-                                                      ListStl[i].ZN));
-                 });
+                                                      item.ZN));
+                }
             }
             else
             {
@@ -1580,7 +2042,8 @@ namespace PreAddTech
                         {
                             CoordinateSectionZ = itemS,
                             Str = SurfaceAreaSection(item, itemS, step),
-                            ZN = (float)(Math.Acos(item.ZN) / Math.PI * 180)
+                            ZN = (float)(Math.Acos(item.ZN) / Math.PI * 180),
+                            ZB = item.Z1 < item.Z2 ? item.Z1 : item.Z2
                         };
                         tempElementSection.Add(tempElement);
                     }
@@ -1829,19 +2292,6 @@ namespace PreAddTech
             }
             return listStep;
         }
-        /// <summary>
-        /// Корректировка последних слоев
-        /// </summary>
-        /// <param name="limitZmax">Максимальная координата изделия по оси Z</param>
-        /// <param name="stepMin1">Минимальный шаг построения</param>
-        /// <param name="stepMax1">Максимальный шаг построения</param>
-        /// <param name="coordinateSectionZ">Список координат слоев</param>
-        /// <param name="listStep">Список шагов построения</param>
-        public void CorrectFinishLayering (float limitZmax, float stepMin1, float stepMax1, 
-                                           List<float> coordinateSectionZ, List<float> listStepSectionZ)
-        {
-
-        }
         
         /// <summary>
         /// Создание списка трансформированных треугольников с информацией о величине погрешности и площади участка грани
@@ -1857,7 +2307,8 @@ namespace PreAddTech
             for (int z = 0; z < coordinateSectionZ.Count(); z++)
             {
                 ProgressBarRefresh(progressBarAnalysis, z, coordinateSectionZ.Count()-1);
-                float zmax;
+                //Координаты текущего слоя
+                float zmin, zmax;
                 List<SurfaceSection> tempSurface = new List<SurfaceSection>();
                 tempSurface = listSurface.Where(S => S.CoordinateSectionZ == coordinateSectionZ[z]).ToList<SurfaceSection>();
                 if (z < coordinateSectionZ.Count() - 1)
@@ -1871,16 +2322,118 @@ namespace PreAddTech
                     //tempSurface = listSurface.Where(S => S.CoordinateSectionZ >= coordinateSectionZ[z]).ToList<SurfaceSection>();
                     zmax = ListStl.Max(stl => stl.MaxZ());
                 }
+                zmin = coordinateSectionZ[z];
                 int kmax = tempSurface.Count;
                 for (int k = 0; k < kmax; k++)
                 {
-                    tempSurface[k].Error = tempSurface[k].ZN == 0 || tempSurface[k].ZN == 180 ? 0f :
+                    //20190727
+                    
+                    tempSurface[k].Error = tempSurface[k].ZN == 0 || tempSurface[k].ZN == 180 || tempSurface[k].ZN == 90 ? 0f :
                                                Math.Abs((tempSurface[k].CoordinateSectionZ - zmax) *
                                                (float)Math.Cos(Math.PI * tempSurface[k].ZN / 180));
+                    /*
+                    float zc = zmin + (zmax - zmin) * (float)Math.Sin(Math.PI * tempSurface[k].ZN / 180) * (float)Math.Sin(Math.PI * tempSurface[k].ZN / 180);
+                    if (tempSurface[k].ZN == 0 || tempSurface[k].ZN == 180 || Math.Abs(tempSurface[k].ZN) == 90)
+                    {
+                        tempSurface[k].Error = 0f;
+                    }
+                    else if (Math.Abs(tempSurface[k].ZN) < 90 && tempSurface[k].CoordinateSectionZ <= zc && tempSurface[k].CoordinateSectionZ >= zmin)
+                    {
+                        tempSurface[k].Error = Math.Abs((tempSurface[k].ZB - zmin) *
+                                               (float)Math.Cos(Math.PI * tempSurface[k].ZN / 180)); 
+                    }
+                    else if (Math.Abs(tempSurface[k].ZN) < 90 && tempSurface[k].CoordinateSectionZ >= zc && tempSurface[k].CoordinateSectionZ <= zmax)
+                    {
+                        tempSurface[k].Error = Math.Abs((tempSurface[k].ZB - zmax) /
+                                               (float)Math.Cos(Math.PI * tempSurface[k].ZN / 180));
+                    }
+                    else if (Math.Abs(tempSurface[k].ZN) > 90 && tempSurface[k].CoordinateSectionZ <= zc && tempSurface[k].CoordinateSectionZ >= zmin)
+                    {
+                        tempSurface[k].Error = Math.Abs((tempSurface[k].ZB - zmin) /
+                                               (float)Math.Cos(Math.PI * tempSurface[k].ZN / 180));
+                    }
+                    else if (Math.Abs(tempSurface[k].ZN) > 90 && tempSurface[k].CoordinateSectionZ >= zc && tempSurface[k].CoordinateSectionZ <= zmax)
+                    {
+                        tempSurface[k].Error = Math.Abs((tempSurface[k].ZB - zmax) *
+                                               (float)Math.Cos(Math.PI * tempSurface[k].ZN / 180));
+                    }
+                    */
                 }
                 result.Add(tempSurface);
             }
             return result;
+        }
+
+        /// <summary>
+        /// Формирование строки из исходных параметров в программе
+        /// </summary>
+        /// <param name="formElements">Список элементов экранной формы</param>
+        /// <returns>Строка с параметрами заданными в элементах управления формы</returns>
+        public static string HistoryWorkParameters(List<object> formElements)
+        {
+            string history = "";
+            for (int i = 0; i < formElements.Count(); i++)
+            {
+                if (formElements[i] is ComboBox)
+                {
+                    history += ((ComboBox)formElements[i]).Name + " -> " + ((ComboBox)formElements[i]).Text + ";\n";
+                }
+                else if (formElements[i] is ToolStripComboBox)
+                {
+                    history += ((ToolStripComboBox)formElements[i]).Name + " -> " + ((ToolStripComboBox)formElements[i]).Text + ";\n";
+                }
+                else if (formElements[i] is TextBox)
+                {
+                    history += ((TextBox)formElements[i]).Name + " -> " + ((TextBox)formElements[i]).Text + ";\n";
+                }
+                else if (formElements[i] is ToolStripTextBox)
+                {
+                    history += ((ToolStripTextBox)formElements[i]).Name + " -> " + ((ToolStripTextBox)formElements[i]).Text + ";\n";
+                }
+                else if (formElements[i] is NumericUpDown)
+                {
+                    history += ((NumericUpDown)formElements[i]).Name + " -> " + ((NumericUpDown)formElements[i]).Value + ";\n";
+                }
+                else if (formElements[i] is CheckBox)
+                {
+                    history += ((CheckBox)formElements[i]).Name + " (" + ((CheckBox)formElements[i]).Text + ") -> " + 
+                               ((CheckBox)formElements[i]).CheckState.ToString() + ";\n";
+                }
+            }
+            return history;
+        }
+        /// <summary>
+        /// Сохранение в STL-файл
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="unionListStl"></param>
+        public void SaveListToSTL(string fileName, List<Base_stl> unionListStl)
+        {
+            StreamWriter sw = new
+                StreamWriter(fileName, false, Encoding.Default);
+            sw.WriteLine("solid");
+            foreach (var tempFace in unionListStl)
+            {
+                sw.WriteLine("facet normal " + tempFace.XN.ToString().Replace(',', '.') +
+                                         " " + tempFace.YN.ToString().Replace(',', '.') +
+                                         " " + tempFace.ZN.ToString().Replace(',', '.'));
+                sw.WriteLine("outer loop");
+                sw.WriteLine("vertex " + tempFace.X1.ToString().Replace(',', '.') +
+                                   " " + tempFace.Y1.ToString().Replace(',', '.') +
+                                   " " + tempFace.Z1.ToString().Replace(',', '.'));
+
+                sw.WriteLine("vertex " + tempFace.X2.ToString().Replace(',', '.') +
+                                   " " + tempFace.Y2.ToString().Replace(',', '.') +
+                                   " " + tempFace.Z2.ToString().Replace(',', '.'));
+
+                sw.WriteLine("vertex " + tempFace.X3.ToString().Replace(',', '.') +
+                                   " " + tempFace.Y3.ToString().Replace(',', '.') +
+                                   " " + tempFace.Z3.ToString().Replace(',', '.'));
+                sw.WriteLine("endloop");
+                sw.WriteLine("endfacet");
+            }
+            sw.WriteLine("endsolid");
+            sw.Close();
         }
     }
 }

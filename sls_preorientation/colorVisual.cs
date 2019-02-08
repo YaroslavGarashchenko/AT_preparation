@@ -8,7 +8,7 @@ namespace PreAddTech
     /// <summary>
     /// Класс для цветовой визуализации
     /// </summary>
-    public class colorVisual
+    public class ColorVisual
     {
         /// <summary>
         /// Номер интервала

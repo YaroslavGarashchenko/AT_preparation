@@ -8,7 +8,7 @@ namespace PreAddTech
     /// <summary>
     /// класс описания вокселя, элемента воксельной модели
     /// </summary>
-    public class base_vox
+    public class Base_vox
     {
         /// <summary>
         /// порядковый номер вокселя

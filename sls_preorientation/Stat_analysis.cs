@@ -60,8 +60,8 @@ namespace PreAddTech
             stat[10] = 0; // мода
             try
             {
-                if ((Math.Truncate((decimal)DataArray.Length / 2) - (decimal)DataArray.Length / 2) == 0)
-                    stat[11] = (DataArray[DataArray.Length / 2] + DataArray[DataArray.Length / 2 + 1]) / 2; // медиана
+                if (DataArray.Length % 2 == 0)
+                    stat[11] = (DataArray[DataArray.Length / 2 - 1] + DataArray[DataArray.Length / 2]) / 2; // медиана
                 else
                     stat[11] = DataArray[(int)Math.Truncate((decimal)DataArray.Length / 2)];
             }
@@ -317,7 +317,7 @@ namespace PreAddTech
         /// <param name="data2">Второй ряд данных</param>
         /// <returns> Массив значений критериев { [0] Kruskal–Wallis, [1] Mann–Whitney, [2] Манна — Уитни, 
         /// [3] Вальда — Вольфовица, [4] Колмогорова — Смирнова, [5] Пирсона } </returns>
-        public float[] ComparisonStatData( float[] data1, float[] data2 )
+        public static float[] ComparisonStatData( float[] data1, float[] data2 )
         {
             //U-критерий Манна
             //Составить единый ранжированный ряд из обеих сопоставляемых выборок, 
@@ -342,7 +342,7 @@ namespace PreAddTech
                     {
                         Rank = 0,
                         NumGroup = 2,
-                        Point = new Point3D() { X = data2[i], Y = 0, Z = 0 }
+                        Point = new Point3D() { X = data2[i - data1.Length], Y = 0, Z = 0 }
                     });
                 }
             }
@@ -438,7 +438,6 @@ namespace PreAddTech
             }
             float lamda = maxDifference * maxDifference * (data1.Length * data2.Length / GeneralLength);
             // Критерий Пирсона Хи квадрат
-            // 20181003
             float pirson = float.NaN;
                 
             return new float[6]{ KruskalWallis, Ueng, Urus, RValda, lamda, pirson };
@@ -549,7 +548,7 @@ namespace PreAddTech
         /// <param name="n2">Размер второго ряда значений</param>
         /// <param name="al">Уровень значимости</param>
         /// <returns></returns>
-        public Validity VerifyCriterionR(float R, int n1, int n2, float al)
+        public static Validity VerifyCriterionR(float R, int n1, int n2, float al)
         {
             int a = 2 * n1 * n2;
             int b = n1 + n2;
@@ -570,7 +569,7 @@ namespace PreAddTech
         /// <param name="Lambda">Расчетная величина критерия</param>
         /// <param name="al">Уровень значимости</param>
         /// <returns></returns>
-        public Validity VerifyCriterionK(float Lambda, float al)
+        public static Validity VerifyCriterionK(float Lambda, float al)
         {
             float Rlimit = 1;
             if (al == 0.05F) Rlimit = 1.84F; 
@@ -588,7 +587,7 @@ namespace PreAddTech
         /// <param name="n2">Размер второго ряда значений</param>
         /// <param name="al">Уровень значимости</param>
         /// <returns></returns>
-        public Validity VerifyCriterionU(float U, int n1, int n2, float al)
+        public static Validity VerifyCriterionU(float U, int n1, int n2, float al)
         {
             float MU = n1 * n2 / 2; //Мат.ожидание U-критерия
             float DU = n1 * n2 * (n1 + n2 + 1) / 12; //Дисперсия U-критерия
@@ -608,6 +607,7 @@ namespace PreAddTech
             float[] result = new float[10];
             int N = data.Length; //Объем выборки
             Array.Sort(data);
+            data = NormalizedData(data);
             float sum = 0;
             switch (criterion)
             {
@@ -683,16 +683,11 @@ namespace PreAddTech
                     break;
                 case StatisticalCriterion.PearsonsChiSquare:
                     int n = СhoiceNumberIntervals(N);
-                    float[] distribution = new float[n]; // частоты эмпирические
                     float frequency = N / n; // частоты теоретические 
                     List<elementGist> researchGist = Gist(data, n);
-                    for (int i = 0; i < n; i++)
-                    {
-                        distribution[i] = N * researchGist[n].Y;
-                    }
                     for (int j = 0; j < n; j++)
                     {
-                        result[9] += (frequency - distribution[j]) * (frequency - distribution[j]) / distribution[j];
+                        result[9] += (frequency - researchGist[j].Y) * (frequency - researchGist[j].Y) / researchGist[j].Y;
                     }
                     break;
                 default:
@@ -729,9 +724,9 @@ namespace PreAddTech
         public Validity VerifyCriterionSherman(float value, int N, float al)
         {
             float valueMin = float.NaN;
-            if (Stat_criterion.listLimitSherman.Where(v => v.A == al && v.N == N).Count() != 0)
+            if (Stat_criterion.listLimitSherman.Where(v => v.A == al && v.N <= N).Count() != 0)
             {
-                valueMin = Stat_criterion.listLimitSherman.Where(v => v.A == al && v.N == N).
+                valueMin = Stat_criterion.listLimitSherman.Where(v => v.A == al && v.N <= N).OrderByDescending(v => v.N).
                                                 Select(v => v.Value).First();
             }
             else
@@ -751,9 +746,9 @@ namespace PreAddTech
         public Validity VerifyCriterionKimbela(float value, int N, float al)
         {
             float valueMin = float.NaN;
-            if (Stat_criterion.listLimitKimbela.Where(v => v.A == al && v.N == N).Count() != 0)
+            if (Stat_criterion.listLimitKimbela.Where(v => v.A == al && v.N <= N).Count() != 0)
             {
-                valueMin = Stat_criterion.listLimitKimbela.Where(v => v.A == al && v.N == N).
+                valueMin = Stat_criterion.listLimitKimbela.Where(v => v.A == al && v.N <= N).OrderByDescending(v => v.N).
                                                 Select(v => v.Value).First();
             }
             else
@@ -821,23 +816,23 @@ namespace PreAddTech
         /// <returns></returns>
         public Validity VerifyCriterionNeymanBarton(float[] value, int N, float al)
         {
-            if (value.Length < 3) return Validity.excluded;
+            if (value.Length != 10) return Validity.excluded;
 
             float valueMin2 = float.NaN, valueMin3 = float.NaN, valueMin4 = float.NaN;
             if (Stat_criterion.listLimitNeymanBarton2.Where(v => v.A >= al && v.N >= N).Count() != 0)
             {
                 valueMin2 = Stat_criterion.listLimitNeymanBarton2.Where(v => v.A >= al && v.N >= N).
                                                 Select(v => v.Value).First();
-                valueMin3 = Stat_criterion.listLimitNeymanBarton2.Where(v => v.A >= al && v.N >= N).
+                valueMin3 = Stat_criterion.listLimitNeymanBarton3.Where(v => v.A >= al && v.N >= N).
                                                 Select(v => v.Value).First();
-                valueMin4 = Stat_criterion.listLimitNeymanBarton2.Where(v => v.A >= al && v.N >= N).
+                valueMin4 = Stat_criterion.listLimitNeymanBarton4.Where(v => v.A >= al && v.N >= N).
                                                 Select(v => v.Value).First();
             }
             else
             {
                 return Validity.excluded;
             }
-            return value[0] < valueMin2 && value[1] < valueMin3 && value[2] < valueMin4 ? Validity.yes : Validity.no;
+            return value[5] < valueMin2 && value[6] < valueMin3 && value[7] < valueMin4 ? Validity.yes : Validity.no;
         }
 
         /// <summary>
@@ -877,7 +872,7 @@ namespace PreAddTech
         public Validity VerifyCriterionPirson(float value, int K, float al)
         {
             float valueMin = float.NaN;
-            int n = 2; //число параметров теоретического закона распределения
+            int n = 2; //число параметров теоретического закона распределения (по умолчанию)
             int r = K - 1 - n; // число степеней свободы
             if (Stat_criterion.listLimitPirson.Where(v => v.A >= al && v.K <= r).Count() != 0)
             {
@@ -897,7 +892,7 @@ namespace PreAddTech
         public int СhoiceNumberIntervals(int N)
         {
             // AN006266. С.А. Бардасов. Гистограммы. Критерии оптимальности
-            // Среднеарифметическое значение от трех методов расчета (Стерджесс, Скотт, информационный критерий)
+            // Среднеарифметическое значение (округленное) от трех методов расчета (Стерджесс, Скотт, информационный критерий)
             List<NumIntervalsGistogram> recomendation = new List<NumIntervalsGistogram>()
                                                { new NumIntervalsGistogram() {Min =    0, Max =   30, Num = 4 },
                                                  new NumIntervalsGistogram() {Min =   31, Max =   60, Num = 5 },
@@ -918,6 +913,213 @@ namespace PreAddTech
                                                  new NumIntervalsGistogram() {Min = 50000001, Max = int.MaxValue, Num = 200 }
                                                };
             return recomendation.Where(n => n.Min <= N && n.Max >= N).Select(n => n.Num).First();
+        }
+
+        /// <summary>
+        /// Количество вариантов сравнения набора данных
+        /// </summary>
+        /// <param name="numData"></param>
+        /// <returns></returns>
+        public static int NumVariantsComparison(int numData)
+        {
+            int numVar = 0;
+            if (numData >= 2)
+            {
+                numVar = 1;
+                for (int i = 2; i < numData; i++)
+                {
+                    numVar += i;
+                }
+            }
+            return numVar;
+        }
+
+        /// <summary>
+        /// Генерирование отчета по проверке гипотезы о законе распределения исследуемого признака
+        /// </summary>
+        /// <param name="resultStatParLayer">Массив статистических характеристик</param>
+        /// <param name="researchMassive">Массив исследуемых признаков</param>
+        /// /// <returns></returns>
+        public string GenerateReportTestDistribution(float[] resultStatParLayer, float[] researchMassive)
+        {
+            string result;
+            if (resultStatParLayer.Length <= 0)
+            {
+                result = "Нет результатов статистического анализа распределения исследуемого признака! \n";
+            }
+            else
+            {
+                result = "Статистические характеристики распределения исследуемого признака:" + "\n";
+                result += "Минимальная величина: " + resultStatParLayer[0] + " ;\n";
+                result += "Максимальная величина: " + resultStatParLayer[1] + " ;\n";
+                result += "Интервал величин: " + resultStatParLayer[2] + " ;\n";
+                result += "Дисперсия: " + resultStatParLayer[3] + " ;\n";
+                result += "Среднеквадратическое отклонение: " + resultStatParLayer[4] + " ;\n";
+                result += "Среднеарифметическое значение: " + resultStatParLayer[5] + " ;\n";
+                result += "Коэффициент асимметрии: " + resultStatParLayer[6] + " ;\n";
+                result += "Коэффициент эксцесса: " + resultStatParLayer[7] + " ;\n";
+                result += "Коэффициент вариации: " + resultStatParLayer[8] + " ;\n";
+                result += "Меана: " + resultStatParLayer[9] + " ;\n";
+                result += "Мода: " + resultStatParLayer[10] + " ;\n";
+                result += "Медиана: " + resultStatParLayer[11] + " ;\n";
+                result += "Объем выборки: " + resultStatParLayer[12] + " ;\n\n";
+
+                result += "Проверка гипотезы о принадлежности выборки равномерному закону:";
+                //Критерии: 0 - Шермана
+                try
+                {
+                    float valueSherman = VerifyUniformLaw(researchMassive, StatisticalCriterion.Sherman)[0];
+                    result += "\nКритерий Шермана - " + valueSherman + " ; \n";
+                    //Проверка критерия Шермана по уровню значимости и объему выборки
+                    foreach (var item in Stat_criterion.listLimitSherman.GroupBy(Gr => Gr.A).Select(alfa => alfa.First()).ToList())
+                    {
+                        Validity validitySherman = VerifyCriterionSherman(valueSherman, researchMassive.Count(), item.A);
+                        result += validitySherman == Validity.yes ?
+                        "При уровне значимости " + item.A + " гипотеза равномерности не отклоняется; \n" :
+                        validitySherman != Validity.excluded ?
+                        "При уровне значимости " + item.A + " не подтверждена гипотеза; \n" :
+                        "Исключение при проверке по критерию Шермана!\n";
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show("Ошибка при расчете по Критерию Шермана \n\n" + ex.Message, "Проверка гипотезы о принадлежности выборки равномерному закону");
+                }
+                //Критерии: 1 - Кимбала
+                try
+                {
+                    float valueKimball = VerifyUniformLaw(researchMassive, StatisticalCriterion.Kimball)[1];
+                    result += "\nКритерий Кимбала - " + valueKimball + " ; \n";
+                    //Проверка критерия Кимбала по уровню значимости и объему выборки
+                    foreach (var item in Stat_criterion.listLimitKimbela.GroupBy(Gr => Gr.A).Select(alfa => alfa.First()).ToList())
+                    {
+                        Validity validityKimball = VerifyCriterionKimbela(valueKimball, researchMassive.Count(), item.A);
+                        result += validityKimball == Validity.yes ?
+                        "При уровне значимости " + item.A + " гипотеза равномерности не отклоняется; \n" :
+                        validityKimball != Validity.excluded ?
+                        "При уровне значимости " + item.A + " не подтверждена гипотеза; \n" :
+                        "Исключение при проверке по критерию Шермана!\n";
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show("Ошибка при расчете по Критерию Кимбала \n\n" + ex.Message,
+                                    "Проверка гипотезы о принадлежности выборки равномерному закону");
+                }
+                //Критерии: 2 - Андерсона-Дарлинга
+                try
+                {
+                    float valueAndersonDarling = VerifyUniformLaw(researchMassive, StatisticalCriterion.AndersonDarling)[2];
+                    result += "\nКритерий Андерсона-Дарлинга - " + valueAndersonDarling + " ; \n";
+                    //Проверка критерия Андерсона-Дарлинга по уровню значимости и объему выборки
+                    foreach (var A in Stat_criterion.listLimitAndersonDarling.Select(alfa => alfa.A).ToList())
+                    {
+                        Validity validityAndersonDarling = VerifyCriterionAndersonDarling(valueAndersonDarling, researchMassive.Count(), A);
+                        result += validityAndersonDarling == Validity.yes ?
+                        "При уровне значимости " + A + " гипотеза равномерности не отклоняется; \n" :
+                        validityAndersonDarling != Validity.excluded ?
+                        "При уровне значимости " + A + " не подтверждена гипотеза; \n" :
+                        "Исключение при проверке по критерию Андерсона-Дарлинга!\n";
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show("Ошибка при расчете по Критерию Андерсона-Дарлинга \n\n" + ex.Message,
+                                    "Проверка гипотезы о принадлежности выборки равномерному закону");
+                }
+                //Критерии: 3 - Крамера-Мизеса-Смирнова
+                try
+                {
+                    float valueKramerMisesSmirnov = VerifyUniformLaw(researchMassive, StatisticalCriterion.KramerMisesSmirnov)[3];
+                    result += "\nКритерий Крамера-Мизеса-Смирнова - " + valueKramerMisesSmirnov + " ; \n";
+                    //Проверка критерия Крамера-Мизеса-Смирнова по уровню значимости и объему выборки
+                    foreach (var A in Stat_criterion.listLimitKramerMisesSmirnov.Select(alfa => alfa.A).ToList())
+                    {
+                        Validity validityKramerMisesSmirnov = VerifyCriterionKramerMisesSmirnov(valueKramerMisesSmirnov, researchMassive.Count(), A);
+                        result += validityKramerMisesSmirnov == Validity.yes ?
+                        "При уровне значимости " + A + " гипотеза равномерности не отклоняется; \n" :
+                        validityKramerMisesSmirnov != Validity.excluded ?
+                        "При уровне значимости " + A + " не подтверждена гипотеза; \n" :
+                        "Исключение при проверке по критерию Крамера-Мизеса-Смирнова!\n";
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show("Ошибка при расчете по Критерию Крамера-Мизеса-Смирнова \n\n" + ex.Message,
+                                    "Проверка гипотезы о принадлежности выборки равномерному закону");
+                }
+                //Критерии: 4-7 Ньюмана-Бартона
+                try
+                {
+                    float[] valueNeymanBarton = VerifyUniformLaw(researchMassive, StatisticalCriterion.NeymanBarton1polinom);
+                    valueNeymanBarton[5] = VerifyUniformLaw(researchMassive, StatisticalCriterion.NeymanBarton2polinom)[5];
+                    valueNeymanBarton[6] = VerifyUniformLaw(researchMassive, StatisticalCriterion.NeymanBarton3polinom)[6];
+                    valueNeymanBarton[7] = VerifyUniformLaw(researchMassive, StatisticalCriterion.NeymanBarton4polinom)[7];
+                    result += "\nКритерий Ньюмана-Бартона (1 полином) - " + valueNeymanBarton[4] + " ; \n";
+                    result += "Критерий Ньюмана-Бартона (2 полином) - " + valueNeymanBarton[5] + " ; \n";
+                    result += "Критерий Ньюмана-Бартона (3 полином) - " + valueNeymanBarton[6] + " ; \n";
+                    result += "Критерий Ньюмана-Бартона (4 полином) - " + valueNeymanBarton[7] + " ; \n";
+                    //Проверка критерия Ньюмана-Бартона по уровню значимости и объему выборки
+                    foreach (var item in Stat_criterion.listLimitNeymanBarton2.GroupBy(Gr => Gr.A).Select(alfa => alfa.First()).ToList())
+                    {
+                        Validity validityNeymanBarton = VerifyCriterionNeymanBarton(valueNeymanBarton, researchMassive.Count(), item.A);
+                        result += validityNeymanBarton == Validity.yes ?
+                        "При уровне значимости " + item.A + " гипотеза равномерности не отклоняется; \n" :
+                        validityNeymanBarton != Validity.excluded ?
+                        "При уровне значимости " + item.A + " не подтверждена гипотеза; \n" :
+                        "Исключение при проверке по критерию Ньюмана-Бартона!\n";
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show("Ошибка при расчете по критерию Ньюмана-Бартона \n\n" + ex.Message,
+                                    "Проверка гипотезы о принадлежности выборки равномерному закону");
+                }
+                //Критерии: 8 Дудевича
+                try
+                {
+                    float valueDudevichVanDerMuelen = VerifyUniformLaw(researchMassive, StatisticalCriterion.DudevichVanDerMuelen)[8];
+                    result += "\nКритерий Дудевича - " + valueDudevichVanDerMuelen + " ; \n";
+                    //Проверка критерия Дудевича по уровню значимости и объему выборки
+                    foreach (var item in Stat_criterion.listLimitDudevichVanDerMuelen.GroupBy(Gr => Gr.A).Select(alfa => alfa.First()).ToList())
+                    {
+                        Validity validityDudevichVanDerMuelen = VerifyCriterionDudevichVanDerMuelen(valueDudevichVanDerMuelen, researchMassive.Count(), item.A);
+                        result += validityDudevichVanDerMuelen == Validity.yes ?
+                        "При уровне значимости " + item.A + " гипотеза равномерности не отклоняется; \n" :
+                        validityDudevichVanDerMuelen != Validity.excluded ?
+                        "При уровне значимости " + item.A + " не подтверждена гипотеза; \n" :
+                        "Исключение при проверке по критерию Дудевича!\n";
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show("Ошибка при расчете по критерию Дудевича \n\n" + ex.Message,
+                                    "Проверка гипотезы о принадлежности выборки равномерному закону");
+                }
+                //Критерии: 9 Пирсона
+                try
+                {
+                    float valuePearsonsChiSquare = VerifyUniformLaw(researchMassive, StatisticalCriterion.PearsonsChiSquare)[9];
+                    result += "\nКритерий Пирсона - " + valuePearsonsChiSquare + " ; \n";
+                    //Проверка критерия Пирсона по уровню значимости и объему выборки
+                    foreach (var item in Stat_criterion.listLimitPirson.GroupBy(Gr => Gr.A).Select(alfa => alfa.First()).ToList())
+                    {
+                        Validity validityPearsonsChiSquare = VerifyCriterionPirson(valuePearsonsChiSquare, researchMassive.Count(), item.A);
+                        result += validityPearsonsChiSquare == Validity.yes ?
+                        "При уровне значимости " + item.A + " гипотеза равномерности не отклоняется; \n" :
+                        validityPearsonsChiSquare != Validity.excluded ?
+                        "При уровне значимости " + item.A + " не подтверждена гипотеза; \n" :
+                        "Исключение при проверке по критерию Пирсона!\n\n";
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show("Ошибка при расчете по критерию Пирсона \n\n" + ex.Message,
+                                    "Проверка гипотезы о принадлежности выборки равномерному закону");
+                }
+            }
+            //
+            return result;
         }
     }
 }

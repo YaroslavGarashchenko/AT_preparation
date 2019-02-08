@@ -8,52 +8,52 @@ namespace PreAddTech
     /// <summary>
     /// Параметры установки
     /// </summary>
-    class PlantParameters
+    public class PlantParameters
     {
-        public string nameEquipment { get; set; }
+        public string NameEquipment { get; set; }
         /// <summary>
         /// Минимальная координата рабочей области построения по оси X
         /// </summary>
-        public float workXmin { get; set; }
+        public float WorkXmin { get; set; }
         /// <summary>
         /// Максимальная координата рабочей области построения по оси X
         /// </summary>
-        public float workXmax { get; set; }
+        public float WorkXmax { get; set; }
         /// <summary>
         /// Минимальная координата рабочей области построения по оси Y
         /// </summary>
-        public float workYmin { get; set; }
+        public float WorkYmin { get; set; }
         /// <summary>
         /// Максимальная координата рабочей области построения по оси Y
         /// </summary>
-        public float workYmax { get; set; }
+        public float WorkYmax { get; set; }
         /// <summary>
         /// Минимальная координата рабочей области построения по оси Z
         /// </summary>
-        public float workZmin { get; set; }
+        public float WorkZmin { get; set; }
         /// <summary>
         /// Максимальная координата рабочей области построения по оси Z
         /// </summary>
-        public float workZmax { get; set; }
+        public float WorkZmax { get; set; }
         /// <summary>
         /// Ширина области построения
         /// </summary>
-        public float workWidth { get; set; }
+        public float WorkWidth { get; set; }
         /// <summary>
         /// Длина области построения
         /// </summary>
-        public float workLength { get; set; }
+        public float WorkLength { get; set; }
         /// <summary>
         /// Высота области построения
         /// </summary>
-        public float workHeight { get; set; }
+        public float WorkHeight { get; set; }
         /// <summary>
         /// Безопасное расстояние до краев области построения
         /// </summary>
-        public float safeDistanceBorder { get; set; }
+        public float SafeDistanceBorder { get; set; }
         /// <summary>
         /// Безопасное расстояние между моделями
         /// </summary>
-        public float safeDistanceBody { get; set; }
+        public float SafeDistanceBody { get; set; }
     }
 }

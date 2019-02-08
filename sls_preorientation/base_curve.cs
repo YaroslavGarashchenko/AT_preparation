@@ -25,7 +25,7 @@ namespace PreAddTech
         /// <summary>
         /// Список точек контура
         /// </summary>
-        public List<base_elementOfCurve> ListElement { get; set; }
+        public List<Base_elementOfCurve> ListElement { get; set; }
     }
 
 }

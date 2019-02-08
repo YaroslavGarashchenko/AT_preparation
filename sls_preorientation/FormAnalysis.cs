@@ -14,7 +14,6 @@ using System.Linq;
 using System.Media;
 using System.Threading;
 using MSExel = Microsoft.Office.Interop.Excel;
-using btl.generic;
 
 
 
@@ -29,211 +28,241 @@ namespace PreAddTech
         private void RichTextBox1_TextChanged(object sender, EventArgs e)
         {
             int textlength = richTextBox_review.TextLength;
-            toolStripComboBox1.ToolTipText = textlength.ToString() + " символов в тексте";
+            toolStripComboBoxNumLine.ToolTipText = textlength.ToString() + " символов в тексте";
         }
         /// <summary>
         /// Массив моделей
         /// </summary>
-        List<base_model> massiveListModels = new List<base_model>();
-
+        public List<Base_model> massiveListModels = new List<Base_model>();
+        /// <summary>
+        /// Массив моделей для параллельной обработки
+        /// </summary>
+        //public ParallelQuery<Base_model> Models;
         /// <summary>
         /// Задача активной формы
         /// </summary>
-        public ATPreparation.switchActiveTask activeTask;
-        //предварительное количество треугольников
+        public SwitchActiveTask activeTask;
+
+        /// <summary>
+        /// Предварительное количество треугольников
+        /// </summary>
         int countTr = 0;
+
+        /// <summary>
+        /// Выбранный STL-файл
+        /// </summary>
+        public string VibFileName;
+        /// <summary>
+        /// Выбранные STL-файлы для размещения группы в рабочем пространстве установки
+        /// </summary>
+        public string[] VibFileNames;
+
         /// <summary>
         /// Открытие и просмотр STL файла
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ToolStripButton1_Click(object sender, EventArgs e)
+        private void ToolStripButtonOpenSTL_Click(object sender, EventArgs e)
         {
             toolStripStatusLabel_info.Text = "Открытие и просмотр STL-файла";
+            if (activeTask == SwitchActiveTask.analizePacking) 
+                openFileDialogU.Multiselect = true;
             openFileDialogU.FileName = "";
             openFileDialogU.Filter = "STL files (*.stl)|*.stl|All files (*.*)|*.*";
             float StartTimeSecunds, EndTimeSecunds;
-            // количество строк для просмотра
-            ulong n = Convert.ToUInt64(toolStripTextBoxVol.Text);
+            ulong n = Convert.ToUInt64(toolStripTextBoxVol.Text); // количество строк для просмотра
             ulong i = 0;
-            //
-            bool metka = toolStripComboBox1.Text.TrimEnd() == "весь файл" ? false : true;
-            //
+            bool metka = toolStripComboBoxNumLine.Text.TrimEnd() == "весь файл" ? false : true;
             MyProcedures proc = new MyProcedures();
             string line;
-            string VibFileName;
-
-            // текстовый файл
-            if (toolStripComboBox2.Text.Substring(0, 2) == "1."
-                && openFileDialogU.ShowDialog() == DialogResult.OK)
+            if (openFileDialogU.ShowDialog() == DialogResult.OK)
             {
-                StreamReader sr = new StreamReader(openFileDialogU.FileName);
                 timer1.Enabled = true;
-                //Определение количества треугольников
-                countTr = 0;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (line.IndexOf("outer") != -1)
-                    {
-                        countTr++;
-                    }
-                }
-                sr.Close();
-                sr = new StreamReader(openFileDialogU.FileName);
-                //
                 StartTimeSecunds = 3600 * DateTime.Now.Hour +
                     60 * DateTime.Now.Minute + DateTime.Now.Second;
                 VibFileName = openFileDialogU.FileName;
                 toolStripTextBoxFileName.Text = VibFileName;
-                //
-                if (metka)
+                richTextBox_review.Text = "";
+                if (activeTask != SwitchActiveTask.analizePacking)
                 {
-                    richTextBox_review.Text = "";
-                    try
+                    // текстовый файл
+                    if (toolStripComboBoxTypeSTL.Text.Substring(0, 2) == "1.")
                     {
-                        while ((line = sr.ReadLine()) != null & i < n)
+                        StreamReader sr = new StreamReader(openFileDialogU.FileName);
+                        //Определение количества треугольников
+                        countTr = 0;
+                        while ((line = sr.ReadLine()) != null)
                         {
-                            ++i;
-                            richTextBox_review.Text += line + "\n";
-                            //
+                            if (line.IndexOf("outer") != -1)
+                                countTr++;
+                        }
+                        sr.Close();
+                        sr = new StreamReader(openFileDialogU.FileName);
+                        if (metka)
+                        {
+                            try
+                            {
+                                while ((line = sr.ReadLine()) != null & i < n)
+                                {
+                                    ++i;
+                                    richTextBox_review.Text += line + "\n";
+                                }
+                            }
+                            catch (Exception e0)
+                            {
+                                MessageBox.Show(e0.Message);
+                            }
+                        }
+                        else
+                        {
+                            richTextBox_review.Text = sr.ReadToEnd();//чтение всего файла
+                        }
+                        sr.Close();
+                        //MessageBox.Show("Выбран файл и загружен для просмотра: " + VibFileName);
+                    }
+                    // бинарный файл
+                    else if (toolStripComboBoxTypeSTL.Text.Substring(0, 2) == "2.")
+                    {
+                        try
+                        {
+                            using (BinaryReader br = new BinaryReader(File.Open(VibFileName, FileMode.Open)))
+                            {
+                                float x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn;
+                                ushort AddAttr;
+                                while (br.BaseStream.Position != br.BaseStream.Length)
+                                {
+                                    byte[] header = br.ReadBytes(80);
+                                    richTextBox_review.Text += "Бинарный файл: " + "\n";
+                                    uint numTr = br.ReadUInt32();
+                                    countTr = (int)numTr;
+                                    int ProgressBarNumTr = countTr - 1;
+                                    Base_stl[] TrStl = new Base_stl[numTr];
+                                    richTextBox_review.Text += "Количество треугольников: " + numTr.ToString("###,0") + " шт." + "\n";
+                                    StreamWriter sw = new StreamWriter(VibFileName.Remove(VibFileName.LastIndexOf('.'), 4) + "_ascii.txt", false);
+                                    for (uint ui = 0; ui < numTr; ui++)
+                                    {
+                                        proc.ProgressBarRefresh(toolStripProgressBarOpenSTL, (int)ui, ProgressBarNumTr);
+                                        // нормальный вектор
+                                        xn = br.ReadSingle(); yn = br.ReadSingle(); zn = br.ReadSingle();
+                                        // 1 вершина
+                                        x1 = br.ReadSingle(); y1 = br.ReadSingle(); z1 = br.ReadSingle();
+                                        // 2 вершина
+                                        x2 = br.ReadSingle(); y2 = br.ReadSingle(); z2 = br.ReadSingle();
+                                        // 3 вершина
+                                        x3 = br.ReadSingle(); y3 = br.ReadSingle(); z3 = br.ReadSingle();
+                                        //
+                                        AddAttr = br.ReadUInt16();
+                                        line = "facet normal " +
+                                            xn.ToString("0.000000E-000") + " " + yn.ToString("0.000000E-000") + " " + zn.ToString("0.000000E-000") + "\r\n" +
+                                        "vertex " +
+                                            x1.ToString("0.000000E-000") + " " + y1.ToString("0.000000E-000") + " " + z1.ToString("0.000000E-000") + "\r\n" +
+                                        "vertex " +
+                                            x2.ToString("0.000000E-000") + " " + y2.ToString("0.000000E-000") + " " + z2.ToString("0.000000E-000") + "\r\n" +
+                                        "vertex " +
+                                            x3.ToString("0.000000E-000") + " " + y3.ToString("0.000000E-000") + " " + z3.ToString("0.000000E-000") + "\r\n" +
+                                        "AddAttr = " + AddAttr + "\r\n" +
+                                        "endfacet";
+                                        if (!metka)
+                                        {
+                                            // запись в richTextBox 
+                                            richTextBox_review.Text += line;
+                                        }
+                                        // запись в новый файл c именем + "_ascii.txt", в текстовый формат
+                                        sw.Write(line);
+                                        sw.Write("\r\n");
+                                    }
+                                    sw.Close();
+                                }
+                            }
+                        }
+                        catch (Exception e1)
+                        {
+                            MessageBox.Show(e1.ToString() + "\n Выбран не верный тип файла");
+                            richTextBox_review.Text = "Выберите текстовый формат файла (ASCII)";
+                            toolStripComboBoxTypeSTL.Text = "1. Текстовый формат файла (ASCII)";
+                            timer1.Enabled = false;
+                            if (VibFileName.Substring((int)(VibFileName.Length - 3)).ToLower() == "stl")
+                            {
+                                ToolStripButtonOpenSTL_Click(sender, e);
+                            }
+                            else
+                            { return; }
+                        }
+                        try
+                        {
+                            frmMain.richTextBoxHistory.Text += "Выбран файл и загружен для просмотра: " + VibFileName + "\n";
+                        }
+                        catch (Exception e9)
+                        {
+                            MessageBox.Show(e9.Message);
                         }
                     }
-                    catch (Exception e0)
+                    else
                     {
-                        MessageBox.Show(e0.Message);
+                        toolStripStatusLabelCreateVoxel.Text = "Массив исходных данных не создан";
+                        toolStripStatusLabelImport.Text = "Массив исходных данных не создан";
+                        toolStripStatusLabelInphoOrientation.Text = "Массив исходных данных не создан";
+                        toolStripStatusLabelCreateVoxel.ForeColor = Color.Red;
+                        toolStripStatusLabelImport.ForeColor = Color.Red;
+                        toolStripStatusLabelInphoOrientation.ForeColor = Color.Red;
+                        Calculate_size.Enabled = false;
+                        toolStripButtonCreateVoxModel.Enabled = false;
+                        toolStripButtonASC.Enabled = false;
+                        toolStripButtonVerification.Enabled = false;
                     }
                 }
                 else
                 {
-                    //чтение всего файла
-                    richTextBox_review.Text = sr.ReadToEnd();
-                }
-                //
-                EndTimeSecunds = 3600 * DateTime.Now.Hour +
-                                 60 * DateTime.Now.Minute + DateTime.Now.Second;
-                toolStripStatusLabel_time_loud.Text = "Время загрузки: " +
-                    (EndTimeSecunds - StartTimeSecunds).ToString() + " c.";
-                //
-                toolStripStatusLabel_info.Text = "Количество символов " + richTextBox_review.TextLength.ToString("###,0");
-                sr.Close();
-                //
-                timer1.Enabled = false;
-                MessageBox.Show("Выбран файл и загружен для просмотра: " + VibFileName);
-            }
-            // бинарный файл
-            if (toolStripComboBox2.Text.Substring(0, 2) == "2."
-                && openFileDialogU.ShowDialog() == DialogResult.OK)
-            {
-                StartTimeSecunds = 3600 * DateTime.Now.Hour +
-                    60 * DateTime.Now.Minute + DateTime.Now.Second;
-                VibFileName = openFileDialogU.FileName;
-                toolStripTextBoxFileName.Text = VibFileName;
-                try
-                {
-                    using (BinaryReader br = new BinaryReader(File.Open(VibFileName, FileMode.Open)))
+                    massiveListModels.Clear();
+                    VibFileNames = openFileDialogU.FileNames;
+                    for (int f = 0; f < VibFileNames.Length; f++)
                     {
-                        float x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn;
-                        ushort AddAttr;
-                        richTextBox_review.Text = "";
-
-                        while (br.BaseStream.Position != br.BaseStream.Length)
+                        //base_model model = new base_model() { Name = VibFileNames[f] };
+                        if (toolStripComboBoxTypeSTL.Text.Substring(0, 2) == "1.")
                         {
-                            byte[] header = br.ReadBytes(80);
-                            richTextBox_review.Text += "Бинарный файл" + "\n";
-                            uint numTr = br.ReadUInt32();
-                            countTr = (int)numTr;
-                            int ProgressBarNumTr = countTr - 1;
-                            Base_stl[] TrStl = new Base_stl[numTr];
-                            richTextBox_review.Text += "Количество треугольников: " + numTr.ToString("###,0") + " шт." + "\n";
-                            StreamWriter sw = new StreamWriter(VibFileName.Remove(VibFileName.LastIndexOf('.'), 4) + "_ascii.txt", false);
-                            for (uint ui = 0; ui < numTr; ui++)
-                            {
-                                proc.ProgressBarRefresh(toolStripProgressBarOpenSTL, (int)ui, ProgressBarNumTr);
-                                // нормальный вектор
-                                xn = br.ReadSingle(); yn = br.ReadSingle(); zn = br.ReadSingle();
-                                // 1 вершина
-                                x1 = br.ReadSingle(); y1 = br.ReadSingle(); z1 = br.ReadSingle();
-                                // 2 вершина
-                                x2 = br.ReadSingle(); y2 = br.ReadSingle(); z2 = br.ReadSingle();
-                                // 3 вершина
-                                x3 = br.ReadSingle(); y3 = br.ReadSingle(); z3 = br.ReadSingle();
-                                //
-                                AddAttr = br.ReadUInt16();
-                                line = "facet normal " +
-                                    xn.ToString("0.000000E-000") + " " + yn.ToString("0.000000E-000") + " " + zn.ToString("0.000000E-000") + "\r\n" +
-                                "vertex " +
-                                    x1.ToString("0.000000E-000") + " " + y1.ToString("0.000000E-000") + " " + z1.ToString("0.000000E-000") + "\r\n" +
-                                "vertex " +
-                                    x2.ToString("0.000000E-000") + " " + y2.ToString("0.000000E-000") + " " + z2.ToString("0.000000E-000") + "\r\n" +
-                                "vertex " +
-                                    x3.ToString("0.000000E-000") + " " + y3.ToString("0.000000E-000") + " " + z3.ToString("0.000000E-000") + "\r\n" +
-                                "AddAttr = " + AddAttr + "\r\n" +
-                                "endfacet";
-                                if (!metka)
-                                {
-                                    // запись в richTextBox 
-                                    richTextBox_review.Text += line;
-                                }
-                                // запись в новый файл c именем + "_ascii.txt", в текстовый формат
-
-                                sw.Write(line);
-                                sw.Write("\r\n");
-                            }
-                            sw.Close();
+                            ListStl = proc.TranslationSTLtexttoList(VibFileNames[f]);
                         }
+                        else if (toolStripComboBoxTypeSTL.Text.Substring(0, 2) == "2.")
+                        {
+                            ListStl = proc.TranslationSTLtoList(VibFileNames[f]);
+                        }
+                        toolStripTextBoxFileName.Text = VibFileNames[f];
+                        //ListStl = model.Stl;
+                        Calculate_size_Click(Calculate_size, EventArgs.Empty);
+                        ToolStripButtonCreateVoxModel_Click(toolStripButtonCreateVoxModel, EventArgs.Empty);
+                        
+                        proc.ProgressBarRefresh(toolStripProgressBarOpenSTL, f + 1, VibFileNames.Length);
+
+                        richTextBox_review.Text += "Выбран файл и загружен для расчетов: " + VibFileNames[f] + "\n" +
+                                                   "Количество граней: " + ListStl.Count() + ";\n\n";
                     }
-                }
-                catch (Exception e1)
-                {
-                    MessageBox.Show(e1.ToString() + "\n Выбран не верный тип файла");
-                    richTextBox_review.Text = "Выберите текстовый формат файла (ASCII)";
-                    toolStripComboBox2.Text = "1. Текстовый формат файла (ASCII)";
-                    timer1.Enabled = false;
-                    if (VibFileName.Substring((int)(VibFileName.Length - 3)).ToLower() == "stl")
+                    //Многопоточный расчет 
+                    // 2019/02/01
+                    /*
+                    var parallelModel = massiveListModels.AsParallel();
+                    foreach (var item in parallelModel)
                     {
-                        ToolStripButton1_Click(sender, e);
+                        ListStl = item.Stl;
+                        Calculate_size_Click(Calculate_size, EventArgs.Empty);
+                        ToolStripButtonCreateVoxModel_Click(toolStripButtonCreateVoxModel, EventArgs.Empty);
+                        item.Voxels = ListVox;
                     }
-                    else
-                    { return; }
+                    */
                 }
-                //
                 EndTimeSecunds = 3600 * DateTime.Now.Hour +
-                                 60 * DateTime.Now.Minute + DateTime.Now.Second;
+                     60 * DateTime.Now.Minute + DateTime.Now.Second;
                 toolStripStatusLabel_time_loud.Text = "Время загрузки: " +
                     (EndTimeSecunds - StartTimeSecunds).ToString() + " c.";
-                //
                 toolStripStatusLabel_info.Text = "Количество символов " + richTextBox_review.TextLength.ToString("###,0");
-                //
                 timer1.Enabled = false;
-                /*
-                MessageBox.Show("Выбран файл и загружен для просмотра: " + VibFileName + "\n" +
-                                "Создан массив данных координат вершин и нормального вектора треугольных граней");
-                */
-                try
-                {
-                    frmMain.richTextBoxHistory.Text += "Выбран файл и загружен для просмотра: " + VibFileName + "\n" +
-                                "Создан массив данных координат вершин и нормального вектора треугольных граней" +" \n";
-                }
-                catch (Exception e9)
-                {
-                    MessageBox.Show(e9.Message);
-                }
-                toolStripStatusLabelCreateVoxel.Text = "Массив исходных данных не создан";
-                toolStripStatusLabel2.Text = "Массив исходных данных не создан";
-                toolStripStatusLabelInphoOrientation.Text = "Массив исходных данных не создан";
-                toolStripStatusLabelCreateVoxel.ForeColor = Color.Red;
-                toolStripStatusLabel2.ForeColor = Color.Red;
-                toolStripStatusLabelInphoOrientation.ForeColor = Color.Red;
-                Calculate_size.Enabled = false;
-                toolStripButtonCreateVoxModel.Enabled = false;
-                toolStripButtonASC.Enabled = false;
-                toolStripButtonVerification.Enabled = false;
+                //toolStripComboBoxListModels.Items.Clear();
+                PlaySound();
             }
         }
 
         private void ToolStripComboBox1_TextChanged(object sender, EventArgs e)
         {
-            if (toolStripComboBox1.Text.TrimEnd() != "весь файл")
+            if (toolStripComboBoxNumLine.Text.TrimEnd() != "весь файл")
             {
                 toolStripTextBoxVol.ReadOnly = false;
                 toolStripTextBoxVol.Visible = true;
@@ -244,8 +273,16 @@ namespace PreAddTech
                 toolStripTextBoxVol.Visible = false;
             }
         }
-        //Mассив данных о треугольниках для расчетов
+
+        /// <summary>
+        /// Mассив данных о треугольниках
+        /// </summary>
         public List<Base_stl> ListStl = new List<Base_stl>();
+        /// <summary>
+        /// Массив моделей (массивов данных о треугольниках)
+        /// </summary>
+        public List<List<Base_stl>> MassiveListStl = new List<List<Base_stl>>();
+
         /// <summary>
         /// Преобразование stl файла в БД
         /// </summary>
@@ -258,46 +295,41 @@ namespace PreAddTech
             if (VibFileName == "")
             {
                 MessageBox.Show("Не выбран файл для импорта. См. закладку \"Открыть STL\".", "Отсутствуют данные");
-                toolStripStatusLabel2.Text = "Не выбран STL-файл для импорта. Отсутствуют данные.";
+                toolStripStatusLabelImport.Text = "Не выбран STL-файл для импорта. Отсутствуют данные.";
                 return;
             }
             else
             { VibFileName2 = VibFileName.Remove(VibFileName.LastIndexOf('.'), 4) + "_ascii.txt"; }
             //2016/03/09
             //Очищаем таблицу от данных
-            if (dataGridView1.ColumnCount != 0)
-                dataGridView1.Columns.Clear();
+            if (dataGridViewImport.ColumnCount != 0)
+                dataGridViewImport.Columns.Clear();
             //Добавление колонок в текущую таблицу для возможности добавления записей по треугольникам
-            dataGridView1.Columns.Add("Nom", "№ треуг."); // 1-я колонка
-            dataGridView1.Columns.Add("x1", "X1"); // 2-я колонка
-            dataGridView1.Columns.Add("y1", "Y1"); // 3-я колонка
-            dataGridView1.Columns.Add("z1", "Z1"); // 4-я колонка
-            dataGridView1.Columns.Add("x2", "X2"); // 5-я колонка
-            dataGridView1.Columns.Add("y2", "Y2"); // 6-я колонка
-            dataGridView1.Columns.Add("z1", "Z2"); // 7-я колонка
-            dataGridView1.Columns.Add("x3", "X3"); // 8-я колонка
-            dataGridView1.Columns.Add("y3", "Y3"); // 9-я колонка
-            dataGridView1.Columns.Add("z3", "Z3"); // 10-я колонка
-            dataGridView1.Columns.Add("xn", "XN"); // 11-я колонка
-            dataGridView1.Columns.Add("yn", "YN"); // 12-я колонка
-            dataGridView1.Columns.Add("zn", "ZN"); // 13-я колонка
-            dataGridView1.Columns.Add("str", "Площадь, мм2");
-            // 14-я колонка
-            //поток данных создаем по таблице выбранной на первой закладке
-            StreamReader sr4 = new StreamReader((toolStripComboBox2.Text.Substring(0, 2) == "2." ? VibFileName2 : VibFileName), Encoding.Default);
+            dataGridViewImport.Columns.Add("Nom", "№ треуг."); // 1-я колонка
+            dataGridViewImport.Columns.Add("x1", "X1"); // 2-я колонка
+            dataGridViewImport.Columns.Add("y1", "Y1"); // 3-я колонка
+            dataGridViewImport.Columns.Add("z1", "Z1"); // 4-я колонка
+            dataGridViewImport.Columns.Add("x2", "X2"); // 5-я колонка
+            dataGridViewImport.Columns.Add("y2", "Y2"); // 6-я колонка
+            dataGridViewImport.Columns.Add("z1", "Z2"); // 7-я колонка
+            dataGridViewImport.Columns.Add("x3", "X3"); // 8-я колонка
+            dataGridViewImport.Columns.Add("y3", "Y3"); // 9-я колонка
+            dataGridViewImport.Columns.Add("z3", "Z3"); // 10-я колонка
+            dataGridViewImport.Columns.Add("xn", "XN"); // 11-я колонка
+            dataGridViewImport.Columns.Add("yn", "YN"); // 12-я колонка
+            dataGridViewImport.Columns.Add("zn", "ZN"); // 13-я колонка
+            dataGridViewImport.Columns.Add("str", "Площадь, мм2"); // 14-я колонка
+            //поток данных
+            StreamReader sr4 = new StreamReader((toolStripComboBoxTypeSTL.Text.Substring(0, 2) == "2." ? VibFileName2 : VibFileName), Encoding.Default);
             string str_temp = "";
             int Nom = 0; // порядковый номер треугольника
             string StrNom;
             int NomVertex = 0; // порядковый номер вершины
-            //string x1 ="", y1 = "", z1 = "", x2 = "", y2 = "", z2 = "", x3 = "", y3 = "", z3 = "", xn = "", yn = "", zn = "", str = "";
             string x1 = "", y1 = "", z1 = "", x2 = "", y2 = "", z2 = "", x3 = "", y3 = "", z3 = "", xn = "", yn = "", zn = "";
             double[] fstr;
             string[] p1; // вспомогательный массив
-            //string[] p2; // вспомогательный массив
             //Экземпляр для класса процедур расчета
             MyProcedures proc = new MyProcedures();
-            //Mассив для расчетов
-            //List<base_stl> ListStl = new List<base_stl>();
             ListStl.Clear();
 
             while (!sr4.EndOfStream)
@@ -339,15 +371,12 @@ namespace PreAddTech
                         {
                             case 12:
                                 z1 = p1[i].Trim();
-                                //MessageBox.Show("z1 = " + z1);
                                 break;
                             case 11:
                                 y1 = p1[i].Trim();
-                                //MessageBox.Show("y1 = " + y1);
                                 break;
                             case 10:
                                 x1 = p1[i].Trim();
-                                //MessageBox.Show("x1 = " + x1);
                                 break;
                             case 22:
                                 z2 = p1[i].Trim();
@@ -371,7 +400,7 @@ namespace PreAddTech
                         //Проверка на пустую запись
                         if (p1[i].Trim() == "")
                         {
-                            toolStripStatusLabel2.Text = "Проблема c записью координат вершин. Номер проблемной грани - " + Nom;
+                            toolStripStatusLabelImport.Text = "Проблема c записью координат вершин. Номер проблемной грани - " + Nom;
                             return;
                         }
                     }
@@ -404,13 +433,6 @@ namespace PreAddTech
                         x2 = x2.Replace('e', 'E'); y2 = y2.Replace('e', 'E'); z2 = z2.Replace('e', 'E');
                         x3 = x3.Replace('e', 'E'); y3 = y3.Replace('e', 'E'); z3 = z3.Replace('e', 'E');
                         xn = xn.Replace('e', 'E'); yn = yn.Replace('e', 'E'); zn = zn.Replace('e', 'E');
-                        /*Второй вариант решения проблемы 2016/03/11
-                        p2 = proc.DeleteFraction(x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn);
-                        x1 = p2[0]; y1 = p2[1]; z1 = p2[2];
-                        x2 = p2[3]; y2 = p2[4]; z2 = p2[5];
-                        x3 = p2[6]; y3 = p2[7]; z3 = p2[8];
-                        xn = p2[9]; yn = p2[10];zn = p2[11];
-                        */
                     }
                     //fstr = proc.Str(double.Parse(x1), double.Parse(y1), double.Parse(z1),
                     //                double.Parse(x2), double.Parse(y2), double.Parse(z2),
@@ -420,20 +442,13 @@ namespace PreAddTech
                     //1.Просмотр в таблице
                     //2.Просмотр и записать в файл
                     //3.Записать в массив для расчетов
-
-                    toolStripProgressBarCreateTable.Value = (int)(toolStripProgressBarCreateTable.Minimum +
-                                 (toolStripProgressBarCreateTable.Maximum - toolStripProgressBarCreateTable.Minimum) * int.Parse(StrNom) / countTr);
-
-                    Application.DoEvents();
-
+                    proc.ProgressBarRefresh(toolStripProgressBarCreateTable, int.Parse(StrNom), countTr);
                     try
                     {
-                        switch (toolStripComboBox3.Text.Substring(0, 1))
+                        switch (toolStripComboBoxSelectAct.Text.Substring(0, 1))
                         {
                             case "1":
-                                //Просмотр в таблице
-                                //dataGridView1.Rows.Add(StrNom, x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn, str);
-                                dataGridView1.Rows.Add(StrNom, x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn);
+                                dataGridViewImport.Rows.Add(StrNom, x1, y1, z1, x2, y2, z2, x3, y3, z3, xn, yn, zn);
                                 break;
                             case "2":
                                 //Просмотр и записать в файл
@@ -482,33 +497,31 @@ namespace PreAddTech
                                 ListStl.Add(TrSTL);
                                 break;
                             default:
-                                toolStripStatusLabel2.Text = "Не выбрана операция!";
+                                toolStripStatusLabelImport.Text = "Не выбрана операция!";
                                 break;
                         }
                     }
                     catch (Exception e3)
                     {
                         MessageBox.Show(e3.Message + "\n" + "Возможно не выбрана активность(операция)");
-                        toolStripStatusLabel2.Text = "Не выбрана операция!";
+                        toolStripStatusLabelImport.Text = "Не выбрана операция!";
                         return;
                     }
                 }
             }
             sr4.Close();
 
-            if (toolStripComboBox3.Text.Substring(0, 1) == "2")
+            if (toolStripComboBoxSelectAct.Text.Substring(0, 1) == "2")
             {
-                toolStripStatusLabel2.Text = "Файл сохранен " + (string)saveFileDialogU.FileName;
-                toolStripStatusLabel2.ForeColor = Color.Black;
+                toolStripStatusLabelImport.Text = "Файл сохранен " + (string)saveFileDialogU.FileName;
+                toolStripStatusLabelImport.ForeColor = Color.Black;
             }
-            if (toolStripComboBox3.Text.Substring(0, 1) == "3")
+            if (toolStripComboBoxSelectAct.Text.Substring(0, 1) == "3")
             {
-                //MessageBox.Show("Массив объектов класса треугольники создан. \n" +
-                //                "Количество треугольников: " + ListStl.Count.ToString("###,0"));
                 toolStripStatusLabelCreateVoxel.Text = "Массив исходных данных создан, количество треугольников: " + ListStl.Count.ToString("###,0");
                 toolStripStatusLabelCreateVoxel.ForeColor = Color.Black;
-                toolStripStatusLabel2.Text = "Массив исходных данных создан, количество треугольников: " + ListStl.Count.ToString("###,0");
-                toolStripStatusLabel2.ForeColor = Color.Black;
+                toolStripStatusLabelImport.Text = "Массив исходных данных создан, количество треугольников: " + ListStl.Count.ToString("###,0");
+                toolStripStatusLabelImport.ForeColor = Color.Black;
                 toolStripStatusLabelColorVisual.Text = "Расчет не выполнен.";
                 toolStripStatusLabelColorVisual.ForeColor = Color.Red;
                 Calculate_size.Enabled = true;
@@ -517,9 +530,8 @@ namespace PreAddTech
                 toolStripButtonVerification.Enabled = false;
                 toolStripStatusLabelInphoOrientation.Text = "Массив исходных данных создан, количество треугольников: " + ListStl.Count.ToString("###,0");
                 toolStripStatusLabelInphoOrientation.ForeColor = Color.Black;
-                // Обнуление списка вершин
-                listVertex.Clear();
-
+                listVertex.Clear();// Обнуление списка вершин
+                PlaySound();
             }
         }
 
@@ -540,7 +552,7 @@ namespace PreAddTech
                 StreamWriter sw = new
                     StreamWriter(saveFileDialogU.FileName, false, Encoding.Default);
                 float Sum = 0, Sum0 = 0;
-                int Num = int.Parse(toolStripTextBox2.Text);
+                int Num = int.Parse(toolStripTextBoxNumLine.Text);
                 for (int i = 0; i < ListStl.Count; i++)
                 {
                     Sum0 += (float)ListStl[i].CalcSTr()[3];
@@ -555,7 +567,7 @@ namespace PreAddTech
                     }
                 }
                 sw.WriteLine(ListStl.Count);
-                toolStripStatusLabel2.Text = "Файл сохранен" + saveFileDialogU.FileName;
+                toolStripStatusLabelImport.Text = "Файл сохранен" + saveFileDialogU.FileName;
                 sw.Close();
             }
         }
@@ -567,6 +579,7 @@ namespace PreAddTech
         ///создаем новый процесс
         ///http://csharpcoding.org/zapusk-iz-programmy-drugogo-prilozheniya/
         Process proc = new Process();
+
         /// <summary>
         /// Запускает Блокнот с загруженным файлом
         /// </summary>
@@ -619,20 +632,12 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void Calculate_size_Click(object sender, EventArgs e)
         {
-
             float minX = float.MaxValue, minY = float.MaxValue, minZ = float.MaxValue,
                   maxX = float.MinValue, maxY = float.MinValue, maxZ = float.MinValue;
 
             foreach (var TempSTL in ListStl)
             {
                 minX = (minX < TempSTL.MinX()) ? minX : TempSTL.MinX();
-                /* 2016/03/15
-                richTextBoxInfo.Text += "minX: " + minX + "\n";
-                richTextBoxInfo.Text += "TempSTL.MinX(): " + TempSTL.MinX() + "\n";
-                richTextBoxInfo.Text += TempSTL.X1 + "   " + TempSTL.X2 + "   " + TempSTL.X3 + "\n";
-                richTextBoxInfo.Text += TempSTL.Y1 + "   " + TempSTL.Y2 + "   " + TempSTL.Y3 + "\n";
-                richTextBoxInfo.Text += TempSTL.Z1 + "   " + TempSTL.Z2 + "   " + TempSTL.Z3 + "\n";
-                */
                 minY = (minY < TempSTL.MinY()) ? minY : TempSTL.MinY();
                 minZ = (minZ < TempSTL.MinZ()) ? minZ : TempSTL.MinZ();
                 //
@@ -640,18 +645,38 @@ namespace PreAddTech
                 maxY = (maxY > TempSTL.MaxY()) ? maxY : TempSTL.MaxY();
                 maxZ = (maxZ > TempSTL.MaxZ()) ? maxZ : TempSTL.MaxZ();
             }
-            richTextBoxInfo.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
-            richTextBoxInfo.Text += toolStripTextBoxFileName.Text + "\n" + "*********" + "\n" +
-                "Минимальное значение координат вершин по оси Х:  " + minX.ToString("E03") + "\n" +
-                "Минимальное значение координат вершин по оси Y:  " + minY.ToString("E03") + "\n" +
-                "Минимальное значение координат вершин по оси Z:  " + minZ.ToString("E03") + "\n" + "\n" +
-                "Максимальное значение координат вершин по оси Х: " + maxX.ToString("E03") + "\n" +
-                "Максимальное значение координат вершин по оси Y: " + maxY.ToString("E03") + "\n" +
-                "Максимальное значение координат вершин по оси Z: " + maxZ.ToString("E03") + "\n" + "\n" +
-                "Габаритные размеры модели по осям X, Y, Z:  " + (maxX - minX).ToString("N03") + " ;  " +
-                                                                (maxY - minY).ToString("N03") + " ;  " +
-                                                                (maxZ - minZ).ToString("N03") + "\n" + "\n";
-            richTextBoxInfo.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
+            if (CultureInfo.CurrentCulture.Name == "ru")
+            {
+                richTextBoxInfo.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
+
+                richTextBoxInfo.Text += toolStripTextBoxFileName.Text + "\n" + "*********" + "\n" +
+                    "Минимальное значение координат вершин по оси Х:  " + minX.ToString("E03") + "\n" +
+                    "Минимальное значение координат вершин по оси Y:  " + minY.ToString("E03") + "\n" +
+                    "Минимальное значение координат вершин по оси Z:  " + minZ.ToString("E03") + "\n" + "\n" +
+                    "Максимальное значение координат вершин по оси Х: " + maxX.ToString("E03") + "\n" +
+                    "Максимальное значение координат вершин по оси Y: " + maxY.ToString("E03") + "\n" +
+                    "Максимальное значение координат вершин по оси Z: " + maxZ.ToString("E03") + "\n" + "\n" +
+                    "Габаритные размеры модели по осям X, Y, Z:  " + (maxX - minX).ToString("N03") + " ;  " +
+                                                                    (maxY - minY).ToString("N03") + " ;  " +
+                                                                    (maxZ - minZ).ToString("N03") + "\n" + "\n";
+                richTextBoxInfo.Text += "Время: " + DateTime.Now.ToLongTimeString() + "\n";
+            }
+            else
+            {
+                richTextBoxInfo.Text += "Time: " + DateTime.Now.ToLongTimeString() + "\n";
+
+                richTextBoxInfo.Text += toolStripTextBoxFileName.Text + "\n" + "*********" + "\n" +
+                    "Minimum value of vertex coordinates along Х axis:  " + minX.ToString("E03") + "\n" +
+                    "Minimum value of vertex coordinates along Y axis:  " + minY.ToString("E03") + "\n" +
+                    "Minimum value of vertex coordinates along Z axis:  " + minZ.ToString("E03") + "\n" + "\n" +
+                    "Maximum value of vertex coordinates along Х axis: " + maxX.ToString("E03") + "\n" +
+                    "Maximum value of vertex coordinates along Х axis: " + maxY.ToString("E03") + "\n" +
+                    "Maximum value of vertex coordinates along Z axis: " + maxZ.ToString("E03") + "\n" + "\n" +
+                    "Model overall dimensions in X, Y, Z axes:  " + (maxX - minX).ToString("N03") + " ;  " +
+                                                                    (maxY - minY).ToString("N03") + " ;  " +
+                                                                    (maxZ - minZ).ToString("N03") + "\n" + "\n";
+                richTextBoxInfo.Text += "Time: " + DateTime.Now.ToLongTimeString() + "\n";
+            }
             //
             toolStripButtonCreateVoxModel.Enabled = true;
             toolStripButtonASC.Enabled = false;
@@ -682,7 +707,7 @@ namespace PreAddTech
         /// <summary>
         /// Список вокселей модели
         /// </summary>
-        List<base_vox> ListVox = new List<base_vox>();
+        List<Base_vox> ListVox = new List<Base_vox>();
 
         /// <summary>
         /// Процедура создания воксельной модели
@@ -692,10 +717,20 @@ namespace PreAddTech
             ListVox.Clear();
             toolStripButtonStatAnal.Enabled = true;
             int StartTime = DateTime.Now.Hour * 3600000 + DateTime.Now.Minute * 60000 + DateTime.Now.Second * 1000 + DateTime.Now.Millisecond;
-            richTextBoxInfo.Text += "Время (начало создания воксельной модели): " + DateTime.Now.ToLongTimeString() + "\n";
+            if (CultureInfo.CurrentCulture.Name == "ru")
+            {
+                richTextBoxInfo.Text += "Время (начало создания воксельной модели): " + DateTime.Now.ToLongTimeString() + "\n";   
+                toolStripStatusLabelCreateVoxel.Text = "Воксельная модель создается... ";             
+            }
+            else
+            {
+                richTextBoxInfo.Text += "Time (start creating a voxel model): " + DateTime.Now.ToLongTimeString() + "\n";
+                toolStripStatusLabelCreateVoxel.Text = "The voxel model is created... ";                     
+            }
+
             toolStripButtonASC.Enabled = false;
             toolStripButtonVerification.Enabled = false;
-            toolStripStatusLabelCreateVoxel.Text = "Воксельная модель создается... ";
+
             string temptext = richTextBoxInfo.Text;
             MyProcedures proc = new MyProcedures();
             //исходные данные
@@ -763,7 +798,7 @@ namespace PreAddTech
                     for (int m = 0; m <= numZ; m++)
                     {
                         tempZ = MinZ + m * SizeZ;
-                        base_vox tempVoxLine = new base_vox()
+                        Base_vox tempVoxLine = new Base_vox()
                             {
                                 Xv = tempX,
                                 Yv = tempY,
@@ -805,27 +840,45 @@ namespace PreAddTech
             }
             //
             int EndTime = DateTime.Now.Hour * 3600000 + DateTime.Now.Minute * 60000 + DateTime.Now.Second * 1000 + DateTime.Now.Millisecond - StartTime;
-            richTextBoxInfo.Text = temptext + "Количество вокселей модели: " + k + "\n";
-            richTextBoxInfo.Text += "Количество вокселей свободного пространства: " + (ListVox.Count - k) + "\n";
-            TotalCount = ((numX) * (numY) * (numZ));
-            richTextBoxInfo.Text += "Расчетное количество вокселей (общее): " + TotalCount + "\n";
-            textBoxTotalVox.Text = TotalCount.ToString("N0");
-            richTextBoxInfo.Text += "Размеры вокселя (по осям X, Y, Z): " + numericUpDownVoxX.Value + "; " + numericUpDownVoxY.Value + "; " + numericUpDownVoxZ.Value + "\n";
-            richTextBoxInfo.Text += "Объем воксельной модели: " + (k * SizeX * SizeY * SizeZ).ToString() + "(мм3)" + "\n";
-            richTextBoxInfo.Text += "Время создания: " + EndTime.ToString("###,0") + " мc. \n";
+            if (CultureInfo.CurrentCulture.Name == "ru")
+            {
+                richTextBoxInfo.Text = temptext + "Количество вокселей модели: " + k + "\n";
+                richTextBoxInfo.Text += "Количество вокселей свободного пространства: " + (ListVox.Count - k) + "\n";
+                TotalCount = ((numX) * (numY) * (numZ));
+                richTextBoxInfo.Text += "Расчетное количество вокселей (общее): " + TotalCount + "\n";
+                textBoxTotalVox.Text = TotalCount.ToString("N0");
+                richTextBoxInfo.Text += "Размеры вокселя (по осям X, Y, Z): " + numericUpDownVoxX.Value + "; " + numericUpDownVoxY.Value + "; " + numericUpDownVoxZ.Value + "\n";
+                richTextBoxInfo.Text += "Объем воксельной модели: " + (k * SizeX * SizeY * SizeZ).ToString() + "(мм3)" + "\n";
+                richTextBoxInfo.Text += "Время создания: " + EndTime.ToString("###,0") + " мc. \n";
+            }
+            else
+            {
+                richTextBoxInfo.Text = temptext + "Number of voxels: " + k + "\n";
+                richTextBoxInfo.Text += "Number of free voxels: " + (ListVox.Count - k) + "\n";
+                TotalCount = ((numX) * (numY) * (numZ));
+                richTextBoxInfo.Text += "Estimated number of voxels (total): " + TotalCount + "\n";
+                textBoxTotalVox.Text = TotalCount.ToString("N0");
+                richTextBoxInfo.Text += "Voxel size (X, Y, Z): " + numericUpDownVoxX.Value + "; " + numericUpDownVoxY.Value + "; " + numericUpDownVoxZ.Value + "\n";
+                richTextBoxInfo.Text += "Voxel volume: " + (k * SizeX * SizeY * SizeZ).ToString() + "(mm3)" + "\n";
+                richTextBoxInfo.Text += "Time of creation: " + EndTime.ToString("###,0") + " mc. \n";
+            }
             toolStripButtonASC.Enabled = true;
             toolStripButtonVerification.Enabled = true;
             toolStripStatusLabelCreateVoxel.Text = "Воксельная модель создана.";
+            toolStripStatusLabelCreateVoxel.ForeColor = Color.Black;
             toolStripStatusLabelLocation.Text = "Воксельная модель создана.";
+            toolStripStatusLabelLocation.ForeColor = Color.Black;
             toolStripButtonSaveVoxModel.Enabled = true;
+            if (activeTask != SwitchActiveTask.analizePacking)
+                toolStripComboBoxShowAnalysis.Enabled = true;
             //Создание массива моделей для размещения на рабочей платформе
-            if (activeTask == ATPreparation.switchActiveTask.analizePacking)
+            if (activeTask == SwitchActiveTask.analizePacking)
             {
-                base_model model = new base_model() {
+                Base_model model = new Base_model() {
                                         Name = toolStripTextBoxFileName.Text,
                                         Stl = ListStl};
                 //Создание списка вокселей для модели изделия
-                List<base_vox> tempListVox = new List<base_vox>();
+                List<Base_vox> tempListVox = new List<Base_vox>();
                 foreach (var item in ListVox)
                 {
                     if(item.Lfull)
@@ -833,10 +886,10 @@ namespace PreAddTech
                 }
                 model.Voxels = tempListVox;
                 //
-                model.totalCountVoxels = TotalCount;
-                model.sizeXvoxel = SizeX;
-                model.sizeYvoxel = SizeY;
-                model.sizeZvoxel = SizeZ;
+                model.TotalCountVoxels = TotalCount;
+                model.SizeXvoxel = SizeX;
+                model.SizeYvoxel = SizeY;
+                model.SizeZvoxel = SizeZ;
                 float Vstl = 0;
                 foreach (var tempstl in ListStl)
                 {
@@ -844,19 +897,21 @@ namespace PreAddTech
                 }
 
                 model.Volumе = Vstl;
-                model.angleX = 0;
-                model.angleY = 0;
-                model.coordinateX = MinX;
-                model.coordinateY = MinY;
-                model.coordinateZ = MinZ;
-                model.sizeX = MaxX - MinX;
-                model.sizeY = MaxY - MinY;
-                model.sizeZ = MaxZ - MinZ;
-                model.information = richTextBoxInfo.Text;
+                model.AngleX = 0;
+                model.AngleY = 0;
+                model.CoordinateX = MinX;
+                model.CoordinateY = MinY;
+                model.CoordinateZ = MinZ;
+                model.SizeX = MaxX - MinX;
+                model.SizeY = MaxY - MinY;
+                model.SizeZ = MaxZ - MinZ;
+                model.Information = richTextBoxInfo.Text;
                 massiveListModels.Add(model);
                 //добавление в список выбора
                 toolStripComboBoxListModels.Items.Add(massiveListModels.Count.ToString("000") +
                            " "+ toolStripTextBoxFileName.Text.Remove(0, 1 + toolStripTextBoxFileName.Text.LastIndexOf(@"\")));
+                toolStripStatusLabelCreateVoxel.Text = "Воксельная модель добавлена в массив.";
+                toolStripStatusLabelCreateVoxel.ForeColor = Color.Black;
             }
             try
             {
@@ -876,13 +931,13 @@ namespace PreAddTech
         {
             if (ListStl.Count != 0)
             {
-                dataGridView1.Columns.Clear();
+                dataGridViewImport.Columns.Clear();
                 //Добавление колонок в текущую таблицу для возможности добавления записей по треугольникам
-                dataGridView1.Columns.Add("Nom1", "№ 1-го треуг."); // 1-я колонка
-                dataGridView1.Columns.Add("Nom2", "№ 2-го треуг."); // 2-я колонка
-                dataGridView1.Columns.Add("fi", "fi угол между нормалями"); // 3-я колонка
-                dataGridView1.Columns.Add("cosfi", "cos(fi)"); // 4-я колонка
-                dataGridView1.Columns.Add("str", "Площадь, мм2"); // 5-я колонка
+                dataGridViewImport.Columns.Add("Nom1", "№ 1-го треуг."); // 1-я колонка
+                dataGridViewImport.Columns.Add("Nom2", "№ 2-го треуг."); // 2-я колонка
+                dataGridViewImport.Columns.Add("fi", "fi угол между нормалями"); // 3-я колонка
+                dataGridViewImport.Columns.Add("cosfi", "cos(fi)"); // 4-я колонка
+                dataGridViewImport.Columns.Add("str", "Площадь, мм2"); // 5-я колонка
                 //
                 MyProcedures proced = new MyProcedures();
                 double fi = 0; // угол между нормалями смежных граней 
@@ -897,7 +952,7 @@ namespace PreAddTech
                         {
                             fi = proced.AngleBetweenNormals(item1, item2);
 
-                            dataGridView1.Rows.Add(i + 1, j + 1, fi, 180 * Math.Acos(fi) / Math.PI, item1.CalcSTr()[3]);
+                            dataGridViewImport.Rows.Add(i + 1, j + 1, fi, 180 * Math.Acos(fi) / Math.PI, item1.CalcSTr()[3]);
                         }
                     }
                 }
@@ -978,9 +1033,17 @@ namespace PreAddTech
                 sw.Close();
                 //MessageBox.Show("Файл записан: " + saveFileDialog1.FileName);
                 int dTime = DateTime.Now.Hour * 3600000 + DateTime.Now.Minute * 60000 + DateTime.Now.Second * 1000 + DateTime.Now.Millisecond - StartTime;
-                richTextBoxInfo.Text += "Записан файл: " + saveFileDialogU.FileName + ", за " + dTime.ToString("###,0") + " мс. \n";
+                if (CultureInfo.CurrentCulture.Name != "en")
+                {
+                    richTextBoxInfo.Text += "Записан файл: " + saveFileDialogU.FileName + ", за " + dTime.ToString("###,0") + " мс. \n";
+                    toolStripStatusLabelCreateVoxel.Text = "Модель сохранена в файл: " + saveFileDialogU.FileName;
+                }
+                else
+                {
+                    richTextBoxInfo.Text += "File recorded: " + saveFileDialogU.FileName + ", during " + dTime.ToString("###,0") + " mс. \n";
+                    toolStripStatusLabelCreateVoxel.Text = "Model was saved to file: " + saveFileDialogU.FileName;
+                }
             }
-            toolStripStatusLabelCreateVoxel.Text = "Модель сохранена в файл: " + saveFileDialogU.FileName;
         }
         /// <summary>
         /// Проверка воксельной модели
@@ -1041,17 +1104,34 @@ namespace PreAddTech
                 Sstl += tempstl.CalcSTr()[3];
                 Vstl += tempstl.CalcVol();
             }
-            richTextBoxInfo.Text += "Площадь триангуляционной модели: " + Sstl.ToString("N3") + " mm2 \n";
-            richTextBoxInfo.Text += "Объем триангуляционной модели: " + Vstl.ToString("N3") + " mm3 \n";
-            richTextBoxInfo.Text += "Объем воксельной модели: " + (CountVox * (float)numericUpDownVoxX.Value *
-                                    (float)numericUpDownVoxY.Value * (float)numericUpDownVoxZ.Value).ToString("N3") + " mm3 \n";
-            richTextBoxInfo.Text += "Погрешность создания воксельной модели по объему: " + ((CountVox * (float)numericUpDownVoxX.Value *
-                                    (float)numericUpDownVoxY.Value * (float)numericUpDownVoxZ.Value - Vstl) / Vstl).ToString("P01") + ".\n";
-            richTextBoxInfo.Text += "Коэффициент заполнения объема: " + ((float)CountVox / (float)ListVox.Count).ToString("P01") + ".\n";
-            //
-            int EndTime = DateTime.Now.Hour * 3600000 + DateTime.Now.Minute * 60000 + DateTime.Now.Second * 1000 + DateTime.Now.Millisecond - StartTime;
-            richTextBoxInfo.Text += "Время проверки: " + EndTime.ToString("###,0") + " мc. \n";
-            toolStripStatusLabelCreateVoxel.Text = "Выполнена проверка модели. ";
+            int EndTime = DateTime.Now.Hour * 3600000 + DateTime.Now.Minute * 60000 + DateTime.Now.Second * 1000 + 
+                          DateTime.Now.Millisecond - StartTime;
+            if (CultureInfo.CurrentCulture.Name == "ru")
+            {
+                richTextBoxInfo.Text += "Площадь триангуляционной модели: " + Sstl.ToString("N3") + " мм2 \n";
+                richTextBoxInfo.Text += "Объем триангуляционной модели: " + Vstl.ToString("N3") + " мм3 \n";
+                richTextBoxInfo.Text += "Объем воксельной модели: " + (CountVox * (float)numericUpDownVoxX.Value *
+                                        (float)numericUpDownVoxY.Value * (float)numericUpDownVoxZ.Value).ToString("N3") + " мм3 \n";
+                richTextBoxInfo.Text += "Погрешность создания воксельной модели по объему: " + ((CountVox * (float)numericUpDownVoxX.Value *
+                                        (float)numericUpDownVoxY.Value * (float)numericUpDownVoxZ.Value - Vstl) / Vstl).ToString("P01") + ".\n";
+                richTextBoxInfo.Text += "Коэффициент заполнения объема: " + ((float)CountVox / (float)ListVox.Count).ToString("P01") + ".\n";
+
+                richTextBoxInfo.Text += "Время проверки: " + EndTime.ToString("###,0") + " мc. \n";
+                toolStripStatusLabelCreateVoxel.Text = "Выполнена проверка модели. ";
+            }
+            else
+            {
+                richTextBoxInfo.Text += "The area of triangulated model: " + Sstl.ToString("N3") + " mm2 \n";
+                richTextBoxInfo.Text += "The volume of triangulated model: " + Vstl.ToString("N3") + " mm3 \n";
+                richTextBoxInfo.Text += "Volume of voxel model: " + (CountVox * (float)numericUpDownVoxX.Value *
+                                        (float)numericUpDownVoxY.Value * (float)numericUpDownVoxZ.Value).ToString("N3") + " mm3 \n";
+                richTextBoxInfo.Text += "Volume error of creating a voxel model: " + ((CountVox * (float)numericUpDownVoxX.Value *
+                                        (float)numericUpDownVoxY.Value * (float)numericUpDownVoxZ.Value - Vstl) / Vstl).ToString("P01") + ".\n";
+                richTextBoxInfo.Text += "Volume fill factor: " + ((float)CountVox / (float)ListVox.Count).ToString("P01") + ".\n";
+
+                richTextBoxInfo.Text += "Test time: " + EndTime.ToString("###,0") + " mc. \n";
+                toolStripStatusLabelCreateVoxel.Text = "Testing model was performed.";
+            }
         }
         /// <summary>
         /// Статистические характеристики (результаты анализа)
@@ -1356,7 +1436,7 @@ namespace PreAddTech
             activeChartType = SwitchChartType.X;
 
             //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-            // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+            // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- середина, 10 - мода (0), 11 - медиана, 12 - объем выборки
             textBoxMin.Text = resultStat_X[0].ToString("0.0000E-00");
             textBoxMax.Text = resultStat_X[1].ToString("0.0000E-00");
             textBoxInterval.Text = resultStat_X[2].ToString("0.0000E-00");
@@ -1872,7 +1952,18 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            toolStripComboBoxCountColumnForSave.Text = "1";
+            //toolStripComboBoxCountColumnForSave.Text = "1";
+            massiveListModels.Clear();
+            if (activeTask == SwitchActiveTask.analizePacking ||
+                activeTask == SwitchActiveTask.analizeDecomposing)
+            {
+                labelXmin.Text = SettingsUser.Default.WorkXmin;
+                labelXmax.Text = SettingsUser.Default.WorkXmax;
+                labelYmin.Text = SettingsUser.Default.WorkYmin;
+                labelYmax.Text = SettingsUser.Default.WorkYmax;
+                labelZmin.Text = SettingsUser.Default.WorkZmin;
+                labelZmax.Text = SettingsUser.Default.WorkZmax;
+            }
         }
         /// <summary>
         ///Метка заполненности таблицы интервалов для цветовой визуализации 
@@ -1906,16 +1997,18 @@ namespace PreAddTech
         /// Основная форма приложения
         /// </summary>
         ATPreparation frmMain = (ATPreparation)Application.OpenForms["ATPreparation"];
+        
         /// <summary>
         /// Процедура для обновления progressBar
         /// </summary>
         MyProcedures progressBarVis = new MyProcedures();
-    /// <summary>
-    /// Расчет характеристик модели для визуального анализа
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ToolStripButtonColorVisual_Click(object sender, EventArgs e)
+        
+        /// <summary>
+        /// Расчет характеристик модели для визуального анализа
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripButtonColorVisual_Click(object sender, EventArgs e)
         {
             toolStripProgressBarVisualization.Value = 0;
             try
@@ -2558,7 +2651,7 @@ namespace PreAddTech
 
                 resultStatPar = statisticaPar.Stat(tempMassivePar.ToArray(), gistPar);
                 //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-                // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+                // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- середина, 10 - мода (0), 11 - медиана, 12 - объем выборки
                 /* 2017/06/12
                 if (!checkBoxGist.Checked)
                 { resultStatPar = statisticaPar.Stat(tempMassivePar.ToArray(), gistPar); }
@@ -2649,6 +2742,7 @@ namespace PreAddTech
                 //
                 
                 toolStripButtonColorVisual.Enabled = true;
+                PlaySound();
             }
             else
             { toolStripButtonColorVisual.Enabled = false; }
@@ -2657,7 +2751,7 @@ namespace PreAddTech
         }
 
         //Массив цветов визуализации 
-        public List<colorVisual> ListColorDistribution = new List<colorVisual>();
+        public List<ColorVisual> ListColorDistribution = new List<ColorVisual>();
         /// <summary>
         /// Визуализация модели
         /// </summary>
@@ -2675,7 +2769,7 @@ namespace PreAddTech
                 {
                     if (dataGridViewIntervals[dataGridViewIntervals.Columns["Begin"].Index, i].Value != null)
                     {
-                        colorVisual tempTablColorDistribution = new colorVisual()
+                        ColorVisual tempTablColorDistribution = new ColorVisual()
                                 {
                                     Nom = i,
                                     Begin = float.Parse(dataGridViewIntervals[dataGridViewIntervals.Columns["Begin"].Index, i].Value.ToString()),
@@ -2746,7 +2840,7 @@ namespace PreAddTech
         }
         private void NumericUpDownG1_ValueChanged(object sender, EventArgs e)
         {
-            cproc.changeColorLabel(labelRGB1, (int)numericUpDownR1.Value,
+            cproc.ChangeColorLabel(labelRGB1, (int)numericUpDownR1.Value,
                                   (int)numericUpDownG1.Value, (int)numericUpDownB1.Value);
         }
         /// <summary>
@@ -2756,7 +2850,7 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void LabelRGB1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDownR1,
+            cproc.DoubleClickColorLabel(sender, colorDialogSelect, numericUpDownR1,
                               numericUpDownG1, numericUpDownB1);
         }
         /// <summary>
@@ -2766,13 +2860,13 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void LabelRGB2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDownR2,
+            cproc.DoubleClickColorLabel(sender, colorDialogSelect, numericUpDownR2,
                               numericUpDownG2, numericUpDownB2);
         }
 
         private void NumericUpDownR2_ValueChanged(object sender, EventArgs e)
         {
-            cproc.changeColorLabel(labelRGB2, (int)numericUpDownR2.Value,
+            cproc.ChangeColorLabel(labelRGB2, (int)numericUpDownR2.Value,
                                   (int)numericUpDownG2.Value, (int)numericUpDownB2.Value);
         }
         /// <summary>
@@ -3271,6 +3365,7 @@ namespace PreAddTech
                 }
             }
         }
+
         /// <summary>
         /// Сохранение модели (списка )
         /// </summary>
@@ -3757,7 +3852,7 @@ namespace PreAddTech
                     //
                     resultStatParOrientation = statisticaParOrient.Stat(tempMassiveParNormals, tempGistPar);
                     //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-                    // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+                    // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- середина, 10 - мода (0), 11 - медиана, 12 - объем выборки
                     //
                     if (dataGridViewIntervals.Rows.Count != 0)
                         //Добавление в dataGridView варианта расчета
@@ -3796,6 +3891,7 @@ namespace PreAddTech
                                                    (DateTime.Now - StartTime).Minutes + " мин. " +
                                                    (DateTime.Now - StartTime).Seconds + " с. " +
                                                    (DateTime.Now - StartTime).Milliseconds + " мс.";
+                PlaySound();
             }
             catch (Exception e9)
             {
@@ -3990,7 +4086,6 @@ namespace PreAddTech
                             MessageBox.Show(e8.Message);
                         }
                     }
-                
             }
         }
         /// <summary>
@@ -4058,21 +4153,21 @@ namespace PreAddTech
 
         private void NumericUpDown1varR_ValueChanged(object sender, EventArgs e)
         {
-            cproc.changeColorLabel(label1var, (int)numericUpDown1varR.Value,
+            cproc.ChangeColorLabel(label1var, (int)numericUpDown1varR.Value,
                                       (int)numericUpDown1varG.Value, (int)numericUpDown1varB.Value,
                                       (checkBox1var.CheckState == CheckState.Checked));
         }
 
         private void NumericUpDown2varR_ValueChanged(object sender, EventArgs e)
         {
-            cproc.changeColorLabel(label2var, (int)numericUpDown2varR.Value,
+            cproc.ChangeColorLabel(label2var, (int)numericUpDown2varR.Value,
                                       (int)numericUpDown2varG.Value, (int)numericUpDown2varB.Value,
                                       (checkBox2var.CheckState == CheckState.Checked));
         }
 
         private void NumericUpDown3varR_ValueChanged(object sender, EventArgs e)
         {
-            cproc.changeColorLabel(label3var, (int)numericUpDown3varR.Value,
+            cproc.ChangeColorLabel(label3var, (int)numericUpDown3varR.Value,
                                       (int)numericUpDown3varG.Value, (int)numericUpDown3varB.Value,
                                       (checkBox3var.CheckState == CheckState.Checked));
         }
@@ -4257,6 +4352,7 @@ namespace PreAddTech
                 areaRel3var = 0;
             }
         }
+
         /// <summary>
         /// Вызов формы для задания зависимости угла наклона грани от исследуемого признака
         /// </summary>
@@ -4268,6 +4364,7 @@ namespace PreAddTech
             
             MessageBox.Show(new DataTable().Compute(expr, "").ToString());
         }
+
         /// <summary>
         /// Параметры установки
         /// </summary>
@@ -4277,28 +4374,93 @@ namespace PreAddTech
         {
             PackingSettings formPackingSettings = new PackingSettings();
             formPackingSettings.Activate();
+            formPackingSettings.numericUpDownNumX.Value = PackingAnalisysSettings.NumXSubSpace;
+            formPackingSettings.numericUpDownNumY.Value = PackingAnalisysSettings.NumYSubSpace;
+            formPackingSettings.numericUpDownNumZ.Value = PackingAnalisysSettings.NumZSubSpace;
+            formPackingSettings.numericUpDownEmptySubSpace.Value = (decimal)PackingAnalisysSettings.LimitEmptySubSpace;
+            formPackingSettings.numericUpDownFullSubSpace.Value = (decimal)PackingAnalisysSettings.LimitFullSubSpace;
+            formPackingSettings.numericUpDownStepMin.Value = (decimal)PackingAnalisysSettings.StepMin;
+            formPackingSettings.numericUpDownStepMax.Value = (decimal)PackingAnalisysSettings.StepMax;
+            formPackingSettings.numericUpDownError.Value = (decimal)PackingAnalisysSettings.ErrorMax;
+            formPackingSettings.numericUpDownTruncated.Value = (decimal)PackingAnalisysSettings.ValueTruncatedDistribution;
+            formPackingSettings.checkBoxConstantStep.CheckState = PackingAnalisysSettings.Layering[0] == TypeLayering.constant ?
+                                                                  CheckState.Checked : CheckState.Unchecked;
+            formPackingSettings.checkBoxVariableStep.CheckState = PackingAnalisysSettings.Layering[1] == TypeLayering.simpleVariable ?
+                                                                  CheckState.Checked : CheckState.Unchecked;
+            formPackingSettings.checkBoxNoTruncated.CheckState = PackingAnalisysSettings.Layering[2] == TypeLayering.variableNoTrim ?
+                                                                  CheckState.Checked : CheckState.Unchecked;
+            formPackingSettings.checkBoxTruncated.CheckState = PackingAnalisysSettings.Layering[3] == TypeLayering.variableTrim ?
+                                                                  CheckState.Checked : CheckState.Unchecked;
+            formPackingSettings.numericUpDownVariants.Value = PackingSettings.NumVariants;
+            formPackingSettings.numericUpDownSearchFree.Value = PackingSettings.NumTimesFreeSpace;
+            formPackingSettings.numericUpDownCrossoverRate.Value = (decimal)PackingSettings.CrossoverRate;
+            formPackingSettings.numericUpDownPopulationSize.Value = PackingSettings.PopulationSize;
+            formPackingSettings.numericUpDownGenerationSize.Value = PackingSettings.GenerationSize;
+            formPackingSettings.numericUpDownGenomeSize.Value = PackingSettings.GenomeSize;
+            formPackingSettings.numericUpDownMutationRate.Value = (decimal)PackingSettings.MutationRate;
+            formPackingSettings.numericUpDownMagnitude.Value = (decimal)PackingSettings.Magnitude;
             formPackingSettings.Show();
         }
+
         //Временка 2017/06/25
-        PlantParameters PlantSettings = new PlantParameters()
+        /// <summary>
+        /// Параметры установки (по умолчанию для Vanguard SLS 5000)
+        /// </summary>
+        public PlantParameters PlantSettings = new PlantParameters()
         {
-            nameEquipment = "Vanguard Si2 SLS",
-            safeDistanceBody = 0.5f,
-            safeDistanceBorder = 25f,
-            workXmax = 190.5f,
-            workXmin = -190.5f,
-            workYmax = 165.1f,
-            workYmin = -167.64f,
-            workZmax = 457.2f,
-            workZmin = -2.54f,
-            workHeight = 460f,
-            workLength = 381f,
-            workWidth = 333f
+            NameEquipment = SettingsUser.Default.NameEquipment.ToString(),
+            SafeDistanceBody = float.Parse(SettingsUser.Default.SafeDistanceBody.Replace('.', ',')),
+            SafeDistanceBorder = float.Parse(SettingsUser.Default.SafeDistanceBorder.Replace('.', ',')),
+            WorkXmax = float.Parse(SettingsUser.Default.WorkXmax.Replace('.', ',')),
+            WorkXmin = float.Parse(SettingsUser.Default.WorkXmin.Replace('.', ',')),
+            WorkYmax = float.Parse(SettingsUser.Default.WorkYmax.Replace('.', ',')),
+            WorkYmin = float.Parse(SettingsUser.Default.WorkYmin.Replace('.', ',')),
+            WorkZmax = float.Parse(SettingsUser.Default.WorkZmax.Replace('.', ',')),
+            WorkZmin = float.Parse(SettingsUser.Default.WorkZmin.Replace('.', ',')),
+            WorkHeight = float.Parse(SettingsUser.Default.WorkHeight.Replace('.', ',')),
+            WorkLength = float.Parse(SettingsUser.Default.WorkLength.Replace('.', ',')),
+            WorkWidth = float.Parse(SettingsUser.Default.WorkWidth.Replace('.', ','))
         };
 
-        //
-        // Количество размещенных моделей в рабочем пространстве построения
-        int numModels = 0;
+        /// <summary>
+        /// Параметры размещения 3D-моделей в рабочем пространстве
+        /// </summary>
+        public PackingParameters PackingSettings = new PackingParameters()
+        {
+            Criterion = PlacementCriterion.height,
+            Mode = PlacementMode.manual,
+            SortDirect = Sort.no,
+            SortCharactModels = SortModels.volume,
+            NumVariants = 5,
+            NumTimesFreeSpace = 10, 
+            CrossoverRate = 0.8f, 
+            GenerationSize = 200, 
+            PopulationSize = 50, 
+            MutationRate = 0.05f, 
+            GenomeSize = 3,
+            Magnitude = 1
+        };
+
+        /// <summary>
+        /// Параметры размещения 3D-моделей в рабочем пространстве
+        /// </summary>
+        public PackingAnalisys PackingAnalisysSettings = new PackingAnalisys()
+        {
+            ErrorMax = 0.1f,
+            Layering = new TypeLayering[4]{ TypeLayering.no,
+                                            TypeLayering.no,
+                                            TypeLayering.no,
+                                            TypeLayering.no},
+            LimitEmptySubSpace = 0.01f,
+            LimitFullSubSpace = 0.8f,
+            NumXSubSpace = 10,
+            NumYSubSpace = 10,
+            NumZSubSpace = 10,
+            StepMin = 0.1f,
+            StepMax = 0.3f,
+            ValueTruncatedDistribution = 5
+        };
+
         /// <summary>
         /// Размещение модели в рабочем пространстве установки
         /// </summary>
@@ -4306,176 +4468,94 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void ToolStripButtonPack_Click(object sender, EventArgs e)
         {
-            if (toolStripComboBoxListModels.SelectedIndex == -1)
+            if (massiveListModels.Count() == 0)
             { return; }
-            base_model currentModel = massiveListModels[toolStripComboBoxListModels.SelectedIndex];
-            List<base_vox> currentVoxels = new List<base_vox>();
-            
-            //Реализация генетического алгоритма
-            GA geneticAlgorithm = new GA();
-
-            float[] sizesPlant = new float[3]
-            { PlantSettings.workHeight, PlantSettings.workLength, PlantSettings.workWidth};
-            //Условия размещения модели в рабочем пространстве установки
-
-            if (currentModel.sizeX > sizesPlant.Max() ||
-                currentModel.sizeY > sizesPlant.Max() ||
-                currentModel.sizeZ > sizesPlant.Max())
+            unionListStl.Clear();
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            PackProcedures procPacking = new PackProcedures();
+            int num = 0; // Порядковый номер модели для размещения
+            // Определение: модели готовые для размещения или для декомпозиции
+            for (int i = 0; i < massiveListModels.Count(); i++)
             {
-                MessageBox.Show("Необходимо применить стуктурную обратимую декомпозицию");
-                return;
+                if (procPacking.FirstVerify(massiveListModels[i], PlantSettings))
+                {
+                    massiveListModels[i].Num = ++num;
+                    massiveListModels[i].Decompozition = false;
+                }
+                else
+                {
+                    massiveListModels[i].Num = 0;
+                    massiveListModels[i].Decompozition = true;
+                }
             }
-            else if (currentModel.sizeX > PlantSettings.workLength ||
-                     currentModel.sizeY > PlantSettings.workWidth ||
-                     currentModel.sizeZ > PlantSettings.workHeight)
+            // Сортировка моделей
+            massiveListModels = procPacking.SortModels(massiveListModels, PackingSettings);
+            // Переписать список в toolStripComboBoxListModels
+            toolStripComboBoxListModels.Items.Clear();
+            toolStripComboBoxListModels.Items.AddRange(massiveListModels.Select(m => m.Num.ToString() + 
+                            m.Name.Remove(0, 1 + toolStripTextBoxFileName.Text.LastIndexOf(@"\"))).ToArray());
+            float.TryParse(toolStripTextBoxStep.Text, out float step); //Шаг перемещения моделей
+            toolStripStatusLabelLocation.Text = "Определение расположения модели...";
+            toolStripStatusLabelLocation.ForeColor = Color.Green;
+            Application.DoEvents();
+            bool showModels = true; // Показывать / не показывать модели
+            switch (PackingSettings.Mode) // Выбор режима размещения
             {
-                MessageBox.Show("Необходимо поменять ориентацию модели \n" +
-                                "или применить стуктурную обратимую декомпозицию");
-                return;
+                case PlacementMode.manual:
+                    ToolStripButtonLocalSettings_Click(toolStripButtonLocalSettings, EventArgs.Empty);
+                    showModels = false;
+                    break;
+                case PlacementMode.random:
+                    procPacking.RandomPlaced( massiveListModels, PlantSettings, PackingSettings, PackingAnalisysSettings,
+                                             toolStripProgressBarLocation);
+                    break;
+                case PlacementMode.geneticAlgorithm:
+                    PackingSettings.GenomeSize = 3;
+                    procPacking.GeneticPlaced(massiveListModels, PlantSettings, PackingSettings, PackingAnalisysSettings,
+                                             toolStripProgressBarLocation);
+                    break;
+                case PlacementMode.geneticAlgorithmGenomeSize6:
+                    PackingSettings.GenomeSize = 6;
+                    procPacking.GeneticPlaced(massiveListModels, PlantSettings, PackingSettings, PackingAnalisysSettings,
+                                             toolStripProgressBarLocation);
+                    break;
+                case PlacementMode.geneticAlgorithmRationalOrientation:
+
+                    break;
+                case PlacementMode.autoRelocation:
+
+                    break;
+                default:
+                    break;
             }
-            MyProcedures procPack = new MyProcedures();
-            //Шаг построения
-            //float step;
-            float.TryParse(toolStripTextBoxStep.Text, out float step);
-            //
-            if (numModels == 0)
+            if (massiveListModels.Count() == 0 || !showModels)
+                return;
+
+            toolStripStatusLabelLocation.Text = "Визуализация ...";
+            Application.DoEvents();
+            //Вывод на экран распределения объемов imageZY, imageZX, imageXY
+            Bitmap[] image = procPacking.ShowWorkPlace(massiveListModels, PlantSettings, step, toolStripProgressBarLocation,
+                                                       toolStripButtonRGB2.BackColor, toolStripButtonRGB1.BackColor);
+            watch.Stop();
+            TimeSpan ts = watch.Elapsed;
+            if (image != null)
             {
-                toolStripStatusLabelLocation.Text = "Определение расположения модели...";
+                pictureBoxTop.Image   = image[0]; //imageXY
+                pictureBoxFront.Image = image[1]; //imageZX
+                pictureBoxRight.Image = image[2]; //imageZY
+                toolStripStatusLabelLocation.Text = "Визуализация выполнена. Время расчета: " +
+                String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
                 toolStripStatusLabelLocation.ForeColor = Color.Black;
-                Application.DoEvents();
-
-                currentVoxels = procPack.MoveVoxels(currentModel.Voxels,
-                     ((PlantSettings.workXmin + PlantSettings.workXmax - currentModel.sizeX) / 2),
-                     ((PlantSettings.workYmin + PlantSettings.workYmax - currentModel.sizeY) / 2),
-                    0f,
-                    currentModel.coordinateX,
-                    currentModel.coordinateY,
-                    currentModel.coordinateZ,
-                    toolStripProgressBarLocation);
-
-                currentModel.transferX = (PlantSettings.workXmin + PlantSettings.workXmax - currentModel.sizeX) / 2
-                                       - currentModel.coordinateX;
-                currentModel.transferY = (PlantSettings.workYmin + PlantSettings.workYmax - currentModel.sizeY) / 2
-                                       - currentModel.coordinateY;
-                currentModel.transferZ -= currentModel.coordinateZ;
-                numModels++;
+                PlaySound();
             }
             else
             {
-                currentVoxels = procPack.MoveVoxels(currentModel.Voxels,
-                ((PlantSettings.workXmin + PlantSettings.workXmax - currentModel.sizeX) / 2),
-                ((PlantSettings.workYmin + PlantSettings.workYmax - currentModel.sizeY) / 2),
-                  0f,
-                  currentModel.coordinateX,
-                  currentModel.coordinateY,
-                  currentModel.coordinateZ,
-                  toolStripProgressBarLocation);
-
-                currentModel.transferX = (PlantSettings.workXmin + PlantSettings.workXmax - currentModel.sizeX) / 2
-                                       - currentModel.coordinateX;
-                currentModel.transferY = (PlantSettings.workYmin + PlantSettings.workYmax - currentModel.sizeY) / 2
-                                       - currentModel.coordinateY;
-                currentModel.transferZ -= currentModel.coordinateZ;
-                numModels++;
+                toolStripStatusLabelLocation.Text = "Проблема с визуализацией";
+                toolStripStatusLabelLocation.ForeColor = Color.Red;
             }
-            
-            //Вывод на экран распределения объемов
-            Bitmap imageZY, imageZX, imageXY;
-            int numX = (int)Math.Ceiling(PlantSettings.workLength / step),
-                numY = (int)Math.Ceiling(PlantSettings.workWidth / step),
-                numZ = (int)Math.Ceiling(PlantSettings.workHeight / step);
-
-            imageXY = new Bitmap(numY, numX);
-            imageZX = new Bitmap(numX, numZ);
-            imageZY = new Bitmap(numY, numZ);
-            toolStripStatusLabelLocation.Text = "Определение распределения объемов...";
-            Application.DoEvents();
-            int[,,] dist = procPack.Distribution(currentVoxels, numX, numY, numZ,
-                                             PlantSettings.workXmin,
-                                             PlantSettings.workYmin,
-                                             PlantSettings.workZmin,
-                                             step, toolStripProgressBarLocation);
-            //
-            //imageXY
-            //максим.кол-во в интервале
-            int maxVoxelsInIntervalXY = (int)(Math.Ceiling(step / currentModel.sizeXvoxel) *
-                                            Math.Ceiling(step / currentModel.sizeYvoxel) *
-                                            Math.Ceiling(numZ * step / currentModel.sizeZvoxel));
-            int[] tRGB = new int[3];
-
-            int[] RGB1 = new int[3] { toolStripButtonRGB1.BackColor.R,
-                                      toolStripButtonRGB1.BackColor.G,
-                                      toolStripButtonRGB1.BackColor.B };
-
-            int[] RGB2 = new int[3] { toolStripButtonRGB2.BackColor.R,
-                                      toolStripButtonRGB2.BackColor.G,
-                                      toolStripButtonRGB2.BackColor.B };
-
-            toolStripStatusLabelLocation.Text = "Вывод распределения объемов по проекциям...";
-            Application.DoEvents();
-            for (int x = 0; x < numX; x++)
-            {
-                procPack.ProgressBarRefresh(toolStripProgressBarLocation, x, numX);
-                for (int y= 0; y < numY; y++)
-                {
-                    int tempZ = 0;
-                    for (int z = 0; z < numZ; z++)
-                    { tempZ += dist[x, y, z]; }
-                    int h = imageXY.Height - 1;
-                    tRGB = procPack.ColorElementLineGarmonic(tempZ, 0, maxVoxelsInIntervalXY,
-                                                    RGB1[0], RGB1[1], RGB1[2],
-                                                    RGB2[0], RGB2[1], RGB2[2]);
-                    imageXY.SetPixel(y, h - x, Color.FromArgb(tRGB[0], tRGB[1], tRGB[2]));
-                }
-            }
-            pictureBoxTop.Image = imageXY;
-            //
-            //максим.кол-во в интервале
-            int maxVoxelsInIntervalXZ = (int)(Math.Ceiling(step / currentModel.sizeXvoxel) *
-                                            Math.Ceiling(step / currentModel.sizeZvoxel) *
-                                            Math.Ceiling(numY * step / currentModel.sizeYvoxel));
-            //
-            for (int x = 0; x < numX; x++)
-            {
-                procPack.ProgressBarRefresh(toolStripProgressBarLocation, x, numX);
-                for (int z = 0; z < numZ; z++)
-                {
-                    int tempY = 0;
-                    for (int y = 0; y < numY; y++)
-                    { tempY += dist[x, y, z]; }
-                    int h = imageZX.Height - 1;
-                    tRGB = procPack.ColorElementLineGarmonic(tempY, 0, maxVoxelsInIntervalXZ,
-                                                    RGB1[0], RGB1[1], RGB1[2],
-                                                    RGB2[0], RGB2[1], RGB2[2]);
-                    imageZX.SetPixel(x, h - z, Color.FromArgb(tRGB[0], tRGB[1], tRGB[2]));
-                }
-            }
-            pictureBoxFront.Image = imageZX;
-
-            //
-            //максим.кол-во в интервале
-            int maxVoxelsInIntervalZY = (int)(Math.Ceiling(step / currentModel.sizeXvoxel) *
-                                            Math.Ceiling(step / currentModel.sizeZvoxel) *
-                                            Math.Ceiling(numY * step / currentModel.sizeYvoxel));
-            //
-            for (int y = 0; y < numY; y++)
-            {
-                procPack.ProgressBarRefresh(toolStripProgressBarLocation, y, numY);
-                for (int z = 0; z < numZ; z++)
-                {
-                    int tempX = 0;
-                    for (int x = 0; x < numX; x++)
-                    { tempX += dist[x, y, z]; }
-                    int h = imageZY.Height - 1;
-                    tRGB = procPack.ColorElementLineGarmonic(tempX, 0, maxVoxelsInIntervalZY,
-                                                    RGB1[0], RGB1[1], RGB1[2],
-                                                    RGB2[0], RGB2[1], RGB2[2]);
-                    imageZY.SetPixel(y, h - z, Color.FromArgb(tRGB[0], tRGB[1], tRGB[2]));
-                }
-            }
-            //
-            pictureBoxRight.Image = imageZY;
         }
+
         /// <summary>
         /// Удаление текущей модели
         /// </summary>
@@ -4490,6 +4570,7 @@ namespace PreAddTech
             }
             
         }
+
         /// <summary>
         /// Задание цвета для неполных элементарных объемов 
         /// </summary>
@@ -4502,6 +4583,7 @@ namespace PreAddTech
                 toolStripButtonRGB1.BackColor = colorDialogSelect.Color;
             }
         }
+
         /// <summary>
         /// Задание цвета для полностью заполненных элементарных объемов 
         /// </summary>
@@ -4514,6 +4596,7 @@ namespace PreAddTech
                 toolStripButtonRGB2.BackColor = colorDialogSelect.Color;
             }
         }
+
         /// <summary>
         /// Расширение на всю экранную форму
         /// </summary>
@@ -4533,6 +4616,7 @@ namespace PreAddTech
             }
             
         }
+
         /// <summary>
         /// Расширение на всю экранную форму
         /// </summary>
@@ -4551,6 +4635,7 @@ namespace PreAddTech
                 pictureBoxRight.Dock = DockStyle.None;
             }
         }
+
         /// <summary>
         /// Расширение на всю экранную форму
         /// </summary>
@@ -4569,7 +4654,9 @@ namespace PreAddTech
                 pictureBoxTop.Dock = DockStyle.None;
             }
         }
+
         private bool nonNumberEntered = false;
+
         private void ToolStripTextBoxStep_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (nonNumberEntered == true) { e.Handled = true; }
@@ -4590,6 +4677,7 @@ namespace PreAddTech
 
             if (Control.ModifierKeys == Keys.Shift) { nonNumberEntered = true; }
         }
+
         /// <summary>
         /// Список конутров набора сечений 3D-модели
         /// </summary>
@@ -4788,7 +4876,7 @@ namespace PreAddTech
                     H = listStep[i],
                     Z = coordinateSectionZ[i]
                 };
-                List<base_elementOfCurve> tempElementOfCurve = new List<base_elementOfCurve>();
+                List<Base_elementOfCurve> tempElementOfCurve = new List<Base_elementOfCurve>();
                 //Массив данных для стат.анализа
                 List<float> tempMassiveParLayer = new List<float>();
                 //Порядковый номер элемента контура
@@ -4805,7 +4893,7 @@ namespace PreAddTech
                     // пересечение треугольной грани участвующей в формировании контура
                     if (pointSTL[0].Z <= coordinateSectionZ[i] && coordinateSectionZ[i] < pointSTL[2].Z && Math.Abs(item.ZN) != 1)
                     {
-                        base_elementOfCurve tempElement = new base_elementOfCurve();
+                        Base_elementOfCurve tempElement = new Base_elementOfCurve();
                         PointF[] pointsCurve = proc.ElementOfCurve(
                                             new Point3D() { X = item.X1, Y = item.Y1, Z = item.Z1 },
                                             new Point3D() { X = item.X2, Y = item.Y2, Z = item.Z2 },
@@ -4906,12 +4994,12 @@ namespace PreAddTech
         /// <summary>
         /// Список ребер контура для просмотра
         /// </summary>
-        List<base_elementOfCurve> tempElementOfCurveSection = new List<base_elementOfCurve>();
+        List<Base_elementOfCurve> tempElementOfCurveSection = new List<Base_elementOfCurve>();
 
         /// <summary>
         /// Список ребер контура для просмотра
         /// </summary>
-        List<List<base_elementOfCurve>> tempElementOfCurveSectionMassive = new List<List<base_elementOfCurve>>();
+        List<List<Base_elementOfCurve>> tempElementOfCurveSectionMassive = new List<List<Base_elementOfCurve>>();
 
         /// <summary>
         /// Просмотр сечения секущей плоскости
@@ -5369,7 +5457,7 @@ namespace PreAddTech
             for (int i = 0; i < listContour.Count; i++)
             {
                 proc.ProgressBarRefresh(toolStripProgressBarLayerAnalysis, i, listContour.Count - 1);
-                List<base_elementOfCurve> listETemp = proc.ListCloseContour(listContour[i].ListElement, float.Parse(SettingsUser.Default.RoundingKoord.Replace('.',',')));
+                List<Base_elementOfCurve> listETemp = proc.ListCloseContour(listContour[i].ListElement, float.Parse(SettingsUser.Default.RoundingKoord.Replace('.',',')));
                 ParMassiveLayerA.Add(proc.MassiveAngleAdjacent(listETemp));
                 if (checkBoxFractalAnalysis.CheckState == CheckState.Checked)
                 {
@@ -5423,7 +5511,7 @@ namespace PreAddTech
                         gistParMassiveLayer.Add(gistParLayer);
                         resultStatParLayer = statisticaPar.Stat((ParMassiveLayer[i]).ToArray(), gistParLayer);
                         //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-                        // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+                        // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- Середина, 10 - мода (0), 11 - медиана, 12 - объем выборки
                         if (resultStatParLayer[2] > 0)
                         { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Nz"].Index, i].Value = "Просмотр"; }
                         else { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Nz"].Index, i].Value = "Нет данных"; }
@@ -5471,7 +5559,7 @@ namespace PreAddTech
                         //
                         resultStatParLayerA = statisticaParA.Stat((ParMassiveLayerA[i]).ToArray(), gistParLayerA);
                         //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-                        // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+                        // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- середина, 10 - мода (0), 11 - медиана, 12 - объем выборки
                         if (resultStatParLayerA[2] > 0)
                         { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Aadjacent"].Index, i].Value = "Просмотр"; }
                         else { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Aadjacent"].Index, i].Value = "Нет данных"; }
@@ -5552,7 +5640,7 @@ namespace PreAddTech
                         float[] resultStatParLayerE = statisticaParE.Stat(ParMassiveLayerErrorForm[i], gistParLayerE);
                         float[] resultStatParLayerNzFull = statisticaParNzFull.Stat(ParMassiveLayerNzFull[i], gistParLayerNzFull);
                         //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-                        // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+                        // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- середина, 10 - мода (0), 11 - медиана, 12 - объем выборки
                         if (resultStatParLayerE[2] > 0)
                         { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Error"].Index, i].Value = "Просмотр"; }
                         else { dataGridViewSetLayer[dataGridViewSetLayer.Columns["Error"].Index, i].Value = "Нет данных"; }
@@ -5626,7 +5714,7 @@ namespace PreAddTech
         {
             if (checkBox1var.CheckState == CheckState.Checked)
             {
-                cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDown1varR,
+                cproc.DoubleClickColorLabel(sender, colorDialogSelect, numericUpDown1varR,
                               numericUpDown1varG, numericUpDown1varB);
             }
         }
@@ -5639,7 +5727,7 @@ namespace PreAddTech
         {
             if (checkBox2var.CheckState == CheckState.Checked)
             {
-                cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDown2varR,
+                cproc.DoubleClickColorLabel(sender, colorDialogSelect, numericUpDown2varR,
               numericUpDown2varG, numericUpDown2varB);
             }
         }
@@ -5652,7 +5740,7 @@ namespace PreAddTech
         {
             if (checkBox3var.CheckState == CheckState.Checked && colorDialogSelect.ShowDialog() == DialogResult.OK)
             {
-                cproc.doubleClickColorLabel(sender, colorDialogSelect, numericUpDown3varR,
+                cproc.DoubleClickColorLabel(sender, colorDialogSelect, numericUpDown3varR,
                               numericUpDown3varG, numericUpDown3varB);
             }
         }
@@ -5670,7 +5758,7 @@ namespace PreAddTech
             toolStripButtonShowHistogram3D.Font = new Font(this.Font, FontStyle.Bold);
             //resultStat3D, resultStat3DEmpty
             //0 - мин., 1 - макс., 2 - интервал, 3 - дисперсия, 4 - ср.кв.откл., 5 - ср.арифм., 
-            // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- меана, 10 - мода (0), 11 - медиана, 12 - объем выборки
+            // 6 - коэф.асимметрии, 7 - эксцесса, 8 - вариации, 9- середина, 10 - мода (0), 11 - медиана, 12 - объем выборки
             float[] resultStat = new float[13];
             if (toolStripComboBoxShowAnalysis.SelectedIndex == 0) resultStat = resultStat3D;
             else if (toolStripComboBoxShowAnalysis.SelectedIndex == 1) resultStat = resultStat3DEmpty; 
@@ -5770,7 +5858,7 @@ namespace PreAddTech
                                 string[] tempVoxString = new string[10];
                                 tempVoxString = childnode.InnerText.Split(';');
                                 // Nom; Xv; Yv; Zv; Lv; Lfull; NomModel; SizeX; SizeY; SizeZ
-                                ListVox.Add(new base_vox()
+                                ListVox.Add(new Base_vox()
                                 {
                                     Nom = int.Parse(tempVoxString[0]),
                                     Xv = float.Parse(tempVoxString[1]),
@@ -5794,12 +5882,12 @@ namespace PreAddTech
                 toolStripButtonStatAnal.Enabled = true;
                 //
                 //Создание массива моделей для размещения на рабочей платформе
-                if (activeTask == ATPreparation.switchActiveTask.analizePacking)
+                if (activeTask == SwitchActiveTask.analizePacking)
                 {
-                    base_model model = new base_model() { Name = toolStripTextBoxFileName.Text};
+                    Base_model model = new Base_model() { Name = toolStripTextBoxFileName.Text};
                     //model.Stl = ListStl;
                     //Создание списка вокселей для модели изделия
-                    List<base_vox> tempListVox = new List<base_vox>();
+                    List<Base_vox> tempListVox = new List<Base_vox>();
                     foreach (var item in ListVox)
                     {
                         if (item.Lfull)
@@ -5807,20 +5895,20 @@ namespace PreAddTech
                     }
                     model.Voxels = tempListVox;
                     //
-                    model.totalCountVoxels = tempListVox.Count;
-                    model.sizeXvoxel = float.Parse(textBoxSizeX.Text);
-                    model.sizeYvoxel = float.Parse(textBoxSizeY.Text);
-                    model.sizeZvoxel = float.Parse(textBoxSizeZ.Text);
+                    model.TotalCountVoxels = tempListVox.Count;
+                    model.SizeXvoxel = float.Parse(textBoxSizeX.Text);
+                    model.SizeYvoxel = float.Parse(textBoxSizeY.Text);
+                    model.SizeZvoxel = float.Parse(textBoxSizeZ.Text);
                     model.Volumе = 0;
-                    model.angleX = 0;
-                    model.angleY = 0;
-                    model.coordinateX = float.Parse(textBoxMinX.Text);
-                    model.coordinateY = float.Parse(textBoxMinY.Text);
-                    model.coordinateZ = float.Parse(textBoxMinZ.Text);
-                    model.sizeX = float.Parse(textBoxSizeX.Text);
-                    model.sizeY = float.Parse(textBoxSizeY.Text);
-                    model.sizeZ = float.Parse(textBoxSizeZ.Text);
-                    model.information = richTextBoxInfo.Text;
+                    model.AngleX = 0;
+                    model.AngleY = 0;
+                    model.CoordinateX = float.Parse(textBoxMinX.Text);
+                    model.CoordinateY = float.Parse(textBoxMinY.Text);
+                    model.CoordinateZ = float.Parse(textBoxMinZ.Text);
+                    model.SizeX = float.Parse(textBoxSizeX.Text);
+                    model.SizeY = float.Parse(textBoxSizeY.Text);
+                    model.SizeZ = float.Parse(textBoxSizeZ.Text);
+                    model.Information = richTextBoxInfo.Text;
                     massiveListModels.Add(model);
                     //добавление в список выбора
                     toolStripComboBoxListModels.Items.Add(massiveListModels.Count.ToString("000") +
@@ -6067,14 +6155,194 @@ namespace PreAddTech
             analysisSteps.seriesFunctionZ = seriesFunctionZ;
             analysisSteps.numericUpDownNumIntervals.Value = numericUpDownLayerInt.Value;
             analysisSteps.titleForm = string.Format( "Анализ по слоям \"{0}\": ", dataGridViewSetLayer.Columns[e.ColumnIndex].HeaderText);
+            ElmentsFormMassive.AddRange(new List<object>()
+            {
+                toolStripComboBoxLayerAnalysis,
+                toolStripTextBoxMinStep,
+                toolStripTextBoxMaxStep,
+                toolStripTextBoxError,
+                toolStripTextBoxLimitF,
+                toolStripComboBoxTypeTrim,
+                numericUpDownRatioRtoL,
+                numericUpDownCountFractalAnalysis,
+                numericUpDownLayerInt,
+                checkBoxAbsOrRel,
+                checkBoxMethod
+            });
+
+            analysisSteps.history = MyProcedures.HistoryWorkParameters(ElmentsFormMassive); ;
             //
             analysisSteps.Activate();
             analysisSteps.Show();
         }
 
-        private void toolStripButtonLocalAnalysis_Click(object sender, EventArgs e)
-        {
+        /// <summary>
+        /// Массив элементов формы для создания информации по заданным параметрам
+        /// </summary>
+        private List<object> ElmentsFormMassive = new List<object>();
 
+        /// <summary>
+        /// Анализ рабочего пространства по выбранному критерию
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripButtonLocalAnalysis_Click(object sender, EventArgs e)
+        {
+            toolStripStatusLabelLocation.Text = "Выполняется анализ ...";
+            toolStripStatusLabelLocation.ForeColor = Color.Red;
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            PackProcedures pack = new PackProcedures();
+            if (unionListStl.Count() == 0)
+            {
+                unionListStl = pack.UnionListSTL(massiveListModels);
+            }
+            //Наименования моделей
+            string nameModels = "";
+            foreach (var model in massiveListModels)
+            {
+                nameModels += model.Name + ", \n";
+            }
+            richTextBoxLocationInfo.Text += "Выполнен анализ для 3D-моделей: \n" + nameModels + "\n" +
+                                            pack.PackingAnalysis(massiveListModels, unionListStl, PlantSettings, 
+                                            PackingAnalisysSettings, toolStripProgressBarLocation);
+            watch.Stop();
+            TimeSpan ts = watch.Elapsed;
+            toolStripStatusLabelLocation.Text = "Анализ выполнен. Время расчета: " +
+                String.Format("{0:00}:{1:00}:{2:00}.{3:000}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
+            toolStripStatusLabelLocation.ForeColor = Color.Black;
+        }
+        
+        /// <summary>
+        /// Выбор режима размещения моделей в рабочем пространстве
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBoxSelectMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (((ToolStripComboBox)sender).SelectedIndex != -1)
+                    PackingSettings.Mode = (PlacementMode)((ToolStripComboBox)sender).SelectedIndex;
+                // Генетический алгоритм (размер генома - 3 )
+                if (((ToolStripComboBox)sender).SelectedIndex == 2)
+                {
+                    PackingSettings.GenomeSize = 3;
+                }
+                // Генетический алгоритм (размер генома - 6 )
+                else if (((ToolStripComboBox)sender).SelectedIndex == 3)
+                {
+                    PackingSettings.GenomeSize = 6;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Непредвиденное обстоятельство!", "Проблема...");
+                throw;
+            }
+        }
+        /// <summary>
+        /// Выбор критерия размещения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBoxCriterion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (((ToolStripComboBox)sender).SelectedIndex != -1)
+                    PackingSettings.Criterion = (PlacementCriterion)((ToolStripComboBox)sender).SelectedIndex;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Непредвиденное обстоятельство!", "Проблема...");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Выбор направления сортировки моделей при размещении
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBoxSortDirect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (((ToolStripComboBox)sender).SelectedIndex != -1)
+                    PackingSettings.SortDirect = (Sort)((ToolStripComboBox)sender).SelectedIndex;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Непредвиденное обстоятельство!", "Проблема...");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Выбор характеристики модели для предварительной сортировки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBoxSortCharactModels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (((ToolStripComboBox)sender).SelectedIndex != -1)
+                    PackingSettings.SortCharactModels = (SortModels)((ToolStripComboBox)sender).SelectedIndex;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Непредвиденное обстоятельство!", "Проблема...");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Объединенный STL для анализа и сохранения всех моделей
+        /// </summary>
+        public List<Base_stl> unionListStl = new List<Base_stl>();
+
+        /// <summary>
+        /// Сохранение всех моделей в один STL-файл
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripButtonSaveAllinOne_Click(object sender, EventArgs e)
+        {
+            if (massiveListModels.Count() == 0) return;
+            if (unionListStl.Count() == 0)
+            {
+                PackProcedures pack = new PackProcedures();
+                unionListStl = pack.UnionListSTL(massiveListModels);
+            }
+
+            saveFileDialogU.FileName = "UModel_" + DateTime.Now.Year + "_" + DateTime.Now.Month +
+                                       "_" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute;
+            saveFileDialogU.DefaultExt = ".stl";
+
+            if (saveFileDialogU.ShowDialog() == DialogResult.OK)
+            {
+                toolStripStatusLabelLocation.Text = "Сохранение ...";
+                toolStripStatusLabelLocation.ForeColor = Color.Red;
+                Stopwatch watch = new Stopwatch();
+                watch.Start();
+                new MyProcedures().SaveListToSTL(saveFileDialogU.FileName, unionListStl);
+                watch.Stop();
+                TimeSpan ts = watch.Elapsed;
+                toolStripStatusLabelLocation.Text = "Файл сохранен за: " +
+                    String.Format("{0:00}:{1:00}:{2:00}.{3:000}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
+                toolStripStatusLabelLocation.ForeColor = Color.Black;
+                try
+                {
+                    frmMain.richTextBoxHistory.Text += "Сохранена модель (STL-файл): \n";
+                    frmMain.richTextBoxHistory.Text += saveFileDialogU.FileName + " \n";
+                }
+                catch (Exception e8)
+                {
+                    MessageBox.Show(e8.Message);
+                }
+            }
         }
 
         /// <summary>
@@ -6084,22 +6352,13 @@ namespace PreAddTech
         /// <param name="e"></param>
         private void ToolStripComboBox3_TextChanged(object sender, EventArgs e)
         {
-            if (toolStripComboBox3.SelectedIndex == 1) // 2. Просмотр и записать в файл
+            if (toolStripComboBoxSelectAct.SelectedIndex == 1) // 2. Просмотр и записать в файл
             {
                 saveFileDialogU.FileName = "stl_" + DateTime.Now.Year.ToString() + "_" +
                                     DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" +
                                     DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString();
                 saveFileDialogU.ShowDialog();
             }
-        }
-        /// <summary>
-        /// Фрактальный визуальный анализ (прорисовка окружностей)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ToolStripButtonFractalDimension_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

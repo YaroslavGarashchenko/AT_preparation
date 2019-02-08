@@ -33,10 +33,46 @@
       <Value Profile="(Default)">0.0001</Value>
     </Setting>
     <Setting Name="PositionResolution" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0.01</Value>
+      <Value Profile="(Default)">0.02</Value>
     </Setting>
     <Setting Name="Multithreading" Description="Многопоточная обработка данных" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="NameEquipment" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Vanguard Si2 SLS</Value>
+    </Setting>
+    <Setting Name="SafeDistanceBody" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="SafeDistanceBorder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+    <Setting Name="WorkXmax" Type="System.String" Scope="User">
+      <Value Profile="(Default)">190.5</Value>
+    </Setting>
+    <Setting Name="WorkXmin" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-190.5</Value>
+    </Setting>
+    <Setting Name="WorkYmax" Type="System.String" Scope="User">
+      <Value Profile="(Default)">165.1</Value>
+    </Setting>
+    <Setting Name="WorkYmin" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-167.64</Value>
+    </Setting>
+    <Setting Name="WorkZmax" Type="System.String" Scope="User">
+      <Value Profile="(Default)">457.2</Value>
+    </Setting>
+    <Setting Name="WorkZmin" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-2.54</Value>
+    </Setting>
+    <Setting Name="WorkHeight" Type="System.String" Scope="User">
+      <Value Profile="(Default)">460</Value>
+    </Setting>
+    <Setting Name="WorkLength" Type="System.String" Scope="User">
+      <Value Profile="(Default)">381</Value>
+    </Setting>
+    <Setting Name="WorkWidth" Type="System.String" Scope="User">
+      <Value Profile="(Default)">333</Value>
     </Setting>
   </Settings>
 </SettingsFile>

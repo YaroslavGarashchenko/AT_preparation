@@ -41,10 +41,9 @@
             this.richTextBoxResultAnalysis.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBoxResultAnalysis.Location = new System.Drawing.Point(0, 34);
-            this.richTextBoxResultAnalysis.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.richTextBoxResultAnalysis.Location = new System.Drawing.Point(0, 28);
             this.richTextBoxResultAnalysis.Name = "richTextBoxResultAnalysis";
-            this.richTextBoxResultAnalysis.Size = new System.Drawing.Size(777, 434);
+            this.richTextBoxResultAnalysis.Size = new System.Drawing.Size(584, 353);
             this.richTextBoxResultAnalysis.TabIndex = 1;
             this.richTextBoxResultAnalysis.Text = "";
             // 
@@ -56,7 +55,7 @@
             this.toolStripComboBoxResult});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(779, 28);
+            this.toolStrip1.Size = new System.Drawing.Size(584, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -66,32 +65,32 @@
             this.toolStripButtonSelect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelect.Image")));
             this.toolStripButtonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSelect.Name = "toolStripButtonSelect";
-            this.toolStripButtonSelect.Size = new System.Drawing.Size(84, 25);
+            this.toolStripButtonSelect.Size = new System.Drawing.Size(68, 22);
             this.toolStripButtonSelect.Text = "Просмотр";
             this.toolStripButtonSelect.Click += new System.EventHandler(this.ToolStripButton1_Click);
             // 
             // toolStripComboBoxResult
             // 
+            this.toolStripComboBoxResult.AutoToolTip = true;
             this.toolStripComboBoxResult.Items.AddRange(new object[] {
             "Площадь и объем триангуляционной модели",
             "Результаты анализа фрактальной размерности методом масштабов",
             "Результаты анализа фрактальной размерности клеточным методом",
             "Полные данные анализа фрактальной размерности"});
             this.toolStripComboBoxResult.Name = "toolStripComboBoxResult";
-            this.toolStripComboBoxResult.Size = new System.Drawing.Size(599, 28);
+            this.toolStripComboBoxResult.Size = new System.Drawing.Size(450, 25);
             this.toolStripComboBoxResult.Text = "Выбор...";
             this.toolStripComboBoxResult.ToolTipText = "Выбор данных для просмотра";
             // 
             // FormResults
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 469);
+            this.ClientSize = new System.Drawing.Size(584, 381);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.richTextBoxResultAnalysis);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MaximumSize = new System.Drawing.Size(1061, 728);
-            this.MinimumSize = new System.Drawing.Size(661, 358);
+            this.MaximumSize = new System.Drawing.Size(800, 599);
+            this.MinimumSize = new System.Drawing.Size(600, 298);
             this.Name = "FormResults";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Результаты анализов исследуемых признаков";

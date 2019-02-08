@@ -47,6 +47,14 @@ namespace PreAddTech
         /// Заголовок формы
         /// </summary>
         public string titleForm;
+        /// <summary>
+        /// История (Время и заданные параметры расчета)
+        /// </summary>
+        public string history;
+        /// <summary>
+        /// Результаты статистического анализа
+        /// </summary>
+        string resultAnalysis = "";
 
         /// <summary>
         /// Показать настройки графика / исходных данных
@@ -253,15 +261,45 @@ namespace PreAddTech
         {
 
         }
+        
+        /// <summary>
+        /// Основная форма приложения
+        /// </summary>
+        ATPreparation frmMain = (ATPreparation)Application.OpenForms["ATPreparation"];
+        /// <summary>
+        /// Подсистема анализа вызвавшая окно с графиком
+        /// </summary>
+        FormAnalysis frmAnalysis = (FormAnalysis)Application.OpenForms["FormAnalysis"];
 
         /// <summary>
         /// Запись в БД сравнительного анализа данных
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonComparison_Click(object sender, EventArgs e)
+        private void ButtonComparison_Click(object sender, EventArgs e)
         {
+            VarDatas addDatas = new VarDatas()
+            {
+                SelectVar = true,
+                Number = 1 + frmMain.varDatasMassive.Count(),
+                Group = 1 + frmMain.varDatasMassive.Where(var => var.Path.Trim() != frmAnalysis.VibFileName.Trim()).
+                                                    GroupBy(var => var.Path).Count(),
+                Name = titleForm,
+                Path = frmAnalysis.VibFileName.Trim(),
+                SelectAnalyse = "",
+                ResultAnalyse = resultAnalysis,
+                ResearchMassive = researchMassive,
+                ResearchMassiveZ = researchMassiveZ,
+                ResultStatParLayer = resultStatParLayer,
+                SeriesDensity = seriesDensity,
+                SeriesIntegralFunction = seriesIntegralFunction,
+                SeriesData = seriesData,
+                SeriesFunctionZ = seriesFunctionZ,
+                DateTimeCreation = DateTime.Now,
+                History = history
+            };
 
+            frmMain.varDatasMassive.Add(addDatas);
         }
 
         /// <summary>
@@ -269,47 +307,15 @@ namespace PreAddTech
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonTest_Click(object sender, EventArgs e)
+        private void ButtonTest_Click(object sender, EventArgs e)
         {
             FormResults formAnalResults = new FormResults();
             formAnalResults.Activate();
             formAnalResults.toolStripComboBoxResult.Enabled = false;
             formAnalResults.toolStripButtonSelect.Enabled = false;
-            formAnalResults.richTextBoxResultAnalysis.Text = GenerateReportTestDistribution();
+            formAnalResults.richTextBoxResultAnalysis.Text = resultAnalysis = 
+                                    new Stat_analysis().GenerateReportTestDistribution(resultStatParLayer, researchMassive);
             formAnalResults.Show();
-        }
-        /// <summary>
-        /// Генерирование отчета по проверке гипотезы о законе распределения исследуемого признака
-        /// </summary>
-        /// <returns></returns>
-        private string GenerateReportTestDistribution()
-        {
-            string result;
-            if (resultStatParLayer.Length <= 0)
-            {
-                result = "Нет результатов статистического анализа распределения исследуемого признака! \n";
-            }
-            else
-            {
-                result = "Статистические характеристики распределения исследуемого признака:" + "\n";
-                result += "Минимальная величина: " + resultStatParLayer[0] + " ;\n";
-                result += "Максимальная величина: " + resultStatParLayer[1] + " ;\n";
-                result += "Интервал величин: " + resultStatParLayer[2] + " ;\n";
-                result += "Дисперсия: " + resultStatParLayer[3] + " ;\n";
-                result += "Среднеквадратическое отклонение: " + resultStatParLayer[4] + " ;\n";
-                result += "Среднеарифметическое значение: " + resultStatParLayer[5] + " ;\n";
-                result += "Коэффициент асимметрии: " + resultStatParLayer[6] + " ;\n";
-                result += "Коэффициент эксцесса: " + resultStatParLayer[7] + " ;\n";
-                result += "Коэффициент вариации: " + resultStatParLayer[8] + " ;\n";
-                result += "Меана: " + resultStatParLayer[9] + " ;\n";
-                result += "Мода: " + resultStatParLayer[10] + " ;\n";
-                result += "Медиана: " + resultStatParLayer[11] + " ;\n";
-                result += "Объем выборки: " + resultStatParLayer[12] + " ;\n\n";
-            }
-            //
-
-
-            return result;
         }
     }
 }
