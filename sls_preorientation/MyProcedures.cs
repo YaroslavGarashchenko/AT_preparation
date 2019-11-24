@@ -538,41 +538,7 @@ namespace PreAddTech
             if (RGB[2] > 255) { RGB[2] = 255; }
             return RGB;
         }
-        /// <summary>
-        /// Окраска элементов по гармонической зависимости
-        /// </summary>
-        /// <param name="X">величина</param>
-        /// <param name="Xmin">минимальное значение интервала</param>
-        /// <param name="Xmax">максимальное значение интервала</param>
-        /// <param name="R1">компонента R для мин.значения</param>
-        /// <param name="G1">компонента G для мин.значения</param>
-        /// <param name="B1">компонента B для мин.значения</param>
-        /// <param name="R2">компонента R для макс.значения</param>
-        /// <param name="G2">компонента G для макс.значения</param>
-        /// <param name="B2">компонента B для макс.значения</param>
-        /// <returns></returns>
-        public int[] ColorElementLineGarmonic(int X, int Xmin, int Xmax,
-                                  int R1, int G1, int B1,
-                                  int R2, int G2, int B2)
-        {
-            int[] RGB = new int[3];
-            //R
-            RGB[0] = ((R2 + R1) / 2 + (int)Math.Floor((decimal)((R2 - R1) / 2)
-                        * ((decimal)Math.Cos(2 * Math.PI * (X - Xmin) / (Xmax - Xmin)))));
-            //G
-            RGB[1] = ((G2 + G1) / 2 + (int)Math.Floor((decimal)((G2 - G1) / 2)
-                        * ((decimal)Math.Cos(2 * Math.PI / 3 + 2 * Math.PI * (X - Xmin) / (Xmax - Xmin)))));
-            //B
-            RGB[2] = ((B2 + B1) / 2 + (int)Math.Floor((decimal)((B2 - B1) / 2)
-                * ((decimal)Math.Cos(4 * Math.PI / 3 + 2 * Math.PI * (X - Xmin) / (Xmax - Xmin)))));
-
-            //Исключения
-            if (RGB[0] > 255) { RGB[0] = 255; }
-            if (RGB[1] > 255) { RGB[1] = 255; }
-            if (RGB[2] > 255) { RGB[2] = 255; }
-            return RGB;
-        }
-
+        
         /// <summary>
         /// Точка пересечения плоскости с линией заданной двумя точками
         /// </summary>
